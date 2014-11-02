@@ -7,17 +7,135 @@
 //
 
 #import "AppDelegate.h"
-
+#import <ZeroPush.h>
+#import "ViewController.h"
 @interface AppDelegate ()
+@property NSString *token;
+@property (nonatomic, strong) NSString *temperature;
 
 @end
 
 @implementation AppDelegate
 
+- (void)applicationDidBecomeActive:(UIApplication *)application
+{
+    [ZeroPush engageWithAPIKey:@"PM4ouAj1rzxmQysu5ej6" delegate:self];
+//    [[ZeroPush shared] registerForRemoteNotificationTypes:(UIRemoteNotificationTypeAlert |
+//                                                           UIRemoteNotificationTypeBadge |
+//                                                           UIRemoteNotificationTypeSound)];
+    [[UIApplication sharedApplication] registerUserNotificationSettings:[UIUserNotificationSettings settingsForTypes:(UIUserNotificationTypeSound | UIUserNotificationTypeAlert | UIUserNotificationTypeBadge) categories:nil]];
+         [[ZeroPush shared] registerForRemoteNotifications];
+}
+
+- (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)tokenData
+{
+    [[ZeroPush shared] registerDeviceToken:tokenData];
+
+    self.token = [ZeroPush deviceTokenFromData:tokenData];
+//    [self runRequest];
+}
+
+
+-(void)runRequest{
+    NSString* deviceId = [NSString stringWithFormat:@"https://gentle-ocean-7650.herokuapp.com/deviceid/%@", self.token];
+//    NSString* deviceId = [NSString stringWithFormat:@"https://192.168.129.228:3000/deviceid/%@", self.token];
+
+    NSURL* url = [NSURL URLWithString:deviceId];
+
+    NSMutableURLRequest* request = [NSMutableURLRequest requestWithURL:url];
+    request.HTTPMethod = @"POST";
+
+    [request addValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
+
+    NSURLSessionConfiguration* config = [NSURLSessionConfiguration defaultSessionConfiguration];
+    NSURLSession* session = [NSURLSession sessionWithConfiguration:config];
+
+    NSURLSessionDataTask* dataTask = [session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+        if (!error) {
+            NSLog(@"%@",response);
+        }
+    }];
+    [dataTask resume];
+}
+
+-(void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error {
+    NSLog(@"%@", error.localizedDescription);
+}
+
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    // Override point for customization after application launch.
+
+
+
     return YES;
+}
+
+
+
+- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo fetchCompletionHandler:(void (^)(UIBackgroundFetchResult result))handler{
+
+    NSLog(@"Background fetch started...");
+
+    // 30 seconds to perform the fetch
+
+    NSString *urlString = [NSString stringWithFormat: @"http://api.openweathermap.org/data/2.5/weather?q=%@", @"Singapore"];
+
+    NSURLSession *session = [NSURLSession sharedSession];
+    [[session dataTaskWithURL:[NSURL URLWithString:urlString]
+            completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+
+                NSHTTPURLResponse *httpResp = (NSHTTPURLResponse*) response;
+                if (!error && httpResp.statusCode == 200) {
+                    NSString *result = [[NSString alloc] initWithBytes:[data bytes] length:[data length] encoding:NSUTF8StringEncoding];
+                    NSLog(@"RESULTS %@",result);
+                    [self parseJSONData:data];
+
+                    ViewController *vc = (ViewController *) [[[UIApplication sharedApplication] keyWindow] rootViewController];
+                    dispatch_sync(dispatch_get_main_queue(), ^{
+                        vc.lblStatus.text = self.temperature;
+                    });
+
+                    handler(UIBackgroundFetchResultNewData);
+
+                    NSLog(@"Background fetch completed...");
+                } else {
+                    NSLog(@"%@", error.description);
+                    handler(UIBackgroundFetchResultFailed);
+                    NSLog(@"Background fetch Failed...");
+                }
+            }
+      
+      ] resume ];
+
+}
+
+// used for testing updating the view
+- (void)parseJSONData:(NSData *)data {
+    NSError *error;
+    NSDictionary *parsedJSONData =
+    [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
+    NSDictionary *main = [parsedJSONData objectForKey:@"main"];
+
+    //---temperature in Kelvin---
+    NSString *temp = [main valueForKey:@"temp"];
+
+    //---convert temperature to Celcius---
+    float temperature = [temp floatValue] - 273;
+
+    //---get current time---
+    NSDate *date = [NSDate date];
+    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    [formatter setDateFormat:@"HH:mm:ss"];
+
+    NSString *timeString = [formatter stringFromDate:date];
+
+    self.temperature = [NSString stringWithFormat:@"%.0f degrees Celsius, fetched at %@",temperature, timeString];
+}
+
+- (void)application:(UIApplication *)application didReceiveLocalNotification:(UILocalNotification *)notification
+{
+    application.applicationIconBadgeNumber = 0;
+    NSLog(@"Local Notifc called");
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application {
@@ -26,6 +144,13 @@
 }
 
 - (void)applicationDidEnterBackground:(UIApplication *)application {
+//    UILocalNotification *notification = [[UILocalNotification alloc]init];
+//    notification.repeatInterval = NSCalendarUnitDay;
+//    [notification setAlertBody:@"Hello world"];
+//    [notification setFireDate:[NSDate dateWithTimeIntervalSinceNow:1]];
+//    [notification setTimeZone:[NSTimeZone  defaultTimeZone]];
+//    [application setScheduledLocalNotifications:[NSArray arrayWithObject:notification]];
+
     // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
     // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
 }
@@ -34,9 +159,9 @@
     // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
 }
 
-- (void)applicationDidBecomeActive:(UIApplication *)application {
-    // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
-}
+//- (void)applicationDidBecomeActive:(UIApplication *)application {
+//    // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
+//}
 
 - (void)applicationWillTerminate:(UIApplication *)application {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
