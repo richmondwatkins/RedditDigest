@@ -8,7 +8,7 @@
 
 #import "AppDelegate.h"
 #import <ZeroPush.h>
-#import "ViewController.h"
+#import "DigestViewController.h"
 @interface AppDelegate ()
 @property NSString *token;
 @property (nonatomic, strong) NSString *temperature;

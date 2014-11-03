@@ -12,7 +12,7 @@
 		5D5C12C31A05716E002902A8 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D5C12C21A05716E002902A8 /* main.m */; };
 		5D5C12C61A05716E002902A8 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D5C12C51A05716E002902A8 /* AppDelegate.m */; };
 		5D5C12C91A05716E002902A8 /* RedditDigest.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 5D5C12C71A05716E002902A8 /* RedditDigest.xcdatamodeld */; };
-		5D5C12CC1A05716E002902A8 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D5C12CB1A05716E002902A8 /* ViewController.m */; };
+		5D5C12CC1A05716E002902A8 /* DigestViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D5C12CB1A05716E002902A8 /* DigestViewController.m */; };
 		5D5C12CF1A05716E002902A8 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5D5C12CD1A05716E002902A8 /* Main.storyboard */; };
 		5D5C12D11A05716E002902A8 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5D5C12D01A05716E002902A8 /* Images.xcassets */; };
 		5D5C12D41A05716E002902A8 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5D5C12D21A05716E002902A8 /* LaunchScreen.xib */; };
@@ -43,8 +43,8 @@
 		5D5C12C41A05716E002902A8 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		5D5C12C51A05716E002902A8 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		5D5C12C81A05716E002902A8 /* RedditDigest.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = RedditDigest.xcdatamodel; sourceTree = "<group>"; };
-		5D5C12CA1A05716E002902A8 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
-		5D5C12CB1A05716E002902A8 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		5D5C12CA1A05716E002902A8 /* DigestViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DigestViewController.h; sourceTree = "<group>"; };
+		5D5C12CB1A05716E002902A8 /* DigestViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DigestViewController.m; sourceTree = "<group>"; };
 		5D5C12CE1A05716E002902A8 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		5D5C12D01A05716E002902A8 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		5D5C12D31A05716E002902A8 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
@@ -104,8 +104,8 @@
 				5D5C12C51A05716E002902A8 /* AppDelegate.m */,
 				81C322601A0831AB007ECD43 /* CategoryViewController.h */,
 				81C322611A0831AB007ECD43 /* CategoryViewController.m */,
-				5D5C12CA1A05716E002902A8 /* ViewController.h */,
-				5D5C12CB1A05716E002902A8 /* ViewController.m */,
+				5D5C12CA1A05716E002902A8 /* DigestViewController.h */,
+				5D5C12CB1A05716E002902A8 /* DigestViewController.m */,
 				34D1B9351A081B4D00C0C15F /* WelcomViewController.h */,
 				34D1B9361A081B4D00C0C15F /* WelcomViewController.m */,
 				34D1B9381A081D0C00C0C15F /* LoginViewController.h */,
@@ -301,7 +301,7 @@
 				5D5C12C91A05716E002902A8 /* RedditDigest.xcdatamodeld in Sources */,
 				5D5C12C61A05716E002902A8 /* AppDelegate.m in Sources */,
 				34D1B93A1A081D0C00C0C15F /* LoginViewController.m in Sources */,
-				5D5C12CC1A05716E002902A8 /* ViewController.m in Sources */,
+				5D5C12CC1A05716E002902A8 /* DigestViewController.m in Sources */,
 				81C322621A0831AB007ECD43 /* CategoryViewController.m in Sources */,
 				5D5C12C31A05716E002902A8 /* main.m in Sources */,
 				34D1B9371A081B4D00C0C15F /* WelcomViewController.m in Sources */,
