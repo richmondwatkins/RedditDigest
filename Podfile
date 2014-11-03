@@ -5,6 +5,8 @@ source 'https://github.com/CocoaPods/Specs.git'
 
 target 'RedditDigest' do
 pod "ZeroPush"
+pod 'RedditKit', '~> 1.3'
+
 end
 
 target 'RedditDigestTests' do
