@@ -57,7 +57,8 @@ static NSString *const ZeroPushAPIURLHost = @"https://api.zeropush.com";
     token = [token stringByReplacingOccurrencesOfString:@" " withString:@""];
     return token;
 }
-
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
 - (void)registerForRemoteNotificationTypes:(UIRemoteNotificationType)types;
 {
     [[UIApplication sharedApplication] registerForRemoteNotificationTypes:types];
@@ -77,6 +78,8 @@ static NSString *const ZeroPushAPIURLHost = @"https://api.zeropush.com";
     [[UIApplication sharedApplication] registerForRemoteNotificationTypes: (UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeSound | UIRemoteNotificationTypeAlert)];
 #endif
 }
+#pragma GCC diagnostic pop
+
 
 - (NSDictionary *)userInfoForData:(id)data andResponse:(NSHTTPURLResponse *)response
 {

@@ -7,7 +7,9 @@
 //
 
 #import "ViewController.h"
-
+#import <RedditKit.h>
+#import <RKLink.h>
+#import <RKSubreddit.h>
 @interface ViewController ()
 
 @end
@@ -16,7 +18,27 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view, typically from a nib.
+    [[RKClient sharedClient] signInWithUsername:@"hankthedog" password:@"Duncan12" completion:^(NSError *error) {
+        if (!error)
+        {
+            NSLog(@"Successfully signed in!");
+
+            [[RKClient sharedClient] subscribedSubredditsWithCompletion:^(NSArray *collection, RKPagination *pagination, NSError *error) {
+                //                NSLog(@"%@",collection);
+
+                RKSubreddit *subreddit = collection.firstObject;
+
+                [[RKClient sharedClient] linksInSubreddit:subreddit pagination:nil completion:^(NSArray *links, RKPagination *pagination, NSError *error) {
+                    NSLog(@"Links: %@", links);
+                    [[RKClient sharedClient] upvote:links.firstObject completion:^(NSError *error) {
+                        NSLog(@"Upvoted the link!");
+                    }];
+                }];
+                
+            }];
+        }
+    }];
+
 }
 
 - (void)didReceiveMemoryWarning {
