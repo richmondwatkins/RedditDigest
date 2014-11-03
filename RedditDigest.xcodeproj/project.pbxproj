@@ -17,6 +17,7 @@
 		5D5C12D11A05716E002902A8 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5D5C12D01A05716E002902A8 /* Images.xcassets */; };
 		5D5C12D41A05716E002902A8 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5D5C12D21A05716E002902A8 /* LaunchScreen.xib */; };
 		5D5C12E01A05716E002902A8 /* RedditDigestTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D5C12DF1A05716E002902A8 /* RedditDigestTests.m */; };
+		81C322621A0831AB007ECD43 /* CategoryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 81C322611A0831AB007ECD43 /* CategoryViewController.m */; };
 		AFECB7D3E1AFD77137EC9E75 /* libPods-RedditDigest.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DCDE6A54A047557AD956D431 /* libPods-RedditDigest.a */; };
 /* End PBXBuildFile section */
 
@@ -51,6 +52,8 @@
 		5D5C12DE1A05716E002902A8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5D5C12DF1A05716E002902A8 /* RedditDigestTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RedditDigestTests.m; sourceTree = "<group>"; };
 		5D5C12E91A05758E002902A8 /* RedditDigest_Push_Development.mobileprovision */ = {isa = PBXFileReference; lastKnownFileType = file; path = RedditDigest_Push_Development.mobileprovision; sourceTree = "<group>"; };
+		81C322601A0831AB007ECD43 /* CategoryViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CategoryViewController.h; sourceTree = "<group>"; };
+		81C322611A0831AB007ECD43 /* CategoryViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CategoryViewController.m; sourceTree = "<group>"; };
 		9EDEC8BDBE184DC937399E93 /* Pods-RedditDigest.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RedditDigest.release.xcconfig"; path = "Pods/Target Support Files/Pods-RedditDigest/Pods-RedditDigest.release.xcconfig"; sourceTree = "<group>"; };
 		DCDE6A54A047557AD956D431 /* libPods-RedditDigest.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-RedditDigest.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -99,6 +102,8 @@
 			children = (
 				5D5C12C41A05716E002902A8 /* AppDelegate.h */,
 				5D5C12C51A05716E002902A8 /* AppDelegate.m */,
+				81C322601A0831AB007ECD43 /* CategoryViewController.h */,
+				81C322611A0831AB007ECD43 /* CategoryViewController.m */,
 				5D5C12CA1A05716E002902A8 /* ViewController.h */,
 				5D5C12CB1A05716E002902A8 /* ViewController.m */,
 				34D1B9351A081B4D00C0C15F /* WelcomViewController.h */,
@@ -297,6 +302,7 @@
 				5D5C12C61A05716E002902A8 /* AppDelegate.m in Sources */,
 				34D1B93A1A081D0C00C0C15F /* LoginViewController.m in Sources */,
 				5D5C12CC1A05716E002902A8 /* ViewController.m in Sources */,
+				81C322621A0831AB007ECD43 /* CategoryViewController.m in Sources */,
 				5D5C12C31A05716E002902A8 /* main.m in Sources */,
 				34D1B9371A081B4D00C0C15F /* WelcomViewController.m in Sources */,
 			);
