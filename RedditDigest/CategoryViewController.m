@@ -9,6 +9,7 @@
 #import "CategoryViewController.h"
 
 @interface CategoryViewController ()
+@property NSArray *categories;
 
 @end
 
