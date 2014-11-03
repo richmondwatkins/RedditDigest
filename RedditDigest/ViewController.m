@@ -15,7 +15,7 @@
 @end
 
 @implementation ViewController
-//
+///
 - (void)viewDidLoad {
     [super viewDidLoad];
     [[RKClient sharedClient] signInWithUsername:@"hankthedog" password:@"Duncan12" completion:^(NSError *error) {
