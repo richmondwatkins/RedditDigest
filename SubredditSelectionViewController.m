@@ -7,6 +7,7 @@
 //
 
 #import "SubredditSelectionViewController.h"
+#import "SubredditListCollectionViewCell.h"
 #import <RedditKit.h>
 #import <RKLink.h>
 #import <RKSubreddit.h>
@@ -34,6 +35,12 @@
 }
 
 -(UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{
+
+    RKSubreddit *subreddit = self.subreddits[indexPath.row];
+
+    SubredditListCollectionViewCell *cell = [SubredditListCollectionViewCell createCellWithCollectionView:collectionView andSubreddit:subreddit andIndexPath:indexPath];
+
+    return cell;
 }
 
 @end
