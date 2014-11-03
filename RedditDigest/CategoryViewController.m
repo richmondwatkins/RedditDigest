@@ -7,6 +7,7 @@
 //
 
 #import "CategoryViewController.h"
+#import "CategoryCustomCollectionViewCell.h"
 
 @interface CategoryViewController () <UICollectionViewDataSource, UICollectionViewDelegate>
 @property NSArray *categories;
@@ -30,12 +31,13 @@
 
 -(NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
-    return 1;
+    return self.categories.count;
 }
 
 -(UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    UICollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:(@"CVCell") forIndexPath:indexPath];
+    CategoryCustomCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:(@"CVCell") forIndexPath:indexPath];
+    cell.categoryLabel.text = self.categories[indexPath.row];
     return cell;
 }
 
