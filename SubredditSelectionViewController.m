@@ -12,6 +12,7 @@
 #import <RKLink.h>
 #import <RKSubreddit.h>
 @interface SubredditSelectionViewController () <UICollectionViewDataSource, UICollectionViewDelegate>
+@property (strong, nonatomic) IBOutlet UICollectionView *subredditCollectionView;
 @property NSMutableArray *subreddits;
 @end
 
@@ -24,6 +25,7 @@
          [[RKClient sharedClient] subscribedSubredditsWithCompletion:^(NSArray *collection, RKPagination *pagination, NSError *error) {
              self.subreddits = [[NSMutableArray alloc] initWithArray:collection];
              NSLog(@"%@",self.subreddits);
+             [self.subredditCollectionView reloadData];
          }];
      }];
 
