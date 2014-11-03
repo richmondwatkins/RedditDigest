@@ -18,6 +18,26 @@
 ///
 - (void)viewDidLoad {
     [super viewDidLoad];
+
+    //PFUser *currentUser = [PFUser currentUser];
+    BOOL currentUser = NO;
+    if (currentUser) {
+        //NSLog(@"The current user is: %@", currentUser.username);
+       // [self.tabBarController.tabBar setHidden:NO];
+        //[self getMyfollowersImages];
+    }
+    else {
+        UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+        UIViewController *welcomeViewController = [storyboard instantiateViewControllerWithIdentifier:@"WelcomeViewController"];
+
+        [self.parentViewController presentViewController:welcomeViewController animated:YES completion:nil];
+
+
+        //[self presentViewController:welcomeViewController animated:YES completion:nil];
+        //[self performSegueWithIdentifier:@"ShowLoginSegue" sender:self];
+    }
+
+    /*
     [[RKClient sharedClient] signInWithUsername:@"hankthedog" password:@"Duncan12" completion:^(NSError *error) {
         if (!error)
         {
@@ -38,6 +58,7 @@
             }];
         }
     }];
+     */
 
 }
 

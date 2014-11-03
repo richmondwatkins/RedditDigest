@@ -26,6 +26,14 @@
     [ZeroPush engageWithAPIKey:@"PM4ouAj1rzxmQysu5ej6" delegate:self];
     [[UIApplication sharedApplication] registerUserNotificationSettings:[UIUserNotificationSettings settingsForTypes:(UIUserNotificationTypeSound | UIUserNotificationTypeAlert | UIUserNotificationTypeBadge) categories:nil]];
          [[ZeroPush shared] registerForRemoteNotifications];
+
+    //first-time ever defaults check and set
+    /* // Uncomment this to store if user used the app for the first time or not
+    if([[NSUserDefaults standardUserDefaults] boolForKey:@"FirstTimeUsingApp"] != NO)
+    {
+        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"FirstTimeUsingApp"];
+    }
+     */
 }
 
 
