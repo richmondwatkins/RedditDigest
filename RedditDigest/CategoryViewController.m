@@ -8,8 +8,9 @@
 
 #import "CategoryViewController.h"
 
-@interface CategoryViewController ()
+@interface CategoryViewController () <UICollectionViewDataSource, UICollectionViewDelegate>
 @property NSArray *categories;
+@property (strong, nonatomic) IBOutlet UICollectionView *collectionView;
 
 @end
 
@@ -24,6 +25,23 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
+#pragma mark - Collection View Delegate Protocols
+
+-(NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
+{
+    return 1;
+}
+
+-(UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    UICollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:(@"CVCell") forIndexPath:indexPath];
+    return cell;
+}
+
+
+
+
 
 /*
 #pragma mark - Navigation
