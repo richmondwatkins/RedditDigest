@@ -29,7 +29,7 @@
                 RKSubreddit *subreddit = collection.firstObject;
 
                 [[RKClient sharedClient] linksInSubreddit:subreddit pagination:nil completion:^(NSArray *links, RKPagination *pagination, NSError *error) {
-                    NSLog(@"Links: %@", links);
+//                    NSLog(@"Links: %@", links);
                     [[RKClient sharedClient] upvote:links.firstObject completion:^(NSError *error) {
                         NSLog(@"Upvoted the link!");
                     }];

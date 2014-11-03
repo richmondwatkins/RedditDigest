@@ -12,34 +12,59 @@
 @interface AppDelegate ()
 @property NSString *token;
 @property (nonatomic, strong) NSString *temperature;
-
+@property NSString *deviceString;
 @end
 
 @implementation AppDelegate
 
-
 - (void)applicationDidBecomeActive:(UIApplication *)application
 {
+    NSUUID *deviceID = [UIDevice currentDevice].identifierForVendor;
+    self.deviceString = [NSString stringWithFormat:@"%@", deviceID];
+    [self registerDevice];
+
     [ZeroPush engageWithAPIKey:@"PM4ouAj1rzxmQysu5ej6" delegate:self];
-//    [[ZeroPush shared] registerForRemoteNotificationTypes:(UIRemoteNotificationTypeAlert |
-//                                                           UIRemoteNotificationTypeBadge |
-//                                                           UIRemoteNotificationTypeSound)];
     [[UIApplication sharedApplication] registerUserNotificationSettings:[UIUserNotificationSettings settingsForTypes:(UIUserNotificationTypeSound | UIUserNotificationTypeAlert | UIUserNotificationTypeBadge) categories:nil]];
          [[ZeroPush shared] registerForRemoteNotifications];
 }
+
+
 
 - (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)tokenData
 {
     [[ZeroPush shared] registerDeviceToken:tokenData];
 
     self.token = [ZeroPush deviceTokenFromData:tokenData];
-//    [self runRequest];
+    [self runRequest];
+}
+
+-(void)registerDevice{
+    NSString* deviceURLString = [NSString stringWithFormat:@"https://gentle-ocean-7650.herokuapp.com/phone/%@", self.deviceString];
+//    NSString* deviceId = [NSString stringWithFormat:@"http://172.20.10.6:3000/phone/%@", self.deviceString];
+    NSURL *url = [[NSURL alloc] initWithString:[deviceURLString stringByAddingPercentEscapesUsingEncoding:NSASCIIStringEncoding]];
+
+    NSMutableURLRequest* request = [NSMutableURLRequest requestWithURL:url];
+    request.HTTPMethod = @"POST";
+
+    [request addValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
+
+    NSURLSessionConfiguration* config = [NSURLSessionConfiguration defaultSessionConfiguration];
+    NSURLSession* session = [NSURLSession sessionWithConfiguration:config];
+
+    NSURLSessionDataTask* dataTask = [session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+        if (!error) {
+            NSLog(@"%@",response);
+        }
+    }];
+    [dataTask resume];
 }
 
 
 -(void)runRequest{
+    NSLog(@"TOKEN %@",self.token);
+
     NSString* deviceId = [NSString stringWithFormat:@"https://gentle-ocean-7650.herokuapp.com/deviceid/%@", self.token];
-//    NSString* deviceId = [NSString stringWithFormat:@"https://192.168.129.228:3000/deviceid/%@", self.token];
+//    NSString* deviceId = [NSString stringWithFormat:@"http://172.20.10.6:3000/deviceid/%@", self.token];
 
     NSURL* url = [NSURL URLWithString:deviceId];
 
@@ -53,7 +78,7 @@
 
     NSURLSessionDataTask* dataTask = [session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
         if (!error) {
-            NSLog(@"%@",response);
+            NSLog(@"RESPONSEEEEEEEE%@",response);
         }
     }];
     [dataTask resume];
@@ -75,38 +100,40 @@
 
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo fetchCompletionHandler:(void (^)(UIBackgroundFetchResult result))handler{
 
+    handler(UIBackgroundFetchResultNewData);
+
     NSLog(@"Background fetch started...");
 
     // 30 seconds to perform the fetch
-
-    NSString *urlString = [NSString stringWithFormat: @"http://api.openweathermap.org/data/2.5/weather?q=%@", @"Singapore"];
-
-    NSURLSession *session = [NSURLSession sharedSession];
-    [[session dataTaskWithURL:[NSURL URLWithString:urlString]
-            completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
-
-                NSHTTPURLResponse *httpResp = (NSHTTPURLResponse*) response;
-                if (!error && httpResp.statusCode == 200) {
-                    NSString *result = [[NSString alloc] initWithBytes:[data bytes] length:[data length] encoding:NSUTF8StringEncoding];
-                    NSLog(@"RESULTS %@",result);
-                    [self parseJSONData:data];
-
-                    ViewController *vc = (ViewController *) [[[UIApplication sharedApplication] keyWindow] rootViewController];
-                    dispatch_sync(dispatch_get_main_queue(), ^{
-                        vc.lblStatus.text = self.temperature;
-                    });
-
-                    handler(UIBackgroundFetchResultNewData);
-
-                    NSLog(@"Background fetch completed...");
-                } else {
-                    NSLog(@"%@", error.description);
-                    handler(UIBackgroundFetchResultFailed);
-                    NSLog(@"Background fetch Failed...");
-                }
-            }
-      
-      ] resume ];
+//
+//    NSString *urlString = [NSString stringWithFormat: @"http://api.openweathermap.org/data/2.5/weather?q=%@", @"Singapore"];
+//
+//    NSURLSession *session = [NSURLSession sharedSession];
+//    [[session dataTaskWithURL:[NSURL URLWithString:urlString]
+//            completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+//
+//                NSHTTPURLResponse *httpResp = (NSHTTPURLResponse*) response;
+//                if (!error && httpResp.statusCode == 200) {
+//                    NSString *result = [[NSString alloc] initWithBytes:[data bytes] length:[data length] encoding:NSUTF8StringEncoding];
+//                    NSLog(@"RESULTS %@",result);
+//                    [self parseJSONData:data];
+//
+//                    ViewController *vc = (ViewController *) [[[UIApplication sharedApplication] keyWindow] rootViewController];
+//                    dispatch_sync(dispatch_get_main_queue(), ^{
+//                        vc.lblStatus.text = self.temperature;
+//                    });
+//
+//                    handler(UIBackgroundFetchResultNewData);
+//
+//                    NSLog(@"Background fetch completed...");
+//                } else {
+//                    NSLog(@"%@", error.description);
+//                    handler(UIBackgroundFetchResultFailed);
+//                    NSLog(@"Background fetch Failed...");
+//                }
+//            }
+//      
+//      ] resume ];
 
 }
 
