@@ -7,7 +7,7 @@
         <!--Welcom View Controller-->
         <scene sceneID="5zD-IQ-vpQ">
             <objects>
-                <viewController id="xQ7-9y-dXT" customClass="WelcomViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="WelcomeViewController" id="xQ7-9y-dXT" customClass="WelcomViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="pc3-iN-3qc"/>
                         <viewControllerLayoutGuide type="bottom" id="cIO-S4-E9Q"/>
@@ -171,6 +171,7 @@
                     <navigationItem key="navigationItem" id="Qty-cj-ePJ"/>
                     <connections>
                         <outlet property="lblStatus" destination="Z2c-7N-5x2" id="in6-tt-MrO"/>
+                        <segue destination="xQ7-9y-dXT" kind="presentation" identifier="ShowLoginSegue" id="3oS-Bl-KOE"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>
