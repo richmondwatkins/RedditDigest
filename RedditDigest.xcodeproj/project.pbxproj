@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		34D1B9371A081B4D00C0C15F /* WelcomViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 34D1B9361A081B4D00C0C15F /* WelcomViewController.m */; };
+		34D1B93A1A081D0C00C0C15F /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 34D1B9391A081D0C00C0C15F /* LoginViewController.m */; };
 		5D5C12C31A05716E002902A8 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D5C12C21A05716E002902A8 /* main.m */; };
 		5D5C12C61A05716E002902A8 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D5C12C51A05716E002902A8 /* AppDelegate.m */; };
 		5D5C12C91A05716E002902A8 /* RedditDigest.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 5D5C12C71A05716E002902A8 /* RedditDigest.xcdatamodeld */; };
@@ -30,6 +32,10 @@
 
 /* Begin PBXFileReference section */
 		0C4AAC9EB76DD8D441DD99F5 /* Pods-RedditDigest.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RedditDigest.debug.xcconfig"; path = "Pods/Target Support Files/Pods-RedditDigest/Pods-RedditDigest.debug.xcconfig"; sourceTree = "<group>"; };
+		34D1B9351A081B4D00C0C15F /* WelcomViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WelcomViewController.h; sourceTree = "<group>"; };
+		34D1B9361A081B4D00C0C15F /* WelcomViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WelcomViewController.m; sourceTree = "<group>"; };
+		34D1B9381A081D0C00C0C15F /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
+		34D1B9391A081D0C00C0C15F /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
 		5D5C12BD1A05716E002902A8 /* RedditDigest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RedditDigest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5D5C12C11A05716E002902A8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5D5C12C21A05716E002902A8 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -95,6 +101,10 @@
 				5D5C12C51A05716E002902A8 /* AppDelegate.m */,
 				5D5C12CA1A05716E002902A8 /* ViewController.h */,
 				5D5C12CB1A05716E002902A8 /* ViewController.m */,
+				34D1B9351A081B4D00C0C15F /* WelcomViewController.h */,
+				34D1B9361A081B4D00C0C15F /* WelcomViewController.m */,
+				34D1B9381A081D0C00C0C15F /* LoginViewController.h */,
+				34D1B9391A081D0C00C0C15F /* LoginViewController.m */,
 				5D5C12CD1A05716E002902A8 /* Main.storyboard */,
 				5D5C12D01A05716E002902A8 /* Images.xcassets */,
 				5D5C12D21A05716E002902A8 /* LaunchScreen.xib */,
@@ -285,8 +295,10 @@
 			files = (
 				5D5C12C91A05716E002902A8 /* RedditDigest.xcdatamodeld in Sources */,
 				5D5C12C61A05716E002902A8 /* AppDelegate.m in Sources */,
+				34D1B93A1A081D0C00C0C15F /* LoginViewController.m in Sources */,
 				5D5C12CC1A05716E002902A8 /* ViewController.m in Sources */,
 				5D5C12C31A05716E002902A8 /* main.m in Sources */,
+				34D1B9371A081B4D00C0C15F /* WelcomViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
