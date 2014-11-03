@@ -16,42 +16,6 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Would you like to login with your reddit account?" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tOP-ez-EVr">
-                                <rect key="frame" x="113" y="160" width="374" height="21"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="21" id="RZm-Gi-RhR"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BK2-Uy-0mW">
-                                <rect key="frame" x="204" y="212" width="192" height="30"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="30" id="Ep2-vJ-B5g"/>
-                                    <constraint firstAttribute="width" constant="192" id="XJS-wq-TA4"/>
-                                </constraints>
-                                <state key="normal" title="YES">
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <action selector="onLoginWithRedditAccountButtonPressed:" destination="xQ7-9y-dXT" eventType="touchUpInside" id="8NU-D3-7ih"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9YD-v8-10H">
-                                <rect key="frame" x="204" y="266" width="192" height="30"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="192" id="6D8-eC-kpB"/>
-                                    <constraint firstAttribute="height" constant="30" id="J0D-e7-ruc"/>
-                                </constraints>
-                                <state key="normal" title="NO">
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <action selector="onLoginWithoutRedditAccountButtonPressed:" destination="xQ7-9y-dXT" eventType="touchUpInside" id="pGa-gM-npp"/>
-                                    <segue destination="WOc-nv-58w" kind="presentation" modalTransitionStyle="crossDissolve" id="AZM-Aa-g8Y"/>
-                                </connections>
-                            </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="WELCOME" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KOa-NI-vbb">
                                 <rect key="frame" x="172" y="65" width="256" height="52"/>
                                 <constraints>
@@ -62,17 +26,42 @@
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9YD-v8-10H">
+                                <rect key="frame" x="183" y="266" width="233" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="233" id="Quw-0O-Pzr"/>
+                                    <constraint firstAttribute="height" constant="30" id="r1t-rd-4r0"/>
+                                </constraints>
+                                <state key="normal" title="Continue without a reddit account">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="onLoginWithoutRedditAccountButtonPressed:" destination="xQ7-9y-dXT" eventType="touchUpInside" id="pGa-gM-npp"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BK2-Uy-0mW">
+                                <rect key="frame" x="191" y="212" width="218" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="218" id="1UI-W3-BjF"/>
+                                    <constraint firstAttribute="height" constant="30" id="YfG-Vt-ueA"/>
+                                </constraints>
+                                <state key="normal" title="Sign in with your reddit account">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="onLoginWithRedditAccountButtonPressed:" destination="xQ7-9y-dXT" eventType="touchUpInside" id="8NU-D3-7ih"/>
+                                    <segue destination="WOc-nv-58w" kind="presentation" modalTransitionStyle="crossDissolve" id="bKw-lt-3Nc"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstAttribute="centerX" secondItem="BK2-Uy-0mW" secondAttribute="centerX" id="3Rk-sq-I6z"/>
                             <constraint firstAttribute="centerX" secondItem="KOa-NI-vbb" secondAttribute="centerX" id="Lmy-Ah-nks"/>
-                            <constraint firstAttribute="centerX" secondItem="tOP-ez-EVr" secondAttribute="centerX" id="PfK-2X-RXq"/>
-                            <constraint firstItem="tOP-ez-EVr" firstAttribute="top" secondItem="KOa-NI-vbb" secondAttribute="bottom" constant="43" id="XR2-By-flt"/>
-                            <constraint firstItem="9YD-v8-10H" firstAttribute="top" secondItem="BK2-Uy-0mW" secondAttribute="bottom" constant="24" id="aGq-aU-8il"/>
+                            <constraint firstItem="BK2-Uy-0mW" firstAttribute="top" secondItem="KOa-NI-vbb" secondAttribute="bottom" constant="95" id="cpf-l2-8Yy"/>
                             <constraint firstItem="KOa-NI-vbb" firstAttribute="top" secondItem="pc3-iN-3qc" secondAttribute="bottom" constant="45" id="fpq-7N-XwB"/>
-                            <constraint firstAttribute="centerX" secondItem="BK2-Uy-0mW" secondAttribute="centerX" id="gc0-St-zhj"/>
-                            <constraint firstItem="BK2-Uy-0mW" firstAttribute="top" secondItem="tOP-ez-EVr" secondAttribute="bottom" constant="31" id="hC9-rt-2KH"/>
-                            <constraint firstAttribute="centerX" secondItem="9YD-v8-10H" secondAttribute="centerX" id="mjs-b9-I6f"/>
+                            <constraint firstAttribute="centerX" secondItem="9YD-v8-10H" secondAttribute="centerX" id="iKX-vb-So3"/>
+                            <constraint firstItem="9YD-v8-10H" firstAttribute="top" secondItem="BK2-Uy-0mW" secondAttribute="bottom" constant="24" id="xEC-zY-Cbh"/>
                         </constraints>
                     </view>
                 </viewController>
