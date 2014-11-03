@@ -7,10 +7,12 @@
 //
 
 #import "SubredditSelectionViewController.h"
+#import "SubredditListCollectionViewCell.h"
 #import <RedditKit.h>
 #import <RKLink.h>
 #import <RKSubreddit.h>
 @interface SubredditSelectionViewController () <UICollectionViewDataSource, UICollectionViewDelegate>
+@property (strong, nonatomic) IBOutlet UICollectionView *subredditCollectionView;
 @property NSMutableArray *subreddits;
 @end
 
@@ -23,6 +25,7 @@
          [[RKClient sharedClient] subscribedSubredditsWithCompletion:^(NSArray *collection, RKPagination *pagination, NSError *error) {
              self.subreddits = [[NSMutableArray alloc] initWithArray:collection];
              NSLog(@"%@",self.subreddits);
+             [self.subredditCollectionView reloadData];
          }];
      }];
 
@@ -33,8 +36,14 @@
     return self.subreddits.count;
 }
 
--(UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
-{
+
+-(UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{
+
+    RKSubreddit *subreddit = self.subreddits[indexPath.row];
+
+    SubredditListCollectionViewCell *cell = [SubredditListCollectionViewCell createCellWithCollectionView:collectionView andSubreddit:subreddit andIndexPath:indexPath];
+
+    return cell;
 }
 
 @end

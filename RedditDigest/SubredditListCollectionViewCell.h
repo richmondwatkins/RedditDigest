@@ -7,11 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <RedditKit.h>
+#import <RKSubreddit.h>
 
 @interface SubredditListCollectionViewCell : UICollectionViewCell
 @property (strong, nonatomic) IBOutlet UILabel *subredditTitleCell;
 
 
--(SubredditListCollectionViewCell *)createCellWithCollectionView:(UICollectionViewCell *)
++(SubredditListCollectionViewCell *)createCellWithCollectionView:(UICollectionView *)collectionView andSubreddit:(RKSubreddit *)subreddit andIndexPath:(NSIndexPath*)indexPath;
 
 @end
