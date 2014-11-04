@@ -27,12 +27,12 @@
 {
     [super viewWillAppear:animated];
 
-//    if ([[NSUserDefaults standardUserDefaults] boolForKey:@"HasLaunchedOnce"])
-//    {
-//        
-//    }
-//    else
-//    {
+    if ([[NSUserDefaults standardUserDefaults] boolForKey:@"HasLaunchedOnce"])
+    {
+        
+    }
+    else
+    {
         UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
         UIViewController *welcomeViewController = [storyboard instantiateViewControllerWithIdentifier:@"WelcomeViewController"];
 
@@ -40,7 +40,7 @@
 
         [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"HasLaunchedOnce"];
         [[NSUserDefaults standardUserDefaults] synchronize];
-//    }
+    }
 
 }
 
