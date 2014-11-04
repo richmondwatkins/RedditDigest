@@ -23,6 +23,7 @@
 		5D9BF2511A0857BB00B699E5 /* CustomSubredditLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D9BF2501A0857BB00B699E5 /* CustomSubredditLabel.m */; };
 		5DB5B8491A083DF0007DC036 /* SubredditSelectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DB5B8481A083DF0007DC036 /* SubredditSelectionViewController.m */; };
 		5DB5B84C1A084055007DC036 /* SubredditListCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DB5B84B1A084055007DC036 /* SubredditListCollectionViewCell.m */; };
+		815EED181A097E36006286FF /* EditSubredditViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 815EED171A097E36006286FF /* EditSubredditViewController.m */; };
 		81C322621A0831AB007ECD43 /* CategoryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 81C322611A0831AB007ECD43 /* CategoryViewController.m */; };
 		81C322651A084762007ECD43 /* CategoryCustomCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 81C322641A084762007ECD43 /* CategoryCustomCollectionViewCell.m */; };
 		AFECB7D3E1AFD77137EC9E75 /* libPods-RedditDigest.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DCDE6A54A047557AD956D431 /* libPods-RedditDigest.a */; };
@@ -69,6 +70,8 @@
 		5DB5B8481A083DF0007DC036 /* SubredditSelectionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SubredditSelectionViewController.m; path = ../SubredditSelectionViewController.m; sourceTree = "<group>"; };
 		5DB5B84A1A084055007DC036 /* SubredditListCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SubredditListCollectionViewCell.h; sourceTree = "<group>"; };
 		5DB5B84B1A084055007DC036 /* SubredditListCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SubredditListCollectionViewCell.m; sourceTree = "<group>"; };
+		815EED161A097E36006286FF /* EditSubredditViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EditSubredditViewController.h; sourceTree = "<group>"; };
+		815EED171A097E36006286FF /* EditSubredditViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EditSubredditViewController.m; sourceTree = "<group>"; };
 		81C322601A0831AB007ECD43 /* CategoryViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CategoryViewController.h; sourceTree = "<group>"; };
 		81C322611A0831AB007ECD43 /* CategoryViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CategoryViewController.m; sourceTree = "<group>"; };
 		81C322631A084762007ECD43 /* CategoryCustomCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CategoryCustomCollectionViewCell.h; sourceTree = "<group>"; };
@@ -142,6 +145,8 @@
 				3417AC0B1A092D970026961C /* SettingsViewController.h */,
 				3417AC0C1A092D970026961C /* SettingsViewController.m */,
 				5D5C12CD1A05716E002902A8 /* Main.storyboard */,
+				815EED161A097E36006286FF /* EditSubredditViewController.h */,
+				815EED171A097E36006286FF /* EditSubredditViewController.m */,
 				5D5C12D01A05716E002902A8 /* Images.xcassets */,
 				5D5C12D21A05716E002902A8 /* LaunchScreen.xib */,
 				5D5C12C71A05716E002902A8 /* RedditDigest.xcdatamodeld */,
@@ -246,11 +251,11 @@
 				TargetAttributes = {
 					5D5C12BC1A05716E002902A8 = {
 						CreatedOnToolsVersion = 6.1;
-						DevelopmentTeam = TB5YKEAJ2S;
+						DevelopmentTeam = 4T52H7QMHA;
 					};
 					5D5C12D81A05716E002902A8 = {
 						CreatedOnToolsVersion = 6.1;
-						DevelopmentTeam = TB5YKEAJ2S;
+						DevelopmentTeam = 4T52H7QMHA;
 						TestTargetID = 5D5C12BC1A05716E002902A8;
 					};
 				};
@@ -339,6 +344,7 @@
 				3417AC0D1A092D970026961C /* SettingsViewController.m in Sources */,
 				5D5C12C61A05716E002902A8 /* AppDelegate.m in Sources */,
 				34D1B93A1A081D0C00C0C15F /* LoginViewController.m in Sources */,
+				815EED181A097E36006286FF /* EditSubredditViewController.m in Sources */,
 				5D5C12CC1A05716E002902A8 /* DigestViewController.m in Sources */,
 				81C322621A0831AB007ECD43 /* CategoryViewController.m in Sources */,
 				5D5C12C31A05716E002902A8 /* main.m in Sources */,
