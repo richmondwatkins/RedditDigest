@@ -80,6 +80,7 @@
 }
 
 -(void)findTopPostsFromSubreddit:(NSArray *)subreddits withCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler{
+    [self clearOutCoreData];
 
     __block int j = 0;
     for (NSDictionary *subredditDict in subreddits) {
@@ -94,6 +95,7 @@
 
             [self.digestPosts addObject:topPost];
             [self addPostToCoreData:topPost];
+
             j += 1;
 
             if (j  == subreddits.count) {
@@ -120,11 +122,30 @@
 
 
 -(void)addPostToCoreData:(RKLink *)post{
+
     Post *savedPost = [NSEntityDescription insertNewObjectForEntityForName:@"Post" inManagedObjectContext:self.managedObjectContext];
     savedPost.title = post.title;
     savedPost.url = [NSString stringWithFormat:@"%@", post.URL];
     [self.managedObjectContext save:nil];
 
+    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:@"Post"];
+    NSArray *results = [self.managedObjectContext executeFetchRequest:fetchRequest error:nil];
+    NSLog(@"RESULTSSSSSS %@",results);
+
+}
+
+-(void)clearOutCoreData{
+    NSFetchRequest * allCars = [[NSFetchRequest alloc] init];
+    [allCars setEntity:[NSEntityDescription entityForName:@"Post" inManagedObjectContext:self.managedObjectContext]];
+    [allCars setIncludesPropertyValues:NO];
+
+    NSError * error = nil;
+    NSArray * posts = [self.managedObjectContext executeFetchRequest:allCars error:&error];
+    //error handling goes here
+    for (NSManagedObject * post in posts) {
+        [self.managedObjectContext deleteObject:post];
+    }
+    [self.managedObjectContext save:nil];
 }
 
 
