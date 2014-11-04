@@ -36,6 +36,7 @@
     return self.subreddits.count;
 }
 
+
 -(UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{
 
     RKSubreddit *subreddit = self.subreddits[indexPath.row];

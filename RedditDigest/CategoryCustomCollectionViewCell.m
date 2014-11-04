@@ -1,0 +1,13 @@
+//
+//  CategoryCustomCollectionViewCell.m
+//  RedditDigest
+//
+//  Created by Christopher on 11/3/14.
+//  Copyright (c) 2014 Richmond. All rights reserved.
+//
+
+#import "CategoryCustomCollectionViewCell.h"
+
+@implementation CategoryCustomCollectionViewCell
+
+@end

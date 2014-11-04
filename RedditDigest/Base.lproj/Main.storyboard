@@ -235,15 +235,15 @@
                                     <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 </collectionViewFlowLayout>
                                 <cells>
-                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="CVCell" id="esm-yF-aSP">
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="CVCell" id="esm-yF-aSP" customClass="CategoryCustomCollectionViewCell">
                                         <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                            <rect key="frame" x="0.0" y="0.0" width="120" height="60"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="240" height="120"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cHT-ka-crg">
-                                                    <rect key="frame" x="39" y="19" width="42" height="21"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cHT-ka-crg">
+                                                    <rect key="frame" x="99" y="19" width="42" height="81"/>
                                                     <color key="backgroundColor" red="0.80000001190000003" green="0.80000001190000003" blue="0.80000001190000003" alpha="1" colorSpace="calibratedRGB"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
@@ -252,7 +252,15 @@
                                             </subviews>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         </view>
-                                        <size key="customSize" width="120" height="60"/>
+                                        <constraints>
+                                            <constraint firstAttribute="bottomMargin" secondItem="cHT-ka-crg" secondAttribute="bottom" constant="12" id="UOu-n2-tY5"/>
+                                            <constraint firstItem="cHT-ka-crg" firstAttribute="centerX" secondItem="esm-yF-aSP" secondAttribute="centerX" id="wZk-p1-QE7"/>
+                                            <constraint firstItem="cHT-ka-crg" firstAttribute="top" secondItem="esm-yF-aSP" secondAttribute="topMargin" constant="11" id="z7Q-PU-6dt"/>
+                                        </constraints>
+                                        <size key="customSize" width="240" height="120"/>
+                                        <connections>
+                                            <outlet property="categoryLabel" destination="cHT-ka-crg" id="2SN-xt-kSX"/>
+                                        </connections>
                                     </collectionViewCell>
                                 </cells>
                                 <connections>
@@ -263,10 +271,10 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="SbB-zt-t5S" firstAttribute="leading" secondItem="jeM-fr-UUc" secondAttribute="leading" id="DLz-Gd-mgm"/>
-                            <constraint firstItem="SbB-zt-t5S" firstAttribute="top" secondItem="jeM-fr-UUc" secondAttribute="top" id="MUU-o5-enH"/>
-                            <constraint firstItem="a6R-Xr-PmH" firstAttribute="top" secondItem="SbB-zt-t5S" secondAttribute="bottom" id="OSK-pI-tdF"/>
-                            <constraint firstAttribute="trailing" secondItem="SbB-zt-t5S" secondAttribute="trailing" id="wka-XR-daZ"/>
+                            <constraint firstItem="SbB-zt-t5S" firstAttribute="bottom" secondItem="a6R-Xr-PmH" secondAttribute="top" id="CCM-xQ-REL"/>
+                            <constraint firstItem="SbB-zt-t5S" firstAttribute="leading" secondItem="jeM-fr-UUc" secondAttribute="leading" id="FCK-tD-Ah4"/>
+                            <constraint firstAttribute="trailing" secondItem="SbB-zt-t5S" secondAttribute="trailing" id="O9q-eI-cng"/>
+                            <constraint firstItem="SbB-zt-t5S" firstAttribute="top" secondItem="jeM-fr-UUc" secondAttribute="top" id="WSW-ME-RUu"/>
                         </constraints>
                     </view>
                     <connections>
