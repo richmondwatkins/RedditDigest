@@ -90,7 +90,7 @@
             if (topPost.stickied) {
                 topPost = links[1];
             }
-
+             NSLog(@"MEDIA MEDIA MEDIA %@",topPost.selfText);
             [self.digestPosts addObject:topPost];
 
             j += 1;

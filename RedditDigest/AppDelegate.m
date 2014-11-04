@@ -190,7 +190,7 @@
 
 - (void)application:(UIApplication *)application didReceiveLocalNotification:(UILocalNotification *)notification
 {
-    application.applicationIconBadgeNumber = 0;
+    [[UIApplication sharedApplication] setApplicationIconBadgeNumber:0];
 }
 
 
