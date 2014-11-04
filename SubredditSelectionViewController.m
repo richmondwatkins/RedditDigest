@@ -15,7 +15,6 @@
 @property (strong, nonatomic) IBOutlet UICollectionView *subredditCollectionView;
 @property NSMutableArray *subreddits;
 @property NSMutableArray *selectedSubreddits;
-@property NSMutableArray *posts; //remove when move to app delegate
 @property SubredditListCollectionViewCell *sizingCell;
 
 @end
@@ -25,7 +24,6 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.posts = [NSMutableArray array];
     [self getAllPosts];
     self.selectedSubreddits = [[NSMutableArray alloc] init];
 
@@ -131,56 +129,6 @@
 
 }
 
-//testing GET for subreddits and recreating a RKSubreddit object
--(void)getAllPosts{
-    
-    NSURLSessionConfiguration* config = [NSURLSessionConfiguration defaultSessionConfiguration];
-    NSURLSession* session = [NSURLSession sessionWithConfiguration:config];
-
-    NSUUID *deviceID = [UIDevice currentDevice].identifierForVendor;
-    NSString *deviceString = [NSString stringWithFormat:@"%@", deviceID];
-    NSString *urlString = [NSString stringWithFormat:@"http://192.168.129.228:3000/subreddits/%@",deviceString];
-    NSURL *url = [[NSURL alloc] initWithString:[urlString stringByAddingPercentEscapesUsingEncoding:NSASCIIStringEncoding]];
-
-    NSURLSessionDataTask * dataTask = [session dataTaskWithURL:url completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
-        if(error == nil)
-        {
-            NSDictionary *results = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
-            NSArray *usersSubredditsArray = results[@"subreddits"];
-            [self findTopPostsFromSubreddit:usersSubredditsArray];
-
-
-        }
-    }];
-
-    [dataTask resume];
-
-}
-
--(void)findTopPostsFromSubreddit:(NSArray *)subreddits{
-    __block int j = 0;
-    for (NSDictionary *subredditDict in subreddits) {
-            NSDictionary *setUpForRKKitObject = [[NSDictionary alloc] initWithObjectsAndKeys:subredditDict[@"subreddit"], @"name", subredditDict[@"url"], @"URL", nil];
-            RKSubreddit *subreddit = [[RKSubreddit alloc] initWithDictionary:setUpForRKKitObject error:nil];
-
-            [[RKClient sharedClient] linksInSubreddit:subreddit pagination:nil completion:^(NSArray *links, RKPagination *pagination, NSError *error) {
-                RKLink *topPost = links.firstObject;
-                if (topPost.stickied) {
-                    topPost = links[1];
-                }
-
-                [self.posts addObject:topPost];
-
-                j += 1;
-
-                NSLog(@"%i",j);
-                if (j  == subreddits.count) {
-                    NSLog(@"ALL POSTSSS %@",self.posts);
-                }
-
-            }];
-        }
-}
 
 -(void)deleter:(RKSubreddit *)subreddit{
     NSMutableDictionary *tempDict = [[NSMutableDictionary alloc] initWithObjectsAndKeys:subreddit.name, @"name",subreddit.URL, @"url", nil];//testing puproses

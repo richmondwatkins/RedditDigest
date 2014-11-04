@@ -28,6 +28,7 @@
 @property NSString *token;
 @property (nonatomic, strong) NSString *temperature;
 @property NSString *deviceString;
+@property NSMutableArray *posts;
 @end
 
 @implementation AppDelegate
@@ -177,16 +178,65 @@
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo fetchCompletionHandler:(void (^)(UIBackgroundFetchResult result))handler{
 
     handler(UIBackgroundFetchResultNewData);
-  
-
 }
-
 
 - (void)application:(UIApplication *)application didReceiveLocalNotification:(UILocalNotification *)notification
 {
     application.applicationIconBadgeNumber = 0;
     NSLog(@"Local Notifc called");
 }
+
+
+-(void) application:(UIApplication *)application performFetchWithCompletionHandler: (void (^)(UIBackgroundFetchResult))completionHandler {
+
+    self.posts = [NSMutableArray array];
+    NSURLSessionConfiguration* config = [NSURLSessionConfiguration defaultSessionConfiguration];
+    NSURLSession* session = [NSURLSession sessionWithConfiguration:config];
+
+    NSUUID *deviceID = [UIDevice currentDevice].identifierForVendor;
+    NSString *deviceString = [NSString stringWithFormat:@"%@", deviceID];
+    NSString *urlString = [NSString stringWithFormat:@"http://192.168.129.228:3000/subreddits/%@",deviceString];
+    NSURL *url = [[NSURL alloc] initWithString:[urlString stringByAddingPercentEscapesUsingEncoding:NSASCIIStringEncoding]];
+
+    NSURLSessionDataTask * dataTask = [session dataTaskWithURL:url completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+        if(error == nil)
+        {
+            NSDictionary *results = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
+            NSArray *usersSubredditsArray = results[@"subreddits"];
+            [self findTopPostsFromSubreddit:usersSubredditsArray withCompletionHandler:completionHandler];
+        }
+    }];
+
+    [dataTask resume];
+}
+
+-(void)findTopPostsFromSubreddit:(NSArray *)subreddits withCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler{
+    __block int j = 0;
+    for (NSDictionary *subredditDict in subreddits) {
+        NSDictionary *setUpForRKKitObject = [[NSDictionary alloc] initWithObjectsAndKeys:subredditDict[@"subreddit"], @"name", subredditDict[@"url"], @"URL", nil];
+        RKSubreddit *subreddit = [[RKSubreddit alloc] initWithDictionary:setUpForRKKitObject error:nil];
+
+        [[RKClient sharedClient] linksInSubreddit:subreddit pagination:nil completion:^(NSArray *links, RKPagination *pagination, NSError *error) {
+            RKLink *topPost = links.firstObject;
+            if (topPost.stickied) {
+                topPost = links[1];
+            }
+
+            [self.posts addObject:topPost];
+
+            j += 1;
+
+            if (j  == subreddits.count) {
+                NSLog(@"ALL POSTSSS %@",self.posts);
+                completionHandler(UIBackgroundFetchResultNewData);
+            }
+
+        }];
+    }
+}
+
+
+
 
 - (void)applicationWillResignActive:(UIApplication *)application {
     // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
