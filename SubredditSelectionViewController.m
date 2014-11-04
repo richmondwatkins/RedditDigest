@@ -14,6 +14,7 @@
 @interface SubredditSelectionViewController () <UICollectionViewDataSource, UICollectionViewDelegate>
 @property (strong, nonatomic) IBOutlet UICollectionView *subredditCollectionView;
 @property NSMutableArray *subreddits;
+@property NSMutableArray *selectedSubreddits;
 @end
 
 @implementation SubredditSelectionViewController
@@ -21,14 +22,14 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
 
+    self.selectedSubreddits = [[NSMutableArray alloc] init];
+
      [[RKClient sharedClient] signInWithUsername:@"hankthedog" password:@"Duncan12" completion:^(NSError *error) {
          [[RKClient sharedClient] subscribedSubredditsWithCompletion:^(NSArray *collection, RKPagination *pagination, NSError *error) {
              self.subreddits = [[NSMutableArray alloc] initWithArray:collection];
-             NSLog(@"%@",self.subreddits);
              [self.subredditCollectionView reloadData];
          }];
      }];
-
 }
 
 
@@ -48,21 +49,20 @@
     return cell;
 }
 
-- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath{
-    return CGSizeMake(320, 158);
-
-////    RKSubreddit *subreddit = self.subreddits[indexPath.row];
-////
-//////    float imageHeight = [[(Product *)self.products[indexPath.row] image] height];
-//////    float imageWidth = [[(Product *)self.products[indexPath.row] image] width];
-//////
-//////    float ratio = 150.0/imageWidth;
-//////
-//////    return CGSizeMake(150, ratio*imageHeight);
-////
-////
-////
-////    return [subreddit.name sizeWithAttributes:NULL];
+-(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
+    RKSubreddit *subreddit = self.subreddits[indexPath.row];
+    [self.selectedSubreddits addObject:subreddit];
 }
+
+
+- (IBAction)finishSelectingSubreddits:(id)sender {
+}
+
+//- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath{
+//
+//    RKSubreddit *subreddit = self.subreddits[indexPath.row];
+//
+//    return [subreddit.name sizeWithAttributes:NULL];
+//}
 
 @end
