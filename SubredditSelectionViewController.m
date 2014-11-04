@@ -74,17 +74,12 @@
     //NSMutableDictionary *tempDict = [[NSMutableDictionary alloc] initWithObjectsAndKeys:subreddit.name, @"name",subreddit.URL, @"url", nil];
     //    NSData *subredditData = [NSJSONSerialization dataWithJSONObject:tempDict options:0 error:&error];
     //[self.selectedSubreddits addObject:tempDict];
-    NSLog(@"mmmmm");
+
+    SubredditListCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"Cell" forIndexPath:indexPath];
 }
 
 - (void)configureCell:(SubredditListCollectionViewCell *)cell forIndexPath:(NSIndexPath *)indexPath
 {
-    cell.contentView.layer.cornerRadius = 8.0;
-    cell.contentView.layer.masksToBounds = YES;
-    cell.contentView.layer.borderColor = [UIColor blueColor].CGColor;
-    cell.contentView.layer.borderWidth = 1;
-    cell.contentView.backgroundColor = [UIColor whiteColor];
-
     RKSubreddit *subreddit = self.subreddits[indexPath.row];
     cell.subredditTitleLabel.text = subreddit.name;
 }
@@ -100,7 +95,7 @@
 
 - (UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout insetForSectionAtIndex:(NSInteger)section
 {
-    return UIEdgeInsetsMake(5, 5, 5, 5);
+    return UIEdgeInsetsMake(10, 10, 10, 10);
 }
 
 - (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout minimumInteritemSpacingForSectionAtIndex:(NSInteger)section
