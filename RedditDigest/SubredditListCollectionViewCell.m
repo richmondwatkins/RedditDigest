@@ -10,34 +10,29 @@
 
 @implementation SubredditListCollectionViewCell
 
-- (void)drawRect:(CGRect)rect
+- (instancetype)initWithCoder:(NSCoder *)aDecoder
 {
-    // inset by half line width to avoid cropping where line touches frame edges
-    CGRect insetRect = CGRectInset(rect, 0.5, 0.5);
-    UIBezierPath *path = [UIBezierPath bezierPathWithRoundedRect:insetRect cornerRadius:rect.size.height/2.0];
+    self = [super initWithCoder:aDecoder];
 
-    // white background
-    [[UIColor whiteColor] setFill];
-    [path fill];
+    self.selectedBackgroundView = [UIView new];
+    self.backgroundView = [UIView new];
 
-    // red outline
-    [[UIColor lightGrayColor] setStroke];
-    [path stroke];
+    self.backgroundView.backgroundColor = [UIColor whiteColor];
+    self.selectedBackgroundView.backgroundColor = [UIColor greenColor];
+
+    for (CALayer *layer in @[self.backgroundView.layer, self.selectedBackgroundView.layer]) {
+        layer.cornerRadius = 8.0;
+        layer.masksToBounds = YES;
+        layer.borderColor = [UIColor blueColor].CGColor;
+        layer.borderWidth = 1;
+    }
+
+    return self;
 }
 
-+(SubredditListCollectionViewCell *)createCellWithCollectionView:(UICollectionView *)collectionView andSubreddit:(RKSubreddit *)subreddit andIndexPath:(NSIndexPath *)indexPath
-{
-    SubredditListCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"Cell" forIndexPath:indexPath ];
-
-    cell.subredditTitleLabel.text = subreddit.name;
-    //cell.subredditTitleLabel.lineBreakMode = NSLineBreakByWordWrapping;
-
-   // cell.subredditTitleLabel.preferredMaxLayoutWidth = cell.frame.size.width; // assumes the parent view has its frame already set.
-
-   // [cell.subredditTitleLabel sizeToFit];
-   // [cell.subredditTitleLabel setNeedsDisplay];
-//    [cell.subredditTitleCell sizeToFit];
-    return cell;
+- (void)awakeFromNib {
+    // Initlize label from nib
+    self.subredditTitleLabel.highlightedTextColor = [UIColor whiteColor];
 }
 
 @end

@@ -14,6 +14,4 @@
 
 @property (weak, nonatomic) IBOutlet UILabel *subredditTitleLabel;
 
-+(SubredditListCollectionViewCell *)createCellWithCollectionView:(UICollectionView *)collectionView andSubreddit:(RKSubreddit *)subreddit andIndexPath:(NSIndexPath*)indexPath;
-
 @end
