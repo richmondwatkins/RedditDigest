@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 
 @interface CategoryCustomCollectionViewCell : UICollectionViewCell
-@property UILabel *categoryLabel;
+
+@property (strong, nonatomic) IBOutlet UILabel *categoryLabel;
 
 @end
