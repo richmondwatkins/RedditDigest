@@ -10,6 +10,8 @@
 
 @interface DigestViewController : UIViewController
 
+@property (strong, nonatomic) NSManagedObjectContext *managedObjectContext;
+
 -(void)fetchNewDataWithCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler;
 
 @end

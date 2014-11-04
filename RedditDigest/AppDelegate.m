@@ -113,6 +113,9 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    UINavigationController *navigationController = (UINavigationController *)self.window.rootViewController;
+    DigestViewController *controller = (DigestViewController *)navigationController.topViewController;
+    controller.managedObjectContext = self.managedObjectContext;
 
     [application registerUserNotificationSettings:[UIUserNotificationSettings settingsForTypes:(UIUserNotificationTypeSound | UIUserNotificationTypeAlert | UIUserNotificationTypeBadge) categories:nil]];
 
@@ -240,6 +243,8 @@
 @synthesize persistentStoreCoordinator = _persistentStoreCoordinator;
 
 - (NSURL *)applicationDocumentsDirectory {
+    NSLog(@"%@",[[[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory  inDomains:NSUserDomainMask] lastObject]);
+
     // The directory the application uses to store the Core Data store file. This code uses a directory named "com-greekconnect.RedditDigest" in the application's documents directory.
     return [[[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask] lastObject];
 }

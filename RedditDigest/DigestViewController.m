@@ -11,7 +11,8 @@
 #import <RKLink.h>
 #import <RKSubreddit.h>
 #import <SSKeychain/SSKeychain.h>
-
+#import "Post.h"
+#import <CoreData/CoreData.h>
 @interface DigestViewController () <UITableViewDataSource, UITableViewDelegate>
 @property (strong, nonatomic) IBOutlet UITableView *digestTableView;
 @property NSMutableArray *digestPosts;
@@ -90,9 +91,9 @@
             if (topPost.stickied) {
                 topPost = links[1];
             }
-             NSLog(@"MEDIA MEDIA MEDIA %@",topPost.selfText);
-            [self.digestPosts addObject:topPost];
 
+            [self.digestPosts addObject:topPost];
+            [self addPostToCoreData:topPost];
             j += 1;
 
             if (j  == subreddits.count) {
@@ -116,5 +117,16 @@
 -(void)performNewFetchedDataActionsWithDataArray{
     [self.digestTableView reloadData];
 }
+
+
+-(void)addPostToCoreData:(RKLink *)post{
+    Post *savedPost = [NSEntityDescription insertNewObjectForEntityForName:@"Post" inManagedObjectContext:self.managedObjectContext];
+    savedPost.title = post.title;
+    savedPost.url = [NSString stringWithFormat:@"%@", post.URL];
+    [self.managedObjectContext save:nil];
+
+}
+
+
 
 @end
