@@ -147,13 +147,9 @@
         {
             NSDictionary *results = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
             NSArray *usersSubredditsArray = results[@"subreddits"];
+            [self findTopPostsFromSubreddit:usersSubredditsArray];
 
-            for (NSDictionary *subredditDict in usersSubredditsArray) {
-                NSDictionary *setUpForRKKitObject = [[NSDictionary alloc] initWithObjectsAndKeys:subredditDict[@"subreddit"], @"name", subredditDict[@"url"], @"URL", nil];
-                RKSubreddit *subreddit = [[RKSubreddit alloc] initWithDictionary:setUpForRKKitObject error:nil];
-                [self findTopPostsFromSubreddit:subreddit];
-            }
-            NSLog(@"ALL POSTSSS",self.posts);
+
         }
     }];
 
@@ -161,14 +157,29 @@
 
 }
 
--(void)findTopPostsFromSubreddit:(RKSubreddit *)subreddit{
-    [[RKClient sharedClient] linksInSubreddit:subreddit pagination:nil completion:^(NSArray *links, RKPagination *pagination, NSError *error) {
-        RKLink *topPost = links.firstObject;
-        if (topPost.stickied) {
-            topPost = links[1];
+-(void)findTopPostsFromSubreddit:(NSArray *)subreddits{
+    __block int j = 0;
+    for (NSDictionary *subredditDict in subreddits) {
+            NSDictionary *setUpForRKKitObject = [[NSDictionary alloc] initWithObjectsAndKeys:subredditDict[@"subreddit"], @"name", subredditDict[@"url"], @"URL", nil];
+            RKSubreddit *subreddit = [[RKSubreddit alloc] initWithDictionary:setUpForRKKitObject error:nil];
+
+            [[RKClient sharedClient] linksInSubreddit:subreddit pagination:nil completion:^(NSArray *links, RKPagination *pagination, NSError *error) {
+                RKLink *topPost = links.firstObject;
+                if (topPost.stickied) {
+                    topPost = links[1];
+                }
+
+                [self.posts addObject:topPost];
+
+                j += 1;
+
+                NSLog(@"%i",j);
+                if (j  == subreddits.count) {
+                    NSLog(@"ALL POSTSSS %@",self.posts);
+                }
+
+            }];
         }
-        [self.posts addObject:topPost];
-    }];
 }
 
 -(void)deleter:(RKSubreddit *)subreddit{
