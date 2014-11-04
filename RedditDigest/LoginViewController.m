@@ -30,14 +30,21 @@
 
 - (IBAction)login:(id)sender
 {
-    [[RKClient sharedClient] signInWithUsername:self.usernameTextField.text password:self.passwordTextField.text completion:^(NSError *error) {
-        if (!error) {
-            NSLog(@"Successfully signed in!");
-        }
-        else {
-            NSLog(@"Error logging in: %@", error.localizedDescription);
-        }
-    }];
+    [self savePasswordToKeychain];
+    //[self updateKeychain];
+//    [[RKClient sharedClient] signInWithUsername:self.usernameTextField.text password:self.passwordTextField.text completion:^(NSError *error) {
+//        if (!error) {
+//            NSLog(@"Successfully signed in!");
+//        }
+//        else {
+//            NSLog(@"Error logging in: %@", error.localizedDescription);
+//        }
+//    }];
+}
+
+- (void)savePasswordToKeychain
+{
+
 }
 
 - (void)didReceiveMemoryWarning
