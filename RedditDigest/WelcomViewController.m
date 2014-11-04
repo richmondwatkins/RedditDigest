@@ -19,14 +19,10 @@
     [super viewDidLoad];
 }
 
-- (IBAction)onLoginWithRedditAccountButtonPressed:(id)sender
+- (IBAction)onContinueWithoutRedditAccountButtonPressed:(id)sender
 {
-
-}
-
-- (IBAction)onLoginWithoutRedditAccountButtonPressed:(id)sender
-{
-
+    [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"HasRedditAccount"];
+    [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
 - (void)didReceiveMemoryWarning
