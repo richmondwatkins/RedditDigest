@@ -34,13 +34,14 @@
 
 - (void)applicationDidBecomeActive:(UIApplication *)application
 {
-    NSUUID *deviceID = [UIDevice currentDevice].identifierForVendor;
-    self.deviceString = [NSString stringWithFormat:@"%@", deviceID];
-    [self registerDevice];
 
     [ZeroPush engageWithAPIKey:@"PM4ouAj1rzxmQysu5ej6" delegate:self];
     [[UIApplication sharedApplication] registerUserNotificationSettings:[UIUserNotificationSettings settingsForTypes:(UIUserNotificationTypeSound | UIUserNotificationTypeAlert | UIUserNotificationTypeBadge) categories:nil]];
          [[ZeroPush shared] registerForRemoteNotifications];
+
+    [application registerUserNotificationSettings:[UIUserNotificationSettings settingsForTypes:(UIUserNotificationTypeSound | UIUserNotificationTypeAlert | UIUserNotificationTypeBadge) categories:nil]];
+
+    [application registerForRemoteNotifications];
 }
 
 
@@ -48,53 +49,57 @@
 - (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)tokenData
 {
     [[ZeroPush shared] registerDeviceToken:tokenData];
-
     self.token = [ZeroPush deviceTokenFromData:tokenData];
-    [self runRequest];
+    [self registerDeviceForPushNotifications];
 }
 
 -(void)registerDevice{
-    NSString* deviceURLString = [NSString stringWithFormat:@"http://192.168.1.4:3000/phone/%@", self.deviceString];
-//    NSString* deviceId = [NSString stringWithFormat:@"http://172.20.10.6:3000/phone/%@", self.deviceString];
+    NSString* deviceURLString = @"http://192.168.129.228:3000/register/device";
     NSURL *url = [[NSURL alloc] initWithString:[deviceURLString stringByAddingPercentEscapesUsingEncoding:NSASCIIStringEncoding]];
+
+    NSError *error;
+    NSDictionary *deviceIdDictionary = [[NSDictionary alloc] initWithObjectsAndKeys:self.deviceString, @"deviceid", nil];
+    NSData *postData = [NSJSONSerialization dataWithJSONObject:deviceIdDictionary options:0 error:&error];
 
     NSMutableURLRequest* request = [NSMutableURLRequest requestWithURL:url];
     request.HTTPMethod = @"POST";
 
     [request addValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
+    [request setHTTPBody:postData];
 
     NSURLSessionConfiguration* config = [NSURLSessionConfiguration defaultSessionConfiguration];
     NSURLSession* session = [NSURLSession sessionWithConfiguration:config];
 
     NSURLSessionDataTask* dataTask = [session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
-        if (!error) {
-            NSLog(@"%@",response);
+        if (error) {
+            NSLog(@"Error from device registration %@",error);
         }
     }];
     [dataTask resume];
 }
 
 
--(void)runRequest{
-    NSLog(@"TOKEN %@",self.token);
+-(void)registerDeviceForPushNotifications{
 
-    NSString* deviceId = [NSString stringWithFormat:@"http://192.168.1.4:3000/deviceid/%@", self.token];
-//    NSString* deviceId = [NSString stringWithFormat:@"http://172.20.10.6:3000/deviceid/%@", self.token];
+    NSString* urlString = @"http://192.168.129.228:3000/register/push";
+    NSURL *url = [[NSURL alloc] initWithString:[urlString stringByAddingPercentEscapesUsingEncoding:NSASCIIStringEncoding]];
 
-    NSURL* url = [NSURL URLWithString:deviceId];
+    NSError *error;
+    NSDictionary *tokenDictionary = [[NSDictionary alloc] initWithObjectsAndKeys:self.token, @"token", self.deviceString, @"deviceid", nil];
+    NSData *postData = [NSJSONSerialization dataWithJSONObject:tokenDictionary options:0 error:&error];
 
     NSMutableURLRequest* request = [NSMutableURLRequest requestWithURL:url];
     request.HTTPMethod = @"POST";
 
     [request addValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
+    [request setHTTPBody:postData];
 
     NSURLSessionConfiguration* config = [NSURLSessionConfiguration defaultSessionConfiguration];
     NSURLSession* session = [NSURLSession sessionWithConfiguration:config];
 
     NSURLSessionDataTask* dataTask = [session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
-        NSLog(@"%@",error);
-        if (!error) {
-            NSLog(@"RESPONSEEEEEEEE%@",response);
+        if (error) {
+            NSLog(@"Push Notification Error: %@",error);
         }
     }];
     [dataTask resume];
@@ -107,8 +112,13 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-
     [self showWelcomeViewOrDigestView];
+
+//    if ([[NSUserDefaults standardUserDefaults] boolForKey:@"HasLaunchedOnce"]){
+    NSUUID *deviceID = [UIDevice currentDevice].identifierForVendor;
+    self.deviceString = [NSString stringWithFormat:@"%@", deviceID];
+    [self registerDevice];
+//    }
 
     return YES;
 }
@@ -167,64 +177,10 @@
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo fetchCompletionHandler:(void (^)(UIBackgroundFetchResult result))handler{
 
     handler(UIBackgroundFetchResultNewData);
-
-    NSLog(@"Background fetch started...");
-
-    // 30 seconds to perform the fetch
-//
-//    NSString *urlString = [NSString stringWithFormat: @"http://api.openweathermap.org/data/2.5/weather?q=%@", @"Singapore"];
-//
-//    NSURLSession *session = [NSURLSession sharedSession];
-//    [[session dataTaskWithURL:[NSURL URLWithString:urlString]
-//            completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
-//
-//                NSHTTPURLResponse *httpResp = (NSHTTPURLResponse*) response;
-//                if (!error && httpResp.statusCode == 200) {
-//                    NSString *result = [[NSString alloc] initWithBytes:[data bytes] length:[data length] encoding:NSUTF8StringEncoding];
-//                    NSLog(@"RESULTS %@",result);
-//                    [self parseJSONData:data];
-//
-//                    ViewController *vc = (ViewController *) [[[UIApplication sharedApplication] keyWindow] rootViewController];
-//                    dispatch_sync(dispatch_get_main_queue(), ^{
-//                        vc.lblStatus.text = self.temperature;
-//                    });
-//
-//                    handler(UIBackgroundFetchResultNewData);
-//
-//                    NSLog(@"Background fetch completed...");
-//                } else {
-//                    NSLog(@"%@", error.description);
-//                    handler(UIBackgroundFetchResultFailed);
-//                    NSLog(@"Background fetch Failed...");
-//                }
-//            }
-//      
-//      ] resume ];
+  
 
 }
 
-// used for testing updating the view
-- (void)parseJSONData:(NSData *)data {
-    NSError *error;
-    NSDictionary *parsedJSONData =
-    [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
-    NSDictionary *main = [parsedJSONData objectForKey:@"main"];
-
-    //---temperature in Kelvin---
-    NSString *temp = [main valueForKey:@"temp"];
-
-    //---convert temperature to Celcius---
-    float temperature = [temp floatValue] - 273;
-
-    //---get current time---
-    NSDate *date = [NSDate date];
-    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-    [formatter setDateFormat:@"HH:mm:ss"];
-
-    NSString *timeString = [formatter stringFromDate:date];
-
-    self.temperature = [NSString stringWithFormat:@"%.0f degrees Celsius, fetched at %@",temperature, timeString];
-}
 
 - (void)application:(UIApplication *)application didReceiveLocalNotification:(UILocalNotification *)notification
 {

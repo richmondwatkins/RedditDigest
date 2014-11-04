@@ -107,7 +107,7 @@ NSString * RKStringFromSubredditCategory(RKSubredditCategory category)
 - (NSURLSessionDataTask *)linksInSubredditWithName:(NSString *)subredditName category:(RKSubredditCategory)category pagination:(RKPagination *)pagination completion:(RKListingCompletionBlock)completion
 {
     NSParameterAssert(subredditName);
-    NSLog(@"INSIDE OF REDDDIIT KITTT %@",subredditName);
+
     NSString *path = [NSString stringWithFormat:@"r/%@/%@.json", subredditName, RKStringFromSubredditCategory(category)];
     
     return [self listingTaskWithPath:path parameters:nil pagination:pagination completion:completion];
