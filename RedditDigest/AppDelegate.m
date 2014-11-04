@@ -225,9 +225,15 @@
             [self.posts addObject:topPost];
 
             j += 1;
-
+            NSLog(@"%i",j);
             if (j  == subreddits.count) {
-                NSLog(@"ALL POSTSSS %@",self.posts);
+                    NSLog(@"Made it");
+                DigestViewController *digestViewController = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"DigestViewController"];
+
+                digestViewController.digestPosts = [NSArray array];
+                digestViewController.digestPosts = self.posts;
+                [digestViewController.digestTabelView reloadData];
+
                 completionHandler(UIBackgroundFetchResultNewData);
             }
 

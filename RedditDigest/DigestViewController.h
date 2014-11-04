@@ -10,7 +10,8 @@
 
 @interface DigestViewController : UIViewController
 
-@property (strong, nonatomic) IBOutlet UILabel *lblStatus;
+@property (strong, nonatomic) IBOutlet UITableView *digestTabelView;
+@property NSArray *digestPosts;
 
 @end
 

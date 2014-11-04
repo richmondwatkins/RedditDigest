@@ -12,7 +12,7 @@
 #import <RKSubreddit.h>
 #import <SSKeychain/SSKeychain.h>
 
-@interface DigestViewController ()
+@interface DigestViewController () <UITableViewDataSource, UITableViewDelegate>
 
 @end
 
@@ -42,6 +42,21 @@
         [[NSUserDefaults standardUserDefaults] synchronize];
     }
 
+}
+
+-(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
+    return self.digestPosts.count;
+}
+
+-(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
+
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"DigestCell"];
+    RKSubreddit *subreddit = self.digestPosts[indexPath.row];
+
+    cell.textLabel.text = subreddit.name;
+    cell.detailTextLabel.text = subreddit.URL;
+
+    return cell;
 }
 
 - (void)didReceiveMemoryWarning {

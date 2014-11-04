@@ -246,11 +246,11 @@
 				TargetAttributes = {
 					5D5C12BC1A05716E002902A8 = {
 						CreatedOnToolsVersion = 6.1;
-						DevelopmentTeam = 4T52H7QMHA;
+						DevelopmentTeam = TB5YKEAJ2S;
 					};
 					5D5C12D81A05716E002902A8 = {
 						CreatedOnToolsVersion = 6.1;
-						DevelopmentTeam = 4T52H7QMHA;
+						DevelopmentTeam = TB5YKEAJ2S;
 						TestTargetID = 5D5C12BC1A05716E002902A8;
 					};
 				};
