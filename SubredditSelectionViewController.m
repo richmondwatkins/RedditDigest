@@ -15,13 +15,15 @@
 @property (strong, nonatomic) IBOutlet UICollectionView *subredditCollectionView;
 @property NSMutableArray *subreddits;
 @property NSMutableArray *selectedSubreddits;
+@property NSMutableArray *posts; //remove when move to app delegate
 @end
 
 @implementation SubredditSelectionViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-
+    self.posts = [NSMutableArray array];
+    [self getAllPosts];
     self.selectedSubreddits = [[NSMutableArray alloc] init];
 
      [[RKClient sharedClient] signInWithUsername:@"hankthedog" password:@"Duncan12" completion:^(NSError *error) {
@@ -62,7 +64,7 @@
 
     NSUUID *deviceID = [UIDevice currentDevice].identifierForVendor;
     NSString *deviceString = [NSString stringWithFormat:@"%@", deviceID];
-    NSString *urlString = [NSString stringWithFormat:@"http://192.168.1.4:3000/subreddits/%@",  deviceString];
+    NSString *urlString = [NSString stringWithFormat:@"http://192.168.129.228:3000/subreddits/%@",  deviceString];
 
     NSDictionary *dataDictionary = [[NSDictionary alloc] initWithObjectsAndKeys:self.selectedSubreddits, @"subreddits", nil];
     NSError *error;
@@ -81,7 +83,7 @@
     NSURLSessionDataTask* dataTask = [session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
         if (!error) {
             NSLog(@"%@",response);
-            [self getter]; //THIS IS FOR TESTING THE SUBREDDIT GETTER METHOD
+            //[self getter]; //THIS IS FOR TESTING THE SUBREDDIT GETTER METHOD
         }
     }];
     [dataTask resume];
@@ -89,41 +91,43 @@
 }
 
 //testing GET for subreddits and recreating a RKSubreddit object
--(void)getter{
+-(void)getAllPosts{
     
     NSURLSessionConfiguration* config = [NSURLSessionConfiguration defaultSessionConfiguration];
     NSURLSession* session = [NSURLSession sessionWithConfiguration:config];
 
     NSUUID *deviceID = [UIDevice currentDevice].identifierForVendor;
     NSString *deviceString = [NSString stringWithFormat:@"%@", deviceID];
-    NSString *urlString = [NSString stringWithFormat:@"http://192.168.1.4:3000/subreddits/%@",deviceString];
+    NSString *urlString = [NSString stringWithFormat:@"http://192.168.129.228:3000/subreddits/%@",deviceString];
     NSURL *url = [[NSURL alloc] initWithString:[urlString stringByAddingPercentEscapesUsingEncoding:NSASCIIStringEncoding]];
 
     NSURLSessionDataTask * dataTask = [session dataTaskWithURL:url completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
-        NSLog(@"%@",error);
         if(error == nil)
         {
-            NSDictionary *tester = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
-            NSLog(@"THIS IS THE REsponSEEEEE %@", tester);
-            NSArray *testArry = tester[@"subreddits"];
-            NSDictionary *testDict = testArry.firstObject;
-            NSDictionary *woo = [[NSDictionary alloc] initWithObjectsAndKeys:testDict[@"subreddit"], @"name", testDict[@"url"], @"URL", nil];
-            RKSubreddit *subreddit = [[RKSubreddit alloc] initWithDictionary:woo error:nil];
+            NSDictionary *results = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
+            NSArray *usersSubredditsArray = results[@"subreddits"];
 
-            [[RKClient sharedClient] linksInSubreddit:subreddit pagination:nil completion:^(NSArray *links, RKPagination *pagination, NSError *error) {
-                NSLog(@"Links: %@", links);
-                [[RKClient sharedClient] upvote:links.firstObject completion:^(NSError *error) {
-                    NSLog(@"Upvoted the link!");
-
-                    [self deleter:subreddit];
-                }];
-            }];
+            for (NSDictionary *subredditDict in usersSubredditsArray) {
+                NSDictionary *setUpForRKKitObject = [[NSDictionary alloc] initWithObjectsAndKeys:subredditDict[@"subreddit"], @"name", subredditDict[@"url"], @"URL", nil];
+                RKSubreddit *subreddit = [[RKSubreddit alloc] initWithDictionary:setUpForRKKitObject error:nil];
+                [self findTopPostsFromSubreddit:subreddit];
+            }
+            NSLog(@"ALL POSTSSS",self.posts);
         }
-
     }];
 
     [dataTask resume];
 
+}
+
+-(void)findTopPostsFromSubreddit:(RKSubreddit *)subreddit{
+    [[RKClient sharedClient] linksInSubreddit:subreddit pagination:nil completion:^(NSArray *links, RKPagination *pagination, NSError *error) {
+        RKLink *topPost = links.firstObject;
+        if (topPost.stickied) {
+            topPost = links[1];
+        }
+        [self.posts addObject:topPost];
+    }];
 }
 
 -(void)deleter:(RKSubreddit *)subreddit{
@@ -132,7 +136,7 @@
 
     NSUUID *deviceID = [UIDevice currentDevice].identifierForVendor;
     NSString *deviceString = [NSString stringWithFormat:@"%@", deviceID];
-    NSString *urlString = [NSString stringWithFormat:@"http://192.168.1.4:3000/subreddits/delete/%@",  deviceString];
+    NSString *urlString = [NSString stringWithFormat:@"http://192.168.129.228:3000/subreddits/delete/%@",  deviceString];
 
     NSDictionary *objectToDelete = [[NSDictionary alloc] initWithObjectsAndKeys:tempDict, @"subreddit", nil];
     NSError *error;
@@ -155,8 +159,38 @@
         }
     }];
     [dataTask resume];
-
 }
+
+//-(void)getAllPosts{
+//    NSURLSessionConfiguration* config = [NSURLSessionConfiguration defaultSessionConfiguration];
+//    NSURLSession* session = [NSURLSession sessionWithConfiguration:config];
+//
+//    NSUUID *deviceID = [UIDevice currentDevice].identifierForVendor;
+//    NSString *deviceString = [NSString stringWithFormat:@"%@", deviceID];
+//    NSString *urlString = [NSString stringWithFormat:@"http://192.168.129.228:3000/subreddits/%@",deviceString];
+//    NSURL *url = [[NSURL alloc] initWithString:[urlString stringByAddingPercentEscapesUsingEncoding:NSASCIIStringEncoding]];
+//
+//    NSURLSessionDataTask * dataTask = [session dataTaskWithURL:url completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+//        NSLog(@"%@",error);
+//        if(error == nil)
+//        {
+//            NSDictionary *tester = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
+//            NSLog(@"THIS IS THE REsponSEEEEE %@", tester);
+//            NSArray *testArry = tester[@"subreddits"];
+//            NSDictionary *testDict = testArry.firstObject;
+//            NSDictionary *woo = [[NSDictionary alloc] initWithObjectsAndKeys:testDict[@"subreddit"], @"name", testDict[@"url"], @"URL", nil];
+//            RKSubreddit *subreddit = [[RKSubreddit alloc] initWithDictionary:woo error:nil];
+//
+//            [[RKClient sharedClient] linksInSubreddit:subreddit pagination:nil completion:^(NSArray *links, RKPagination *pagination, NSError *error) {
+//                NSLog(@"Links: %@", links);
+//
+//            }];
+//        }
+//
+//    }];
+//    
+//    [dataTask resume];
+//}
 
 
 @end

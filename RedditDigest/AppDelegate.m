@@ -50,7 +50,7 @@
 }
 
 -(void)registerDevice{
-    NSString* deviceURLString = @"http://192.168.1.4:3000/register/device";
+    NSString* deviceURLString = @"http://192.168.129.228:3000/register/device";
     NSURL *url = [[NSURL alloc] initWithString:[deviceURLString stringByAddingPercentEscapesUsingEncoding:NSASCIIStringEncoding]];
 
     NSError *error;
@@ -77,7 +77,7 @@
 
 -(void)registerDeviceForPushNotifications{
 
-    NSString* urlString = @"http://192.168.1.4:3000/register/push";
+    NSString* urlString = @"http://192.168.129.228:3000/register/push";
     NSURL *url = [[NSURL alloc] initWithString:[urlString stringByAddingPercentEscapesUsingEncoding:NSASCIIStringEncoding]];
 
     NSError *error;
@@ -173,64 +173,10 @@
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo fetchCompletionHandler:(void (^)(UIBackgroundFetchResult result))handler{
 
     handler(UIBackgroundFetchResultNewData);
-
-    NSLog(@"Background fetch started...");
-
-    // 30 seconds to perform the fetch
-//
-//    NSString *urlString = [NSString stringWithFormat: @"http://api.openweathermap.org/data/2.5/weather?q=%@", @"Singapore"];
-//
-//    NSURLSession *session = [NSURLSession sharedSession];
-//    [[session dataTaskWithURL:[NSURL URLWithString:urlString]
-//            completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
-//
-//                NSHTTPURLResponse *httpResp = (NSHTTPURLResponse*) response;
-//                if (!error && httpResp.statusCode == 200) {
-//                    NSString *result = [[NSString alloc] initWithBytes:[data bytes] length:[data length] encoding:NSUTF8StringEncoding];
-//                    NSLog(@"RESULTS %@",result);
-//                    [self parseJSONData:data];
-//
-//                    ViewController *vc = (ViewController *) [[[UIApplication sharedApplication] keyWindow] rootViewController];
-//                    dispatch_sync(dispatch_get_main_queue(), ^{
-//                        vc.lblStatus.text = self.temperature;
-//                    });
-//
-//                    handler(UIBackgroundFetchResultNewData);
-//
-//                    NSLog(@"Background fetch completed...");
-//                } else {
-//                    NSLog(@"%@", error.description);
-//                    handler(UIBackgroundFetchResultFailed);
-//                    NSLog(@"Background fetch Failed...");
-//                }
-//            }
-//      
-//      ] resume ];
+  
 
 }
 
-// used for testing updating the view
-- (void)parseJSONData:(NSData *)data {
-    NSError *error;
-    NSDictionary *parsedJSONData =
-    [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
-    NSDictionary *main = [parsedJSONData objectForKey:@"main"];
-
-    //---temperature in Kelvin---
-    NSString *temp = [main valueForKey:@"temp"];
-
-    //---convert temperature to Celcius---
-    float temperature = [temp floatValue] - 273;
-
-    //---get current time---
-    NSDate *date = [NSDate date];
-    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-    [formatter setDateFormat:@"HH:mm:ss"];
-
-    NSString *timeString = [formatter stringFromDate:date];
-
-    self.temperature = [NSString stringWithFormat:@"%.0f degrees Celsius, fetched at %@",temperature, timeString];
-}
 
 - (void)application:(UIApplication *)application didReceiveLocalNotification:(UILocalNotification *)notification
 {
