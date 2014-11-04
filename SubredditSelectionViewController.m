@@ -48,9 +48,20 @@
 }
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath{
+    return CGSizeMake(320, 158);
 
-    RKSubreddit *subreddit = self.subreddits[indexPath.row];
-    return [(NSString*)subreddit.name sizeWithAttributes:NULL];
+////    RKSubreddit *subreddit = self.subreddits[indexPath.row];
+////
+//////    float imageHeight = [[(Product *)self.products[indexPath.row] image] height];
+//////    float imageWidth = [[(Product *)self.products[indexPath.row] image] width];
+//////
+//////    float ratio = 150.0/imageWidth;
+//////
+//////    return CGSizeMake(150, ratio*imageHeight);
+////
+////
+////
+////    return [subreddit.name sizeWithAttributes:NULL];
 }
 
 @end
