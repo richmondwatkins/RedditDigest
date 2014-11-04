@@ -9,10 +9,10 @@
 #import <UIKit/UIKit.h>
 #import <RedditKit.h>
 #import <RKSubreddit.h>
-
+#import "CustomSubredditLabel.h"
 @interface SubredditListCollectionViewCell : UICollectionViewCell
-@property (strong, nonatomic) IBOutlet UILabel *subredditTitleCell;
 
+@property (strong, nonatomic) IBOutlet CustomSubredditLabel *subredditTitleCell;
 
 +(SubredditListCollectionViewCell *)createCellWithCollectionView:(UICollectionView *)collectionView andSubreddit:(RKSubreddit *)subreddit andIndexPath:(NSIndexPath*)indexPath;
 
