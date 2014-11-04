@@ -27,7 +27,7 @@
 
 +(SubredditListCollectionViewCell *)createCellWithCollectionView:(UICollectionView *)collectionView andSubreddit:(RKSubreddit *)subreddit andIndexPath:(NSIndexPath *)indexPath{
 
-    SubredditListCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"SubredditCell" forIndexPath:indexPath ];
+    SubredditListCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"Cell" forIndexPath:indexPath ];
 
     cell.subredditTitleLabel.text = subreddit.name;
     cell.subredditTitleLabel.lineBreakMode = NSLineBreakByWordWrapping;
