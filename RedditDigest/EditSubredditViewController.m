@@ -8,7 +8,7 @@
 
 #import "EditSubredditViewController.h"
 
-@interface EditSubredditViewController ()
+@interface EditSubredditViewController () <UITableViewDelegate, UITableViewDataSource>
 @property NSArray *digestPosts;
 @property (strong, nonatomic) IBOutlet UITableView *tableView;
 
@@ -22,7 +22,7 @@
 }
 
 
-#pragma mark - Table view data source
+#pragma mark - Table View Delegate & Data Source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     return 1;
@@ -31,6 +31,19 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return self.digestPosts.count;
 }
+
+-(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Cell"];
+    NSDictionary *temp = self.digestPosts[indexPath.row];
+    NSString *subredditTitle = [temp objectForKey:@"subreddit"];
+    cell.textLabel.text = subredditTitle;
+    NSLog(@"Dictionary %@ and key %@", temp, subredditTitle);
+    return cell;
+}
+
+
+#pragma mark - Fetching Data
 
 -(void)fetchNewData{
     self.digestPosts = [NSArray array];
