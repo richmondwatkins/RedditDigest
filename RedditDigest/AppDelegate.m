@@ -47,7 +47,7 @@
 }
 
 -(void)registerDevice{
-    NSString* deviceURLString = [NSString stringWithFormat:@"https://gentle-ocean-7650.herokuapp.com/phone/%@", self.deviceString];
+    NSString* deviceURLString = [NSString stringWithFormat:@"http://192.168.1.4:3000/phone/%@", self.deviceString];
 //    NSString* deviceId = [NSString stringWithFormat:@"http://172.20.10.6:3000/phone/%@", self.deviceString];
     NSURL *url = [[NSURL alloc] initWithString:[deviceURLString stringByAddingPercentEscapesUsingEncoding:NSASCIIStringEncoding]];
 
@@ -71,7 +71,7 @@
 -(void)runRequest{
     NSLog(@"TOKEN %@",self.token);
 
-    NSString* deviceId = [NSString stringWithFormat:@"https://gentle-ocean-7650.herokuapp.com/deviceid/%@", self.token];
+    NSString* deviceId = [NSString stringWithFormat:@"http://192.168.1.4:3000/deviceid/%@", self.token];
 //    NSString* deviceId = [NSString stringWithFormat:@"http://172.20.10.6:3000/deviceid/%@", self.token];
 
     NSURL* url = [NSURL URLWithString:deviceId];
@@ -85,6 +85,7 @@
     NSURLSession* session = [NSURLSession sessionWithConfiguration:config];
 
     NSURLSessionDataTask* dataTask = [session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+        NSLog(@"%@",error);
         if (!error) {
             NSLog(@"RESPONSEEEEEEEE%@",response);
         }
