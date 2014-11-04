@@ -16,11 +16,14 @@
 @property NSMutableArray *subreddits;
 @property NSMutableArray *selectedSubreddits;
 @property NSMutableArray *posts; //remove when move to app delegate
+@property SubredditListCollectionViewCell *sizingCell;
+
 @end
 
 @implementation SubredditSelectionViewController
 
-- (void)viewDidLoad {
+- (void)viewDidLoad
+{
     [super viewDidLoad];
     self.posts = [NSMutableArray array];
     [self getAllPosts];
@@ -32,33 +35,72 @@
              [self.subredditCollectionView reloadData];
          }];
      }];
+
+    // Regester cell for sizing template
+    UINib *cellNib = [UINib nibWithNibName:@"SubredditSelectionCell" bundle:nil];
+    [self.subredditCollectionView registerNib:cellNib forCellWithReuseIdentifier:@"Cell"];
+    self.sizingCell = [[cellNib instantiateWithOwner:nil options:nil] objectAtIndex:0];
 }
 
-
--(NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section{
+-(NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
+{
     return self.subreddits.count;
 }
 
-
--(UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{
-
+-(UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
+{
     RKSubreddit *subreddit = self.subreddits[indexPath.row];
 
     SubredditListCollectionViewCell *cell = [SubredditListCollectionViewCell createCellWithCollectionView:collectionView andSubreddit:subreddit andIndexPath:indexPath];
-    cell.subredditTitleCell.layer.masksToBounds = YES;
-
+    //cell.subredditTitleCell.layer.masksToBounds = YES;
+    [self _configureCell:cell forIndexPath:indexPath];
 
     return cell;
 }
 
--(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
+-(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
+{
     RKSubreddit *subreddit = self.subreddits[indexPath.row];
     NSError *error;
     NSMutableDictionary *tempDict = [[NSMutableDictionary alloc] initWithObjectsAndKeys:subreddit.name, @"name",subreddit.URL, @"url", nil];
-//    NSData *subredditData = [NSJSONSerialization dataWithJSONObject:tempDict options:0 error:&error];
+    //    NSData *subredditData = [NSJSONSerialization dataWithJSONObject:tempDict options:0 error:&error];
     [self.selectedSubreddits addObject:tempDict];
 }
 
+//- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
+//{
+//
+//    CollectionViewCell *aSelectedCell = (CollectionViewCell*)[collectionView cellForItemAtIndexPath:indexPath];
+//    [aSelectedCell mmmmmmmm];
+//    //aSelectedCell dra
+//
+//}
+
+- (void)_configureCell:(SubredditListCollectionViewCell *)cell forIndexPath:(NSIndexPath *)indexPath
+{
+    //cell.layer.cornerRadius = 8.0;
+    //cell.layer.masksToBounds = YES;
+    cell.subredditTitleLabel.text = self.subreddits[indexPath.row];
+}
+
+- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    [self _configureCell:_sizingCell forIndexPath:indexPath];
+
+    return [self.sizingCell systemLayoutSizeFittingSize:UILayoutFittingCompressedSize];
+}
+
+#pragma mark - Cell Spacing and Padding
+
+- (UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout insetForSectionAtIndex:(NSInteger)section
+{
+    return UIEdgeInsetsMake(5, 5, 5, 5);
+}
+
+- (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout minimumInteritemSpacingForSectionAtIndex:(NSInteger)section{
+
+    return 5.0;
+}
 
 - (IBAction)finishSelectingSubreddits:(id)sender {
 
