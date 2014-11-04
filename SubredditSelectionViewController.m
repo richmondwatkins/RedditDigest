@@ -49,10 +49,8 @@
 
 -(UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    RKSubreddit *subreddit = self.subreddits[indexPath.row];
+    SubredditListCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"Cell" forIndexPath:indexPath];
 
-    SubredditListCollectionViewCell *cell = [SubredditListCollectionViewCell createCellWithCollectionView:collectionView andSubreddit:subreddit andIndexPath:indexPath];
-    //cell.subredditTitleCell.layer.masksToBounds = YES;
     [self _configureCell:cell forIndexPath:indexPath];
 
     return cell;
@@ -80,7 +78,8 @@
 {
     //cell.layer.cornerRadius = 8.0;
     //cell.layer.masksToBounds = YES;
-    cell.subredditTitleLabel.text = self.subreddits[indexPath.row];
+    RKSubreddit *subreddit = self.subreddits[indexPath.row];
+    cell.subredditTitleLabel.text = subreddit.name;
 }
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
