@@ -13,11 +13,16 @@
 		5D5C12C31A05716E002902A8 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D5C12C21A05716E002902A8 /* main.m */; };
 		5D5C12C61A05716E002902A8 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D5C12C51A05716E002902A8 /* AppDelegate.m */; };
 		5D5C12C91A05716E002902A8 /* RedditDigest.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 5D5C12C71A05716E002902A8 /* RedditDigest.xcdatamodeld */; };
-		5D5C12CC1A05716E002902A8 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D5C12CB1A05716E002902A8 /* ViewController.m */; };
+		5D5C12CC1A05716E002902A8 /* DigestViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D5C12CB1A05716E002902A8 /* DigestViewController.m */; };
 		5D5C12CF1A05716E002902A8 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5D5C12CD1A05716E002902A8 /* Main.storyboard */; };
 		5D5C12D11A05716E002902A8 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5D5C12D01A05716E002902A8 /* Images.xcassets */; };
 		5D5C12D41A05716E002902A8 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5D5C12D21A05716E002902A8 /* LaunchScreen.xib */; };
 		5D5C12E01A05716E002902A8 /* RedditDigestTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D5C12DF1A05716E002902A8 /* RedditDigestTests.m */; };
+		5D9BF2511A0857BB00B699E5 /* CustomSubredditLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D9BF2501A0857BB00B699E5 /* CustomSubredditLabel.m */; };
+		5DB5B8491A083DF0007DC036 /* SubredditSelectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DB5B8481A083DF0007DC036 /* SubredditSelectionViewController.m */; };
+		5DB5B84C1A084055007DC036 /* SubredditListCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DB5B84B1A084055007DC036 /* SubredditListCollectionViewCell.m */; };
+		81C322621A0831AB007ECD43 /* CategoryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 81C322611A0831AB007ECD43 /* CategoryViewController.m */; };
+		81C322651A084762007ECD43 /* CategoryCustomCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 81C322641A084762007ECD43 /* CategoryCustomCollectionViewCell.m */; };
 		AFECB7D3E1AFD77137EC9E75 /* libPods-RedditDigest.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DCDE6A54A047557AD956D431 /* libPods-RedditDigest.a */; };
 /* End PBXBuildFile section */
 
@@ -44,8 +49,8 @@
 		5D5C12C41A05716E002902A8 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		5D5C12C51A05716E002902A8 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		5D5C12C81A05716E002902A8 /* RedditDigest.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = RedditDigest.xcdatamodel; sourceTree = "<group>"; };
-		5D5C12CA1A05716E002902A8 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
-		5D5C12CB1A05716E002902A8 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		5D5C12CA1A05716E002902A8 /* DigestViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DigestViewController.h; sourceTree = "<group>"; };
+		5D5C12CB1A05716E002902A8 /* DigestViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DigestViewController.m; sourceTree = "<group>"; };
 		5D5C12CE1A05716E002902A8 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		5D5C12D01A05716E002902A8 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		5D5C12D31A05716E002902A8 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
@@ -53,6 +58,16 @@
 		5D5C12DE1A05716E002902A8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5D5C12DF1A05716E002902A8 /* RedditDigestTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RedditDigestTests.m; sourceTree = "<group>"; };
 		5D5C12E91A05758E002902A8 /* RedditDigest_Push_Development.mobileprovision */ = {isa = PBXFileReference; lastKnownFileType = file; path = RedditDigest_Push_Development.mobileprovision; sourceTree = "<group>"; };
+		5D9BF24F1A0857BB00B699E5 /* CustomSubredditLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomSubredditLabel.h; sourceTree = "<group>"; };
+		5D9BF2501A0857BB00B699E5 /* CustomSubredditLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomSubredditLabel.m; sourceTree = "<group>"; };
+		5DB5B8471A083DF0007DC036 /* SubredditSelectionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SubredditSelectionViewController.h; path = ../SubredditSelectionViewController.h; sourceTree = "<group>"; };
+		5DB5B8481A083DF0007DC036 /* SubredditSelectionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SubredditSelectionViewController.m; path = ../SubredditSelectionViewController.m; sourceTree = "<group>"; };
+		5DB5B84A1A084055007DC036 /* SubredditListCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SubredditListCollectionViewCell.h; sourceTree = "<group>"; };
+		5DB5B84B1A084055007DC036 /* SubredditListCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SubredditListCollectionViewCell.m; sourceTree = "<group>"; };
+		81C322601A0831AB007ECD43 /* CategoryViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CategoryViewController.h; sourceTree = "<group>"; };
+		81C322611A0831AB007ECD43 /* CategoryViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CategoryViewController.m; sourceTree = "<group>"; };
+		81C322631A084762007ECD43 /* CategoryCustomCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CategoryCustomCollectionViewCell.h; sourceTree = "<group>"; };
+		81C322641A084762007ECD43 /* CategoryCustomCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CategoryCustomCollectionViewCell.m; sourceTree = "<group>"; };
 		9EDEC8BDBE184DC937399E93 /* Pods-RedditDigest.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RedditDigest.release.xcconfig"; path = "Pods/Target Support Files/Pods-RedditDigest/Pods-RedditDigest.release.xcconfig"; sourceTree = "<group>"; };
 		DCDE6A54A047557AD956D431 /* libPods-RedditDigest.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-RedditDigest.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -80,6 +95,8 @@
 		5D5C12B41A05716E002902A8 = {
 			isa = PBXGroup;
 			children = (
+				5D9BF24F1A0857BB00B699E5 /* CustomSubredditLabel.h */,
+				5D9BF2501A0857BB00B699E5 /* CustomSubredditLabel.m */,
 				5D5C12BF1A05716E002902A8 /* RedditDigest */,
 				5D5C12DC1A05716E002902A8 /* RedditDigestTests */,
 				5D5C12BE1A05716E002902A8 /* Products */,
@@ -102,12 +119,20 @@
 			children = (
 				5D5C12C41A05716E002902A8 /* AppDelegate.h */,
 				5D5C12C51A05716E002902A8 /* AppDelegate.m */,
-				5D5C12CA1A05716E002902A8 /* ViewController.h */,
-				5D5C12CB1A05716E002902A8 /* ViewController.m */,
+				81C322601A0831AB007ECD43 /* CategoryViewController.h */,
+				81C322611A0831AB007ECD43 /* CategoryViewController.m */,
+				81C322631A084762007ECD43 /* CategoryCustomCollectionViewCell.h */,
+				81C322641A084762007ECD43 /* CategoryCustomCollectionViewCell.m */,
+				5D5C12CA1A05716E002902A8 /* DigestViewController.h */,
+				5D5C12CB1A05716E002902A8 /* DigestViewController.m */,
 				34D1B9351A081B4D00C0C15F /* WelcomViewController.h */,
 				34D1B9361A081B4D00C0C15F /* WelcomViewController.m */,
 				34D1B9381A081D0C00C0C15F /* LoginViewController.h */,
 				34D1B9391A081D0C00C0C15F /* LoginViewController.m */,
+				5DB5B8471A083DF0007DC036 /* SubredditSelectionViewController.h */,
+				5DB5B8481A083DF0007DC036 /* SubredditSelectionViewController.m */,
+				5DB5B84A1A084055007DC036 /* SubredditListCollectionViewCell.h */,
+				5DB5B84B1A084055007DC036 /* SubredditListCollectionViewCell.m */,
 				5D5C12CD1A05716E002902A8 /* Main.storyboard */,
 				5D5C12D01A05716E002902A8 /* Images.xcassets */,
 				5D5C12D21A05716E002902A8 /* LaunchScreen.xib */,
@@ -213,9 +238,11 @@
 				TargetAttributes = {
 					5D5C12BC1A05716E002902A8 = {
 						CreatedOnToolsVersion = 6.1;
+						DevelopmentTeam = TB5YKEAJ2S;
 					};
 					5D5C12D81A05716E002902A8 = {
 						CreatedOnToolsVersion = 6.1;
+						DevelopmentTeam = TB5YKEAJ2S;
 						TestTargetID = 5D5C12BC1A05716E002902A8;
 					};
 				};
@@ -297,12 +324,17 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5DB5B84C1A084055007DC036 /* SubredditListCollectionViewCell.m in Sources */,
+				5DB5B8491A083DF0007DC036 /* SubredditSelectionViewController.m in Sources */,
 				5D5C12C91A05716E002902A8 /* RedditDigest.xcdatamodeld in Sources */,
 				5D5C12C61A05716E002902A8 /* AppDelegate.m in Sources */,
 				34D1B93A1A081D0C00C0C15F /* LoginViewController.m in Sources */,
-				5D5C12CC1A05716E002902A8 /* ViewController.m in Sources */,
+				5D5C12CC1A05716E002902A8 /* DigestViewController.m in Sources */,
+				81C322621A0831AB007ECD43 /* CategoryViewController.m in Sources */,
 				5D5C12C31A05716E002902A8 /* main.m in Sources */,
 				34D1B9371A081B4D00C0C15F /* WelcomViewController.m in Sources */,
+				81C322651A084762007ECD43 /* CategoryCustomCollectionViewCell.m in Sources */,
+				5D9BF2511A0857BB00B699E5 /* CustomSubredditLabel.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -425,14 +457,17 @@
 			baseConfigurationReference = 0C4AAC9EB76DD8D441DD99F5 /* Pods-RedditDigest.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/RedditDigest",
 				);
 				INFOPLIST_FILE = RedditDigest/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "d3bbf691-49b1-42f8-88e2-6ff521ecac3f";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Debug;
 		};
@@ -441,14 +476,17 @@
 			baseConfigurationReference = 9EDEC8BDBE184DC937399E93 /* Pods-RedditDigest.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/RedditDigest",
 				);
 				INFOPLIST_FILE = RedditDigest/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "d3bbf691-49b1-42f8-88e2-6ff521ecac3f";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Release;
 		};

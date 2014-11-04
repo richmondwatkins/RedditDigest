@@ -6,18 +6,18 @@
 //  Copyright (c) 2014 Richmond. All rights reserved.
 //
 
-#import "ViewController.h"
+#import "DigestViewController.h"
 #import <RedditKit.h>
 #import <RKLink.h>
 #import <RKSubreddit.h>
 #import <SSKeychain/SSKeychain.h>
 
-@interface ViewController ()
+@interface DigestViewController ()
 
 @end
 
-@implementation ViewController
-///
+@implementation DigestViewController
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];

@@ -8,7 +8,19 @@
 
 #import "AppDelegate.h"
 #import <ZeroPush.h>
-#import "ViewController.h"
+
+
+//
+//  AppDelegate.m
+//  RedditDigest
+//
+//  Created by Richmond on 11/1/14.
+//  Copyright (c) 2014 Richmond. All rights reserved.
+//
+
+#import "AppDelegate.h"
+#import <ZeroPush.h>
+#import "DigestViewController.h"
 #import <SSKeychain/SSKeychain.h>
 #import <RedditKit/RedditKit.h>
 
