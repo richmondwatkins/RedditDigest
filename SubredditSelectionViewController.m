@@ -42,8 +42,16 @@
     RKSubreddit *subreddit = self.subreddits[indexPath.row];
 
     SubredditListCollectionViewCell *cell = [SubredditListCollectionViewCell createCellWithCollectionView:collectionView andSubreddit:subreddit andIndexPath:indexPath];
+    cell.subredditTitleCell.layer.masksToBounds = YES;
+
 
     return cell;
+}
+
+- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath{
+
+    RKSubreddit *subreddit = self.subreddits[indexPath.row];
+    return [(NSString*)subreddit.name sizeWithAttributes:NULL];
 }
 
 @end
