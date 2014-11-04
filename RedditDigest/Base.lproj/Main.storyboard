@@ -17,7 +17,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="WELCOME" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KOa-NI-vbb">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="WELCOME" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KOa-NI-vbb">
                                 <rect key="frame" x="172" y="65" width="256" height="52"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="52" id="JSv-qM-5kU"/>
@@ -27,7 +27,7 @@
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9YD-v8-10H">
+                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9YD-v8-10H">
                                 <rect key="frame" x="183" y="266" width="233" height="30"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="233" id="Quw-0O-Pzr"/>
@@ -37,11 +37,11 @@
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <action selector="onLoginWithoutRedditAccountButtonPressed:" destination="xQ7-9y-dXT" eventType="touchUpInside" id="pGa-gM-npp"/>
-                                    <segue destination="e1g-HR-koU" kind="show" id="IWx-eg-FxF"/>
+                                    <action selector="onContinueWithoutRedditAccountButtonPressed:" destination="xQ7-9y-dXT" eventType="touchUpInside" id="drs-aN-bkT"/>
+                                    <segue destination="e1g-HR-koU" kind="show" identifier="SubredditSelectionFromLoginSegue" id="IWx-eg-FxF"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BK2-Uy-0mW">
+                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BK2-Uy-0mW">
                                 <rect key="frame" x="191" y="212" width="218" height="30"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="218" id="1UI-W3-BjF"/>
@@ -51,7 +51,6 @@
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <action selector="onLoginWithRedditAccountButtonPressed:" destination="xQ7-9y-dXT" eventType="touchUpInside" id="8NU-D3-7ih"/>
                                     <segue destination="WOc-nv-58w" kind="show" id="bKw-lt-3Nc"/>
                                 </connections>
                             </button>
@@ -83,7 +82,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="LOGIN" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HsC-en-qIL">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="LOGIN" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HsC-en-qIL">
                                 <rect key="frame" x="220" y="56" width="160" height="67"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="160" id="D0c-RM-kbJ"/>
@@ -93,7 +92,7 @@
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="username" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="xMh-Sq-VlA">
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="username" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="xMh-Sq-VlA">
                                 <rect key="frame" x="208" y="150" width="184" height="30"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="184" id="EeK-ql-u5t"/>
@@ -102,7 +101,7 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" returnKeyType="next"/>
                             </textField>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="password" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="YVl-9K-NMa">
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="password" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="YVl-9K-NMa">
                                 <rect key="frame" x="208" y="198" width="184" height="30"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="184" id="6sG-2D-au7"/>
@@ -125,7 +124,7 @@
                     <connections>
                         <outlet property="passwordTextField" destination="YVl-9K-NMa" id="nc2-O2-dUW"/>
                         <outlet property="usernameTextField" destination="xMh-Sq-VlA" id="3FK-ZS-Cqw"/>
-                        <segue destination="e1g-HR-koU" kind="show" id="UQ5-hC-TYb"/>
+                        <segue destination="e1g-HR-koU" kind="show" identifier="SubredditSelectionFromLoginSegue" id="UQ5-hC-TYb"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="f2U-BX-3ah" userLabel="First Responder" sceneMemberID="firstResponder"/>

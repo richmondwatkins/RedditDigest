@@ -36,14 +36,13 @@
         if (!error)
         {
             NSLog(@"Successfully signed in!");
+            [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"HasRedditAccount"];
+            [[NSUserDefaults standardUserDefaults] synchronize];
             // Store credentials in Keychain
             BOOL result = [SSKeychain setPassword:self.passwordTextField.text forService:@"friendsOfSnoo" account:self.usernameTextField.text];
 
-
             if (result) {
-                [self.presentingViewController dismissViewControllerAnimated:NO completion:nil];
-                [self dismissViewControllerAnimated:YES completion:nil];
-               // [self.presentedViewController dismissViewControllerAnimated:YES completion:nil];
+                [self performSegueWithIdentifier:@"SubredditSelectionFromLoginSegue" sender:self];
             }
             /* // Richmond, uncomment this to get what you need after the user logs in correctly
             [[RKClient sharedClient] subscribedSubredditsWithCompletion:^(NSArray *collection, RKPagination *pagination, NSError *error) {
@@ -77,11 +76,6 @@
         self.usernameTextField.text = @"";
         self.passwordTextField.text = @"";
     }
-}
-
-- (void)savePasswordToKeychain
-{
-
 }
 
 - (void)didReceiveMemoryWarning

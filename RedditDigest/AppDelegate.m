@@ -116,36 +116,44 @@
 {
     if ([[NSUserDefaults standardUserDefaults] boolForKey:@"HasLaunchedOnce"])
     {
-        NSArray *array = [SSKeychain accountsForService:@"friendsOfSnoo"];
-        NSDictionary *accountInfoDictionary = array.firstObject;
-        NSString *username = accountInfoDictionary[@"acct"];
-        NSString *password = [SSKeychain passwordForService:@"friendsOfSnoo" account:username];
+        if ([[NSUserDefaults standardUserDefaults] boolForKey:@"HasRedditAccount"])
+        {
+            NSArray *array = [SSKeychain accountsForService:@"friendsOfSnoo"];
+            NSDictionary *accountInfoDictionary = array.firstObject;
+            NSString *username = accountInfoDictionary[@"acct"];
+            NSString *password = [SSKeychain passwordForService:@"friendsOfSnoo" account:username];
 
-        [[RKClient sharedClient] signInWithUsername:accountInfoDictionary[@"acct"] password:password completion:^(NSError *error) {
-            if (!error)
-            {
-                NSLog(@"Successfully signed in!");
+            [[RKClient sharedClient] signInWithUsername:accountInfoDictionary[@"acct"] password:password completion:^(NSError *error) {
+                if (!error)
+                {
+                    NSLog(@"Successfully signed in!");
 
-                /* // Richmond, uncomment this to get what you need after the user logs in correctly
-                 [[RKClient sharedClient] subscribedSubredditsWithCompletion:^(NSArray *collection, RKPagination *pagination, NSError *error) {
+                    /* // Richmond, uncomment this to get what you need after the user logs in correctly
+                     [[RKClient sharedClient] subscribedSubredditsWithCompletion:^(NSArray *collection, RKPagination *pagination, NSError *error) {
 
-                 RKSubreddit *subreddit = collection.firstObject;
+                     RKSubreddit *subreddit = collection.firstObject;
 
-                 [[RKClient sharedClient] linksInSubreddit:subreddit pagination:nil completion:^(NSArray *links, RKPagination *pagination, NSError *error) {
-                 //                    NSLog(@"Links: %@", links);
-                 [[RKClient sharedClient] upvote:links.firstObject completion:^(NSError *error) {
-                 NSLog(@"Upvoted the link!");
-                 }];
-                 }];
+                     [[RKClient sharedClient] linksInSubreddit:subreddit pagination:nil completion:^(NSArray *links, RKPagination *pagination, NSError *error) {
+                     //                    NSLog(@"Links: %@", links);
+                     [[RKClient sharedClient] upvote:links.firstObject completion:^(NSError *error) {
+                     NSLog(@"Upvoted the link!");
+                     }];
+                     }];
 
-                 }];
-                 */
-            }
-            else
-            {
-               
-            }
-        }];
+                     }];
+                     */
+                }
+                else
+                {
+                   
+                }
+            }];
+        }
+        else
+        {
+            // Get information about user who has no account. Unique ID? Generate content.
+            NSLog(@"User Has no reddit account, but that's cool we'll just give them the content they requested the first time they setup the app. Bam!");
+        }
     }
     else
     {
