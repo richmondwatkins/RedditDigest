@@ -11,11 +11,14 @@
 #import <RedditKit.h>
 #import <RKLink.h>
 #import <RKSubreddit.h>
-@interface SubredditSelectionViewController () <UICollectionViewDataSource, UICollectionViewDelegate>
+#import "KTCenterFlowLayout.h"
+@interface SubredditSelectionViewController () <UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout>
+
 @property (strong, nonatomic) IBOutlet UICollectionView *subredditCollectionView;
 @property NSMutableArray *subreddits;
 @property NSMutableArray *selectedSubreddits;
 @property SubredditListCollectionViewCell *sizingCell;
+@property NSMutableArray *posts;
 
 @end
 
@@ -24,6 +27,15 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+
+    KTCenterFlowLayout *layout = [KTCenterFlowLayout new];
+    layout.minimumInteritemSpacing = 10.f;
+    layout.minimumLineSpacing = 10.f;
+    self.subredditCollectionView = [self.subredditCollectionView initWithFrame:self.view.frame collectionViewLayout:layout];
+
+
+    self.posts = [NSMutableArray array];
+    [self getAllPosts];
     self.selectedSubreddits = [[NSMutableArray alloc] init];
 
      [[RKClient sharedClient] signInWithUsername:@"hankthedog" password:@"Duncan12" completion:^(NSError *error) {
@@ -48,7 +60,7 @@
 {
     SubredditListCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"Cell" forIndexPath:indexPath];
 
-    [self _configureCell:cell forIndexPath:indexPath];
+    [self configureCell:cell forIndexPath:indexPath];
 
     return cell;
 }
@@ -62,26 +74,15 @@
     [self.selectedSubreddits addObject:tempDict];
 }
 
-//- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
-//{
-//
-//    CollectionViewCell *aSelectedCell = (CollectionViewCell*)[collectionView cellForItemAtIndexPath:indexPath];
-//    [aSelectedCell mmmmmmmm];
-//    //aSelectedCell dra
-//
-//}
-
-- (void)_configureCell:(SubredditListCollectionViewCell *)cell forIndexPath:(NSIndexPath *)indexPath
+- (void)configureCell:(SubredditListCollectionViewCell *)cell forIndexPath:(NSIndexPath *)indexPath
 {
-    //cell.layer.cornerRadius = 8.0;
-    //cell.layer.masksToBounds = YES;
     RKSubreddit *subreddit = self.subreddits[indexPath.row];
     cell.subredditTitleLabel.text = subreddit.name;
 }
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    [self _configureCell:_sizingCell forIndexPath:indexPath];
+    [self configureCell:self.sizingCell forIndexPath:indexPath];
 
     return [self.sizingCell systemLayoutSizeFittingSize:UILayoutFittingCompressedSize];
 }
@@ -90,16 +91,16 @@
 
 - (UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout insetForSectionAtIndex:(NSInteger)section
 {
-    return UIEdgeInsetsMake(5, 5, 5, 5);
+    return UIEdgeInsetsMake(10, 10, 10, 10);
 }
 
-- (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout minimumInteritemSpacingForSectionAtIndex:(NSInteger)section{
-
+- (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout minimumInteritemSpacingForSectionAtIndex:(NSInteger)section
+{
     return 5.0;
 }
 
-- (IBAction)finishSelectingSubreddits:(id)sender {
-
+- (IBAction)finishSelectingSubreddits:(id)sender
+{
     NSUUID *deviceID = [UIDevice currentDevice].identifierForVendor;
     NSString *deviceString = [NSString stringWithFormat:@"%@", deviceID];
     NSString *urlString = [NSString stringWithFormat:@"http://192.168.129.228:3000/subreddits/%@",  deviceString];
@@ -128,6 +129,45 @@
 
 }
 
+//testing GET for subreddits and recreating a RKSubreddit object
+-(void)getAllPosts{
+    
+    NSURLSessionConfiguration* config = [NSURLSessionConfiguration defaultSessionConfiguration];
+    NSURLSession* session = [NSURLSession sessionWithConfiguration:config];
+
+    NSUUID *deviceID = [UIDevice currentDevice].identifierForVendor;
+    NSString *deviceString = [NSString stringWithFormat:@"%@", deviceID];
+    NSString *urlString = [NSString stringWithFormat:@"http://192.168.129.228:3000/subreddits/%@",deviceString];
+    NSURL *url = [[NSURL alloc] initWithString:[urlString stringByAddingPercentEscapesUsingEncoding:NSASCIIStringEncoding]];
+
+    NSURLSessionDataTask * dataTask = [session dataTaskWithURL:url completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+        if(error == nil)
+        {
+            NSDictionary *results = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
+            NSArray *usersSubredditsArray = results[@"subreddits"];
+
+            for (NSDictionary *subredditDict in usersSubredditsArray) {
+                NSDictionary *setUpForRKKitObject = [[NSDictionary alloc] initWithObjectsAndKeys:subredditDict[@"subreddit"], @"name", subredditDict[@"url"], @"URL", nil];
+                RKSubreddit *subreddit = [[RKSubreddit alloc] initWithDictionary:setUpForRKKitObject error:nil];
+                [self findTopPostsFromSubreddit:subreddit];
+            }
+            NSLog(@"ALL POSTSSS",self.posts);
+        }
+    }];
+
+    [dataTask resume];
+
+}
+
+-(void)findTopPostsFromSubreddit:(RKSubreddit *)subreddit{
+    [[RKClient sharedClient] linksInSubreddit:subreddit pagination:nil completion:^(NSArray *links, RKPagination *pagination, NSError *error) {
+        RKLink *topPost = links.firstObject;
+        if (topPost.stickied) {
+            topPost = links[1];
+        }
+        [self.posts addObject:topPost];
+    }];
+}
 
 -(void)deleter:(RKSubreddit *)subreddit{
     NSMutableDictionary *tempDict = [[NSMutableDictionary alloc] initWithObjectsAndKeys:subreddit.name, @"name",subreddit.URL, @"url", nil];//testing puproses
