@@ -2,6 +2,7 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6250" systemVersion="14A389" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="9zg-4H-k34">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6244"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
         <!--Welcom View Controller-->
@@ -144,9 +145,9 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="jsl-Cu-EB1">
-                                <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                                <rect key="frame" x="0.0" y="69" width="600" height="531"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="Vqe-X7-dFy">
-                                    <size key="itemSize" width="118" height="94"/>
+                                    <size key="itemSize" width="288" height="160"/>
                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
                                     <size key="footerReferenceSize" width="0.0" height="0.0"/>
                                     <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
@@ -156,11 +157,11 @@
                                         <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                            <rect key="frame" x="0.0" y="0.0" width="118" height="94"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="288" height="160"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Pfo-M0-Dhh">
-                                                    <rect key="frame" x="38" y="37" width="42" height="21"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Pfo-M0-Dhh">
+                                                    <rect key="frame" x="16" y="19" width="240" height="122"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                     <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -169,8 +170,10 @@
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         </view>
                                         <constraints>
-                                            <constraint firstAttribute="centerX" secondItem="Pfo-M0-Dhh" secondAttribute="centerX" id="BhA-vt-KcW"/>
-                                            <constraint firstAttribute="centerY" secondItem="Pfo-M0-Dhh" secondAttribute="centerY" id="gPj-TN-dLR"/>
+                                            <constraint firstItem="Pfo-M0-Dhh" firstAttribute="top" secondItem="zmN-Yw-IKi" secondAttribute="topMargin" constant="11" id="1Vg-XP-E0A"/>
+                                            <constraint firstItem="Pfo-M0-Dhh" firstAttribute="leading" secondItem="zmN-Yw-IKi" secondAttribute="leadingMargin" constant="8" id="Kia-Kc-m9K"/>
+                                            <constraint firstAttribute="centerY" secondItem="Pfo-M0-Dhh" secondAttribute="centerY" id="Rix-v9-c34"/>
+                                            <constraint firstAttribute="centerX" secondItem="Pfo-M0-Dhh" secondAttribute="centerX" id="ctS-xc-jAr"/>
                                         </constraints>
                                         <connections>
                                             <outlet property="subredditTitleCell" destination="Pfo-M0-Dhh" id="ifN-Zf-rDm"/>
@@ -182,10 +185,25 @@
                                     <outlet property="delegate" destination="e1g-HR-koU" id="EtN-Ec-UpB"/>
                                 </connections>
                             </collectionView>
+                            <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="D7a-ly-kna">
+                                <rect key="frame" x="0.0" y="20" width="600" height="44"/>
+                                <items>
+                                    <navigationItem title="Subreddits" id="YhO-V6-lYj">
+                                        <barButtonItem key="rightBarButtonItem" title="Categories" id="Y6E-74-MW7">
+                                            <connections>
+                                                <segue destination="AYR-hp-zUj" kind="presentation" id="igU-U0-Rec"/>
+                                            </connections>
+                                        </barButtonItem>
+                                    </navigationItem>
+                                </items>
+                            </navigationBar>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="jsl-Cu-EB1" firstAttribute="top" secondItem="H4a-Ni-sHg" secondAttribute="top" id="hNC-sk-crA"/>
+                            <constraint firstItem="D7a-ly-kna" firstAttribute="trailing" secondItem="jsl-Cu-EB1" secondAttribute="trailing" id="0wg-Zx-vBA"/>
+                            <constraint firstItem="D7a-ly-kna" firstAttribute="leading" secondItem="jsl-Cu-EB1" secondAttribute="leading" id="S19-6f-r9j"/>
+                            <constraint firstItem="jsl-Cu-EB1" firstAttribute="top" secondItem="H4a-Ni-sHg" secondAttribute="top" constant="69" id="hNC-sk-crA"/>
+                            <constraint firstItem="D7a-ly-kna" firstAttribute="top" secondItem="niW-GM-YVN" secondAttribute="bottom" id="kEX-O9-zeC"/>
                             <constraint firstAttribute="trailing" secondItem="jsl-Cu-EB1" secondAttribute="trailing" id="olA-Qz-bCz"/>
                             <constraint firstItem="jsl-Cu-EB1" firstAttribute="bottom" secondItem="4Dj-3k-U5H" secondAttribute="top" id="v91-kb-uGv"/>
                             <constraint firstItem="jsl-Cu-EB1" firstAttribute="leading" secondItem="H4a-Ni-sHg" secondAttribute="leading" id="zjA-81-VqG"/>
