@@ -11,7 +11,10 @@
 #import <RedditKit.h>
 #import <RKLink.h>
 #import <RKSubreddit.h>
-@interface SubredditSelectionViewController () <UICollectionViewDataSource, UICollectionViewDelegate>
+#import "KTCenterFlowLayout.h"
+
+@interface SubredditSelectionViewController () <UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout>
+
 @property (strong, nonatomic) IBOutlet UICollectionView *subredditCollectionView;
 @property NSMutableArray *subreddits;
 @property NSMutableArray *selectedSubreddits;
@@ -25,6 +28,13 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+
+    KTCenterFlowLayout *layout = [KTCenterFlowLayout new];
+    layout.minimumInteritemSpacing = 10.f;
+    layout.minimumLineSpacing = 10.f;
+    self.subredditCollectionView = [self.subredditCollectionView initWithFrame:self.view.frame collectionViewLayout:layout];
+
+
     self.posts = [NSMutableArray array];
     [self getAllPosts];
     self.selectedSubreddits = [[NSMutableArray alloc] init];
@@ -51,7 +61,7 @@
 {
     SubredditListCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"Cell" forIndexPath:indexPath];
 
-    [self _configureCell:cell forIndexPath:indexPath];
+    [self configureCell:cell forIndexPath:indexPath];
 
     return cell;
 }
@@ -60,31 +70,28 @@
 {
     RKSubreddit *subreddit = self.subreddits[indexPath.row];
     NSError *error;
-    NSMutableDictionary *tempDict = [[NSMutableDictionary alloc] initWithObjectsAndKeys:subreddit.name, @"name",subreddit.URL, @"url", nil];
+    //SubredditListCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"Cell" forIndexPath:indexPath ];
+    //NSMutableDictionary *tempDict = [[NSMutableDictionary alloc] initWithObjectsAndKeys:subreddit.name, @"name",subreddit.URL, @"url", nil];
     //    NSData *subredditData = [NSJSONSerialization dataWithJSONObject:tempDict options:0 error:&error];
-    [self.selectedSubreddits addObject:tempDict];
+    //[self.selectedSubreddits addObject:tempDict];
+    NSLog(@"mmmmm");
 }
 
-//- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
-//{
-//
-//    CollectionViewCell *aSelectedCell = (CollectionViewCell*)[collectionView cellForItemAtIndexPath:indexPath];
-//    [aSelectedCell mmmmmmmm];
-//    //aSelectedCell dra
-//
-//}
-
-- (void)_configureCell:(SubredditListCollectionViewCell *)cell forIndexPath:(NSIndexPath *)indexPath
+- (void)configureCell:(SubredditListCollectionViewCell *)cell forIndexPath:(NSIndexPath *)indexPath
 {
-    //cell.layer.cornerRadius = 8.0;
-    //cell.layer.masksToBounds = YES;
+    cell.contentView.layer.cornerRadius = 8.0;
+    cell.contentView.layer.masksToBounds = YES;
+    cell.contentView.layer.borderColor = [UIColor blueColor].CGColor;
+    cell.contentView.layer.borderWidth = 1;
+    cell.contentView.backgroundColor = [UIColor whiteColor];
+
     RKSubreddit *subreddit = self.subreddits[indexPath.row];
     cell.subredditTitleLabel.text = subreddit.name;
 }
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    [self _configureCell:_sizingCell forIndexPath:indexPath];
+    [self configureCell:self.sizingCell forIndexPath:indexPath];
 
     return [self.sizingCell systemLayoutSizeFittingSize:UILayoutFittingCompressedSize];
 }
@@ -96,13 +103,13 @@
     return UIEdgeInsetsMake(5, 5, 5, 5);
 }
 
-- (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout minimumInteritemSpacingForSectionAtIndex:(NSInteger)section{
-
+- (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout minimumInteritemSpacingForSectionAtIndex:(NSInteger)section
+{
     return 5.0;
 }
 
-- (IBAction)finishSelectingSubreddits:(id)sender {
-
+- (IBAction)finishSelectingSubreddits:(id)sender
+{
     NSUUID *deviceID = [UIDevice currentDevice].identifierForVendor;
     NSString *deviceString = [NSString stringWithFormat:@"%@", deviceID];
     NSString *urlString = [NSString stringWithFormat:@"http://192.168.129.228:3000/subreddits/%@",  deviceString];
