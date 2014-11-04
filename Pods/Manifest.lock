@@ -41,4 +41,4 @@ SPEC CHECKSUMS:
   SSKeychain: cc48bd3ad24fcd9125adb9e0d23dd50b8bbd08b9
   ZeroPush: 1251bdeecbf0d70e2fdf85a7c968f886f82cc57a
 
-COCOAPODS: 0.34.2
+COCOAPODS: 0.34.4

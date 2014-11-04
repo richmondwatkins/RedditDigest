@@ -34,9 +34,6 @@
 
 - (void)applicationDidBecomeActive:(UIApplication *)application
 {
-    NSUUID *deviceID = [UIDevice currentDevice].identifierForVendor;
-    self.deviceString = [NSString stringWithFormat:@"%@", deviceID];
-    [self registerDevice];
 
     [ZeroPush engageWithAPIKey:@"PM4ouAj1rzxmQysu5ej6" delegate:self];
     [[UIApplication sharedApplication] registerUserNotificationSettings:[UIUserNotificationSettings settingsForTypes:(UIUserNotificationTypeSound | UIUserNotificationTypeAlert | UIUserNotificationTypeBadge) categories:nil]];
@@ -48,53 +45,57 @@
 - (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)tokenData
 {
     [[ZeroPush shared] registerDeviceToken:tokenData];
-
     self.token = [ZeroPush deviceTokenFromData:tokenData];
-    [self runRequest];
+    [self registerDeviceForPushNotifications];
 }
 
 -(void)registerDevice{
-    NSString* deviceURLString = [NSString stringWithFormat:@"http://192.168.1.4:3000/phone/%@", self.deviceString];
-//    NSString* deviceId = [NSString stringWithFormat:@"http://172.20.10.6:3000/phone/%@", self.deviceString];
+    NSString* deviceURLString = @"http://192.168.1.4:3000/register/device";
     NSURL *url = [[NSURL alloc] initWithString:[deviceURLString stringByAddingPercentEscapesUsingEncoding:NSASCIIStringEncoding]];
+
+    NSError *error;
+    NSDictionary *deviceIdDictionary = [[NSDictionary alloc] initWithObjectsAndKeys:self.deviceString, @"deviceid", nil];
+    NSData *postData = [NSJSONSerialization dataWithJSONObject:deviceIdDictionary options:0 error:&error];
 
     NSMutableURLRequest* request = [NSMutableURLRequest requestWithURL:url];
     request.HTTPMethod = @"POST";
 
     [request addValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
+    [request setHTTPBody:postData];
 
     NSURLSessionConfiguration* config = [NSURLSessionConfiguration defaultSessionConfiguration];
     NSURLSession* session = [NSURLSession sessionWithConfiguration:config];
 
     NSURLSessionDataTask* dataTask = [session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
-        if (!error) {
-            NSLog(@"%@",response);
+        if (error) {
+            NSLog(@"Error from device registration %@",error);
         }
     }];
     [dataTask resume];
 }
 
 
--(void)runRequest{
-    NSLog(@"TOKEN %@",self.token);
+-(void)registerDeviceForPushNotifications{
 
-    NSString* deviceId = [NSString stringWithFormat:@"http://192.168.1.4:3000/deviceid/%@", self.token];
-//    NSString* deviceId = [NSString stringWithFormat:@"http://172.20.10.6:3000/deviceid/%@", self.token];
+    NSString* urlString = @"http://192.168.1.4:3000/register/push";
+    NSURL *url = [[NSURL alloc] initWithString:[urlString stringByAddingPercentEscapesUsingEncoding:NSASCIIStringEncoding]];
 
-    NSURL* url = [NSURL URLWithString:deviceId];
+    NSError *error;
+    NSDictionary *tokenDictionary = [[NSDictionary alloc] initWithObjectsAndKeys:self.token, @"token", self.deviceString, @"deviceid", nil];
+    NSData *postData = [NSJSONSerialization dataWithJSONObject:tokenDictionary options:0 error:&error];
 
     NSMutableURLRequest* request = [NSMutableURLRequest requestWithURL:url];
     request.HTTPMethod = @"POST";
 
     [request addValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
+    [request setHTTPBody:postData];
 
     NSURLSessionConfiguration* config = [NSURLSessionConfiguration defaultSessionConfiguration];
     NSURLSession* session = [NSURLSession sessionWithConfiguration:config];
 
     NSURLSessionDataTask* dataTask = [session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
-        NSLog(@"%@",error);
-        if (!error) {
-            NSLog(@"RESPONSEEEEEEEE%@",response);
+        if (error) {
+            NSLog(@"Push Notification Error: %@",error);
         }
     }];
     [dataTask resume];
@@ -107,8 +108,13 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-
     [self showWelcomeViewOrDigestView];
+
+//    if ([[NSUserDefaults standardUserDefaults] boolForKey:@"HasLaunchedOnce"]){
+    NSUUID *deviceID = [UIDevice currentDevice].identifierForVendor;
+    self.deviceString = [NSString stringWithFormat:@"%@", deviceID];
+    [self registerDevice];
+//    }
 
     return YES;
 }
