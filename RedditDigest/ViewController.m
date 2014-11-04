@@ -10,55 +10,37 @@
 #import <RedditKit.h>
 #import <RKLink.h>
 #import <RKSubreddit.h>
+#import <SSKeychain/SSKeychain.h>
+
 @interface ViewController ()
 
 @end
 
 @implementation ViewController
 ///
-- (void)viewDidLoad {
+- (void)viewDidLoad
+{
     [super viewDidLoad];
+}
 
-    //PFUser *currentUser = [PFUser currentUser];
-    BOOL currentUser = NO;
-    if (currentUser) {
-        //NSLog(@"The current user is: %@", currentUser.username);
-       // [self.tabBarController.tabBar setHidden:NO];
-        //[self getMyfollowersImages];
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+
+    if ([[NSUserDefaults standardUserDefaults] boolForKey:@"HasLaunchedOnce"])
+    {
+        
     }
-    else {
+    else
+    {
         UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
         UIViewController *welcomeViewController = [storyboard instantiateViewControllerWithIdentifier:@"WelcomeViewController"];
 
         [self.parentViewController presentViewController:welcomeViewController animated:YES completion:nil];
 
-
-        //[self presentViewController:welcomeViewController animated:YES completion:nil];
-        //[self performSegueWithIdentifier:@"ShowLoginSegue" sender:self];
+        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"HasLaunchedOnce"];
+        [[NSUserDefaults standardUserDefaults] synchronize];
     }
-
-    /*
-    [[RKClient sharedClient] signInWithUsername:@"hankthedog" password:@"Duncan12" completion:^(NSError *error) {
-        if (!error)
-        {
-            NSLog(@"Successfully signed in!");
-
-            [[RKClient sharedClient] subscribedSubredditsWithCompletion:^(NSArray *collection, RKPagination *pagination, NSError *error) {
-                //                NSLog(@"%@",collection);
-
-                RKSubreddit *subreddit = collection.firstObject;
-
-                [[RKClient sharedClient] linksInSubreddit:subreddit pagination:nil completion:^(NSArray *links, RKPagination *pagination, NSError *error) {
-//                    NSLog(@"Links: %@", links);
-                    [[RKClient sharedClient] upvote:links.firstObject completion:^(NSError *error) {
-                        NSLog(@"Upvoted the link!");
-                    }];
-                }];
-                
-            }];
-        }
-    }];
-     */
 
 }
 

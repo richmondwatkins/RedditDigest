@@ -9,6 +9,9 @@
 #import "AppDelegate.h"
 #import <ZeroPush.h>
 #import "ViewController.h"
+#import <SSKeychain/SSKeychain.h>
+#import <RedditKit/RedditKit.h>
+
 @interface AppDelegate ()
 @property NSString *token;
 @property (nonatomic, strong) NSString *temperature;
@@ -26,14 +29,6 @@
     [ZeroPush engageWithAPIKey:@"PM4ouAj1rzxmQysu5ej6" delegate:self];
     [[UIApplication sharedApplication] registerUserNotificationSettings:[UIUserNotificationSettings settingsForTypes:(UIUserNotificationTypeSound | UIUserNotificationTypeAlert | UIUserNotificationTypeBadge) categories:nil]];
          [[ZeroPush shared] registerForRemoteNotifications];
-
-    //first-time ever defaults check and set
-    /* // Uncomment this to store if user used the app for the first time or not
-    if([[NSUserDefaults standardUserDefaults] boolForKey:@"FirstTimeUsingApp"] != NO)
-    {
-        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"FirstTimeUsingApp"];
-    }
-     */
 }
 
 
@@ -97,13 +92,55 @@
 }
 
 
-- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
+{
 
-
+    [self showWelcomeViewOrDigestView];
 
     return YES;
 }
 
+- (void)showWelcomeViewOrDigestView
+{
+    if ([[NSUserDefaults standardUserDefaults] boolForKey:@"HasLaunchedOnce"])
+    {
+        NSArray *array = [SSKeychain accountsForService:@"friendsOfSnoo"];
+        NSDictionary *accountInfoDictionary = array.firstObject;
+        NSString *username = accountInfoDictionary[@"acct"];
+        NSString *password = [SSKeychain passwordForService:@"friendsOfSnoo" account:username];
+
+        [[RKClient sharedClient] signInWithUsername:accountInfoDictionary[@"acct"] password:password completion:^(NSError *error) {
+            if (!error)
+            {
+                NSLog(@"Successfully signed in!");
+
+                /* // Richmond, uncomment this to get what you need after the user logs in correctly
+                 [[RKClient sharedClient] subscribedSubredditsWithCompletion:^(NSArray *collection, RKPagination *pagination, NSError *error) {
+
+                 RKSubreddit *subreddit = collection.firstObject;
+
+                 [[RKClient sharedClient] linksInSubreddit:subreddit pagination:nil completion:^(NSArray *links, RKPagination *pagination, NSError *error) {
+                 //                    NSLog(@"Links: %@", links);
+                 [[RKClient sharedClient] upvote:links.firstObject completion:^(NSError *error) {
+                 NSLog(@"Upvoted the link!");
+                 }];
+                 }];
+
+                 }];
+                 */
+            }
+            else
+            {
+               
+            }
+        }];
+    }
+    else
+    {
+        
+        // This is the first launch ever -- ooooo
+    }
+}
 
 
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo fetchCompletionHandler:(void (^)(UIBackgroundFetchResult result))handler{
