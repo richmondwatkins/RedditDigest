@@ -12,7 +12,7 @@
 #import "CustomSubredditLabel.h"
 @interface SubredditListCollectionViewCell : UICollectionViewCell
 
-@property (strong, nonatomic) IBOutlet CustomSubredditLabel *subredditTitleCell;
+@property (weak, nonatomic) IBOutlet UILabel *subredditTitleLabel;
 
 +(SubredditListCollectionViewCell *)createCellWithCollectionView:(UICollectionView *)collectionView andSubreddit:(RKSubreddit *)subreddit andIndexPath:(NSIndexPath*)indexPath;
 
