@@ -33,44 +33,46 @@
 #pragma mark - TableView Delegate Methods
 
 
--(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
-{
-    return 4;
-}
+//-(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+//{
+//    return 4;
+//}
 
--(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
-{
-    NSLog(@"Section now is %ld", (long)section);
-    if (section == 0) {
-        return 1; }
-    else if (section == 1) {
-        return 2;
-    }
-    else {
-        return 4;
-    }
-}
+//-(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+//{
+//
+//    return 8;
+//    NSLog(@"Section now is %ld", (long)section);
+//    if (section == 0) {
+//        return 1; }
+//    else if (section == 1) {
+//        return 2;
+//    }
+//    else {
+//        return 4;
+//    }
+//}
 
--(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Cell"];
-    cell.textLabel.text = self.settingsArray[indexPath.row];
-    return cell;
-}
+//-(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+//{
+//    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Cell"];
+////    cell.textLabel.text = self.settingsArray[indexPath.row];
+//    return cell;
+//}
 
--(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
-{
-    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, tableView.frame.size.width, 36)];
-    /* Create custom view to display section header... */
-    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(10, 5, tableView.frame.size.width, 18)];
-    [label setFont:[UIFont boldSystemFontOfSize:12]];
-    NSString *string =[self.titlesArray objectAtIndex:section];
-    /* Section header is in 0th index... */
-    [label setText:string];
-    [view addSubview:label];
-    [view setBackgroundColor:[UIColor colorWithRed:166/255.0 green:177/255.0 blue:186/255.0 alpha:1.0]]; //your background color...
-    return view;
-}
+//-(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
+//{
+//    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, tableView.frame.size.width, 36)];
+//    /* Create custom view to display section header... */
+//    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(10, 5, tableView.frame.size.width, 18)];
+//    [label setFont:[UIFont boldSystemFontOfSize:12]];
+//    NSString *string =[self.titlesArray objectAtIndex:section];
+//    /* Section header is in 0th index... */
+//    [label setText:string];
+//    [view addSubview:label];
+//    [view setBackgroundColor:[UIColor colorWithRed:166/255.0 green:177/255.0 blue:186/255.0 alpha:1.0]]; //your background color...
+//    return view;
+//}
 
 /*
 #pragma mark - Navigation
