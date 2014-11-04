@@ -377,8 +377,7 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
-                        <outlet property="digestTabelView" destination="Ud7-YU-1kZ" id="GZX-jz-YTu"/>
-                        <outlet property="tester" destination="MS0-GG-KNW" id="TUX-p1-ajx"/>
+                        <outlet property="digestTableView" destination="Ud7-YU-1kZ" id="BgF-ER-13U"/>
                         <segue destination="xQ7-9y-dXT" kind="show" identifier="ShowLoginSegue" id="3oS-Bl-KOE"/>
                     </connections>
                 </viewController>

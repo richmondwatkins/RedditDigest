@@ -13,10 +13,8 @@
 #import <SSKeychain/SSKeychain.h>
 
 @interface DigestViewController () <UITableViewDataSource, UITableViewDelegate>
-@property (strong, nonatomic) IBOutlet UITableView *digestTabelView;
+@property (strong, nonatomic) IBOutlet UITableView *digestTableView;
 @property NSMutableArray *digestPosts;
-@property (strong, nonatomic) IBOutlet UIBarButtonItem *tester;
-@property NSArray *digestTablePosts;
 @end
 
 @implementation DigestViewController
@@ -43,8 +41,7 @@
 }
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    NSLog(@"FOOOO: %d", self.digestTablePosts.count);
-    return self.digestTablePosts.count;
+    return self.digestPosts.count;
 }
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -83,7 +80,6 @@
 
 -(void)findTopPostsFromSubreddit:(NSArray *)subreddits withCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler{
 
-    NSLog(@"RKCLIENT %@",[RKClient sharedClient]);
     __block int j = 0;
     for (NSDictionary *subredditDict in subreddits) {
         NSDictionary *setUpForRKKitObject = [[NSDictionary alloc] initWithObjectsAndKeys:subredditDict[@"subreddit"], @"name", subredditDict[@"url"], @"URL", nil];
@@ -98,24 +94,27 @@
             [self.digestPosts addObject:topPost];
 
             j += 1;
-            NSLog(@"%i",j);
-            if (j  == subreddits.count) {
-                [self performNewFetchedDataActionsWithDataArray:self.digestPosts];
 
+            if (j  == subreddits.count) {
+                [self performNewFetchedDataActionsWithDataArray];
                 completionHandler(UIBackgroundFetchResultNewData);
+                [self fireLocalNotification];
             }
-            
         }];
     }
 }
 
--(void)performNewFetchedDataActionsWithDataArray:(NSArray *)dataArray{
+-(void)fireLocalNotification{
+    UILocalNotification* localNotification = [[UILocalNotification alloc] init];
+    localNotification.fireDate = [NSDate date];
+    localNotification.timeZone = [NSTimeZone defaultTimeZone];
+    localNotification.alertBody = @"Your reddit digest is ready for viewing";
+    localNotification.applicationIconBadgeNumber = [[UIApplication sharedApplication] applicationIconBadgeNumber] + 1;
+    [[UIApplication sharedApplication] scheduleLocalNotification:localNotification];
+}
 
-    self.digestTablePosts = [[NSArray alloc] initWithArray:dataArray];
-    NSLog(@"%@",self.digestTablePosts);
-
-    [self.digestTabelView reloadData];
-
+-(void)performNewFetchedDataActionsWithDataArray{
+    [self.digestTableView reloadData];
 }
 
 @end
