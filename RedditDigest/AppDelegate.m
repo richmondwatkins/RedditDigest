@@ -114,6 +114,7 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     [self showWelcomeViewOrDigestView];
+    [[UIApplication sharedApplication] setMinimumBackgroundFetchInterval:UIApplicationBackgroundFetchIntervalMinimum];
 
 //    if ([[NSUserDefaults standardUserDefaults] boolForKey:@"HasLaunchedOnce"]){
     NSUUID *deviceID = [UIDevice currentDevice].identifierForVendor;
@@ -188,61 +189,12 @@
 
 
 -(void) application:(UIApplication *)application performFetchWithCompletionHandler: (void (^)(UIBackgroundFetchResult))completionHandler {
-
-    self.posts = [NSMutableArray array];
-    NSURLSessionConfiguration* config = [NSURLSessionConfiguration defaultSessionConfiguration];
-    NSURLSession* session = [NSURLSession sessionWithConfiguration:config];
-
-    NSUUID *deviceID = [UIDevice currentDevice].identifierForVendor;
-    NSString *deviceString = [NSString stringWithFormat:@"%@", deviceID];
-    NSString *urlString = [NSString stringWithFormat:@"http://192.168.129.228:3000/subreddits/%@",deviceString];
-    NSURL *url = [[NSURL alloc] initWithString:[urlString stringByAddingPercentEscapesUsingEncoding:NSASCIIStringEncoding]];
-
-    NSURLSessionDataTask * dataTask = [session dataTaskWithURL:url completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
-        if(error == nil)
-        {
-            NSDictionary *results = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
-            NSArray *usersSubredditsArray = results[@"subreddits"];
-            [self findTopPostsFromSubreddit:usersSubredditsArray withCompletionHandler:completionHandler];
-        }
+    DigestViewController *digestViewController = [(id)self.window.rootViewController viewControllers][0];
+    [digestViewController fetchNewDataWithCompletionHandler:^(UIBackgroundFetchResult result) {
+        completionHandler(result);
     }];
 
-    [dataTask resume];
 }
-
--(void)findTopPostsFromSubreddit:(NSArray *)subreddits withCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler{
-    __block int j = 0;
-    for (NSDictionary *subredditDict in subreddits) {
-        NSDictionary *setUpForRKKitObject = [[NSDictionary alloc] initWithObjectsAndKeys:subredditDict[@"subreddit"], @"name", subredditDict[@"url"], @"URL", nil];
-        RKSubreddit *subreddit = [[RKSubreddit alloc] initWithDictionary:setUpForRKKitObject error:nil];
-
-        [[RKClient sharedClient] linksInSubreddit:subreddit pagination:nil completion:^(NSArray *links, RKPagination *pagination, NSError *error) {
-            RKLink *topPost = links.firstObject;
-            if (topPost.stickied) {
-                topPost = links[1];
-            }
-
-            [self.posts addObject:topPost];
-
-            j += 1;
-            NSLog(@"%i",j);
-            if (j  == subreddits.count) {
-                    NSLog(@"Made it");
-                DigestViewController *digestViewController = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"DigestViewController"];
-
-                digestViewController.digestPosts = [NSArray array];
-                digestViewController.digestPosts = self.posts;
-                [digestViewController.digestTabelView reloadData];
-
-                completionHandler(UIBackgroundFetchResultNewData);
-            }
-
-        }];
-    }
-}
-
-
-
 
 - (void)applicationWillResignActive:(UIApplication *)application {
     // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
