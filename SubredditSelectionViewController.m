@@ -13,13 +13,15 @@
 #import <RKSubreddit.h>
 #import "KTCenterFlowLayout.h"
 
-@interface SubredditSelectionViewController () <UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout>
+@interface SubredditSelectionViewController () <UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, UIAlertViewDelegate>
 
 @property (strong, nonatomic) IBOutlet UICollectionView *subredditCollectionView;
 @property NSMutableArray *subreddits;
 @property NSMutableArray *selectedSubreddits;
 @property NSMutableArray *posts; //remove when move to app delegate
 @property SubredditListCollectionViewCell *sizingCell;
+@property (weak, nonatomic) IBOutlet UIButton *doneSelectingSubredditsButton;
+@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *activityIndicator;
 
 @end
 
@@ -34,15 +36,22 @@
     layout.minimumLineSpacing = 10.f;
     self.subredditCollectionView = [self.subredditCollectionView initWithFrame:self.view.frame collectionViewLayout:layout];
 
+    self.doneSelectingSubredditsButton.alpha = 0.0;
+    self.doneSelectingSubredditsButton.layer.borderWidth = 1.0;
+    self.doneSelectingSubredditsButton.layer.borderColor = [UIColor grayColor].CGColor;
+    self.subredditCollectionView.allowsMultipleSelection = YES;
 
     self.posts = [NSMutableArray array];
     [self getAllPosts];
     self.selectedSubreddits = [[NSMutableArray alloc] init];
 
+    [self.activityIndicator startAnimating];
      [[RKClient sharedClient] signInWithUsername:@"hankthedog" password:@"Duncan12" completion:^(NSError *error) {
          [[RKClient sharedClient] subscribedSubredditsWithCompletion:^(NSArray *collection, RKPagination *pagination, NSError *error) {
              self.subreddits = [[NSMutableArray alloc] initWithArray:collection];
              [self.subredditCollectionView reloadData];
+             [self.activityIndicator stopAnimating];
+             self.activityIndicator.hidden = YES;
          }];
      }];
 
@@ -70,12 +79,23 @@
 {
     RKSubreddit *subreddit = self.subreddits[indexPath.row];
     NSError *error;
-    //SubredditListCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"Cell" forIndexPath:indexPath ];
-    //NSMutableDictionary *tempDict = [[NSMutableDictionary alloc] initWithObjectsAndKeys:subreddit.name, @"name",subreddit.URL, @"url", nil];
-    //    NSData *subredditData = [NSJSONSerialization dataWithJSONObject:tempDict options:0 error:&error];
-    //[self.selectedSubreddits addObject:tempDict];
 
-    SubredditListCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"Cell" forIndexPath:indexPath];
+    if (self.selectedSubreddits.count < 10 /* and cell not already selected */)
+    {
+        NSMutableDictionary *tempDict = [[NSMutableDictionary alloc] initWithObjectsAndKeys:subreddit.name, @"name",subreddit.URL, @"url", nil];
+        NSData *subredditData = [NSJSONSerialization dataWithJSONObject:tempDict options:0 error:&error];
+        [self.selectedSubreddits addObject:subredditData];
+
+        if (self.selectedSubreddits.count == 10) {
+            [UIView animateWithDuration:0.3 animations:^{
+                self.doneSelectingSubredditsButton.alpha = 1.0;
+            }];
+        }
+    }
+    else
+    {
+        [self.subredditCollectionView deselectItemAtIndexPath:indexPath animated: YES];
+    }
 }
 
 - (void)configureCell:(SubredditListCollectionViewCell *)cell forIndexPath:(NSIndexPath *)indexPath
@@ -91,11 +111,35 @@
     return [self.sizingCell systemLayoutSizeFittingSize:UILayoutFittingCompressedSize];
 }
 
+- (void)collectionView:(UICollectionView *)collectionView didDeselectItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    RKSubreddit *subreddit = self.subreddits[indexPath.row];
+    NSError *error;
+
+    NSMutableDictionary *tempDict = [[NSMutableDictionary alloc] initWithObjectsAndKeys:subreddit.name, @"name",subreddit.URL, @"url", nil];
+    NSData *subredditData = [NSJSONSerialization dataWithJSONObject:tempDict options:0 error:&error];
+    if ([self.selectedSubreddits containsObject:subredditData]) {
+        [self.selectedSubreddits removeObject:subredditData];
+        NSLog(@"sizelkj: %lu", (unsigned long)self.selectedSubreddits.count);
+    }
+
+    if (self.selectedSubreddits.count < 10) {
+        [UIView animateWithDuration:0.3 animations:^{
+            self.doneSelectingSubredditsButton.alpha = 0.0;
+        }];
+    }
+    else {
+        [UIView animateWithDuration:0.3 animations:^{
+            self.doneSelectingSubredditsButton.alpha = 1.0;
+        }];
+    }
+}
+
 #pragma mark - Cell Spacing and Padding
 
 - (UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout insetForSectionAtIndex:(NSInteger)section
 {
-    return UIEdgeInsetsMake(10, 10, 10, 10);
+    return UIEdgeInsetsMake(20, 15, 10, 15);
 }
 
 - (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout minimumInteritemSpacingForSectionAtIndex:(NSInteger)section
@@ -130,12 +174,11 @@
         }
     }];
     [dataTask resume];
-
 }
 
 //testing GET for subreddits and recreating a RKSubreddit object
--(void)getAllPosts{
-    
+-(void)getAllPosts
+{
     NSURLSessionConfiguration* config = [NSURLSessionConfiguration defaultSessionConfiguration];
     NSURLSession* session = [NSURLSession sessionWithConfiguration:config];
 
@@ -155,15 +198,15 @@
                 RKSubreddit *subreddit = [[RKSubreddit alloc] initWithDictionary:setUpForRKKitObject error:nil];
                 [self findTopPostsFromSubreddit:subreddit];
             }
-            NSLog(@"ALL POSTSSS",self.posts);
+            NSLog(@"ALL POSTSSS %@", self.posts);
         }
     }];
 
     [dataTask resume];
-
 }
 
--(void)findTopPostsFromSubreddit:(RKSubreddit *)subreddit{
+-(void)findTopPostsFromSubreddit:(RKSubreddit *)subreddit
+{
     [[RKClient sharedClient] linksInSubreddit:subreddit pagination:nil completion:^(NSArray *links, RKPagination *pagination, NSError *error) {
         RKLink *topPost = links.firstObject;
         if (topPost.stickied) {
@@ -173,9 +216,9 @@
     }];
 }
 
--(void)deleter:(RKSubreddit *)subreddit{
+-(void)deleter:(RKSubreddit *)subreddit
+{
     NSMutableDictionary *tempDict = [[NSMutableDictionary alloc] initWithObjectsAndKeys:subreddit.name, @"name",subreddit.URL, @"url", nil];//testing puproses
-
 
     NSUUID *deviceID = [UIDevice currentDevice].identifierForVendor;
     NSString *deviceString = [NSString stringWithFormat:@"%@", deviceID];
