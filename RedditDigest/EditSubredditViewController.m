@@ -10,8 +10,8 @@
 #import <RKLink.h>
 #import <RKSubreddit.h>
 
-@interface EditSubredditViewController () <UITableViewDelegate, UITableViewDataSource>
-@property NSMutableArray *digestPosts;
+@interface EditSubredditViewController () <UITableViewDelegate, UITableViewDataSource, UIAlertViewDelegate>
+@property (strong) NSMutableArray *digestPosts;
 @property (strong, nonatomic) IBOutlet UITableView *tableView;
 @property NSIndexPath *editingIndex;
 
@@ -46,7 +46,7 @@
     return cell;
 }
 
-#pragma mark - Delete Row from Table
+#pragma mark - Delete Row & Data from Table
 
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
     return YES;
@@ -55,22 +55,38 @@
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
 
     if (editingStyle == UITableViewCellEditingStyleDelete) {
-        
+
+
+        self.editingIndex = indexPath;
+        UIAlertView *alertView = [[UIAlertView alloc]init];
+        alertView.delegate = self;
+        alertView.title = @"Are you sure?";
+        [alertView addButtonWithTitle:@"Delete"];
+        [alertView addButtonWithTitle:@"Cancel"];
+        [alertView show];
 //        self.editingIndex = indexPath;
 //        [self.digestPosts removeObjectAtIndex:indexPath.row];
 //        [self.tableView deleteRowsAtIndexPaths:@[self.editingIndex] withRowAnimation:UITableViewRowAnimationFade];
 
 //        [self deleter:self.digestPosts[indexPath.row]];
-        [tableView reloadData];
     }
 }
 
+-(void) alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
+
+    if (buttonIndex == 0) {
+//        NSLog(@"SELECTED TO DELETE %@",self.digestPosts[self.editingIndex.row] );
+        [self deleter:self.digestPosts[self.editingIndex.row]];
+        [self.digestPosts removeObjectAtIndex:self.editingIndex.row];
+        [self.tableView deleteRowsAtIndexPaths:@[self.editingIndex] withRowAnimation:UITableViewRowAnimationFade];
+        [self.tableView reloadData];
+    }
+
+}
 
 #pragma mark - Fetching Data
 
 -(void)fetchNewData{
-    self.digestPosts = [NSMutableArray array];
-
     NSURLSessionConfiguration* config = [NSURLSessionConfiguration defaultSessionConfiguration];
     NSURLSession* session = [NSURLSession sessionWithConfiguration:config];
 
@@ -83,7 +99,7 @@
         if(error == nil)
         {
             NSDictionary *results = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
-            NSMutableArray *usersSubredditsArray = results[@"subreddits"];
+            NSMutableArray *usersSubredditsArray = [results[@"subreddits"] mutableCopy];
             self.digestPosts = usersSubredditsArray;
             NSLog(@"self.digestPosts %@", self.digestPosts);
             NSLog(@"userSubredditsArray %@", usersSubredditsArray);
@@ -97,9 +113,9 @@
 
 
 
--(void)deleter:(RKSubreddit *)subreddit
+-(void)deleter:(NSDictionary *)subredditDictionary
 {
-    NSMutableDictionary *tempDict = [[NSMutableDictionary alloc] initWithObjectsAndKeys:subreddit.name, @"name",subreddit.URL, @"url", nil];//testing puproses
+    NSMutableDictionary *tempDict = [[NSMutableDictionary alloc] initWithObjectsAndKeys:subredditDictionary[@"subreddit"], @"name", subredditDictionary[@"url"], @"url", nil];//testing puproses
 
     NSUUID *deviceID = [UIDevice currentDevice].identifierForVendor;
     NSString *deviceString = [NSString stringWithFormat:@"%@", deviceID];
