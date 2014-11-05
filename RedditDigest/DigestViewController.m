@@ -152,7 +152,13 @@
             savedPost.nsfw = [NSNumber numberWithBool:post.NSFW];
             savedPost.author = post.author;
 
-            (post.isSelfPost) ? savedPost.isSelfPost = [NSNumber numberWithBool:YES] : (savedPost.isSelfPost = [NSNumber numberWithBool:NO]);
+            if (post.isSelfPost) {
+                savedPost.isSelfPost = [NSNumber numberWithBool:YES];
+                savedPost.selfText = post.selfText;
+            }else{
+                savedPost.isWebPage = [NSNumber numberWithBool:YES];
+                savedPost.html = [NSString stringWithContentsOfURL:post.URL encoding:NSUTF8StringEncoding error:nil];
+            }
         }
         [self.managedObjectContext save:nil];
     }];
@@ -181,10 +187,13 @@
     Post *post = posts.firstObject;
 
     NSLog(@"TITLE %@",post.title);
+    NSLog(@"IS WEB PAGE %@",post.isWebPage);
+    NSLog(@"WEB PAGE %@",post.html);
     NSLog(@"IS Image link %@",post.isImageLink);
     NSLog(@"URL %@",post.url);
     NSLog(@"IMAGE %@",post.image);
     NSLog(@"IS SELF POST %@",post.isSelfPost);
+    NSLog(@"IS SELF POST %@",post.selfText);
     NSLog(@"THUMBNAIL %@",post.thumbnailImage);
     NSLog(@"NSFW %@",post.nsfw);
     NSLog(@"SUBREDDIT %@",post.subreddit);

@@ -1,9 +1,9 @@
 //
 //  Post.h
-//  
+//  RedditDigest
 //
 //  Created by Richmond on 11/5/14.
-//
+//  Copyright (c) 2014 Richmond. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
@@ -13,6 +13,7 @@
 @interface Post : NSManagedObject
 
 @property (nonatomic, retain) NSString * author;
+@property (nonatomic, retain) NSData * image;
 @property (nonatomic, retain) NSNumber * isImageLink;
 @property (nonatomic, retain) NSNumber * isSelfPost;
 @property (nonatomic, retain) NSNumber * nsfw;
@@ -23,6 +24,7 @@
 @property (nonatomic, retain) NSNumber * totalComments;
 @property (nonatomic, retain) NSString * url;
 @property (nonatomic, retain) NSNumber * voteRatio;
-@property (nonatomic, retain) NSData * image;
+@property (nonatomic, retain) NSNumber * isWebPage;
+@property (nonatomic, retain) NSString * html;
 
 @end

@@ -2,9 +2,11 @@
 <model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="6252" systemVersion="14A389" minimumToolsVersion="Automatic" macOSVersion="Automatic" iOSVersion="Automatic">
     <entity name="Post" representedClassName="Post" syncable="YES">
         <attribute name="author" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="html" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="image" optional="YES" attributeType="Binary" syncable="YES"/>
         <attribute name="isImageLink" optional="YES" attributeType="Boolean" defaultValueString="0" syncable="YES"/>
         <attribute name="isSelfPost" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="isWebPage" optional="YES" attributeType="Boolean" syncable="YES"/>
         <attribute name="nsfw" optional="YES" attributeType="Boolean" syncable="YES"/>
         <attribute name="selfText" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="subreddit" optional="YES" attributeType="String" syncable="YES"/>
@@ -15,6 +17,6 @@
         <attribute name="voteRatio" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Post" positionX="-63" positionY="-18" width="128" height="225"/>
+        <element name="Post" positionX="-63" positionY="-18" width="128" height="255"/>
     </elements>
 </model>

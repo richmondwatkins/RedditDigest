@@ -156,9 +156,11 @@
 
     if([[NSDate date] compare: lastDigest] == NSOrderedDescending && [lastDigest compare: morningDigest] == NSOrderedDescending){
         [digestController retrievePostsFromCoreData];
+//        [digestController requestNewLinks];
 
     }else if([[NSDate date] compare: eveningDigest] == NSOrderedDescending && [lastDigest compare: eveningDigest] == NSOrderedDescending){
         [digestController retrievePostsFromCoreData];
+//        [digestController requestNewLinks];
 
     }else{
         [digestController requestNewLinks];
