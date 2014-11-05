@@ -274,11 +274,10 @@
 				TargetAttributes = {
 					5D5C12BC1A05716E002902A8 = {
 						CreatedOnToolsVersion = 6.1;
-						DevelopmentTeam = TB5YKEAJ2S;
 					};
 					5D5C12D81A05716E002902A8 = {
 						CreatedOnToolsVersion = 6.1;
-						DevelopmentTeam = TB5YKEAJ2S;
+						DevelopmentTeam = 4T52H7QMHA;
 						TestTargetID = 5D5C12BC1A05716E002902A8;
 					};
 				};
@@ -538,6 +537,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
@@ -557,6 +557,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
