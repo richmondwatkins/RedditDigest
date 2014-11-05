@@ -125,11 +125,29 @@
 
 -(void)addPostToCoreData:(RKLink *)post{
 
+//    @dynamic thumbnailImage;
+//    @dynamic isImageLink;
+//    @dynamic voteRatio;
+//    @dynamic subreddit;
+//    @dynamic isSelfPost;
+//    @dynamic nsfw;
+//    @dynamic author;
+
     Post *savedPost = [NSEntityDescription insertNewObjectForEntityForName:@"Post" inManagedObjectContext:self.managedObjectContext];
     savedPost.title = post.title;
-    savedPost.url = [NSString stringWithFormat:@"%@", post.URL];
-    [self.managedObjectContext save:nil];
 
+    if (post.isImageLink) {
+        //download image and save data to core data
+    }else{
+        savedPost.url = [NSString stringWithFormat:@"%@", post.URL];
+    }
+
+    int totalComments = (int)post.totalComments;
+    savedPost.totalComments = [NSNumber numberWithInt:totalComments];
+    if (post.isSelfPost) {
+        savedPost.selfText = post.selfText;
+    }
+    [self.managedObjectContext save:nil];
 }
 
 -(void)clearOutCoreData{
@@ -164,10 +182,13 @@
 
     NSUUID *deviceID = [UIDevice currentDevice].identifierForVendor;
     NSString *deviceString = [NSString stringWithFormat:@"%@", deviceID];
-    NSString *urlString = [NSString stringWithFormat:@"http://192.168.129.228:3000/subreddits/%@",deviceString];
+
+    NSString *urlString = [NSString stringWithFormat:@"http://192.168.1.4:3000/subreddits/%@",deviceString];
+//    NSString *urlString = [NSString stringWithFormat:@"http://192.168.129.228:3000/subreddits/%@",deviceString];
     NSURL *url = [[NSURL alloc] initWithString:[urlString stringByAddingPercentEscapesUsingEncoding:NSASCIIStringEncoding]];
 
     NSURLSessionDataTask * dataTask = [session dataTaskWithURL:url completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+        NSLog(@"%@",data);
         if(error == nil)
         {
             NSDictionary *results = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
@@ -193,7 +214,7 @@
             if (topPost.stickied) {
                 topPost = links[1];
             }
-
+            NSLog(@"LINK : %@",topPost);
             [self.digestPosts addObject:topPost];
             [self addPostToCoreData:topPost];
 
