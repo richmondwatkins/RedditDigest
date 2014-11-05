@@ -221,7 +221,12 @@
 
 - (void)searchForSubreddit:(UITextField *)textField
 {
-    NSLog(@"Search text: %@", textField.text);
+    NSString *subredditName = [textField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+
+    [[RKClient sharedClient] subredditWithName:subredditName completion:^(id subreddit, NSError *error) {
+        NSLog(@"Subreddit %@", subreddit);
+    }];
+
     textField.text = @"";
     [textField resignFirstResponder];
 }
