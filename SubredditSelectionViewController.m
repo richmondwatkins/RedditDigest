@@ -17,11 +17,13 @@
 
 @property (strong, nonatomic) IBOutlet UICollectionView *subredditCollectionView;
 @property NSMutableArray *subreddits;
+@property NSArray *catagories;
 @property NSMutableArray *selectedSubreddits;
 @property NSMutableArray *posts; //remove when move to app delegate
 @property SubredditListCollectionViewCell *sizingCell;
 @property (weak, nonatomic) IBOutlet UIButton *doneSelectingSubredditsButton;
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *activityIndicator;
+@property BOOL hasRedditAccount;
 
 @end
 
@@ -45,15 +47,25 @@
     [self getAllPosts];
     self.selectedSubreddits = [[NSMutableArray alloc] init];
 
-    [self.activityIndicator startAnimating];
-     [[RKClient sharedClient] signInWithUsername:@"hankthedog" password:@"Duncan12" completion:^(NSError *error) {
-         [[RKClient sharedClient] subscribedSubredditsWithCompletion:^(NSArray *collection, RKPagination *pagination, NSError *error) {
+    // Logged in with reddit account
+    if ([[NSUserDefaults standardUserDefaults] boolForKey:@"HasRedditAccount"])
+    {
+        [self.activityIndicator startAnimating];
+        self.hasRedditAccount = YES;
+        [[RKClient sharedClient] subscribedSubredditsWithCompletion:^(NSArray *collection, RKPagination *pagination, NSError *error) {
              self.subreddits = [[NSMutableArray alloc] initWithArray:collection];
              [self.subredditCollectionView reloadData];
              [self.activityIndicator stopAnimating];
              self.activityIndicator.hidden = YES;
          }];
-     }];
+    }
+    else // Didn't login with reddit account
+    {
+        self.hasRedditAccount = NO;
+        self.activityIndicator.hidden = YES;
+        self.catagories = @[@"fashion", @"beauty",@"health",@"US news",@"global news",@"politics",@"technology",@"film",@"science",@"humor",@"world explorer",@"books",@"business & finance",@"music",@"art & design",@"history",@"the future",@"surprise me!",@"offbeat",@"cooking",@"sports",@"geek",@"green",@"adventure"];
+    }
+
 
     // Regester cell for sizing template
     UINib *cellNib = [UINib nibWithNibName:@"SubredditSelectionCell" bundle:nil];
@@ -63,7 +75,12 @@
 
 -(NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
-    return self.subreddits.count;
+    if (self.hasRedditAccount) {
+        return self.subreddits.count;
+    }
+    else {
+        return self.catagories.count;
+    }
 }
 
 -(UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
@@ -77,49 +94,77 @@
 
 -(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    RKSubreddit *subreddit = self.subreddits[indexPath.row];
-
-    if (self.selectedSubreddits.count < 10 /* and cell not already selected */)
+    if (self.hasRedditAccount)
     {
-        NSMutableDictionary *subredditDict = [[NSMutableDictionary alloc] initWithObjectsAndKeys:subreddit.name, @"name",subreddit.URL, @"url", nil];
-        [self.selectedSubreddits addObject:subredditDict];
-        NSLog(@"SELECTED SUBREDDITS %@",self.selectedSubreddits);
-        if (self.selectedSubreddits.count == 10) {
-            [UIView animateWithDuration:0.3 animations:^{
-                self.doneSelectingSubredditsButton.alpha = 1.0;
-            }];
+        RKSubreddit *subreddit = self.subreddits[indexPath.row];
+
+        if (self.selectedSubreddits.count < 10)
+        {
+            NSMutableDictionary *subredditDict = [[NSMutableDictionary alloc] initWithObjectsAndKeys:subreddit.name, @"name",subreddit.URL, @"url", nil];
+            [self.selectedSubreddits addObject:subredditDict];
+            NSLog(@"SELECTED SUBREDDITS %@",self.selectedSubreddits);
+            if (self.selectedSubreddits.count > 0) {
+                [UIView animateWithDuration:0.3 animations:^{
+                    self.doneSelectingSubredditsButton.alpha = 1.0;
+                }];
+            }
+        }
+        else
+        {
+            [self.subredditCollectionView deselectItemAtIndexPath:indexPath animated: YES];
         }
     }
-    else
-    {
-        [self.subredditCollectionView deselectItemAtIndexPath:indexPath animated: YES];
+    else {
+        if (self.selectedSubreddits.count < 10)
+        {
+            [self.selectedSubreddits addObject:self.catagories[indexPath.row]];
+            if (self.selectedSubreddits.count > 0) {
+                [UIView animateWithDuration:0.3 animations:^{
+                    self.doneSelectingSubredditsButton.alpha = 1.0;
+                }];
+            }
+        }
+        else {
+            [self.subredditCollectionView deselectItemAtIndexPath:indexPath animated:YES];
+        }
     }
+
 }
 
 - (void)configureCell:(SubredditListCollectionViewCell *)cell forIndexPath:(NSIndexPath *)indexPath
 {
-    RKSubreddit *subreddit = self.subreddits[indexPath.row];
-    cell.subredditTitleLabel.text = subreddit.name;
+    if (self.hasRedditAccount) {
+        RKSubreddit *subreddit = self.subreddits[indexPath.row];
+        cell.subredditTitleLabel.text = subreddit.name;
+    }
+    else {
+        cell.subredditTitleLabel.text = self.catagories[indexPath.row];
+    }
+
 }
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
 {
     [self configureCell:self.sizingCell forIndexPath:indexPath];
-
     return [self.sizingCell systemLayoutSizeFittingSize:UILayoutFittingCompressedSize];
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didDeselectItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    RKSubreddit *subreddit = self.subreddits[indexPath.row];
+    if (self.hasRedditAccount) {
+        RKSubreddit *subreddit = self.subreddits[indexPath.row];
 
-    NSMutableDictionary *subredditDict = [[NSMutableDictionary alloc] initWithObjectsAndKeys:subreddit.name, @"name",subreddit.URL, @"url", nil];
-    if ([self.selectedSubreddits containsObject:subredditDict]) {
-        [self.selectedSubreddits removeObject:subredditDict];
-        NSLog(@"sizelkj: %lu", (unsigned long)self.selectedSubreddits.count);
+        NSMutableDictionary *subredditDict = [[NSMutableDictionary alloc] initWithObjectsAndKeys:subreddit.name, @"name",subreddit.URL, @"url", nil];
+        if ([self.selectedSubreddits containsObject:subredditDict]) {
+            [self.selectedSubreddits removeObject:subredditDict];
+            NSLog(@"sizelkj: %lu", (unsigned long)self.selectedSubreddits.count);
+        }
+    }
+    else {
+        [self.selectedSubreddits removeObject:self.catagories[indexPath.row]];
     }
 
-    if (self.selectedSubreddits.count < 10) {
+    if (self.selectedSubreddits.count == 0) {
         [UIView animateWithDuration:0.3 animations:^{
             self.doneSelectingSubredditsButton.alpha = 0.0;
         }];
@@ -145,32 +190,41 @@
 
 - (IBAction)finishSelectingSubreddits:(id)sender
 {
-    NSUUID *deviceID = [UIDevice currentDevice].identifierForVendor;
-    NSString *deviceString = [NSString stringWithFormat:@"%@", deviceID];
-    NSString *urlString = [NSString stringWithFormat:@"http://192.168.129.228:3000/subreddits/%@",  deviceString];
+    if (self.hasRedditAccount)
+    {
+        NSUUID *deviceID = [UIDevice currentDevice].identifierForVendor;
+        NSString *deviceString = [NSString stringWithFormat:@"%@", deviceID];
+        NSString *urlString = [NSString stringWithFormat:@"http://192.168.129.228:3000/subreddits/%@",  deviceString];
 
-    NSDictionary *dataDictionary = [[NSDictionary alloc] initWithObjectsAndKeys:self.selectedSubreddits, @"subreddits", nil];
-    NSError *error;
-    NSLog(@"DATA DICTIONARY %@", dataDictionary);
-    NSData *postData = [NSJSONSerialization dataWithJSONObject:dataDictionary options:0 error:&error];
-    NSURL *url = [[NSURL alloc] initWithString:[urlString stringByAddingPercentEscapesUsingEncoding:NSASCIIStringEncoding]];
+        NSDictionary *dataDictionary = [[NSDictionary alloc] initWithObjectsAndKeys:self.selectedSubreddits, @"subreddits", nil];
+        NSError *error;
+        NSLog(@"DATA DICTIONARY %@", dataDictionary);
+        NSData *postData = [NSJSONSerialization dataWithJSONObject:dataDictionary options:0 error:&error];
+        NSURL *url = [[NSURL alloc] initWithString:[urlString stringByAddingPercentEscapesUsingEncoding:NSASCIIStringEncoding]];
 
-    NSMutableURLRequest* request = [NSMutableURLRequest requestWithURL:url];
-    request.HTTPMethod = @"POST";
+        NSMutableURLRequest* request = [NSMutableURLRequest requestWithURL:url];
+        request.HTTPMethod = @"POST";
 
-    [request addValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
-    [request setHTTPBody:postData];
+        [request addValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
+        [request setHTTPBody:postData];
 
-    NSURLSessionConfiguration* config = [NSURLSessionConfiguration defaultSessionConfiguration];
-    NSURLSession* session = [NSURLSession sessionWithConfiguration:config];
+        NSURLSessionConfiguration* config = [NSURLSessionConfiguration defaultSessionConfiguration];
+        NSURLSession* session = [NSURLSession sessionWithConfiguration:config];
 
-    NSURLSessionDataTask* dataTask = [session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
-        if (!error) {
-            NSLog(@"%@",response);
-            //[self getter]; //THIS IS FOR TESTING THE SUBREDDIT GETTER METHOD
-        }
-    }];
-    [dataTask resume];
+        NSURLSessionDataTask* dataTask = [session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+            if (!error) {
+                NSLog(@"%@",response);
+                //[self getter]; //THIS IS FOR TESTING THE SUBREDDIT GETTER METHOD
+            }
+        }];
+        [dataTask resume];
+    }
+    else
+    {
+        // load the subreddits here from the selected catagories
+        NSLog(@"You've selected the following catagories: %@", self.selectedSubreddits);
+    }
+
 }
 
 //testing GET for subreddits and recreating a RKSubreddit object
