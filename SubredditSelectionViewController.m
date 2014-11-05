@@ -78,14 +78,12 @@
 -(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
     RKSubreddit *subreddit = self.subreddits[indexPath.row];
-    NSError *error;
 
     if (self.selectedSubreddits.count < 10 /* and cell not already selected */)
     {
-        NSMutableDictionary *tempDict = [[NSMutableDictionary alloc] initWithObjectsAndKeys:subreddit.name, @"name",subreddit.URL, @"url", nil];
-        NSData *subredditData = [NSJSONSerialization dataWithJSONObject:tempDict options:0 error:&error];
-        [self.selectedSubreddits addObject:subredditData];
-
+        NSMutableDictionary *subredditDict = [[NSMutableDictionary alloc] initWithObjectsAndKeys:subreddit.name, @"name",subreddit.URL, @"url", nil];
+        [self.selectedSubreddits addObject:subredditDict];
+        NSLog(@"SELECTED SUBREDDITS %@",self.selectedSubreddits);
         if (self.selectedSubreddits.count == 10) {
             [UIView animateWithDuration:0.3 animations:^{
                 self.doneSelectingSubredditsButton.alpha = 1.0;
@@ -114,12 +112,10 @@
 - (void)collectionView:(UICollectionView *)collectionView didDeselectItemAtIndexPath:(NSIndexPath *)indexPath
 {
     RKSubreddit *subreddit = self.subreddits[indexPath.row];
-    NSError *error;
 
-    NSMutableDictionary *tempDict = [[NSMutableDictionary alloc] initWithObjectsAndKeys:subreddit.name, @"name",subreddit.URL, @"url", nil];
-    NSData *subredditData = [NSJSONSerialization dataWithJSONObject:tempDict options:0 error:&error];
-    if ([self.selectedSubreddits containsObject:subredditData]) {
-        [self.selectedSubreddits removeObject:subredditData];
+    NSMutableDictionary *subredditDict = [[NSMutableDictionary alloc] initWithObjectsAndKeys:subreddit.name, @"name",subreddit.URL, @"url", nil];
+    if ([self.selectedSubreddits containsObject:subredditDict]) {
+        [self.selectedSubreddits removeObject:subredditDict];
         NSLog(@"sizelkj: %lu", (unsigned long)self.selectedSubreddits.count);
     }
 
@@ -155,6 +151,7 @@
 
     NSDictionary *dataDictionary = [[NSDictionary alloc] initWithObjectsAndKeys:self.selectedSubreddits, @"subreddits", nil];
     NSError *error;
+    NSLog(@"DATA DICTIONARY %@", dataDictionary);
     NSData *postData = [NSJSONSerialization dataWithJSONObject:dataDictionary options:0 error:&error];
     NSURL *url = [[NSURL alloc] initWithString:[urlString stringByAddingPercentEscapesUsingEncoding:NSASCIIStringEncoding]];
 
