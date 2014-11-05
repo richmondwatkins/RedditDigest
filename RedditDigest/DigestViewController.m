@@ -200,9 +200,6 @@
     NSLog(@"TOTAL COMMENTS %@",post.totalComments);
     NSLog(@"VOTE RATIO %@",post.voteRatio);
 
-
-
-
 }
 
 -(void)requestNewLinks{
