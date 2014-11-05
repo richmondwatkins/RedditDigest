@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6250" systemVersion="14B17" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="9zg-4H-k34">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6250" systemVersion="14A389" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="9zg-4H-k34">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6244"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
@@ -397,7 +397,7 @@
             </objects>
             <point key="canvasLocation" x="235" y="-1519"/>
         </scene>
-        <!--Edit Subreddit View Controller-->
+        <!--Add or Delete Subreddits-->
         <scene sceneID="FMl-Bs-7d0">
             <objects>
                 <tableViewController id="J8T-U7-GKz" customClass="EditSubredditViewController" sceneMemberID="viewController">
@@ -418,6 +418,10 @@
                             <outlet property="delegate" destination="J8T-U7-GKz" id="LEd-q7-mqL"/>
                         </connections>
                     </tableView>
+                    <navigationItem key="navigationItem" title="Add or Delete Subreddits" id="S28-ij-NdU">
+                        <barButtonItem key="leftBarButtonItem" title="Done" id="KaR-2j-5EO"/>
+                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="GQU-fZ-1uV"/>
+                    </navigationItem>
                     <connections>
                         <outlet property="tableView" destination="NfA-ek-Bay" id="9cc-IS-Qew"/>
                     </connections>
