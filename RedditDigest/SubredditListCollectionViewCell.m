@@ -18,12 +18,12 @@
     self.backgroundView = [UIView new];
 
     self.backgroundView.backgroundColor = [UIColor whiteColor];
-    self.selectedBackgroundView.backgroundColor = [UIColor greenColor];
+    self.selectedBackgroundView.backgroundColor = [UIColor blueColor];
 
     for (CALayer *layer in @[self.backgroundView.layer, self.selectedBackgroundView.layer]) {
         layer.cornerRadius = 8.0;
         layer.masksToBounds = YES;
-        layer.borderColor = [UIColor blueColor].CGColor;
+        layer.borderColor = [UIColor grayColor].CGColor;
         layer.borderWidth = 1;
     }
 
