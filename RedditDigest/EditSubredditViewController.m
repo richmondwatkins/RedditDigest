@@ -7,10 +7,14 @@
 //
 
 #import "EditSubredditViewController.h"
+#import <RKLink.h>
+#import <RKSubreddit.h>
 
-@interface EditSubredditViewController () <UITableViewDelegate, UITableViewDataSource>
-@property NSArray *digestPosts;
+@interface EditSubredditViewController () <UITableViewDelegate, UITableViewDataSource, UIAlertViewDelegate>
+@property (strong) NSMutableArray *digestPosts;
 @property (strong, nonatomic) IBOutlet UITableView *tableView;
+@property NSIndexPath *editingIndex;
+
 
 @end
 
@@ -42,12 +46,47 @@
     return cell;
 }
 
+#pragma mark - Delete Row & Data from Table
+
+- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
+    return YES;
+}
+
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
+
+    if (editingStyle == UITableViewCellEditingStyleDelete) {
+
+
+        self.editingIndex = indexPath;
+        UIAlertView *alertView = [[UIAlertView alloc]init];
+        alertView.delegate = self;
+        alertView.title = @"Are you sure?";
+        [alertView addButtonWithTitle:@"Delete"];
+        [alertView addButtonWithTitle:@"Cancel"];
+        [alertView show];
+//        self.editingIndex = indexPath;
+//        [self.digestPosts removeObjectAtIndex:indexPath.row];
+//        [self.tableView deleteRowsAtIndexPaths:@[self.editingIndex] withRowAnimation:UITableViewRowAnimationFade];
+
+//        [self deleter:self.digestPosts[indexPath.row]];
+    }
+}
+
+-(void) alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
+
+    if (buttonIndex == 0) {
+//        NSLog(@"SELECTED TO DELETE %@",self.digestPosts[self.editingIndex.row] );
+        [self deleter:self.digestPosts[self.editingIndex.row]];
+        [self.digestPosts removeObjectAtIndex:self.editingIndex.row];
+        [self.tableView deleteRowsAtIndexPaths:@[self.editingIndex] withRowAnimation:UITableViewRowAnimationFade];
+        [self.tableView reloadData];
+    }
+
+}
 
 #pragma mark - Fetching Data
 
 -(void)fetchNewData{
-    self.digestPosts = [NSArray array];
-
     NSURLSessionConfiguration* config = [NSURLSessionConfiguration defaultSessionConfiguration];
     NSURLSession* session = [NSURLSession sessionWithConfiguration:config];
 
@@ -60,7 +99,7 @@
         if(error == nil)
         {
             NSDictionary *results = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
-            NSArray *usersSubredditsArray = results[@"subreddits"];
+            NSMutableArray *usersSubredditsArray = [results[@"subreddits"] mutableCopy];
             self.digestPosts = usersSubredditsArray;
             NSLog(@"self.digestPosts %@", self.digestPosts);
             NSLog(@"userSubredditsArray %@", usersSubredditsArray);
@@ -69,6 +108,39 @@
 
     }];
 
+    [dataTask resume];
+}
+
+
+
+-(void)deleter:(NSDictionary *)subredditDictionary
+{
+    NSMutableDictionary *tempDict = [[NSMutableDictionary alloc] initWithObjectsAndKeys:subredditDictionary[@"subreddit"], @"name", subredditDictionary[@"url"], @"url", nil];//testing puproses
+
+    NSUUID *deviceID = [UIDevice currentDevice].identifierForVendor;
+    NSString *deviceString = [NSString stringWithFormat:@"%@", deviceID];
+    NSString *urlString = [NSString stringWithFormat:@"http://192.168.129.228:3000/subreddits/delete/%@",  deviceString];
+
+    NSDictionary *objectToDelete = [[NSDictionary alloc] initWithObjectsAndKeys:tempDict, @"subreddit", nil];
+    NSError *error;
+    NSData *postData = [NSJSONSerialization dataWithJSONObject:objectToDelete options:0 error:&error];
+    NSURL *url = [[NSURL alloc] initWithString:[urlString stringByAddingPercentEscapesUsingEncoding:NSASCIIStringEncoding]];
+
+    NSMutableURLRequest* request = [NSMutableURLRequest requestWithURL:url];
+    request.HTTPMethod = @"POST";
+
+    [request addValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
+    [request setHTTPBody:postData];
+
+    NSURLSessionConfiguration* config = [NSURLSessionConfiguration defaultSessionConfiguration];
+    NSURLSession* session = [NSURLSession sessionWithConfiguration:config];
+
+    NSURLSessionDataTask* dataTask = [session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+        if (!error) {
+            NSLog(@"%@",response);
+            //[self getter]; //THIS IS FOR TESTING THE SUBREDDIT GETTER METHOD
+        }
+    }];
     [dataTask resume];
 }
 

@@ -148,7 +148,7 @@
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="Vqe-X7-dFy">
                                     <size key="itemSize" width="102" height="30"/>
-                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                    <size key="headerReferenceSize" width="50" height="50"/>
                                     <size key="footerReferenceSize" width="0.0" height="0.0"/>
                                     <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 </collectionViewFlowLayout>
@@ -157,6 +157,26 @@
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 </activityIndicatorView>
                                 <cells/>
+                                <collectionReusableView key="sectionHeaderView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="HeaderView" id="GJL-o9-yD4" customClass="SubredditSelectionCollectionReusableView">
+                                    <rect key="frame" x="0.0" y="64" width="600" height="50"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter a subreddit name" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="9DB-Wl-HjA">
+                                            <rect key="frame" x="71" y="10" width="458" height="30"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                            <textInputTraits key="textInputTraits" returnKeyType="search"/>
+                                        </textField>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstItem="9DB-Wl-HjA" firstAttribute="top" secondItem="GJL-o9-yD4" secondAttribute="topMargin" constant="2" id="2kn-v1-8si"/>
+                                        <constraint firstAttribute="trailingMargin" secondItem="9DB-Wl-HjA" secondAttribute="trailing" constant="63" id="ANn-jM-z3s"/>
+                                        <constraint firstAttribute="bottomMargin" secondItem="9DB-Wl-HjA" secondAttribute="bottom" constant="2" id="UOU-7z-x4g"/>
+                                        <constraint firstItem="9DB-Wl-HjA" firstAttribute="leading" secondItem="GJL-o9-yD4" secondAttribute="leadingMargin" constant="63" id="hnn-ne-28C"/>
+                                    </constraints>
+                                    <connections>
+                                        <outlet property="textField" destination="9DB-Wl-HjA" id="Vfq-HH-6DM"/>
+                                    </connections>
+                                </collectionReusableView>
                                 <connections>
                                     <outlet property="dataSource" destination="e1g-HR-koU" id="Ia6-tt-bEk"/>
                                     <outlet property="delegate" destination="e1g-HR-koU" id="EtN-Ec-UpB"/>
@@ -397,7 +417,7 @@
             </objects>
             <point key="canvasLocation" x="235" y="-1519"/>
         </scene>
-        <!--Edit Subreddit View Controller-->
+        <!--Add or Delete Subreddits-->
         <scene sceneID="FMl-Bs-7d0">
             <objects>
                 <tableViewController id="J8T-U7-GKz" customClass="EditSubredditViewController" sceneMemberID="viewController">
@@ -418,6 +438,10 @@
                             <outlet property="delegate" destination="J8T-U7-GKz" id="LEd-q7-mqL"/>
                         </connections>
                     </tableView>
+                    <navigationItem key="navigationItem" title="Add or Delete Subreddits" id="S28-ij-NdU">
+                        <barButtonItem key="leftBarButtonItem" title="Done" id="KaR-2j-5EO"/>
+                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="GQU-fZ-1uV"/>
+                    </navigationItem>
                     <connections>
                         <outlet property="tableView" destination="NfA-ek-Bay" id="9cc-IS-Qew"/>
                     </connections>
