@@ -43,6 +43,9 @@
 
 }
 
+
+#pragma mark - TableView Delegate Methods
+
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     return self.digestPosts.count;
 }
@@ -53,10 +56,13 @@
     RKLink *post = self.digestPosts[indexPath.row];
 
     cell.textLabel.text = post.title;
-//    cell.detailTextLabel.text = post.subreddit;
+    cell.detailTextLabel.text = post.subreddit;
 
     return cell;
 }
+
+
+#pragma mark - Fetch from Server
 
 -(void)fetchNewDataWithCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler{
     self.digestPosts = [NSMutableArray array];
@@ -124,6 +130,8 @@
     [userDefaults synchronize];
 
 }
+
+#pragma mark - Core Data Methods
 
 -(void)addPostToCoreData:(RKLink *)post{
 
