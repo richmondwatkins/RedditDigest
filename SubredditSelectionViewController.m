@@ -14,7 +14,7 @@
 #import "KTCenterFlowLayout.h"
 #import "SubredditSelectionCollectionReusableView.h"
 
-@interface SubredditSelectionViewController () <UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, UIAlertViewDelegate, UITextFieldDelegate, SubredditSelectionCollectionViewHeaderDelegate>
+@interface SubredditSelectionViewController () <UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, UIAlertViewDelegate, UITextFieldDelegate>
 
 @property (strong, nonatomic) IBOutlet UICollectionView *subredditCollectionView;
 @property NSMutableArray *subreddits;
@@ -198,6 +198,8 @@
     if (kind == UICollectionElementKindSectionHeader)
     {
         SubredditSelectionCollectionReusableView *headerView = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"HeaderView" forIndexPath:indexPath];
+
+        [headerView.textField addTarget:self action:@selector(searchForSubreddit:) forControlEvents:UIControlEventEditingDidEndOnExit];
         reusableview = headerView;
     }
 
@@ -215,19 +217,13 @@
     }
 }
 
-#pragma mark - Header Delegate 
+#pragma mark - Search
 
-- (void)searchForSubreddit:(UITextField *)textField sender:(id)sender
+- (void)searchForSubreddit:(UITextField *)textField
 {
-//    NSString *redditSearch = textField.text;
-//
-//    RKSubreddit *newSubreddit;
-//    if (self.hasRedditAccount) {
-//        return [self.subreddits addObject:newSubreddit];
-//    }
-//    else {
-//        return self.catagories.count;
-//    }
+    NSLog(@"Search text: %@", textField.text);
+    textField.text = @"";
+    [textField resignFirstResponder];
 }
 
 - (IBAction)finishSelectingSubreddits:(id)sender

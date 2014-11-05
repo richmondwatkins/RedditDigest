@@ -10,18 +10,4 @@
 
 @implementation SubredditSelectionCollectionReusableView
 
-- (id)initWithCoder:(NSCoder *)aDecoder
-{
-    self = [super initWithCoder:aDecoder];
-    if (self) {
-        [self.textField addTarget:self action:@selector(tellDelegateToAddSubreddit:) forControlEvents:UIControlEventEditingDidEndOnExit];
-    }
-    return self;
-}
-
-- (void)tellDelegateToAddSubreddit:(id)sender
-{
-    [self.delegate searchForSubreddit:self.textField sender:sender];
-}
-
 @end
