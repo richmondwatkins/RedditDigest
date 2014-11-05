@@ -99,7 +99,7 @@
                                     <constraint firstAttribute="height" constant="30" id="JSL-RC-iWz"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits" returnKeyType="next"/>
+                                <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" returnKeyType="next"/>
                             </textField>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="password" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="YVl-9K-NMa">
                                 <rect key="frame" x="208" y="198" width="184" height="30"/>
@@ -486,6 +486,9 @@
                                                 </label>
                                             </subviews>
                                         </tableViewCellContentView>
+                                        <connections>
+                                            <segue destination="5uv-Oq-P6m" kind="show" identifier="PostSegue" id="Rer-8f-YQK"/>
+                                        </connections>
                                     </tableViewCell>
                                 </prototypes>
                                 <connections>
@@ -512,6 +515,59 @@
             </objects>
             <point key="canvasLocation" x="233" y="-837"/>
         </scene>
+        <!--Post View Controller-->
+        <scene sceneID="6cM-va-gTw">
+            <objects>
+                <viewController id="5uv-Oq-P6m" customClass="PostViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="lDg-jd-6lO"/>
+                        <viewControllerLayoutGuide type="bottom" id="ZAd-C1-XKX"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="UbX-54-uAT">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="8bD-j6-fU8">
+                                <rect key="frame" x="0.0" y="64" width="600" height="315"/>
+                            </imageView>
+                            <textView hidden="YES" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Pz7-rn-1w1">
+                                <rect key="frame" x="0.0" y="64" width="600" height="315"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <mutableString key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</mutableString>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
+                            <webView hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8Bg-6O-2Ht">
+                                <rect key="frame" x="0.0" y="64" width="600" height="315"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </webView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="ZAd-C1-XKX" firstAttribute="top" secondItem="8bD-j6-fU8" secondAttribute="bottom" constant="221" id="00g-T6-YiO"/>
+                            <constraint firstItem="Pz7-rn-1w1" firstAttribute="top" secondItem="8Bg-6O-2Ht" secondAttribute="top" id="EBM-kb-oWK"/>
+                            <constraint firstItem="8Bg-6O-2Ht" firstAttribute="bottom" secondItem="8bD-j6-fU8" secondAttribute="bottom" id="F2e-UV-uNm"/>
+                            <constraint firstItem="Pz7-rn-1w1" firstAttribute="trailing" secondItem="8Bg-6O-2Ht" secondAttribute="trailing" id="FKA-N2-3R7"/>
+                            <constraint firstItem="8Bg-6O-2Ht" firstAttribute="leading" secondItem="8bD-j6-fU8" secondAttribute="leading" id="UOk-SZ-cns"/>
+                            <constraint firstAttribute="trailing" secondItem="8bD-j6-fU8" secondAttribute="trailing" id="dOd-XQ-Tuy"/>
+                            <constraint firstItem="8Bg-6O-2Ht" firstAttribute="trailing" secondItem="8bD-j6-fU8" secondAttribute="trailing" id="dtU-4S-Fdm"/>
+                            <constraint firstItem="8Bg-6O-2Ht" firstAttribute="top" secondItem="8bD-j6-fU8" secondAttribute="top" id="eW4-0M-cn0"/>
+                            <constraint firstItem="Pz7-rn-1w1" firstAttribute="bottom" secondItem="8Bg-6O-2Ht" secondAttribute="bottom" id="gmb-lO-iDi"/>
+                            <constraint firstItem="Pz7-rn-1w1" firstAttribute="leading" secondItem="8bD-j6-fU8" secondAttribute="leading" id="oTx-MB-nkY"/>
+                            <constraint firstItem="8bD-j6-fU8" firstAttribute="top" secondItem="UbX-54-uAT" secondAttribute="top" constant="64" id="sBC-vg-ZOD"/>
+                            <constraint firstItem="8bD-j6-fU8" firstAttribute="leading" secondItem="UbX-54-uAT" secondAttribute="leading" id="som-9x-mMh"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="imageView" destination="8bD-j6-fU8" id="ACn-n6-Tep"/>
+                        <outlet property="textView" destination="Pz7-rn-1w1" id="HTs-mi-3Ht"/>
+                        <outlet property="webView" destination="8Bg-6O-2Ht" id="oYK-sd-BpN"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Jq0-Os-qzQ" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="233" y="-135"/>
+        </scene>
         <!--Navigation Controller-->
         <scene sceneID="xjk-nU-YvO">
             <objects>
@@ -532,6 +588,6 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="IWx-eg-FxF"/>
+        <segue reference="UQ5-hC-TYb"/>
     </inferredMetricsTieBreakers>
 </document>

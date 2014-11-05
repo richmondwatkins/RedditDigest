@@ -13,6 +13,7 @@
 #import <SSKeychain/SSKeychain.h>
 #import "Post.h"
 #import <CoreData/CoreData.h>
+#import "PostViewController.h"
 @interface DigestViewController () <UITableViewDataSource, UITableViewDelegate>
 @property (strong, nonatomic) IBOutlet UITableView *digestTableView;
 @property NSMutableArray *digestPosts;
@@ -22,6 +23,7 @@
 
 - (void)viewWillAppear:(BOOL)animated
 {
+
     [super viewWillAppear:animated];
 
     if ([[NSUserDefaults standardUserDefaults] boolForKey:@"HasLaunchedOnce"])
@@ -154,6 +156,7 @@
 
             if (post.isSelfPost) {
                 savedPost.isSelfPost = [NSNumber numberWithBool:YES];
+                NSLog(@"SELF TEXT%@",post.selfText);
                 savedPost.selfText = post.selfText;
             }else{
                 savedPost.isWebPage = [NSNumber numberWithBool:YES];
@@ -184,21 +187,21 @@
     [allPosts setEntity:[NSEntityDescription entityForName:@"Post" inManagedObjectContext:self.managedObjectContext]];
     NSArray * posts = [self.managedObjectContext executeFetchRequest:allPosts error:nil];
     self.digestPosts = [NSMutableArray arrayWithArray:posts];
-    Post *post = posts.firstObject;
+//    Post *post = posts.firstObject;
 
-    NSLog(@"TITLE %@",post.title);
-    NSLog(@"IS WEB PAGE %@",post.isWebPage);
-    NSLog(@"WEB PAGE %@",post.html);
-    NSLog(@"IS Image link %@",post.isImageLink);
-    NSLog(@"URL %@",post.url);
-    NSLog(@"IMAGE %@",post.image);
-    NSLog(@"IS SELF POST %@",post.isSelfPost);
-    NSLog(@"IS SELF POST %@",post.selfText);
-    NSLog(@"THUMBNAIL %@",post.thumbnailImage);
-    NSLog(@"NSFW %@",post.nsfw);
-    NSLog(@"SUBREDDIT %@",post.subreddit);
-    NSLog(@"TOTAL COMMENTS %@",post.totalComments);
-    NSLog(@"VOTE RATIO %@",post.voteRatio);
+//    NSLog(@"TITLE %@",post.title);
+//    NSLog(@"IS WEB PAGE %@",post.isWebPage);
+//    NSLog(@"WEB PAGE %@",post.html);
+//    NSLog(@"IS Image link %@",post.isImageLink);
+//    NSLog(@"URL %@",post.url);
+//    NSLog(@"IMAGE %@",post.image);
+//    NSLog(@"IS SELF POST %@",post.isSelfPost);
+//    NSLog(@"IS SELF POST %@",post.selfText);
+//    NSLog(@"THUMBNAIL %@",post.thumbnailImage);
+//    NSLog(@"NSFW %@",post.nsfw);
+//    NSLog(@"SUBREDDIT %@",post.subreddit);
+//    NSLog(@"TOTAL COMMENTS %@",post.totalComments);
+//    NSLog(@"VOTE RATIO %@",post.voteRatio);
 
 }
 
@@ -256,6 +259,18 @@
 
 -(void)performNewFetchedDataActionsWithDataArray{
     [self.digestTableView reloadData];
+}
+
+-(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
+
+    if ([segue.identifier isEqualToString:@"PostSegue"]) {
+        PostViewController *postViewController = segue.destinationViewController;
+        NSIndexPath *indexPath = [self.digestTableView indexPathForSelectedRow];
+
+        if ([self.digestPosts[indexPath.row] isKindOfClass:[Post class]]) {
+            postViewController.selectedPost = self.digestPosts[indexPath.row];
+        }
+    }
 }
 
 
