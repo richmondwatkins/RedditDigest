@@ -84,4 +84,9 @@
 }
 */
 
+#pragma mark - Unwind from Edit Subreddits
+- (IBAction)unwindToSettingsViewController:(UIStoryboardSegue *)segue {
+    //nothing goes here
+}
+
 @end

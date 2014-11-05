@@ -23,6 +23,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self fetchNewData];
+    [self.tableView reloadData];
 }
 
 
@@ -41,7 +42,10 @@
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Cell"];
     NSDictionary *temp = self.digestPosts[indexPath.row];
     NSString *subredditTitle = [temp objectForKey:@"subreddit"];
+//    NSData *yourData = [temp objectForKey:(id)];
+//    UIImage *subredditLogo = [UIImage imageWithData:yourData];
     cell.textLabel.text = subredditTitle;
+//    cell.imageView.image = subredditLogo;
     NSLog(@"Dictionary %@ and key %@", temp, subredditTitle);
     return cell;
 }
@@ -96,18 +100,19 @@
     NSURL *url = [[NSURL alloc] initWithString:[urlString stringByAddingPercentEscapesUsingEncoding:NSASCIIStringEncoding]];
 
     NSURLSessionDataTask * dataTask = [session dataTaskWithURL:url completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
-        if(error == nil)
-        {
+        if (error != nil)
+            return;
+
+        dispatch_async(dispatch_get_main_queue(), ^{
+            id error;
             NSDictionary *results = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
             NSMutableArray *usersSubredditsArray = [results[@"subreddits"] mutableCopy];
             self.digestPosts = usersSubredditsArray;
             NSLog(@"self.digestPosts %@", self.digestPosts);
             NSLog(@"userSubredditsArray %@", usersSubredditsArray);
             [self.tableView reloadData];
-        }
-
+        });
     }];
-
     [dataTask resume];
 }
 
