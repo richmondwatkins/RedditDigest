@@ -12,12 +12,13 @@
 #import <RKLink.h>
 #import <RKSubreddit.h>
 #import "KTCenterFlowLayout.h"
+#import "SubredditSelectionCollectionReusableView.h"
 
-@interface SubredditSelectionViewController () <UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, UIAlertViewDelegate>
+@interface SubredditSelectionViewController () <UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, UIAlertViewDelegate, UITextFieldDelegate, SubredditSelectionCollectionViewHeaderDelegate>
 
 @property (strong, nonatomic) IBOutlet UICollectionView *subredditCollectionView;
 @property NSMutableArray *subreddits;
-@property NSArray *catagories;
+@property NSMutableArray *catagories;
 @property NSMutableArray *selectedSubreddits;
 @property NSMutableArray *posts; //remove when move to app delegate
 @property SubredditListCollectionViewCell *sizingCell;
@@ -63,7 +64,7 @@
     {
         self.hasRedditAccount = NO;
         self.activityIndicator.hidden = YES;
-        self.catagories = @[@"fashion", @"beauty",@"health",@"US news",@"global news",@"politics",@"technology",@"film",@"science",@"humor",@"world explorer",@"books",@"business & finance",@"music",@"art & design",@"history",@"the future",@"surprise me!",@"offbeat",@"cooking",@"sports",@"geek",@"green",@"adventure"];
+        self.catagories = [NSMutableArray arrayWithArray:@[@"fashion", @"beauty",@"health",@"US news",@"global news",@"politics",@"technology",@"film",@"science",@"humor",@"world explorer",@"books",@"business & finance",@"music",@"art & design",@"history",@"the future",@"surprise me!",@"offbeat",@"cooking",@"sports",@"geek",@"green",@"adventure"]];
     }
 
 
@@ -186,6 +187,47 @@
 - (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout minimumInteritemSpacingForSectionAtIndex:(NSInteger)section
 {
     return 5.0;
+}
+
+#pragma mark - Header
+
+- (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath
+{
+    UICollectionReusableView *reusableview = nil;
+
+    if (kind == UICollectionElementKindSectionHeader)
+    {
+        SubredditSelectionCollectionReusableView *headerView = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"HeaderView" forIndexPath:indexPath];
+        reusableview = headerView;
+    }
+
+    return reusableview;
+}
+
+// Header Height and Width
+- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout referenceSizeForHeaderInSection:(NSInteger)section
+{
+    if (self.hasRedditAccount) {
+        return CGSizeMake(self.view.frame.size.width, 44.0);
+    }
+    else {
+        return CGSizeMake(0, 0);
+    }
+}
+
+#pragma mark - Header Delegate 
+
+- (void)searchForSubreddit:(UITextField *)textField sender:(id)sender
+{
+//    NSString *redditSearch = textField.text;
+//
+//    RKSubreddit *newSubreddit;
+//    if (self.hasRedditAccount) {
+//        return [self.subreddits addObject:newSubreddit];
+//    }
+//    else {
+//        return self.catagories.count;
+//    }
 }
 
 - (IBAction)finishSelectingSubreddits:(id)sender
