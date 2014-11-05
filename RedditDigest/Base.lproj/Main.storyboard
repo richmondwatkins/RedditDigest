@@ -332,10 +332,10 @@
             </objects>
             <point key="canvasLocation" x="2324" y="-837"/>
         </scene>
-        <!--Table View Controller-->
+        <!--Settings View Controller-->
         <scene sceneID="KFU-Cf-Oay">
             <objects>
-                <tableViewController id="TR2-7E-2C6" sceneMemberID="viewController">
+                <tableViewController id="TR2-7E-2C6" customClass="SettingsViewController" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="Ije-ZS-zQI">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -439,7 +439,11 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Add or Delete Subreddits" id="S28-ij-NdU">
-                        <barButtonItem key="leftBarButtonItem" title="Done" id="KaR-2j-5EO"/>
+                        <barButtonItem key="leftBarButtonItem" title="Done" id="KaR-2j-5EO">
+                            <connections>
+                                <segue destination="D6c-O0-7re" kind="unwind" unwindAction="unwindToSettingsViewController:" id="YB6-kZ-t6w"/>
+                            </connections>
+                        </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="GQU-fZ-1uV"/>
                     </navigationItem>
                     <connections>
@@ -447,6 +451,7 @@
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4HK-h7-o78" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="D6c-O0-7re" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="886" y="-1516"/>
         </scene>
