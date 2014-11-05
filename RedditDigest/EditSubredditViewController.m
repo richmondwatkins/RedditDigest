@@ -117,6 +117,7 @@
 }
 
 
+#pragma mark - Delete from Database
 
 -(void)deleter:(NSDictionary *)subredditDictionary
 {
