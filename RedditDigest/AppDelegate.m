@@ -135,18 +135,30 @@
 
 -(void)reloadFromCoreDataOrFetch:(DigestViewController *)digestController{
     NSCalendar* myCalendar = [NSCalendar currentCalendar];
-    NSDateComponents* components = [myCalendar components:NSCalendarUnitYear|NSCalendarUnitMonth|NSCalendarUnitDay
+    NSDateComponents* morningComponents = [myCalendar components:NSCalendarUnitYear|NSCalendarUnitMonth|NSCalendarUnitDay
                                                  fromDate:[NSDate date]];
-    [components setHour: 2];
-    [components setMinute: 0];
-    [components setSecond: 0];
-    NSDate *morningDigest = [myCalendar dateFromComponents:components];
-    NSLog(@"MORNING DIGEST %@",morningDigest);
+    [morningComponents setHour: 2];
+    [morningComponents setMinute: 0];
+    [morningComponents setSecond: 0];
+    NSDate *morningDigest = [myCalendar dateFromComponents:morningComponents];
+
+    NSDateComponents *eveningComponents = [myCalendar components:NSCalendarUnitYear|NSCalendarUnitMonth|NSCalendarUnitDay
+                                                 fromDate:[NSDate date]];
+    [eveningComponents setHour: 18];
+    [eveningComponents setMinute: 0];
+    [eveningComponents setSecond: 0];
+    NSDate *eveningDigest = [myCalendar dateFromComponents:eveningComponents];
+
     NSDate *lastDigest = [[NSUserDefaults standardUserDefaults] valueForKey:@"LastDigest"];
+
     if([[NSDate date] compare: lastDigest] == NSOrderedDescending && [lastDigest compare: morningDigest] == NSOrderedDescending){
         [digestController retrievePostsFromCoreData];
+
+    }else if([[NSDate date] compare: eveningDigest] == NSOrderedDescending && [lastDigest compare: eveningDigest] == NSOrderedDescending){
+        [digestController retrievePostsFromCoreData];
+
     }else{
-        NSLog(@"NOOB ELSE");
+        [digestController requestNewLinks];
 
     }
 }

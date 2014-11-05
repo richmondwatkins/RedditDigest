@@ -13,8 +13,8 @@
 @property (strong, nonatomic) NSManagedObjectContext *managedObjectContext;
 
 -(void)fetchNewDataWithCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler;
-
 -(void)retrievePostsFromCoreData;
+-(void)requestNewLinks;
 
 @end
 

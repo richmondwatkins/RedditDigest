@@ -51,7 +51,7 @@
     RKLink *post = self.digestPosts[indexPath.row];
 
     cell.textLabel.text = post.title;
-    cell.detailTextLabel.text = post.subreddit;
+//    cell.detailTextLabel.text = post.subreddit;
 
     return cell;
 }
@@ -123,11 +123,6 @@
 
 }
 
--(void)performNewFetchedDataActionsWithDataArray{
-    [self.digestTableView reloadData];
-}
-
-
 -(void)addPostToCoreData:(RKLink *)post{
 
     Post *savedPost = [NSEntityDescription insertNewObjectForEntityForName:@"Post" inManagedObjectContext:self.managedObjectContext];
@@ -156,10 +151,66 @@
     NSFetchRequest * allPosts = [[NSFetchRequest alloc] init];
     [allPosts setEntity:[NSEntityDescription entityForName:@"Post" inManagedObjectContext:self.managedObjectContext]];
     NSArray * posts = [self.managedObjectContext executeFetchRequest:allPosts error:nil];
-
+    self.digestPosts = [NSMutableArray arrayWithArray:posts];
     NSLog(@"THIS IS FROM CORE DATA %@",posts);
 
 }
+
+-(void)requestNewLinks{
+    self.digestPosts = [NSMutableArray array];
+
+    NSURLSessionConfiguration* config = [NSURLSessionConfiguration defaultSessionConfiguration];
+    NSURLSession* session = [NSURLSession sessionWithConfiguration:config];
+
+    NSUUID *deviceID = [UIDevice currentDevice].identifierForVendor;
+    NSString *deviceString = [NSString stringWithFormat:@"%@", deviceID];
+    NSString *urlString = [NSString stringWithFormat:@"http://192.168.129.228:3000/subreddits/%@",deviceString];
+    NSURL *url = [[NSURL alloc] initWithString:[urlString stringByAddingPercentEscapesUsingEncoding:NSASCIIStringEncoding]];
+
+    NSURLSessionDataTask * dataTask = [session dataTaskWithURL:url completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+        if(error == nil)
+        {
+            NSDictionary *results = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
+            NSArray *usersSubredditsArray = results[@"subreddits"];
+            [self findTopPostsFromSubreddit:usersSubredditsArray];
+        }
+    }];
+
+    [dataTask resume];
+
+}
+
+-(void)findTopPostsFromSubreddit:(NSArray *)subreddits{
+    [self clearOutCoreData];
+
+    __block int j = 0;
+    for (NSDictionary *subredditDict in subreddits) {
+        NSDictionary *setUpForRKKitObject = [[NSDictionary alloc] initWithObjectsAndKeys:subredditDict[@"subreddit"], @"name", subredditDict[@"url"], @"URL", nil];
+        RKSubreddit *subreddit = [[RKSubreddit alloc] initWithDictionary:setUpForRKKitObject error:nil];
+
+        [[RKClient sharedClient] linksInSubreddit:subreddit pagination:nil completion:^(NSArray *links, RKPagination *pagination, NSError *error) {
+            RKLink *topPost = links.firstObject;
+            if (topPost.stickied) {
+                topPost = links[1];
+            }
+
+            [self.digestPosts addObject:topPost];
+            [self addPostToCoreData:topPost];
+
+            j += 1;
+
+            if (j  == subreddits.count) {
+                [self performNewFetchedDataActionsWithDataArray];
+                [self fireLocalNotificationAndMarkComplete];
+            }
+        }];
+    }
+}
+
+-(void)performNewFetchedDataActionsWithDataArray{
+    [self.digestTableView reloadData];
+}
+
 
 
 @end
