@@ -14,5 +14,7 @@
 
 -(void)fetchNewDataWithCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler;
 
+-(void)retrievePostsFromCoreData;
+
 @end
 

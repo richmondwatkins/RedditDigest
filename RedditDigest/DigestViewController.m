@@ -101,19 +101,26 @@
             if (j  == subreddits.count) {
                 [self performNewFetchedDataActionsWithDataArray];
                 completionHandler(UIBackgroundFetchResultNewData);
-                [self fireLocalNotification];
+                [self fireLocalNotificationAndMarkComplete];
             }
         }];
     }
 }
 
--(void)fireLocalNotification{
+-(void)fireLocalNotificationAndMarkComplete{
     UILocalNotification* localNotification = [[UILocalNotification alloc] init];
     localNotification.fireDate = [NSDate date];
     localNotification.timeZone = [NSTimeZone defaultTimeZone];
     localNotification.alertBody = @"Your reddit digest is ready for viewing";
     localNotification.applicationIconBadgeNumber = [[UIApplication sharedApplication] applicationIconBadgeNumber] + 1;
     [[UIApplication sharedApplication] scheduleLocalNotification:localNotification];
+
+
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    NSDate *lastUpdateDate = [NSDate date];
+    [userDefaults setObject:lastUpdateDate forKey:@"LastDigest"];
+    [userDefaults synchronize];
+
 }
 
 -(void)performNewFetchedDataActionsWithDataArray{
@@ -127,10 +134,6 @@
     savedPost.title = post.title;
     savedPost.url = [NSString stringWithFormat:@"%@", post.URL];
     [self.managedObjectContext save:nil];
-
-    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:@"Post"];
-    NSArray *results = [self.managedObjectContext executeFetchRequest:fetchRequest error:nil];
-    NSLog(@"RESULTSSSSSS %@",results);
 
 }
 
@@ -148,6 +151,15 @@
     [self.managedObjectContext save:nil];
 }
 
+
+-(void)retrievePostsFromCoreData{
+    NSFetchRequest * allPosts = [[NSFetchRequest alloc] init];
+    [allPosts setEntity:[NSEntityDescription entityForName:@"Post" inManagedObjectContext:self.managedObjectContext]];
+    NSArray * posts = [self.managedObjectContext executeFetchRequest:allPosts error:nil];
+
+    NSLog(@"THIS IS FROM CORE DATA %@",posts);
+
+}
 
 
 @end

@@ -29,6 +29,7 @@
 @property (nonatomic, strong) NSString *temperature;
 @property NSString *deviceString;
 @property NSMutableArray *posts;
+
 @end
 
 @implementation AppDelegate
@@ -114,25 +115,40 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     UINavigationController *navigationController = (UINavigationController *)self.window.rootViewController;
-    DigestViewController *controller = (DigestViewController *)navigationController.topViewController;
-    controller.managedObjectContext = self.managedObjectContext;
+    DigestViewController *digestController = (DigestViewController *)navigationController.topViewController;
+    digestController.managedObjectContext = self.managedObjectContext;
 
-    [application registerUserNotificationSettings:[UIUserNotificationSettings settingsForTypes:(UIUserNotificationTypeSound | UIUserNotificationTypeAlert | UIUserNotificationTypeBadge) categories:nil]];
-
-    [application registerForRemoteNotifications];
-
-    [self.window makeKeyAndVisible];
 
     [self showWelcomeViewOrDigestView];
     [[UIApplication sharedApplication] setMinimumBackgroundFetchInterval:UIApplicationBackgroundFetchIntervalMinimum];
 
-//    if ([[NSUserDefaults standardUserDefaults] boolForKey:@"HasLaunchedOnce"]){
+    [self reloadFromCoreDataOrFetch:digestController];
+
+// WE NEED THIS:   if ([[NSUserDefaults standardUserDefaults] boolForKey:@"HasLaunchedOnce"]){
     NSUUID *deviceID = [UIDevice currentDevice].identifierForVendor;
     self.deviceString = [NSString stringWithFormat:@"%@", deviceID];
     [self registerDevice];
 //    }
 
     return YES;
+}
+
+-(void)reloadFromCoreDataOrFetch:(DigestViewController *)digestController{
+    NSCalendar* myCalendar = [NSCalendar currentCalendar];
+    NSDateComponents* components = [myCalendar components:NSCalendarUnitYear|NSCalendarUnitMonth|NSCalendarUnitDay
+                                                 fromDate:[NSDate date]];
+    [components setHour: 2];
+    [components setMinute: 0];
+    [components setSecond: 0];
+    NSDate *morningDigest = [myCalendar dateFromComponents:components];
+    NSLog(@"MORNING DIGEST %@",morningDigest);
+    NSDate *lastDigest = [[NSUserDefaults standardUserDefaults] valueForKey:@"LastDigest"];
+    if([[NSDate date] compare: lastDigest] == NSOrderedDescending && [lastDigest compare: morningDigest] == NSOrderedDescending){
+        [digestController retrievePostsFromCoreData];
+    }else{
+        NSLog(@"NOOB ELSE");
+
+    }
 }
 
 - (void)showWelcomeViewOrDigestView
@@ -211,12 +227,6 @@
 }
 
 - (void)applicationDidEnterBackground:(UIApplication *)application {
-//    UILocalNotification *notification = [[UILocalNotification alloc]init];
-//    notification.repeatInterval = NSCalendarUnitDay;
-//    [notification setAlertBody:@"Hello world"];
-//    [notification setFireDate:[NSDate dateWithTimeIntervalSinceNow:1]];
-//    [notification setTimeZone:[NSTimeZone  defaultTimeZone]];
-//    [application setScheduledLocalNotifications:[NSArray arrayWithObject:notification]];
 
     // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
     // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
