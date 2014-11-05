@@ -21,6 +21,15 @@
     [super viewDidLoad];
     NSLog(@"IN DETAIL VIEW %@",self.selectedPost);
 
+    if (self.selectedPost) {
+        [self loadPageFromCoreData];
+    }else{
+        [self loadPageFromRKLink];
+    }
+
+}
+
+-(void)loadPageFromCoreData{
     if (self.selectedPost.isImageLink.intValue == 1) {
         self.imageView.hidden = NO;
         self.imageView.image = [UIImage imageWithData:self.selectedPost.image];
@@ -33,7 +42,20 @@
         [self.webView loadHTMLString:[self.selectedPost.html stringByReplacingOccurrencesOfString:@"\n" withString:@"<br/>"] baseURL:nil];
     }
 
+}
 
+-(void)loadPageFromRKLink{
+//    if (self.selectedLink.isImageLink) {
+//        self.imageView.hidden = NO;
+//        self.imageView.image = [UIImage imageWithData:self.selectedPost.image];
+//        NSLog(@"IMAGE %@",self.imageView.image);
+//    }else if(self.selectedPost.isSelfPost != nil){
+//        self.textView.hidden = NO;
+//        self.textView.text = self.selectedPost.selfText;
+//    }else{
+//        self.webView.hidden = NO;
+//        [self.webView loadHTMLString:[self.selectedPost.html stringByReplacingOccurrencesOfString:@"\n" withString:@"<br/>"] baseURL:nil];
+//    }
 }
 
 

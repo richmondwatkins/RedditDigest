@@ -8,9 +8,10 @@
 
 #import <UIKit/UIKit.h>
 #import "Post.h"
-
+#import <RedditKit.h>
+#import <RKLink.h>
 @interface PostViewController : UIViewController
 
-@property Post *selectedPost;
-
+@property Post *selectedPost; //if from core data
+@property RKLink *selectedLink; //if from web
 @end

@@ -251,8 +251,7 @@
             if (topPost.stickied) {
                 topPost = links[1];
             }
-//            NSLog(@"LINK : %@",(topPost.isSelfPost) ? @"true" : @"false");
-            [self.digestPosts addObject:topPost];
+//            [self.digestPosts addObject:topPost];
             [self addPostToCoreData:topPost];
 
             j += 1;
@@ -266,6 +265,7 @@
 }
 
 -(void)performNewFetchedDataActionsWithDataArray{
+    [self retrievePostsFromCoreData];
     [self.digestTableView reloadData];
 }
 
@@ -277,6 +277,8 @@
 
         if ([self.digestPosts[indexPath.row] isKindOfClass:[Post class]]) {
             postViewController.selectedPost = self.digestPosts[indexPath.row];
+        }else{
+            postViewController.selectedLink = self.digestPosts[indexPath.row];
         }
     }
 }
