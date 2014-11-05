@@ -2,7 +2,7 @@
 //  Post.m
 //  
 //
-//  Created by Richmond on 11/4/14.
+//  Created by Richmond on 11/5/14.
 //
 //
 
@@ -11,16 +11,17 @@
 
 @implementation Post
 
-@dynamic title;
-@dynamic url;
-@dynamic totalComments;
-@dynamic selfText;
-@dynamic thumbnailImage;
+@dynamic author;
 @dynamic isImageLink;
-@dynamic voteRatio;
-@dynamic subreddit;
 @dynamic isSelfPost;
 @dynamic nsfw;
-@dynamic author;
+@dynamic selfText;
+@dynamic subreddit;
+@dynamic thumbnailImage;
+@dynamic title;
+@dynamic totalComments;
+@dynamic url;
+@dynamic voteRatio;
+@dynamic image;
 
 @end

@@ -155,13 +155,10 @@
     NSDate *lastDigest = [[NSUserDefaults standardUserDefaults] valueForKey:@"LastDigest"];
 
     if([[NSDate date] compare: lastDigest] == NSOrderedDescending && [lastDigest compare: morningDigest] == NSOrderedDescending){
-//        [digestController retrievePostsFromCoreData];
-        [digestController requestNewLinks];
+        [digestController retrievePostsFromCoreData];
 
     }else if([[NSDate date] compare: eveningDigest] == NSOrderedDescending && [lastDigest compare: eveningDigest] == NSOrderedDescending){
-//        [digestController retrievePostsFromCoreData];
-        [digestController requestNewLinks];
-
+        [digestController retrievePostsFromCoreData];
 
     }else{
         [digestController requestNewLinks];

@@ -125,29 +125,37 @@
 
 -(void)addPostToCoreData:(RKLink *)post{
 
-//    @dynamic thumbnailImage;
-//    @dynamic isImageLink;
-//    @dynamic voteRatio;
-//    @dynamic subreddit;
-//    @dynamic isSelfPost;
-//    @dynamic nsfw;
-//    @dynamic author;
-
     Post *savedPost = [NSEntityDescription insertNewObjectForEntityForName:@"Post" inManagedObjectContext:self.managedObjectContext];
     savedPost.title = post.title;
 
-    if (post.isImageLink) {
-        //download image and save data to core data
-    }else{
-        savedPost.url = [NSString stringWithFormat:@"%@", post.URL];
-    }
+    NSURLRequest *thumbnailRequest = [NSURLRequest requestWithURL:post.thumbnailURL];
+    [NSURLConnection sendAsynchronousRequest:thumbnailRequest queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
+        savedPost.thumbnailImage = data;
 
-    int totalComments = (int)post.totalComments;
-    savedPost.totalComments = [NSNumber numberWithInt:totalComments];
-    if (post.isSelfPost) {
-        savedPost.selfText = post.selfText;
-    }
-    [self.managedObjectContext save:nil];
+        if (post.isImageLink) {
+            savedPost.isImageLink = [NSNumber numberWithBool:YES];
+            NSURLRequest *mainImageRequest = [NSURLRequest requestWithURL:post.URL];
+            [NSURLConnection sendAsynchronousRequest:mainImageRequest queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
+                savedPost.image = data;
+                savedPost.url = [post.URL absoluteString];
+                savedPost.voteRatio = [NSNumber numberWithFloat:post.score];
+                savedPost.subreddit = post.subreddit;
+                savedPost.nsfw = [NSNumber numberWithBool:post.NSFW];
+                savedPost.author = post.author;
+            }];
+        }else{
+//            NSLog(@"%ld",(long)post.score);
+            savedPost.isImageLink = [NSNumber numberWithBool:NO];
+            savedPost.url = [post.URL absoluteString];
+            savedPost.voteRatio = [NSNumber numberWithFloat:post.upvoteRatio];
+            savedPost.subreddit = post.subreddit;
+            savedPost.nsfw = [NSNumber numberWithBool:post.NSFW];
+            savedPost.author = post.author;
+
+            (post.isSelfPost) ? savedPost.isSelfPost = [NSNumber numberWithBool:YES] : (savedPost.isSelfPost = [NSNumber numberWithBool:NO]);
+        }
+        [self.managedObjectContext save:nil];
+    }];
 }
 
 -(void)clearOutCoreData{
@@ -170,7 +178,21 @@
     [allPosts setEntity:[NSEntityDescription entityForName:@"Post" inManagedObjectContext:self.managedObjectContext]];
     NSArray * posts = [self.managedObjectContext executeFetchRequest:allPosts error:nil];
     self.digestPosts = [NSMutableArray arrayWithArray:posts];
-    NSLog(@"THIS IS FROM CORE DATA %@",posts);
+    Post *post = posts.firstObject;
+
+    NSLog(@"TITLE %@",post.title);
+    NSLog(@"IS Image link %@",post.isImageLink);
+    NSLog(@"URL %@",post.url);
+    NSLog(@"IMAGE %@",post.image);
+    NSLog(@"IS SELF POST %@",post.isSelfPost);
+    NSLog(@"THUMBNAIL %@",post.thumbnailImage);
+    NSLog(@"NSFW %@",post.nsfw);
+    NSLog(@"SUBREDDIT %@",post.subreddit);
+    NSLog(@"TOTAL COMMENTS %@",post.totalComments);
+    NSLog(@"VOTE RATIO %@",post.voteRatio);
+
+
+
 
 }
 
@@ -187,7 +209,6 @@
     NSURL *url = [[NSURL alloc] initWithString:[urlString stringByAddingPercentEscapesUsingEncoding:NSASCIIStringEncoding]];
 
     NSURLSessionDataTask * dataTask = [session dataTaskWithURL:url completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
-        NSLog(@"%@",data);
         if(error == nil)
         {
             NSDictionary *results = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
@@ -213,7 +234,7 @@
             if (topPost.stickied) {
                 topPost = links[1];
             }
-            NSLog(@"LINK : %@",topPost);
+//            NSLog(@"LINK : %@",(topPost.isSelfPost) ? @"true" : @"false");
             [self.digestPosts addObject:topPost];
             [self addPostToCoreData:topPost];
 
