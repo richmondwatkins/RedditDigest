@@ -366,13 +366,16 @@
                                                 </label>
                                             </subviews>
                                         </tableViewCellContentView>
+                                        <connections>
+                                            <segue destination="zj6-Ch-nL2" kind="presentation" id="IPs-Es-5hZ"/>
+                                        </connections>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="BPR-M7-CNs">
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="BPR-M7-CNs" id="bZ3-KQ-rfL">
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Add or Delete Subreddits" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="goM-Zi-h2K">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Edit Digest (Add or Remove Subreddits)" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="goM-Zi-h2K">
                                                     <rect key="frame" x="16" y="7" width="584" height="28"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
@@ -461,7 +464,59 @@
             </objects>
             <point key="canvasLocation" x="235" y="-1519"/>
         </scene>
-        <!--Add or Delete Subreddits-->
+        <!--Settings About Reddit View Controller-->
+        <scene sceneID="NUo-nm-YjV">
+            <objects>
+                <viewController id="zj6-Ch-nL2" customClass="SettingsAboutRedditViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="IE4-zj-kPD"/>
+                        <viewControllerLayoutGuide type="bottom" id="44l-Jk-bfB"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="zRv-1u-rGJ">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <webView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6tf-g2-4C4">
+                                <rect key="frame" x="0.0" y="70" width="600" height="530"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <connections>
+                                    <outlet property="delegate" destination="zj6-Ch-nL2" id="kfp-rz-fyd"/>
+                                </connections>
+                            </webView>
+                            <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="orz-SL-tTw">
+                                <rect key="frame" x="0.0" y="20" width="600" height="44"/>
+                                <items>
+                                    <navigationItem title="About Reddit" id="5je-kq-iUg">
+                                        <barButtonItem key="leftBarButtonItem" title="Done" id="uau-50-cEO">
+                                            <connections>
+                                                <segue destination="Ll6-be-N5A" kind="unwind" unwindAction="unwindToSettingsViewController:" id="fOh-jf-cje"/>
+                                            </connections>
+                                        </barButtonItem>
+                                    </navigationItem>
+                                </items>
+                            </navigationBar>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="44l-Jk-bfB" firstAttribute="top" secondItem="6tf-g2-4C4" secondAttribute="bottom" id="1vf-gD-Bts"/>
+                            <constraint firstAttribute="trailing" secondItem="6tf-g2-4C4" secondAttribute="trailing" id="Gaz-Dv-4DF"/>
+                            <constraint firstItem="orz-SL-tTw" firstAttribute="leading" secondItem="zRv-1u-rGJ" secondAttribute="leading" id="JDC-YG-DSe"/>
+                            <constraint firstItem="orz-SL-tTw" firstAttribute="top" secondItem="zRv-1u-rGJ" secondAttribute="top" constant="20" id="MeE-lu-45Z"/>
+                            <constraint firstItem="6tf-g2-4C4" firstAttribute="leading" secondItem="zRv-1u-rGJ" secondAttribute="leading" id="cBd-8K-4Tb"/>
+                            <constraint firstItem="6tf-g2-4C4" firstAttribute="top" secondItem="zRv-1u-rGJ" secondAttribute="top" constant="70" id="mCO-WT-OZT"/>
+                            <constraint firstAttribute="trailing" secondItem="orz-SL-tTw" secondAttribute="trailing" id="txH-sw-oFT"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="webView" destination="6tf-g2-4C4" id="jZr-DC-LIJ"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="OeC-4k-jF3" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="Ll6-be-N5A" userLabel="Exit" sceneMemberID="exit"/>
+            </objects>
+            <point key="canvasLocation" x="1008" y="-2306"/>
+        </scene>
+        <!--Edit Digest-->
         <scene sceneID="FMl-Bs-7d0">
             <objects>
                 <tableViewController id="J8T-U7-GKz" customClass="EditSubredditViewController" sceneMemberID="viewController">
@@ -482,7 +537,7 @@
                             <outlet property="delegate" destination="J8T-U7-GKz" id="LEd-q7-mqL"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Add or Delete Subreddits" id="S28-ij-NdU">
+                    <navigationItem key="navigationItem" title="Edit Digest" id="S28-ij-NdU">
                         <barButtonItem key="leftBarButtonItem" title="Done" id="KaR-2j-5EO">
                             <connections>
                                 <segue destination="D6c-O0-7re" kind="unwind" unwindAction="unwindToSettingsViewController:" id="YB6-kZ-t6w"/>
