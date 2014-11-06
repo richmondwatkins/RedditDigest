@@ -7,12 +7,16 @@
 //
 
 #import "SettingsViewController.h"
+#import "RKUser.h"
+#import <SSKeychain/SSKeychain.h>
+
 
 @interface SettingsViewController () <UITableViewDataSource, UITableViewDelegate>
 
 @property (strong, nonatomic) IBOutlet UITableView *tableView;
 @property NSArray *settingsArray;
 @property NSArray *titlesArray;
+@property NSString *currentUserName;
 
 @end
 
@@ -22,6 +26,8 @@
     [super viewDidLoad];
     self.settingsArray = [NSArray arrayWithObjects: @"Edit Subreddits", @"Play Ping Pong", @"Dance", @"Fuggedaboutit", nil];
     self.titlesArray = [NSArray arrayWithObjects:@"One", @"Two", @"Three", @"Four", nil];
+    [self findUserName];
+    self.title = self.currentUserName;
     // Do any additional setup after loading the view.
 }
 
@@ -29,6 +35,31 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
+
+#pragma mark - Login Credentials and Login or Logout
+
+-(void)findUserName
+{
+    NSArray *array = [SSKeychain accountsForService:@"friendsOfSnoo"];
+    NSDictionary *accountInfoDictionary = array.firstObject;
+    NSString *username = accountInfoDictionary[@"acct"];
+    self.currentUserName = username;
+}
+
+
+
+//if ([[NSUserDefaults standardUserDefaults] boolForKey:@"HasRedditAccount"])
+//{
+//    NSArray *array = [SSKeychain accountsForService:@"friendsOfSnoo"];
+//    NSDictionary *accountInfoDictionary = array.firstObject;
+//    NSString *username = accountInfoDictionary[@"acct"];
+//    NSString *password = [SSKeychain passwordForService:@"friendsOfSnoo" account:username];
+//
+//    [[RKClient sharedClient] signInWithUsername:accountInfoDictionary[@"acct"] password:password completion:^(NSError *error) {
+//        if (!error)
+//        {
+//            NSLog(@"Successfully signed in!");
 
 #pragma mark - TableView Delegate Methods
 
