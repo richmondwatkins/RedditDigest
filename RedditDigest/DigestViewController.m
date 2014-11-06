@@ -159,7 +159,12 @@
 
             if (post.isSelfPost) {
                 savedPost.isSelfPost = [NSNumber numberWithBool:YES];
-                savedPost.selfText = post.selfText;
+
+                if ([post.selfText isEqualToString:@""]) {
+                    savedPost.selfText = post.title;
+                }else{
+                    savedPost.selfText = post.selfText;
+                }
             }else{
                 savedPost.isWebPage = [NSNumber numberWithBool:YES];
 //                NSURL *urlReadabilityURL= [NSURL URLWithString:[NSString stringWithFormat:@"http://www.readability.com/m?url=%@", [post.URL absoluteString]]];
