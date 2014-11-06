@@ -65,6 +65,8 @@
 #pragma mark - Fetch from Server
 
 -(void)fetchNewDataWithCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler{
+    [self clearOutCoreData];
+
     self.digestPosts = [NSMutableArray array];
 
     NSURLSessionConfiguration* config = [NSURLSessionConfiguration defaultSessionConfiguration];
@@ -88,7 +90,6 @@
 }
 
 -(void)findTopPostsFromSubreddit:(NSArray *)subreddits withCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler{
-    [self clearOutCoreData];
 
     __block int j = 0;
     for (NSDictionary *subredditDict in subreddits) {
@@ -174,8 +175,11 @@
     }];
 }
 
--(NSString*)cacheFile:(NSString *)title
-{
+-(NSString*)cacheFile:(NSString *)title{
+//    
+//    NSRange range = [title rangeOfString:@"#"];
+//    NSString *shortString = [title substringToIndex:range.location];
+
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
     return [[paths objectAtIndex:0] stringByAppendingPathComponent:[NSString stringWithFormat:@"%@", title]];
 }
@@ -234,6 +238,8 @@
 }
 
 -(void)requestNewLinks{
+    [self clearOutCoreData];
+
     self.digestPosts = [NSMutableArray array];
 
     NSURLSessionConfiguration* config = [NSURLSessionConfiguration defaultSessionConfiguration];
@@ -259,7 +265,6 @@
 }
 
 -(void)findTopPostsFromSubreddit:(NSArray *)subreddits{
-    [self clearOutCoreData];
 
     __block int j = 0;
     for (NSDictionary *subredditDict in subreddits) {
