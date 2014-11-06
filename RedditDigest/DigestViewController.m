@@ -161,15 +161,23 @@
                 savedPost.selfText = post.selfText;
             }else{
                 savedPost.isWebPage = [NSNumber numberWithBool:YES];
-                NSURL *urlReadabilityURL= [NSURL URLWithString:[NSString stringWithFormat:@"http://www.readability.com/m?url=%@", [post.URL absoluteString]]];
+//                NSURL *urlReadabilityURL= [NSURL URLWithString:[NSString stringWithFormat:@"http://www.readability.com/m?url=%@", [post.URL absoluteString]]];
 
-                NSLog(@"URL READBILITYYYY %@",urlReadabilityURL);
-                
-                savedPost.html = [NSString stringWithContentsOfURL:urlReadabilityURL encoding:NSUTF8StringEncoding error:nil];
+//                NSLog(@"URL READBILITYYYY %@",urlReadabilityURL);
+
+                NSData *data = [NSData dataWithContentsOfURL:post.URL];
+                [[NSFileManager defaultManager] createFileAtPath:[self cacheFile:post.title] contents:data attributes:nil];
+//                savedPost.html = [NSString stringWithContentsOfURL:urlReadabilityURL encoding:NSUTF8StringEncoding error:nil];
             }
         }
         [self.managedObjectContext save:nil];
     }];
+}
+
+-(NSString*)cacheFile:(NSString *)title
+{
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
+    return [[paths objectAtIndex:0] stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.html", title]];
 }
 
 -(void)clearOutCoreData{

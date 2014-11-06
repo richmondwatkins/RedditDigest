@@ -58,7 +58,7 @@
 }
 
 -(void)registerDevice{
-    NSString* deviceURLString = @"http://192.168.1.4:3000/register/device";
+    NSString* deviceURLString = @"http://192.168.129.228:3000/register/device";
     NSURL *url = [[NSURL alloc] initWithString:[deviceURLString stringByAddingPercentEscapesUsingEncoding:NSASCIIStringEncoding]];
 
     NSError *error;
@@ -85,7 +85,7 @@
 
 -(void)registerDeviceForPushNotifications{
 
-    NSString* urlString = @"http://192.168.1.4:3000/register/push";
+    NSString* urlString = @"http://192.168.129.228:3000/register/push";
 
     NSURL *url = [[NSURL alloc] initWithString:[urlString stringByAddingPercentEscapesUsingEncoding:NSASCIIStringEncoding]];
 
@@ -155,12 +155,12 @@
     NSDate *lastDigest = [[NSUserDefaults standardUserDefaults] valueForKey:@"LastDigest"];
 
     if([[NSDate date] compare: lastDigest] == NSOrderedDescending && [lastDigest compare: morningDigest] == NSOrderedDescending){
-        [digestController retrievePostsFromCoreData];
-//        [digestController requestNewLinks];
+//        [digestController retrievePostsFromCoreData];
+        [digestController requestNewLinks];
 
     }else if([[NSDate date] compare: eveningDigest] == NSOrderedDescending && [lastDigest compare: eveningDigest] == NSOrderedDescending){
-        [digestController retrievePostsFromCoreData];
-//        [digestController requestNewLinks];
+//        [digestController retrievePostsFromCoreData];
+        [digestController requestNewLinks];
 
     }else{
         [digestController requestNewLinks];
