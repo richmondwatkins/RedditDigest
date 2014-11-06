@@ -67,7 +67,14 @@
     {
         self.hasRedditAccount = NO;
         self.activityIndicator.hidden = YES;
-        self.catagories = [NSMutableArray arrayWithArray:@[@"fashion", @"beauty",@"health",@"US news",@"global news",@"politics",@"technology",@"film",@"science",@"humor",@"world explorer",@"books",@"business & finance",@"music",@"art & design",@"history",@"the future",@"surprise me!",@"offbeat",@"cooking",@"sports",@"geek",@"green",@"adventure"]];
+
+        NSURL *categoryURL = [NSURL URLWithString:@"http://192.168.1.4:3000/get/categories"];
+        NSURLRequest *request = [NSURLRequest requestWithURL:categoryURL];
+        [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
+            NSDictionary *results = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:nil];
+            self.catagories = results[@"allCategories"];
+            [self.subredditCollectionView reloadData];
+        }];
     }
 
 
@@ -106,7 +113,7 @@
         {
             NSMutableDictionary *subredditDict = [[NSMutableDictionary alloc] initWithObjectsAndKeys:subreddit.name, @"name",subreddit.URL, @"url", nil];
             [self.selectedSubreddits addObject:subredditDict];
-            NSLog(@"SELECTED SUBREDDITS %@",self.selectedSubreddits);
+//            NSLog(@"SELECTED SUBREDDITS %@",self.selectedSubreddits);
             if (self.selectedSubreddits.count > 0) {
                 [UIView animateWithDuration:0.3 animations:^{
                     self.doneSelectingSubredditsButton.alpha = 1.0;
@@ -142,7 +149,8 @@
         cell.subredditTitleLabel.text = subreddit.name;
     }
     else {
-        cell.subredditTitleLabel.text = self.catagories[indexPath.row];
+        NSLog(@"LOGLOG LOG %@",self.catagories[indexPath.row]);
+        cell.subredditTitleLabel.text = self.catagories[indexPath.row][@"category"][@"name"];
     }
 
 }
@@ -161,7 +169,7 @@
         NSMutableDictionary *subredditDict = [[NSMutableDictionary alloc] initWithObjectsAndKeys:subreddit.name, @"name",subreddit.URL, @"url", nil];
         if ([self.selectedSubreddits containsObject:subredditDict]) {
             [self.selectedSubreddits removeObject:subredditDict];
-            NSLog(@"sizelkj: %lu", (unsigned long)self.selectedSubreddits.count);
+//            NSLog(@"sizelkj: %lu", (unsigned long)self.selectedSubreddits.count);
         }
     }
     else {
@@ -300,7 +308,7 @@
     {
         NSUUID *deviceID = [UIDevice currentDevice].identifierForVendor;
         NSString *deviceString = [NSString stringWithFormat:@"%@", deviceID];
-        NSString *urlString = [NSString stringWithFormat:@"http://192.168.129.228:3000/subreddits/%@",  deviceString];
+        NSString *urlString = [NSString stringWithFormat:@"http://192.168.1.4:3000/subreddits/%@",  deviceString];
 
         NSDictionary *dataDictionary = [[NSDictionary alloc] initWithObjectsAndKeys:self.selectedSubreddits, @"subreddits", nil];
         NSError *error;
@@ -319,7 +327,7 @@
 
         NSURLSessionDataTask* dataTask = [session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
             if (!error) {
-                NSLog(@"%@",response);
+//                NSLog(@"%@",response);
             }
         }];
         [dataTask resume];
@@ -340,7 +348,7 @@
 
     NSUUID *deviceID = [UIDevice currentDevice].identifierForVendor;
     NSString *deviceString = [NSString stringWithFormat:@"%@", deviceID];
-    NSString *urlString = [NSString stringWithFormat:@"http://192.168.129.228:3000/subreddits/%@",deviceString];
+    NSString *urlString = [NSString stringWithFormat:@"http://192.168.1.4:3000/subreddits/%@",deviceString];
     NSURL *url = [[NSURL alloc] initWithString:[urlString stringByAddingPercentEscapesUsingEncoding:NSASCIIStringEncoding]];
 
     NSURLSessionDataTask * dataTask = [session dataTaskWithURL:url completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
@@ -354,7 +362,6 @@
                 RKSubreddit *subreddit = [[RKSubreddit alloc] initWithDictionary:setUpForRKKitObject error:nil];
                 [self findTopPostsFromSubreddit:subreddit];
             }
-            NSLog(@"ALL POSTSSS %@", self.posts);
         }
     }];
 
@@ -378,7 +385,7 @@
 
     NSUUID *deviceID = [UIDevice currentDevice].identifierForVendor;
     NSString *deviceString = [NSString stringWithFormat:@"%@", deviceID];
-    NSString *urlString = [NSString stringWithFormat:@"http://192.168.129.228:3000/subreddits/delete/%@",  deviceString];
+    NSString *urlString = [NSString stringWithFormat:@"http://192.168.1.4:3000/subreddits/delete/%@",  deviceString];
 
     NSDictionary *objectToDelete = [[NSDictionary alloc] initWithObjectsAndKeys:tempDict, @"subreddit", nil];
     NSError *error;
@@ -407,37 +414,5 @@
     DigestViewController *digestViewController = segue.destinationViewController;
     digestViewController.subredditsForFirstDigest = self.selectedSubreddits;
 }
-
-//-(void)getAllPosts{
-//    NSURLSessionConfiguration* config = [NSURLSessionConfiguration defaultSessionConfiguration];
-//    NSURLSession* session = [NSURLSession sessionWithConfiguration:config];
-//
-//    NSUUID *deviceID = [UIDevice currentDevice].identifierForVendor;
-//    NSString *deviceString = [NSString stringWithFormat:@"%@", deviceID];
-//    NSString *urlString = [NSString stringWithFormat:@"http://192.168.129.228:3000/subreddits/%@",deviceString];
-//    NSURL *url = [[NSURL alloc] initWithString:[urlString stringByAddingPercentEscapesUsingEncoding:NSASCIIStringEncoding]];
-//
-//    NSURLSessionDataTask * dataTask = [session dataTaskWithURL:url completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
-//        NSLog(@"%@",error);
-//        if(error == nil)
-//        {
-//            NSDictionary *tester = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
-//            NSLog(@"THIS IS THE REsponSEEEEE %@", tester);
-//            NSArray *testArry = tester[@"subreddits"];
-//            NSDictionary *testDict = testArry.firstObject;
-//            NSDictionary *woo = [[NSDictionary alloc] initWithObjectsAndKeys:testDict[@"subreddit"], @"name", testDict[@"url"], @"URL", nil];
-//            RKSubreddit *subreddit = [[RKSubreddit alloc] initWithDictionary:woo error:nil];
-//
-//            [[RKClient sharedClient] linksInSubreddit:subreddit pagination:nil completion:^(NSArray *links, RKPagination *pagination, NSError *error) {
-//                NSLog(@"Links: %@", links);
-//
-//            }];
-//        }
-//
-//    }];
-//    
-//    [dataTask resume];
-//}
-
 
 @end
