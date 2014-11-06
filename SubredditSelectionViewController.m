@@ -313,39 +313,32 @@
  */
 - (IBAction)finishSelectingSubreddits:(id)sender
 {
-    if (self.hasRedditAccount)
-    {
-        NSUUID *deviceID = [UIDevice currentDevice].identifierForVendor;
-        NSString *deviceString = [NSString stringWithFormat:@"%@", deviceID];
-        NSString *urlString = [NSString stringWithFormat:@"http://192.168.129.228:3000/subreddits/%@",  deviceString];
 
-        NSDictionary *dataDictionary = [[NSDictionary alloc] initWithObjectsAndKeys:self.selectedSubreddits, @"subreddits", nil];
-        NSError *error;
+    NSUUID *deviceID = [UIDevice currentDevice].identifierForVendor;
+    NSString *deviceString = [NSString stringWithFormat:@"%@", deviceID];
+    NSString *urlString = [NSString stringWithFormat:@"http://192.168.129.228:3000/subreddits/%@",  deviceString];
 
-        NSData *postData = [NSJSONSerialization dataWithJSONObject:dataDictionary options:0 error:&error];
-        NSURL *url = [[NSURL alloc] initWithString:[urlString stringByAddingPercentEscapesUsingEncoding:NSASCIIStringEncoding]];
+    NSDictionary *dataDictionary = [[NSDictionary alloc] initWithObjectsAndKeys:self.selectedSubreddits, @"subreddits", nil];
+    NSError *error;
 
-        NSMutableURLRequest* request = [NSMutableURLRequest requestWithURL:url];
-        request.HTTPMethod = @"POST";
+    NSData *postData = [NSJSONSerialization dataWithJSONObject:dataDictionary options:0 error:&error];
+    NSURL *url = [[NSURL alloc] initWithString:[urlString stringByAddingPercentEscapesUsingEncoding:NSASCIIStringEncoding]];
 
-        [request addValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
-        [request setHTTPBody:postData];
+    NSMutableURLRequest* request = [NSMutableURLRequest requestWithURL:url];
+    request.HTTPMethod = @"POST";
 
-        NSURLSessionConfiguration* config = [NSURLSessionConfiguration defaultSessionConfiguration];
-        NSURLSession* session = [NSURLSession sessionWithConfiguration:config];
+    [request addValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
+    [request setHTTPBody:postData];
 
-        NSURLSessionDataTask* dataTask = [session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
-            if (!error) {
+    NSURLSessionConfiguration* config = [NSURLSessionConfiguration defaultSessionConfiguration];
+    NSURLSession* session = [NSURLSession sessionWithConfiguration:config];
+
+    NSURLSessionDataTask* dataTask = [session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+        if (!error) {
 //                NSLog(@"%@",response);
-            }
-        }];
-        [dataTask resume];
-    }
-    else
-    {
-        // load the subreddits here from the selected catagories
-        NSLog(@"You've selected the following catagories: %@", self.selectedSubreddits);
-    }
+        }
+    }];
+    [dataTask resume];
 
 }
 

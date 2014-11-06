@@ -255,6 +255,7 @@
         if(error == nil)
         {
             NSDictionary *results = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
+            NSLog(@"RESULTS %@",results);
             NSArray *usersSubredditsArray = results[@"subreddits"];
             [self findTopPostsFromSubreddit:usersSubredditsArray];
         }
