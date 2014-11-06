@@ -29,6 +29,17 @@
     self.titlesArray = [NSArray arrayWithObjects:@"One", @"Two", @"Three", @"Four", nil];
     [self findUserName];
     self.title = self.currentUserName;
+
+    if (self.currentUserName == nil)
+        
+    {
+        self.loginLogoutLabel.text = @"Login";
+
+    } else {
+
+        self.loginLogoutLabel.text = @"Logout";
+    }
+
     // Do any additional setup after loading the view.
 }
 
