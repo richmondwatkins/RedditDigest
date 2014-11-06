@@ -36,7 +36,7 @@
 
 - (void)applicationDidBecomeActive:(UIApplication *)application
 {
-
+    
     NSLog(@"%@", BaseURL);
 
     [ZeroPush engageWithAPIKey:@"PM4ouAj1rzxmQysu5ej6" delegate:self];

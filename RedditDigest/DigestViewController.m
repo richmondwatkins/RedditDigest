@@ -139,10 +139,23 @@
     Post *savedPost = [NSEntityDescription insertNewObjectForEntityForName:@"Post" inManagedObjectContext:self.managedObjectContext];
     savedPost.title = post.title;
     savedPost.subreddit = post.subreddit;
-    savedPost.url = [post.URL absoluteString];
+//    savedPost.url = [post.URL absoluteString];
     savedPost.nsfw = [NSNumber numberWithBool:post.NSFW];
     savedPost.author = post.author;
     savedPost.voteRatio = [NSNumber numberWithFloat:post.score];
+
+    savedPost.url = [[post.URL absoluteString] stringByReplacingOccurrencesOfString:@"www" withString:@"m"];
+
+    NSLog(@"URL %@",savedPost);
+//    NSLog(@"URL %@",post.URL);
+//    NSLog(@"scheme: %@", [post.URL scheme]);
+//    NSLog(@"host: %@", [post.URL host]);
+//    NSLog(@"port: %@", [post.URL port]);
+//    NSLog(@"path: %@", [post.URL path]);
+//    NSLog(@"path components: %@", [post.URL pathComponents]);
+//    NSLog(@"parameterString: %@", [post.URL parameterString]);
+//    NSLog(@"query: %@", [post.URL query]);
+//    NSLog(@"fragment: %@", [post.URL fragment]);
 
     NSURLRequest *thumbnailRequest = [NSURLRequest requestWithURL:post.thumbnailURL];
     [NSURLConnection sendAsynchronousRequest:thumbnailRequest queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
@@ -214,21 +227,21 @@
 
         // Print out the path to verify we are in the right place
         NSString *directory = [paths objectAtIndex:0];
-        NSLog(@"Directory: %@", directory);
+//        NSLog(@"Directory: %@", directory);
 
         // For each file in the directory, create full path and delete the file
         for (NSString *file in [fileManager contentsOfDirectoryAtPath:directory error:&error])
         {
             NSString *filePath = [directory stringByAppendingPathComponent:file];
-            NSLog(@"File : %@", filePath);
+//            NSLog(@"File : %@", filePath);
 
             BOOL fileDeleted = [fileManager removeItemAtPath:filePath error:&error];
             
             if (fileDeleted != YES || error != nil)
             {
-                NSLog(@"NOT DELETED");
+//                NSLog(@"NOT DELETED");
             }else{
-                NSLog(@"DELTED");
+//                NSLog(@"DELTED");
             }
         }
         
@@ -260,7 +273,7 @@
         if(error == nil)
         {
             NSDictionary *results = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
-            NSLog(@"RESULTS %@",results);
+//            NSLog(@"RESULTS %@",results);
             NSArray *usersSubredditsArray = results[@"subreddits"];
             [self findTopPostsFromSubreddit:usersSubredditsArray];
         }

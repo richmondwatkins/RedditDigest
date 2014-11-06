@@ -42,6 +42,8 @@
         NSData *data = [NSData dataWithContentsOfFile:[self cacheFile] options:0 error:nil];
         NSLog(@"Data %@",data);
         [self.webView loadData:data MIMEType:@"text/html" textEncodingName:@"UTF-8" baseURL:[NSURL URLWithString:self.selectedPost.url]];
+        NSString *currentURL = [self.webView stringByEvaluatingJavaScriptFromString:@"window.location"];
+        NSLog(@"URL %@",currentURL);
     }
 
 }
