@@ -40,9 +40,8 @@
     }else{
         self.webView.hidden = NO;
         NSData *data = [NSData dataWithContentsOfFile:[self cacheFile] options:0 error:nil];
-
+        NSLog(@"Data %@",data);
         [self.webView loadData:data MIMEType:@"text/html" textEncodingName:@"UTF-8" baseURL:[NSURL URLWithString:self.selectedPost.url]];
-//        [self.webView loadHTMLString:[self.selectedPost.html stringByReplacingOccurrencesOfString:@"\n" withString:@"<br/>"] baseURL:nil];
     }
 
 }
@@ -50,8 +49,7 @@
 -(NSString*)cacheFile
 {
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
-    NSString *string = [[paths objectAtIndex:0] stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.html", self.selectedPost.title]];
-    NSLog(@"STRING %@ ",string);
+    NSString *string = [[paths objectAtIndex:0] stringByAppendingPathComponent:[NSString stringWithFormat:@"%@", self.selectedPost.title]];
     return string;
 }
 

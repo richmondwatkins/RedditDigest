@@ -177,7 +177,7 @@
 -(NSString*)cacheFile:(NSString *)title
 {
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
-    return [[paths objectAtIndex:0] stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.html", title]];
+    return [[paths objectAtIndex:0] stringByAppendingPathComponent:[NSString stringWithFormat:@"%@", title]];
 }
 
 -(void)clearOutCoreData{
@@ -192,8 +192,39 @@
         [self.managedObjectContext deleteObject:post];
     }
     [self.managedObjectContext save:nil];
+    [self clearOutCacheDirectory];
 }
 
+-(void)clearOutCacheDirectory{
+    // Path to the Documents directory
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
+    if ([paths count] > 0)
+    {
+        NSError *error = nil;
+        NSFileManager *fileManager = [NSFileManager defaultManager];
+
+        // Print out the path to verify we are in the right place
+        NSString *directory = [paths objectAtIndex:0];
+        NSLog(@"Directory: %@", directory);
+
+        // For each file in the directory, create full path and delete the file
+        for (NSString *file in [fileManager contentsOfDirectoryAtPath:directory error:&error])
+        {
+            NSString *filePath = [directory stringByAppendingPathComponent:file];
+            NSLog(@"File : %@", filePath);
+
+            BOOL fileDeleted = [fileManager removeItemAtPath:filePath error:&error];
+            
+            if (fileDeleted != YES || error != nil)
+            {
+                NSLog(@"NOT DELETED");
+            }else{
+                NSLog(@"DELTED");
+            }
+        }
+        
+    }
+}
 
 -(void)retrievePostsFromCoreData{
     NSFetchRequest * allPosts = [[NSFetchRequest alloc] init];
