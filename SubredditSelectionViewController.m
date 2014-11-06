@@ -128,7 +128,15 @@
     else {
         if (self.selectedSubreddits.count < 10)
         {
-            [self.selectedSubreddits addObject:self.catagories[indexPath.row]];
+
+            NSDictionary *subreddit = self.catagories[indexPath.row];
+
+            for (NSDictionary *subredditDictionary in subreddit[@"subreddits"]) {
+                NSMutableDictionary *subredditDict = [[NSMutableDictionary alloc] initWithObjectsAndKeys:subredditDictionary[@"name"], @"name",subredditDictionary[@"url"], @"url", nil];
+                [self.selectedSubreddits addObject:subredditDict];
+                NSLog(@"SUBREDDIT %@",self.selectedSubreddits);
+            }
+
             if (self.selectedSubreddits.count > 0) {
                 [UIView animateWithDuration:0.3 animations:^{
                     self.doneSelectingSubredditsButton.alpha = 1.0;
@@ -163,6 +171,7 @@
 
 - (void)collectionView:(UICollectionView *)collectionView didDeselectItemAtIndexPath:(NSIndexPath *)indexPath
 {
+
     if (self.hasRedditAccount) {
         RKSubreddit *subreddit = self.subreddits[indexPath.row];
 
