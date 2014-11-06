@@ -17,6 +17,7 @@
 @property NSArray *settingsArray;
 @property NSArray *titlesArray;
 @property NSString *currentUserName;
+@property (strong, nonatomic) IBOutlet UILabel *loginLogoutLabel;
 
 @end
 
