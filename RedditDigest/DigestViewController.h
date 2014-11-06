@@ -11,6 +11,7 @@
 @interface DigestViewController : UIViewController
 
 @property (strong, nonatomic) NSManagedObjectContext *managedObjectContext;
+@property NSMutableArray *subredditsForFirstDigest;
 
 -(void)fetchNewDataWithCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler;
 -(void)retrievePostsFromCoreData;

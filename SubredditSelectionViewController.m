@@ -13,6 +13,7 @@
 #import <RKSubreddit.h>
 #import "KTCenterFlowLayout.h"
 #import "SubredditSelectionCollectionReusableView.h"
+#import "DigestViewController.h"
 
 @interface SubredditSelectionViewController () <UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, UIAlertViewDelegate, UITextFieldDelegate>
 
@@ -303,7 +304,7 @@
 
         NSDictionary *dataDictionary = [[NSDictionary alloc] initWithObjectsAndKeys:self.selectedSubreddits, @"subreddits", nil];
         NSError *error;
-        NSLog(@"DATA DICTIONARY %@", dataDictionary);
+
         NSData *postData = [NSJSONSerialization dataWithJSONObject:dataDictionary options:0 error:&error];
         NSURL *url = [[NSURL alloc] initWithString:[urlString stringByAddingPercentEscapesUsingEncoding:NSASCIIStringEncoding]];
 
@@ -319,7 +320,6 @@
         NSURLSessionDataTask* dataTask = [session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
             if (!error) {
                 NSLog(@"%@",response);
-                //[self getter]; //THIS IS FOR TESTING THE SUBREDDIT GETTER METHOD
             }
         }];
         [dataTask resume];
@@ -401,6 +401,11 @@
         }
     }];
     [dataTask resume];
+}
+
+-(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
+    DigestViewController *digestViewController = segue.destinationViewController;
+    digestViewController.subredditsForFirstDigest = self.selectedSubreddits;
 }
 
 //-(void)getAllPosts{

@@ -137,6 +137,11 @@
 
     Post *savedPost = [NSEntityDescription insertNewObjectForEntityForName:@"Post" inManagedObjectContext:self.managedObjectContext];
     savedPost.title = post.title;
+    savedPost.subreddit = post.subreddit;
+    savedPost.url = [post.URL absoluteString];
+    savedPost.nsfw = [NSNumber numberWithBool:post.NSFW];
+    savedPost.author = post.author;
+    savedPost.voteRatio = [NSNumber numberWithFloat:post.score];
 
     NSURLRequest *thumbnailRequest = [NSURLRequest requestWithURL:post.thumbnailURL];
     [NSURLConnection sendAsynchronousRequest:thumbnailRequest queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
@@ -147,28 +152,20 @@
             NSURLRequest *mainImageRequest = [NSURLRequest requestWithURL:post.URL];
             [NSURLConnection sendAsynchronousRequest:mainImageRequest queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
                 savedPost.image = data;
-                savedPost.url = [post.URL absoluteString];
-                savedPost.voteRatio = [NSNumber numberWithFloat:post.score];
-                savedPost.subreddit = post.subreddit;
-                savedPost.nsfw = [NSNumber numberWithBool:post.NSFW];
-                savedPost.author = post.author;
             }];
         }else{
-//            NSLog(@"%ld",(long)post.score);
             savedPost.isImageLink = [NSNumber numberWithBool:NO];
-            savedPost.url = [post.URL absoluteString];
-            savedPost.voteRatio = [NSNumber numberWithFloat:post.upvoteRatio];
-            savedPost.subreddit = post.subreddit;
-            savedPost.nsfw = [NSNumber numberWithBool:post.NSFW];
-            savedPost.author = post.author;
 
             if (post.isSelfPost) {
                 savedPost.isSelfPost = [NSNumber numberWithBool:YES];
-                NSLog(@"SELF TEXT%@",post.selfText);
                 savedPost.selfText = post.selfText;
             }else{
                 savedPost.isWebPage = [NSNumber numberWithBool:YES];
-                savedPost.html = [NSString stringWithContentsOfURL:post.URL encoding:NSUTF8StringEncoding error:nil];
+                NSURL *urlReadabilityURL= [NSURL URLWithString:[NSString stringWithFormat:@"http://www.readability.com/m?url=%@", [post.URL absoluteString]]];
+
+                NSLog(@"URL READBILITYYYY %@",urlReadabilityURL);
+                
+                savedPost.html = [NSString stringWithContentsOfURL:urlReadabilityURL encoding:NSUTF8StringEncoding error:nil];
             }
         }
         [self.managedObjectContext save:nil];
@@ -195,22 +192,6 @@
     [allPosts setEntity:[NSEntityDescription entityForName:@"Post" inManagedObjectContext:self.managedObjectContext]];
     NSArray * posts = [self.managedObjectContext executeFetchRequest:allPosts error:nil];
     self.digestPosts = [NSMutableArray arrayWithArray:posts];
-//    Post *post = posts.firstObject;
-
-//    NSLog(@"TITLE %@",post.title);
-//    NSLog(@"IS WEB PAGE %@",post.isWebPage);
-//    NSLog(@"WEB PAGE %@",post.html);
-//    NSLog(@"IS Image link %@",post.isImageLink);
-//    NSLog(@"URL %@",post.url);
-//    NSLog(@"IMAGE %@",post.image);
-//    NSLog(@"IS SELF POST %@",post.isSelfPost);
-//    NSLog(@"IS SELF POST %@",post.selfText);
-//    NSLog(@"THUMBNAIL %@",post.thumbnailImage);
-//    NSLog(@"NSFW %@",post.nsfw);
-//    NSLog(@"SUBREDDIT %@",post.subreddit);
-//    NSLog(@"TOTAL COMMENTS %@",post.totalComments);
-//    NSLog(@"VOTE RATIO %@",post.voteRatio);
-
 }
 
 -(void)requestNewLinks{
@@ -251,7 +232,7 @@
             if (topPost.stickied) {
                 topPost = links[1];
             }
-//            [self.digestPosts addObject:topPost];
+
             [self addPostToCoreData:topPost];
 
             j += 1;
@@ -283,6 +264,34 @@
     }
 }
 
+
+-(IBAction)unwindFromSubredditSelectionViewController:(UIStoryboardSegue *)segue{
+    [self runFirstDigest:self.subredditsForFirstDigest];
+}
+
+-(void)runFirstDigest:(NSArray *)subreddits{
+    [self clearOutCoreData];
+
+    __block int j = 0;
+    for (NSDictionary *subredditDict in subreddits) {
+        NSDictionary *setUpForRKKitObject = [[NSDictionary alloc] initWithObjectsAndKeys:subredditDict[@"name"], @"name", subredditDict[@"url"], @"URL", nil];
+        RKSubreddit *subreddit = [[RKSubreddit alloc] initWithDictionary:setUpForRKKitObject error:nil];
+
+        [[RKClient sharedClient] linksInSubreddit:subreddit pagination:nil completion:^(NSArray *links, RKPagination *pagination, NSError *error) {
+            RKLink *topPost = links.firstObject;
+            if (topPost.stickied) {
+                topPost = links[1];
+            }
+            [self addPostToCoreData:topPost];
+
+            j += 1;
+
+            if (j  == subreddits.count) {
+                [self performNewFetchedDataActionsWithDataArray];
+            }
+        }];
+    }
+}
 
 
 @end

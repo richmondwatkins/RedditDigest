@@ -164,13 +164,21 @@
                                         <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter a subreddit name" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="9DB-Wl-HjA">
                                             <rect key="frame" x="71" y="10" width="458" height="30"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                            <textInputTraits key="textInputTraits" returnKeyType="search"/>
+                                            <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" returnKeyType="search"/>
                                         </textField>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="r/" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vVQ-NM-ZfZ">
+                                            <rect key="frame" x="51" y="14" width="12" height="21"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
                                     </subviews>
                                     <constraints>
                                         <constraint firstItem="9DB-Wl-HjA" firstAttribute="top" secondItem="GJL-o9-yD4" secondAttribute="topMargin" constant="2" id="2kn-v1-8si"/>
                                         <constraint firstAttribute="trailingMargin" secondItem="9DB-Wl-HjA" secondAttribute="trailing" constant="63" id="ANn-jM-z3s"/>
                                         <constraint firstAttribute="bottomMargin" secondItem="9DB-Wl-HjA" secondAttribute="bottom" constant="2" id="UOU-7z-x4g"/>
+                                        <constraint firstItem="vVQ-NM-ZfZ" firstAttribute="top" secondItem="GJL-o9-yD4" secondAttribute="topMargin" constant="6" id="aS9-ke-MNQ"/>
+                                        <constraint firstItem="9DB-Wl-HjA" firstAttribute="leading" secondItem="vVQ-NM-ZfZ" secondAttribute="trailing" constant="8" symbolic="YES" id="efv-SY-8cN"/>
                                         <constraint firstItem="9DB-Wl-HjA" firstAttribute="leading" secondItem="GJL-o9-yD4" secondAttribute="leadingMargin" constant="63" id="hnn-ne-28C"/>
                                     </constraints>
                                     <connections>
@@ -205,6 +213,7 @@
                                 </state>
                                 <connections>
                                     <action selector="finishSelectingSubreddits:" destination="e1g-HR-koU" eventType="touchUpInside" id="yKQ-dv-7y5"/>
+                                    <segue destination="lpW-nw-A4U" kind="unwind" unwindAction="unwindFromSubredditSelectionViewController:" id="CO4-tJ-fHU"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -241,6 +250,7 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="3EZ-Qk-GC1" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="lpW-nw-A4U" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="1642" y="-837"/>
         </scene>
