@@ -404,6 +404,9 @@
                                                 </label>
                                             </subviews>
                                         </tableViewCellContentView>
+                                        <connections>
+                                            <segue destination="WOc-nv-58w" kind="show" id="LaA-qT-0SF"/>
+                                        </connections>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="TyP-pz-lcZ">
                                         <autoresizingMask key="autoresizingMask"/>
@@ -692,6 +695,7 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
+        <segue reference="LaA-qT-0SF"/>
         <segue reference="UQ5-hC-TYb"/>
     </inferredMetricsTieBreakers>
 </document>

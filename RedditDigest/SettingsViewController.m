@@ -9,6 +9,7 @@
 #import "SettingsViewController.h"
 #import "RKUser.h"
 #import <SSKeychain/SSKeychain.h>
+#import "LoginViewController.h"
 
 
 @interface SettingsViewController () <UITableViewDataSource, UITableViewDelegate>
@@ -132,6 +133,13 @@
     //nothing goes here
     NSLog(@"NOW ACTIVATE UNWIND!!!!!");
 
+}
+
+// In a storyboard-based application, you will often want to do a little preparation before navigation
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    LoginViewController *viewController = segue.destinationViewController;
+    viewController.isFromSettings = YES;   // Get the new view controller using [segue destinationViewController].
+    // Pass the selected object to the new view controller.
 }
 
 @end
