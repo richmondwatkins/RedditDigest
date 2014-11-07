@@ -10,8 +10,11 @@
 #import "Post.h"
 #import <RedditKit.h>
 #import <RKLink.h>
-@interface PostViewController : UIViewController
+@interface PostViewController : UIViewController <UIPageViewControllerDataSource>
 
+
+@property (strong, nonatomic) UIPageViewController *pageController;
+@property NSMutableArray *allPosts;
 @property Post *selectedPost; //if from core data
 @property RKLink *selectedLink; //if from web
 @end

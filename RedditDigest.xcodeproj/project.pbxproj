@@ -25,6 +25,9 @@
 		5D5C12E01A05716E002902A8 /* RedditDigestTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D5C12DF1A05716E002902A8 /* RedditDigestTests.m */; };
 		5D9BF2511A0857BB00B699E5 /* CustomSubredditLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D9BF2501A0857BB00B699E5 /* CustomSubredditLabel.m */; };
 		5DAADD411A0C986900BB91AB /* Post.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DAADD401A0C986900BB91AB /* Post.m */; };
+		5DAADDCF1A0D4C9100BB91AB /* ImageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DAADDCE1A0D4C9100BB91AB /* ImageViewController.m */; };
+		5DAADDD21A0D4CD200BB91AB /* ImagePostViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DAADDD11A0D4CD200BB91AB /* ImagePostViewController.m */; };
+		5DAADDD51A0D502600BB91AB /* WebPostViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DAADDD41A0D502600BB91AB /* WebPostViewController.m */; };
 		5DB47A5D1A0ABA5B0034EA84 /* PostViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DB47A5C1A0ABA5B0034EA84 /* PostViewController.m */; };
 		5DB47AEB1A0C45190034EA84 /* RedditRequests.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DB47AEA1A0C45190034EA84 /* RedditRequests.m */; };
 		5DB47AEE1A0C4A700034EA84 /* UserRequests.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DB47AED1A0C4A700034EA84 /* UserRequests.m */; };
@@ -80,6 +83,12 @@
 		5D9BF2501A0857BB00B699E5 /* CustomSubredditLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CustomSubredditLabel.m; path = ../CustomSubredditLabel.m; sourceTree = "<group>"; };
 		5DAADD3F1A0C986900BB91AB /* Post.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Post.h; sourceTree = "<group>"; };
 		5DAADD401A0C986900BB91AB /* Post.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Post.m; sourceTree = "<group>"; };
+		5DAADDCD1A0D4C9100BB91AB /* ImageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageViewController.h; sourceTree = "<group>"; };
+		5DAADDCE1A0D4C9100BB91AB /* ImageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImageViewController.m; sourceTree = "<group>"; };
+		5DAADDD01A0D4CD200BB91AB /* ImagePostViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImagePostViewController.h; sourceTree = "<group>"; };
+		5DAADDD11A0D4CD200BB91AB /* ImagePostViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImagePostViewController.m; sourceTree = "<group>"; };
+		5DAADDD31A0D502600BB91AB /* WebPostViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WebPostViewController.h; sourceTree = "<group>"; };
+		5DAADDD41A0D502600BB91AB /* WebPostViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WebPostViewController.m; sourceTree = "<group>"; };
 		5DB47A5B1A0ABA5B0034EA84 /* PostViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PostViewController.h; sourceTree = "<group>"; };
 		5DB47A5C1A0ABA5B0034EA84 /* PostViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PostViewController.m; sourceTree = "<group>"; };
 		5DB47AE91A0C45190034EA84 /* RedditRequests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RedditRequests.h; sourceTree = "<group>"; };
@@ -169,6 +178,10 @@
 		5D5C12BF1A05716E002902A8 /* RedditDigest */ = {
 			isa = PBXGroup;
 			children = (
+				5DAADDD01A0D4CD200BB91AB /* ImagePostViewController.h */,
+				5DAADDD11A0D4CD200BB91AB /* ImagePostViewController.m */,
+				5DAADDD31A0D502600BB91AB /* WebPostViewController.h */,
+				5DAADDD41A0D502600BB91AB /* WebPostViewController.m */,
 				5D5C12C41A05716E002902A8 /* AppDelegate.h */,
 				5D5C12C51A05716E002902A8 /* AppDelegate.m */,
 				5D9BF24F1A0857BB00B699E5 /* CustomSubredditLabel.h */,
@@ -198,6 +211,8 @@
 				81D523801A0C0E710059C9B3 /* SettingsAboutRedditViewController.m */,
 				815EED161A097E36006286FF /* EditSubredditViewController.h */,
 				815EED171A097E36006286FF /* EditSubredditViewController.m */,
+				5DAADDCD1A0D4C9100BB91AB /* ImageViewController.h */,
+				5DAADDCE1A0D4C9100BB91AB /* ImageViewController.m */,
 				5D5C12D01A05716E002902A8 /* Images.xcassets */,
 				5D5C12D21A05716E002902A8 /* LaunchScreen.xib */,
 				5D5C12C71A05716E002902A8 /* RedditDigest.xcdatamodeld */,
@@ -401,8 +416,11 @@
 				3417AC0D1A092D970026961C /* SettingsViewController.m in Sources */,
 				5D5C12C61A05716E002902A8 /* AppDelegate.m in Sources */,
 				81D523811A0C0E710059C9B3 /* SettingsAboutRedditViewController.m in Sources */,
+				5DAADDCF1A0D4C9100BB91AB /* ImageViewController.m in Sources */,
 				3413401D1A0C996F004C8C15 /* DigestCellWithImageTableViewCell.m in Sources */,
 				34D1B93A1A081D0C00C0C15F /* LoginViewController.m in Sources */,
+				5DAADDD51A0D502600BB91AB /* WebPostViewController.m in Sources */,
+				5DAADDD21A0D4CD200BB91AB /* ImagePostViewController.m in Sources */,
 				815EED181A097E36006286FF /* EditSubredditViewController.m in Sources */,
 				343257411A0A96CF003A3115 /* SubredditSelectionCollectionReusableView.m in Sources */,
 				5D5C12CC1A05716E002902A8 /* DigestViewController.m in Sources */,

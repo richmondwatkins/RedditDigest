@@ -142,7 +142,7 @@
     if ([segue.identifier isEqualToString:@"PostSegue"]) {
         PostViewController *postViewController = segue.destinationViewController;
         NSIndexPath *indexPath = [self.digestTableView indexPathForSelectedRow];
-
+        postViewController.allPosts = self.digestPosts;
         if ([self.digestPosts[indexPath.row] isKindOfClass:[Post class]]) {
             postViewController.selectedPost = self.digestPosts[indexPath.row];
         }else{
