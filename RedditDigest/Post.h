@@ -8,8 +8,8 @@
 
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
-
-
+#import <RedditKit.h>
+#import <RKLink.h>
 @interface Post : NSManagedObject
 
 @property (nonatomic, retain) NSString * author;
@@ -26,5 +26,9 @@
 @property (nonatomic, retain) NSNumber * voteRatio;
 @property (nonatomic, retain) NSNumber * isWebPage;
 @property (nonatomic, retain) NSString * html;
+
+
++(void)savePost:(RKLink *)link withManagedObject:(NSManagedObjectContext *)managedObject;
++(void)removeAllPostsFromCoreData:(NSManagedObjectContext *)managedObject;
 
 @end

@@ -14,6 +14,8 @@
 #import "Post.h"
 #import <CoreData/CoreData.h>
 #import "PostViewController.h"
+#import "RedditRequests.h"
+#import "UserRequests.h"
 @interface DigestViewController () <UITableViewDataSource, UITableViewDelegate>
 @property (strong, nonatomic) IBOutlet UITableView *digestTableView;
 @property NSMutableArray *digestPosts;
@@ -65,55 +67,18 @@
 #pragma mark - Fetch from Server
 
 -(void)fetchNewDataWithCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler{
-    [self clearOutCoreData];
-
-    self.digestPosts = [NSMutableArray array];
-
-    NSURLSessionConfiguration* config = [NSURLSessionConfiguration defaultSessionConfiguration];
-    NSURLSession* session = [NSURLSession sessionWithConfiguration:config];
+    [Post removeAllPostsFromCoreData:self.managedObjectContext];
 
     NSUUID *deviceID = [UIDevice currentDevice].identifierForVendor;
     NSString *deviceString = [NSString stringWithFormat:@"%@", deviceID];
-    NSString *urlString = [NSString stringWithFormat:@"http://192.168.129.228:3000/subreddits/%@",deviceString];
-    NSURL *url = [[NSURL alloc] initWithString:[urlString stringByAddingPercentEscapesUsingEncoding:NSASCIIStringEncoding]];
-
-    NSURLSessionDataTask * dataTask = [session dataTaskWithURL:url completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
-        if(error == nil)
-        {
-            NSDictionary *results = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
-            NSArray *usersSubredditsArray = results[@"subreddits"];
-            [self findTopPostsFromSubreddit:usersSubredditsArray withCompletionHandler:completionHandler];
-        }
+    [UserRequests retrieveUsersSubreddits:deviceString withCompletion:^(NSDictionary *results) {
+        [RedditRequests retrieveLatestPostFromArray:results[@"subreddits"] withManagedObject:self.managedObjectContext withCompletion:^(BOOL completed) {
+            [self performNewFetchedDataActionsWithDataArray];
+            completionHandler(UIBackgroundFetchResultNewData);
+            [self fireLocalNotificationAndMarkComplete];
+        }];
     }];
 
-    [dataTask resume];
-}
-
--(void)findTopPostsFromSubreddit:(NSArray *)subreddits withCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler{
-
-    __block int j = 0;
-    for (NSDictionary *subredditDict in subreddits) {
-        NSDictionary *setUpForRKKitObject = [[NSDictionary alloc] initWithObjectsAndKeys:subredditDict[@"subreddit"], @"name", subredditDict[@"url"], @"URL", nil];
-        RKSubreddit *subreddit = [[RKSubreddit alloc] initWithDictionary:setUpForRKKitObject error:nil];
-
-        [[RKClient sharedClient] linksInSubreddit:subreddit pagination:nil completion:^(NSArray *links, RKPagination *pagination, NSError *error) {
-            RKLink *topPost = links.firstObject;
-            if (topPost.stickied) {
-                topPost = links[1];
-            }
-
-            [self.digestPosts addObject:topPost];
-            [self addPostToCoreData:topPost];
-
-            j += 1;
-
-            if (j  == subreddits.count) {
-                [self performNewFetchedDataActionsWithDataArray];
-                completionHandler(UIBackgroundFetchResultNewData);
-                [self fireLocalNotificationAndMarkComplete];
-            }
-        }];
-    }
 }
 
 -(void)fireLocalNotificationAndMarkComplete{
@@ -132,123 +97,9 @@
 
 }
 
-#pragma mark - Core Data Methods
-
--(void)addPostToCoreData:(RKLink *)post{
-
-    Post *savedPost = [NSEntityDescription insertNewObjectForEntityForName:@"Post" inManagedObjectContext:self.managedObjectContext];
-    savedPost.title = post.title;
-    savedPost.subreddit = post.subreddit;
-//    savedPost.url = [post.URL absoluteString];
-    savedPost.nsfw = [NSNumber numberWithBool:post.NSFW];
-    savedPost.author = post.author;
-    savedPost.voteRatio = [NSNumber numberWithFloat:post.score];
-
-    savedPost.url = [[post.URL absoluteString] stringByReplacingOccurrencesOfString:@"www" withString:@"m"];
-
-    NSLog(@"URL %@",savedPost);
-//    NSLog(@"URL %@",post.URL);
-//    NSLog(@"scheme: %@", [post.URL scheme]);
-//    NSLog(@"host: %@", [post.URL host]);
-//    NSLog(@"port: %@", [post.URL port]);
-//    NSLog(@"path: %@", [post.URL path]);
-//    NSLog(@"path components: %@", [post.URL pathComponents]);
-//    NSLog(@"parameterString: %@", [post.URL parameterString]);
-//    NSLog(@"query: %@", [post.URL query]);
-//    NSLog(@"fragment: %@", [post.URL fragment]);
-
-    NSURLRequest *thumbnailRequest = [NSURLRequest requestWithURL:post.thumbnailURL];
-    [NSURLConnection sendAsynchronousRequest:thumbnailRequest queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
-        savedPost.thumbnailImage = data;
-
-        if (post.isImageLink) {
-            savedPost.isImageLink = [NSNumber numberWithBool:YES];
-            NSURLRequest *mainImageRequest = [NSURLRequest requestWithURL:post.URL];
-            [NSURLConnection sendAsynchronousRequest:mainImageRequest queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
-                savedPost.image = data;
-            }];
-        }else{
-            savedPost.isImageLink = [NSNumber numberWithBool:NO];
-
-            if (post.isSelfPost) {
-                savedPost.isSelfPost = [NSNumber numberWithBool:YES];
-
-                if ([post.selfText isEqualToString:@""]) {
-                    savedPost.selfText = post.title;
-                }else{
-                    savedPost.selfText = post.selfText;
-                }
-            }else{
-                savedPost.isWebPage = [NSNumber numberWithBool:YES];
-//                NSURL *urlReadabilityURL= [NSURL URLWithString:[NSString stringWithFormat:@"http://www.readability.com/m?url=%@", [post.URL absoluteString]]];
-
-//                NSLog(@"URL READBILITYYYY %@",urlReadabilityURL);
-
-                NSData *data = [NSData dataWithContentsOfURL:post.URL];
-                [[NSFileManager defaultManager] createFileAtPath:[self cacheFile:post.title] contents:data attributes:nil];
-//                savedPost.html = [NSString stringWithContentsOfURL:urlReadabilityURL encoding:NSUTF8StringEncoding error:nil];
-            }
-        }
-        [self.managedObjectContext save:nil];
-    }];
-}
-
--(NSString*)cacheFile:(NSString *)title{
-//    
-//    NSRange range = [title rangeOfString:@"#"];
-//    NSString *shortString = [title substringToIndex:range.location];
-
-    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
-    return [[paths objectAtIndex:0] stringByAppendingPathComponent:[NSString stringWithFormat:@"%@", title]];
-}
-
--(void)clearOutCoreData{
-    NSFetchRequest * allCars = [[NSFetchRequest alloc] init];
-    [allCars setEntity:[NSEntityDescription entityForName:@"Post" inManagedObjectContext:self.managedObjectContext]];
-    [allCars setIncludesPropertyValues:NO];
-
-    NSError * error = nil;
-    NSArray * posts = [self.managedObjectContext executeFetchRequest:allCars error:&error];
-    //error handling goes here
-    for (NSManagedObject * post in posts) {
-        [self.managedObjectContext deleteObject:post];
-    }
-    [self.managedObjectContext save:nil];
-    [self clearOutCacheDirectory];
-}
-
--(void)clearOutCacheDirectory{
-    // Path to the Documents directory
-    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
-    if ([paths count] > 0)
-    {
-        NSError *error = nil;
-        NSFileManager *fileManager = [NSFileManager defaultManager];
-
-        // Print out the path to verify we are in the right place
-        NSString *directory = [paths objectAtIndex:0];
-//        NSLog(@"Directory: %@", directory);
-
-        // For each file in the directory, create full path and delete the file
-        for (NSString *file in [fileManager contentsOfDirectoryAtPath:directory error:&error])
-        {
-            NSString *filePath = [directory stringByAppendingPathComponent:file];
-//            NSLog(@"File : %@", filePath);
-
-            BOOL fileDeleted = [fileManager removeItemAtPath:filePath error:&error];
-            
-            if (fileDeleted != YES || error != nil)
-            {
-//                NSLog(@"NOT DELETED");
-            }else{
-//                NSLog(@"DELTED");
-            }
-        }
-        
-    }
-}
-
 -(void)retrievePostsFromCoreData{
+    self.digestPosts = [NSMutableArray array];
+
     NSFetchRequest * allPosts = [[NSFetchRequest alloc] init];
     [allPosts setEntity:[NSEntityDescription entityForName:@"Post" inManagedObjectContext:self.managedObjectContext]];
     NSArray * posts = [self.managedObjectContext executeFetchRequest:allPosts error:nil];
@@ -256,57 +107,19 @@
 }
 
 -(void)requestNewLinks{
-    [self clearOutCoreData];
-
-    self.digestPosts = [NSMutableArray array];
-
-    NSURLSessionConfiguration* config = [NSURLSessionConfiguration defaultSessionConfiguration];
-    NSURLSession* session = [NSURLSession sessionWithConfiguration:config];
+    [Post removeAllPostsFromCoreData:self.managedObjectContext];
 
     NSUUID *deviceID = [UIDevice currentDevice].identifierForVendor;
     NSString *deviceString = [NSString stringWithFormat:@"%@", deviceID];
-
-    NSString *urlString = [NSString stringWithFormat:@"http://192.168.129.228:3000/subreddits/%@",deviceString];
-    NSURL *url = [[NSURL alloc] initWithString:[urlString stringByAddingPercentEscapesUsingEncoding:NSASCIIStringEncoding]];
-
-    NSURLSessionDataTask * dataTask = [session dataTaskWithURL:url completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
-        if(error == nil)
-        {
-            NSDictionary *results = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
-//            NSLog(@"RESULTS %@",results);
-            NSArray *usersSubredditsArray = results[@"subreddits"];
-            [self findTopPostsFromSubreddit:usersSubredditsArray];
-        }
+    [UserRequests retrieveUsersSubreddits:deviceString withCompletion:^(NSDictionary *results) {
+        [RedditRequests retrieveLatestPostFromArray:results[@"subreddits"] withManagedObject:self.managedObjectContext withCompletion:^(BOOL completed) {
+            [self performNewFetchedDataActionsWithDataArray];
+            [self fireLocalNotificationAndMarkComplete];
+        }];
     }];
 
-    [dataTask resume];
-
 }
 
--(void)findTopPostsFromSubreddit:(NSArray *)subreddits{
-
-    __block int j = 0;
-    for (NSDictionary *subredditDict in subreddits) {
-        NSDictionary *setUpForRKKitObject = [[NSDictionary alloc] initWithObjectsAndKeys:subredditDict[@"subreddit"], @"name", subredditDict[@"url"], @"URL", nil];
-        RKSubreddit *subreddit = [[RKSubreddit alloc] initWithDictionary:setUpForRKKitObject error:nil];
-
-        [[RKClient sharedClient] linksInSubreddit:subreddit pagination:nil completion:^(NSArray *links, RKPagination *pagination, NSError *error) {
-            RKLink *topPost = links.firstObject;
-            if (topPost.stickied) {
-                topPost = links[1];
-            }
-
-            [self addPostToCoreData:topPost];
-
-            j += 1;
-
-            if (j  == subreddits.count) {
-                [self performNewFetchedDataActionsWithDataArray];
-                [self fireLocalNotificationAndMarkComplete];
-            }
-        }];
-    }
-}
 
 -(void)performNewFetchedDataActionsWithDataArray{
     [self retrievePostsFromCoreData];
@@ -329,31 +142,11 @@
 
 
 -(IBAction)unwindFromSubredditSelectionViewController:(UIStoryboardSegue *)segue{
-    [self runFirstDigest:self.subredditsForFirstDigest];
-}
-
--(void)runFirstDigest:(NSArray *)subreddits{
-    [self clearOutCoreData];
-
-    __block int j = 0;
-    for (NSDictionary *subredditDict in subreddits) {
-        NSDictionary *setUpForRKKitObject = [[NSDictionary alloc] initWithObjectsAndKeys:subredditDict[@"name"], @"name", subredditDict[@"url"], @"URL", nil];
-        RKSubreddit *subreddit = [[RKSubreddit alloc] initWithDictionary:setUpForRKKitObject error:nil];
-
-        [[RKClient sharedClient] linksInSubreddit:subreddit pagination:nil completion:^(NSArray *links, RKPagination *pagination, NSError *error) {
-            RKLink *topPost = links.firstObject;
-            if (topPost.stickied) {
-                topPost = links[1];
-            }
-            [self addPostToCoreData:topPost];
-
-            j += 1;
-
-            if (j  == subreddits.count) {
-                [self performNewFetchedDataActionsWithDataArray];
-            }
-        }];
-    }
+    [RedditRequests retrieveLatestPostFromArray:self.subredditsForFirstDigest withManagedObject:self.managedObjectContext withCompletion:^(BOOL completed) {
+        if (completed) {
+            [self performNewFetchedDataActionsWithDataArray];
+        }
+    }];
 }
 
 
