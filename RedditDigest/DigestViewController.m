@@ -51,7 +51,7 @@
 {
     [super viewDidAppear:animated];
     // These two lines enable automatic cell resizing thanks to iOS 8 💃
-    self.digestTableView.estimatedRowHeight = 68.0;
+    self.digestTableView.estimatedRowHeight = 76.0;
     self.digestTableView.rowHeight = UITableViewAutomaticDimension;
 }
 
@@ -73,7 +73,9 @@
         Post *post = self.digestPosts[indexPath.row];
         cell.titleLabel.text = post.title;
         cell.subredditAndAuthorLabel.text = post.subreddit;
-//        cell.imageView.image = [UIImage imageWithData:post.thumbnailImage];
+        cell.thumbnailImage.image = [UIImage imageWithData:post.thumbnailImage];
+        //cell.thumbnailImage.contentMode = UIViewContentModeScaleAspectFit;
+
     }
 
 

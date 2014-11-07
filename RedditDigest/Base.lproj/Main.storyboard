@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6250" systemVersion="14A389" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="9zg-4H-k34">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6250" systemVersion="14B17" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="9zg-4H-k34">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6244"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
@@ -475,47 +475,66 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="68" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="Ud7-YU-1kZ">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="76" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="Ud7-YU-1kZ">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="DigestCell" rowHeight="68" id="eg1-5b-zUs" customClass="DigestCellWithImageTableViewCell">
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="DigestCell" rowHeight="76" id="eg1-5b-zUs" customClass="DigestCellWithImageTableViewCell">
                                         <rect key="frame" x="0.0" y="0.0" width="600" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="eg1-5b-zUs" id="TIW-74-Ifz">
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="COR-ut-o5n">
-                                                    <rect key="frame" x="66" y="15" width="505" height="21"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalCompressionResistancePriority="749" text="This is an awesome title" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="COR-ut-o5n">
+                                                    <rect key="frame" x="66" y="8" width="505" height="22.5"/>
+                                                    <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="17"/>
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="gNq-N4-MhL">
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="gNq-N4-MhL">
                                                     <rect key="frame" x="8" y="9" width="50" height="50"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="50" id="7Qt-nu-Imk"/>
                                                         <constraint firstAttribute="width" constant="50" id="Gvp-u4-qwi"/>
                                                     </constraints>
                                                 </imageView>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Qch-SH-AKQ">
-                                                    <rect key="frame" x="66" y="39" width="440" height="12"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="10"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="subreddit" textAlignment="center" lineBreakMode="wordWrap" baselineAdjustment="alignBaselines" minimumFontSize="9" translatesAutoresizingMaskIntoConstraints="NO" id="Qch-SH-AKQ">
+                                                    <rect key="frame" x="8" y="58" width="50" height="12"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="50" id="Zf0-13-COr"/>
+                                                        <constraint firstAttribute="height" constant="12" id="r3r-Mn-8k2"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" name="HelveticaNeue-UltraLight" family="Helvetica Neue" pointSize="10"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="user: hankthedog • views: 3.5k • comments: 834" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zCj-MC-gkZ">
+                                                    <rect key="frame" x="66" y="29" width="505" height="13"/>
+                                                    <fontDescription key="fontDescription" name="HelveticaNeue-UltraLight" family="Helvetica Neue" pointSize="11"/>
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstAttribute="bottomMargin" secondItem="Qch-SH-AKQ" secondAttribute="bottom" constant="8.5" id="35i-jL-zSB"/>
-                                                <constraint firstAttribute="trailingMargin" secondItem="COR-ut-o5n" secondAttribute="trailing" constant="21" id="8TD-ps-LwC"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="COR-ut-o5n" secondAttribute="trailing" constant="21" id="CIv-Nu-Say"/>
+                                                <constraint firstAttribute="bottomMargin" secondItem="COR-ut-o5n" secondAttribute="bottom" constant="37" id="InY-SO-bQ2"/>
+                                                <constraint firstItem="COR-ut-o5n" firstAttribute="leading" secondItem="TIW-74-Ifz" secondAttribute="leadingMargin" constant="58" id="OKw-h6-dfG"/>
+                                                <constraint firstItem="Qch-SH-AKQ" firstAttribute="top" secondItem="gNq-N4-MhL" secondAttribute="bottom" constant="-1" id="PTr-Tk-j6b"/>
                                                 <constraint firstItem="Qch-SH-AKQ" firstAttribute="leading" secondItem="gNq-N4-MhL" secondAttribute="trailing" constant="8" id="R1t-1Z-g6p"/>
+                                                <constraint firstItem="COR-ut-o5n" firstAttribute="top" secondItem="TIW-74-Ifz" secondAttribute="topMargin" id="Sb2-LR-DIn"/>
+                                                <constraint firstAttribute="bottomMargin" secondItem="zCj-MC-gkZ" secondAttribute="bottom" constant="25.5" id="VI0-Bc-umx"/>
+                                                <constraint firstItem="zCj-MC-gkZ" firstAttribute="leading" secondItem="TIW-74-Ifz" secondAttribute="leadingMargin" constant="58" id="WNS-0o-t8q"/>
                                                 <constraint firstItem="gNq-N4-MhL" firstAttribute="top" secondItem="TIW-74-Ifz" secondAttribute="topMargin" constant="1" id="WgA-Or-cD3"/>
-                                                <constraint firstItem="COR-ut-o5n" firstAttribute="top" secondItem="TIW-74-Ifz" secondAttribute="topMargin" constant="7" id="ZFJ-bF-uNW"/>
                                                 <constraint firstItem="gNq-N4-MhL" firstAttribute="leading" secondItem="TIW-74-Ifz" secondAttribute="leadingMargin" id="ZXU-wF-rdD"/>
-                                                <constraint firstAttribute="trailingMargin" secondItem="Qch-SH-AKQ" secondAttribute="trailing" constant="86" id="b43-eQ-mx6"/>
-                                                <constraint firstItem="Qch-SH-AKQ" firstAttribute="top" secondItem="COR-ut-o5n" secondAttribute="bottom" constant="3.5" id="mzZ-W4-n8h"/>
+                                                <constraint firstItem="Qch-SH-AKQ" firstAttribute="leading" secondItem="TIW-74-Ifz" secondAttribute="leadingMargin" id="kJX-7g-tNd"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="zCj-MC-gkZ" secondAttribute="trailing" constant="21" id="nHI-U9-l1N"/>
                                                 <constraint firstItem="COR-ut-o5n" firstAttribute="leading" secondItem="gNq-N4-MhL" secondAttribute="trailing" constant="8" id="vyy-KB-Le1"/>
                                             </constraints>
+                                            <variation key="default">
+                                                <mask key="constraints">
+                                                    <exclude reference="R1t-1Z-g6p"/>
+                                                    <exclude reference="vyy-KB-Le1"/>
+                                                </mask>
+                                            </variation>
                                         </tableViewCellContentView>
                                         <connections>
                                             <outlet property="subredditAndAuthorLabel" destination="Qch-SH-AKQ" id="TRv-vv-3YV"/>
