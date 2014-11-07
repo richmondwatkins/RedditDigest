@@ -11,7 +11,6 @@
 @implementation RedditRequests
 
 +(void)retrieveLatestPostFromArray:(NSArray *)subreddits withManagedObject:(NSManagedObjectContext *)managedObjectContext withCompletion:(void (^)(BOOL completed))complete{
-    NSLog(@"SUBREDDITS %@",subreddits);
     __block int j = 0;
     for (NSDictionary *subredditDict in subreddits) {
         NSDictionary *setUpForRKKitObject = [[NSDictionary alloc] initWithObjectsAndKeys:subredditDict[@"subreddit"], @"name", subredditDict[@"url"], @"URL", nil];
