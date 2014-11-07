@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6250" systemVersion="14A389" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="9zg-4H-k34">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6250" systemVersion="14B17" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="9zg-4H-k34">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6244"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
@@ -68,7 +68,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="pN9-3H-d06" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="952" y="-837"/>
+            <point key="canvasLocation" x="-485" y="-1912"/>
         </scene>
         <!--Login View Controller-->
         <scene sceneID="Dew-8f-ko0">
@@ -129,7 +129,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="f2U-BX-3ah" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1642" y="-1561"/>
+            <point key="canvasLocation" x="233" y="-2344"/>
         </scene>
         <!--Subreddit Selection View Controller-->
         <scene sceneID="HSq-y9-90H">
@@ -193,13 +193,7 @@
                             <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="D7a-ly-kna">
                                 <rect key="frame" x="0.0" y="20" width="600" height="44"/>
                                 <items>
-                                    <navigationItem title="Subreddits" id="YhO-V6-lYj">
-                                        <barButtonItem key="rightBarButtonItem" systemItem="search" id="Y6E-74-MW7">
-                                            <connections>
-                                                <segue destination="mfu-tO-bbM" kind="presentation" identifier="SearchSubredditsSegue" id="Jef-16-fC8"/>
-                                            </connections>
-                                        </barButtonItem>
-                                    </navigationItem>
+                                    <navigationItem title="Subreddits" id="YhO-V6-lYj"/>
                                 </items>
                             </navigationBar>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="J8O-Nf-ZfV">
@@ -252,95 +246,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="3EZ-Qk-GC1" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="lpW-nw-A4U" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="1642" y="-837"/>
-        </scene>
-        <!--Search Subreddits View Controller-->
-        <scene sceneID="nZ3-Dt-y7R">
-            <objects>
-                <viewController id="mfu-tO-bbM" customClass="SearchSubredditsViewController" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="B1v-70-71U"/>
-                        <viewControllerLayoutGuide type="bottom" id="1jO-6L-dQK"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="Ygj-fv-7z1">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="Shb-jF-sMd">
-                                <rect key="frame" x="0.0" y="108" width="600" height="492"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="488" id="RUc-z1-8W3"/>
-                                </constraints>
-                                <prototypes>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="Cell" id="jTY-UM-fgN">
-                                        <rect key="frame" x="0.0" y="0.0" width="600" height="44"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="jTY-UM-fgN" id="0Xr-K4-dSd">
-                                            <autoresizingMask key="autoresizingMask"/>
-                                        </tableViewCellContentView>
-                                    </tableViewCell>
-                                </prototypes>
-                                <variation key="default">
-                                    <mask key="constraints">
-                                        <exclude reference="RUc-z1-8W3"/>
-                                    </mask>
-                                </variation>
-                                <connections>
-                                    <outlet property="dataSource" destination="mfu-tO-bbM" id="10P-Pr-mlz"/>
-                                    <outlet property="delegate" destination="mfu-tO-bbM" id="Vb0-He-ggC"/>
-                                </connections>
-                            </tableView>
-                            <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="YUS-ef-kRY">
-                                <rect key="frame" x="0.0" y="20" width="600" height="44"/>
-                                <items>
-                                    <navigationItem title="Search Subreddits" id="BVG-ao-S5W">
-                                        <barButtonItem key="leftBarButtonItem" title="Done" id="mfo-m8-jE2">
-                                            <connections>
-                                                <action selector="onDoneButtonPressed:" destination="mfu-tO-bbM" id="7Bl-Oa-0bk"/>
-                                            </connections>
-                                        </barButtonItem>
-                                    </navigationItem>
-                                </items>
-                            </navigationBar>
-                            <searchBar contentMode="redraw" translatesAutoresizingMaskIntoConstraints="NO" id="36U-ey-YlT">
-                                <rect key="frame" x="0.0" y="64" width="600" height="44"/>
-                                <textInputTraits key="textInputTraits"/>
-                                <connections>
-                                    <outlet property="delegate" destination="mfu-tO-bbM" id="pEl-yp-OMQ"/>
-                                </connections>
-                            </searchBar>
-                        </subviews>
-                        <constraints>
-                            <constraint firstItem="Shb-jF-sMd" firstAttribute="top" secondItem="36U-ey-YlT" secondAttribute="bottom" id="CPi-f9-riX"/>
-                            <constraint firstItem="YUS-ef-kRY" firstAttribute="top" secondItem="B1v-70-71U" secondAttribute="bottom" id="G4I-nv-h76"/>
-                            <constraint firstItem="1jO-6L-dQK" firstAttribute="top" secondItem="Shb-jF-sMd" secondAttribute="bottom" id="GMe-Bc-fmi"/>
-                            <constraint firstItem="36U-ey-YlT" firstAttribute="top" secondItem="B1v-70-71U" secondAttribute="bottom" constant="44" id="X3I-sO-Kvz"/>
-                            <constraint firstAttribute="trailing" secondItem="36U-ey-YlT" secondAttribute="trailing" id="dtP-6v-hdv"/>
-                            <constraint firstItem="36U-ey-YlT" firstAttribute="leading" secondItem="Ygj-fv-7z1" secondAttribute="leading" id="fPM-eO-SrU"/>
-                            <constraint firstAttribute="trailing" secondItem="YUS-ef-kRY" secondAttribute="trailing" id="l8q-Xm-Uwe"/>
-                            <constraint firstItem="YUS-ef-kRY" firstAttribute="leading" secondItem="Ygj-fv-7z1" secondAttribute="leading" id="qd4-cQ-53a"/>
-                            <constraint firstAttribute="trailing" secondItem="Shb-jF-sMd" secondAttribute="trailing" id="w6v-SO-wer"/>
-                            <constraint firstItem="Shb-jF-sMd" firstAttribute="leading" secondItem="Ygj-fv-7z1" secondAttribute="leading" id="x6Z-bU-kgX"/>
-                        </constraints>
-                    </view>
-                    <connections>
-                        <outlet property="searchDisplayController" destination="XYD-4Q-juU" id="ei8-Y0-0he"/>
-                        <outlet property="tableView" destination="Shb-jF-sMd" id="OJ9-xL-T4b"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="Pit-hl-tnR" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <searchDisplayController id="XYD-4Q-juU">
-                    <connections>
-                        <outlet property="delegate" destination="mfu-tO-bbM" id="vnN-2O-xWd"/>
-                        <outlet property="searchBar" destination="36U-ey-YlT" id="UOU-Lj-iir"/>
-                        <outlet property="searchContentsController" destination="mfu-tO-bbM" id="liQ-cO-oX2"/>
-                        <outlet property="searchResultsDataSource" destination="mfu-tO-bbM" id="qgn-En-lbj"/>
-                        <outlet property="searchResultsDelegate" destination="mfu-tO-bbM" id="8x5-Z8-Cmi"/>
-                    </connections>
-                </searchDisplayController>
-            </objects>
-            <point key="canvasLocation" x="2324" y="-837"/>
+            <point key="canvasLocation" x="233" y="-1640"/>
         </scene>
         <!--Settings View Controller-->
         <scene sceneID="KFU-Cf-Oay">
@@ -465,7 +371,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="prp-Qo-4Mm" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="235" y="-1519"/>
+            <point key="canvasLocation" x="886" y="-1257"/>
         </scene>
         <!--Settings About Reddit View Controller-->
         <scene sceneID="NUo-nm-YjV">
@@ -517,7 +423,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="OeC-4k-jF3" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="Ll6-be-N5A" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="1008" y="-2306"/>
+            <point key="canvasLocation" x="1608" y="-1782"/>
         </scene>
         <!--Edit Digest-->
         <scene sceneID="FMl-Bs-7d0">
@@ -555,7 +461,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4HK-h7-o78" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="D6c-O0-7re" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="886" y="-1516"/>
+            <point key="canvasLocation" x="1608" y="-1099"/>
         </scene>
         <!--Digest View Controller-->
         <scene sceneID="ufC-wZ-h7g">
@@ -620,7 +526,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="233" y="-837"/>
+            <point key="canvasLocation" x="-1199" y="-1257"/>
         </scene>
         <!--Post View Controller-->
         <scene sceneID="6cM-va-gTw">
@@ -673,7 +579,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Jq0-Os-qzQ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="233" y="-135"/>
+            <point key="canvasLocation" x="-485" y="-815"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="xjk-nU-YvO">
@@ -691,7 +597,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="LI7-IK-8pz" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-452" y="-837"/>
+            <point key="canvasLocation" x="-1884" y="-1257"/>
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
