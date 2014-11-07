@@ -39,17 +39,27 @@
         [self.webView setAllowsInlineMediaPlayback:YES];
         [self.webView setMediaPlaybackRequiresUserAction:YES];
 
-        NSString* embedHTML = [NSString stringWithFormat:@"\
-                               <html>\
-                               <body style='margin:0px;padding:0px;'>\
-                               <script type='text/javascript' src='http://www.youtube.com/iframe_api'></script>\
-                               <iframe id='playerId' type='text/html' width='%d' height='%d' src='http://%@?enablejsapi=1&rel=0&playsinline=1&autoplay=1' frameborder='0'>\
-                               </body>\
-                               </html>", 300, 200, self.selectedPost.url];
-        [self.webView loadHTMLString:embedHTML baseURL:[[NSBundle mainBundle] resourceURL]];
+        if (self.selectedPost.isYouTube) {
+            [self embedYouTubePlayer];
+        }else{
+            NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:self.selectedPost.url]];
+            [self.webView loadRequest:request];
+        }
+
     }
 
 }
 
+
+-(void)embedYouTubePlayer{
+    NSString* embedHTML = [NSString stringWithFormat:@"\
+                           <html>\
+                           <body style='margin:0px;padding:0px;'>\
+                           <script type='text/javascript' src='http://www.youtube.com/iframe_api'></script>\
+                           <iframe id='playerId' type='text/html' width='%d' height='%d' src='http://%@?enablejsapi=1&rel=0&playsinline=1&autoplay=1' frameborder='0'>\
+                           </body>\
+                           </html>", 300, 200, self.selectedPost.url];
+    [self.webView loadHTMLString:embedHTML baseURL:[[NSBundle mainBundle] resourceURL]];
+}
 
 @end

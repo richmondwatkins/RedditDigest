@@ -2,7 +2,7 @@
 //  Post.m
 //  
 //
-//  Created by Richmond on 11/6/14.
+//  Created by Richmond on 11/7/14.
 //
 //
 
@@ -14,9 +14,11 @@
 @dynamic author;
 @dynamic html;
 @dynamic image;
+@dynamic isGif;
 @dynamic isImageLink;
 @dynamic isSelfPost;
 @dynamic isWebPage;
+@dynamic isYouTube;
 @dynamic nsfw;
 @dynamic selfText;
 @dynamic subreddit;
@@ -25,7 +27,6 @@
 @dynamic totalComments;
 @dynamic url;
 @dynamic voteRatio;
-@dynamic isYouTube;
 
 
 +(void)savePost:(RKLink *)post withManagedObject:(NSManagedObjectContext *)managedObjectContext{
@@ -50,6 +51,12 @@
             savedPost.isImageLink = [NSNumber numberWithBool:YES];
             NSURLRequest *mainImageRequest = [NSURLRequest requestWithURL:post.URL];
             [NSURLConnection sendAsynchronousRequest:mainImageRequest queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
+                NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse*)response;
+                NSString *contentType = [httpResponse allHeaderFields][@"Content-Type"];
+                if ([contentType isEqualToString:@"image/gif"]) {
+                    savedPost.isImageLink = [NSNumber numberWithBool:NO];
+                    savedPost.isGif = [NSNumber numberWithBool:YES];
+                }
                 savedPost.image = data;
             }];
         }else{
@@ -96,6 +103,5 @@
 
     return [NSString stringWithFormat:@"www.youtube.com/embed/%@", youTubeID];
 }
-
 
 @end

@@ -4,6 +4,7 @@
         <attribute name="author" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="html" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="image" optional="YES" attributeType="Binary" syncable="YES"/>
+        <attribute name="isGif" optional="YES" attributeType="Boolean" syncable="YES"/>
         <attribute name="isImageLink" optional="YES" attributeType="Boolean" defaultValueString="0" syncable="YES"/>
         <attribute name="isSelfPost" optional="YES" attributeType="Boolean" syncable="YES"/>
         <attribute name="isWebPage" optional="YES" attributeType="Boolean" syncable="YES"/>
@@ -18,6 +19,6 @@
         <attribute name="voteRatio" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Post" positionX="-63" positionY="-18" width="128" height="270"/>
+        <element name="Post" positionX="-63" positionY="-18" width="128" height="285"/>
     </elements>
 </model>
