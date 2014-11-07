@@ -22,7 +22,7 @@
 @property NSMutableArray *subreddits;
 @property NSMutableArray *catagories;
 @property NSMutableArray *selectedSubreddits;
-@property NSMutableArray *posts; //remove when move to app delegate
+@property NSMutableArray *posts; 
 @property SubredditListCollectionViewCell *sizingCell;
 @property (weak, nonatomic) IBOutlet UIButton *doneSelectingSubredditsButton;
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *activityIndicator;

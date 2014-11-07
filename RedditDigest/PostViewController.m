@@ -23,10 +23,7 @@
 
     if (self.selectedPost) {
         [self loadPageFromCoreData];
-    }else{
-        [self loadPageFromRKLink];
     }
-
 }
 
 -(void)loadPageFromCoreData{
@@ -39,34 +36,19 @@
         self.textView.text = self.selectedPost.selfText;
     }else{
         self.webView.hidden = NO;
-        NSData *data = [NSData dataWithContentsOfFile:[self cacheFile] options:0 error:nil];
-        NSLog(@"Data %@",data);
-        [self.webView loadData:data MIMEType:@"text/html" textEncodingName:@"UTF-8" baseURL:[NSURL URLWithString:self.selectedPost.url]];
-        NSString *currentURL = [self.webView stringByEvaluatingJavaScriptFromString:@"window.location"];
-        NSLog(@"URL %@",currentURL);
+        [self.webView setAllowsInlineMediaPlayback:YES];
+        [self.webView setMediaPlaybackRequiresUserAction:YES];
+
+        NSString* embedHTML = [NSString stringWithFormat:@"\
+                               <html>\
+                               <body style='margin:0px;padding:0px;'>\
+                               <script type='text/javascript' src='http://www.youtube.com/iframe_api'></script>\
+                               <iframe id='playerId' type='text/html' width='%d' height='%d' src='http://%@?enablejsapi=1&rel=0&playsinline=1&autoplay=1' frameborder='0'>\
+                               </body>\
+                               </html>", 300, 200, self.selectedPost.url];
+        [self.webView loadHTMLString:embedHTML baseURL:[[NSBundle mainBundle] resourceURL]];
     }
 
-}
-
--(NSString*)cacheFile
-{
-    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
-    NSString *string = [[paths objectAtIndex:0] stringByAppendingPathComponent:[NSString stringWithFormat:@"%@", self.selectedPost.title]];
-    return string;
-}
-
--(void)loadPageFromRKLink{
-//    if (self.selectedLink.isImageLink) {
-//        self.imageView.hidden = NO;
-//        self.imageView.image = [UIImage imageWithData:self.selectedPost.image];
-//        NSLog(@"IMAGE %@",self.imageView.image);
-//    }else if(self.selectedPost.isSelfPost != nil){
-//        self.textView.hidden = NO;
-//        self.textView.text = self.selectedPost.selfText;
-//    }else{
-//        self.webView.hidden = NO;
-//        [self.webView loadHTMLString:[self.selectedPost.html stringByReplacingOccurrencesOfString:@"\n" withString:@"<br/>"] baseURL:nil];
-//    }
 }
 
 

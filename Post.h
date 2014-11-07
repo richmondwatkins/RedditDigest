@@ -8,8 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
-#import <RedditKit.h>
-#import <RKLink.h>
+
 
 @interface Post : NSManagedObject
 
@@ -29,6 +28,4 @@
 @property (nonatomic, retain) NSNumber * voteRatio;
 @property (nonatomic, retain) NSNumber * isYouTube;
 
-+(void)savePost:(RKLink *)post withManagedObject:(NSManagedObjectContext *)managedObjectContext;
-+(void)removeAllPostsFromCoreData:(NSManagedObjectContext *)managedObjectContext;
 @end

@@ -1,9 +1,9 @@
 //
 //  Post.m
-//  RedditDigest
+//  
 //
-//  Created by Richmond on 11/5/14.
-//  Copyright (c) 2014 Richmond. All rights reserved.
+//  Created by Richmond on 11/6/14.
+//
 //
 
 #import "Post.h"
@@ -12,9 +12,11 @@
 @implementation Post
 
 @dynamic author;
+@dynamic html;
 @dynamic image;
 @dynamic isImageLink;
 @dynamic isSelfPost;
+@dynamic isWebPage;
 @dynamic nsfw;
 @dynamic selfText;
 @dynamic subreddit;
@@ -23,8 +25,7 @@
 @dynamic totalComments;
 @dynamic url;
 @dynamic voteRatio;
-@dynamic isWebPage;
-@dynamic html;
+@dynamic isYouTube;
 
 
 +(void)savePost:(RKLink *)post withManagedObject:(NSManagedObjectContext *)managedObjectContext{
@@ -35,6 +36,11 @@
     savedPost.nsfw = [NSNumber numberWithBool:post.NSFW];
     savedPost.author = post.author;
     savedPost.voteRatio = [NSNumber numberWithFloat:post.score];
+
+    if ([[post.URL absoluteString] containsString:@"youtube.com/watch"]) {
+        savedPost.url = [self performRegexOnYoutube:post.URL];
+        savedPost.isYouTube = [NSNumber numberWithBool:YES];
+    }
 
     NSURLRequest *thumbnailRequest = [NSURLRequest requestWithURL:post.thumbnailURL];
     [NSURLConnection sendAsynchronousRequest:thumbnailRequest queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
@@ -77,6 +83,18 @@
         [managedObjectContext deleteObject:post];
     }
     [managedObjectContext save:nil];
+}
+
+
++(NSString *)performRegexOnYoutube:(NSURL *)url{
+    NSString *regexString = @"(?:youtube.com.+v[=/]|youtu.be/)([-a-zA-Z0-9_]+)";
+    NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:regexString options:NSRegularExpressionCaseInsensitive error:nil];
+    NSString *urlString = [url absoluteString];
+    NSTextCheckingResult *match = [regex firstMatchInString:urlString options:0 range:NSMakeRange(0, [urlString length])];
+    NSRange videoIDRange = [match rangeAtIndex:1];
+    NSString *youTubeID = [urlString substringWithRange:videoIDRange];
+
+    return [NSString stringWithFormat:@"www.youtube.com/embed/%@", youTubeID];
 }
 
 
