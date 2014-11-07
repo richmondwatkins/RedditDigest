@@ -112,7 +112,7 @@
 
         if (self.selectedSubreddits.count < 10)
         {
-            NSMutableDictionary *subredditDict = [[NSMutableDictionary alloc] initWithObjectsAndKeys:subreddit.name, @"name",subreddit.URL, @"url", nil];
+            NSMutableDictionary *subredditDict = [[NSMutableDictionary alloc] initWithObjectsAndKeys:subreddit.name, @"subreddit",subreddit.URL, @"url", nil];
             [self.selectedSubreddits addObject:subredditDict];
 //            NSLog(@"SELECTED SUBREDDITS %@",self.selectedSubreddits);
             if (self.selectedSubreddits.count > 0) {
@@ -133,7 +133,8 @@
             NSDictionary *subreddit = self.catagories[indexPath.row];
 
             for (NSDictionary *subredditDictionary in subreddit[@"subreddits"]) {
-                NSMutableDictionary *subredditDict = [[NSMutableDictionary alloc] initWithObjectsAndKeys:subredditDictionary[@"name"], @"name",subredditDictionary[@"url"], @"url", nil];
+                NSMutableDictionary *subredditDict = [[NSMutableDictionary alloc] initWithObjectsAndKeys:subredditDictionary[@"name"], @"subreddit",subredditDictionary[@"url"], @"url", nil];
+                NSLog(@"TEMP SREDDDITTTTT %@",subredditDict);
                 [self.selectedSubreddits addObject:subredditDict];
                 NSLog(@"SUBREDDIT %@",self.selectedSubreddits);
             }
@@ -158,7 +159,7 @@
         cell.subredditTitleLabel.text = subreddit.name;
     }
     else {
-        NSLog(@"LOGLOG LOG %@",self.catagories[indexPath.row]);
+
         cell.subredditTitleLabel.text = self.catagories[indexPath.row][@"category"][@"name"];
     }
 
