@@ -29,19 +29,16 @@
 
 -(void)loadPageFromCoreData{
     if (self.selectedPost.isImageLink.intValue == 1) {
-        self.imageView.hidden = NO;
-        self.imageView.image = [UIImage imageWithData:self.selectedPost.image];
-        NSLog(@"IMAGE %@",self.imageView.image);
+//        self.imageView.hidden = NO;
+//        self.imageView.image = [UIImage imageWithData:self.selectedPost.image];
+//        NSLog(@"IMAGE %@",self.imageView.image);
+        [self prepareAndDisplayGif];
     }else if(self.selectedPost.isSelfPost != nil){
         self.textView.hidden = NO;
         self.textView.text = self.selectedPost.selfText;
     }
     else if(self.selectedPost.isGif.intValue == 1){
-        FLAnimatedImage *image = [FLAnimatedImage animatedImageWithGIFData:[NSData dataWithContentsOfURL:[NSURL URLWithString:@"http://i.imgur.com/xevNO8W.gif"]]];
-        FLAnimatedImageView *imageView = [[FLAnimatedImageView alloc] init];
-        imageView.animatedImage = image;
-        imageView.frame = CGRectMake(0.0, 0.0, 100.0, 100.0);
-        [self.view addSubview:imageView];
+        [self prepareAndDisplayGif];
     }else{
         self.webView.hidden = NO;
         [self.webView setAllowsInlineMediaPlayback:YES];
@@ -68,6 +65,21 @@
                            </body>\
                            </html>", 300, 200, self.selectedPost.url];
     [self.webView loadHTMLString:embedHTML baseURL:[[NSBundle mainBundle] resourceURL]];
+}
+
+-(void)prepareAndDisplayGif{
+    dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(void){
+        FLAnimatedImage *image = [FLAnimatedImage animatedImageWithGIFData:[NSData dataWithContentsOfURL:[NSURL URLWithString:@"http://i.imgur.com/xevNO8W.gif"]]];
+        dispatch_async(dispatch_get_main_queue(), ^(void){
+            FLAnimatedImageView *imageView = [[FLAnimatedImageView alloc] init];
+            imageView.animatedImage = image;
+            CGRect screenRect =[[UIScreen mainScreen] bounds];
+            CGFloat screenWidth = screenRect.size.width;
+            CGFloat screenHeight = screenRect.size.height;
+            imageView.frame = CGRectMake(0.0, 0.0, screenWidth, screenHeight/2);
+            [self.view addSubview:imageView];
+        });
+    });
 }
 
 @end

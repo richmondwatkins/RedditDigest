@@ -64,10 +64,18 @@
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
 
     DigestCellWithImageTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"DigestCell"];
-    RKLink *post = self.digestPosts[indexPath.row];
 
-    cell.titleLabel.text = post.title;
-    cell.subredditAndAuthorLabel.text = post.subreddit;
+    if ([self.digestPosts.firstObject isKindOfClass:[RKLink class]]) {
+        RKLink *post = self.digestPosts[indexPath.row];
+        cell.titleLabel.text = post.title;
+        cell.subredditAndAuthorLabel.text = post.subreddit;
+    }else{
+        Post *post = self.digestPosts[indexPath.row];
+        cell.titleLabel.text = post.title;
+        cell.subredditAndAuthorLabel.text = post.subreddit;
+//        cell.imageView.image = [UIImage imageWithData:post.thumbnailImage];
+    }
+
 
     return cell;
 }
