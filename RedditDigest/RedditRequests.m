@@ -24,11 +24,12 @@
             }
             [Post savePost:topPost withManagedObject:managedObjectContext withCompletion:^(BOOL completedFromCoreData) {
                 if (completedFromCoreData) {
+                    j += 1;
                     if (j == subreddits.count) {
                         complete(YES);
                     }
                 }
-                j += 1;
+                
             }];
         }];
     }

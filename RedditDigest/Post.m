@@ -43,6 +43,9 @@
         savedPost.isYouTube = [NSNumber numberWithBool:YES];
     }
 
+
+
+
     NSURLRequest *thumbnailRequest = [NSURLRequest requestWithURL:post.thumbnailURL];
     [NSURLConnection sendAsynchronousRequest:thumbnailRequest queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
         savedPost.thumbnailImage = data;
@@ -60,6 +63,7 @@
                     savedPost.isGif = [NSNumber numberWithBool:YES];
                 }
                 savedPost.image = data;
+
                 complete(YES);
             }];
         }else{
@@ -78,6 +82,7 @@
             }
         }
         [managedObjectContext save:nil];
+        NSLog(@"SAVED POST %@",savedPost);
         complete(YES);
     }];
 }

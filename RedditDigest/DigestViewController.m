@@ -107,13 +107,17 @@
 
 }
 
--(void)retrievePostsFromCoreData{
+-(void)retrievePostsFromCoreData:(void (^)(BOOL))completionHandler{
     self.digestPosts = [NSMutableArray array];
 
     NSFetchRequest * allPosts = [[NSFetchRequest alloc] init];
     [allPosts setEntity:[NSEntityDescription entityForName:@"Post" inManagedObjectContext:self.managedObjectContext]];
     NSArray * posts = [self.managedObjectContext executeFetchRequest:allPosts error:nil];
     self.digestPosts = [NSMutableArray arrayWithArray:posts];
+    NSLog(@"RETRIEVED ALL POSTS FROM CORE DATA %@",posts);
+    if (self.digestPosts.count) {
+        completionHandler(YES);
+    }
 }
 
 -(void)requestNewLinks{
@@ -133,8 +137,11 @@
 
 
 -(void)performNewFetchedDataActions{
-    [self retrievePostsFromCoreData];
-    [self.digestTableView reloadData];
+    [self retrievePostsFromCoreData:^(BOOL completed) {
+        if (completed) {
+            [self.digestTableView reloadData];
+        }
+    }];
 }
 
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
@@ -143,6 +150,7 @@
         PostViewController *postViewController = segue.destinationViewController;
         NSIndexPath *indexPath = [self.digestTableView indexPathForSelectedRow];
         postViewController.allPosts = self.digestPosts;
+        postViewController.index = indexPath.row;
         if ([self.digestPosts[indexPath.row] isKindOfClass:[Post class]]) {
             postViewController.selectedPost = self.digestPosts[indexPath.row];
         }else{
@@ -153,6 +161,8 @@
 
 
 -(IBAction)unwindFromSubredditSelectionViewController:(UIStoryboardSegue *)segue{
+    [Post removeAllPostsFromCoreData:self.managedObjectContext];
+
     [RedditRequests retrieveLatestPostFromArray:self.subredditsForFirstDigest withManagedObject:self.managedObjectContext withCompletion:^(BOOL completed) {
         if (completed) {
             [self performNewFetchedDataActions];

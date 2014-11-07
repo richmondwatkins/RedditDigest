@@ -36,7 +36,7 @@
     self.pageController.dataSource = self;
     [[self.pageController view] setFrame:[[self view] bounds]];
 
-    ImagePostViewController *initialViewController = [self viewControllerAtIndex:0];
+    UIViewController *initialViewController = [self viewControllerAtIndex];
 
     NSArray *viewControllers = [NSArray arrayWithObject:initialViewController];
 
@@ -49,40 +49,39 @@
 
 - (UIViewController *)pageViewController:(UIPageViewController *)pageViewController viewControllerBeforeViewController:(UIViewController *)viewController {
 
-    NSUInteger index = [(ImagePostViewController *)viewController index];
+    self.index--;
 
-    if (index == 0) {
+    if (self.index == 0) {
         return nil;
     }
 
-    index--;
-
-    return [self viewControllerAtIndex:index];
+    return [self viewControllerAtIndex];
 
 }
 
 - (UIViewController *)pageViewController:(UIPageViewController *)pageViewController viewControllerAfterViewController:(UIViewController *)viewController {
 
-    NSUInteger index = [(ImagePostViewController *)viewController index];
+    self.index++;
 
-    index++;
-
-    if (index == self.allPosts.count + 1) {
+    if (self.index == self.allPosts.count -1) {
         return nil;
     }
 
-    return [self viewControllerAtIndex:index];
+    return [self viewControllerAtIndex];
 
 }
 
-- (ImagePostViewController *)viewControllerAtIndex:(NSUInteger)index {
-
-    ImagePostViewController *fvc = [self.storyboard instantiateViewControllerWithIdentifier:@"ImageView"];
-
-    fvc.index = index;
-
-    return fvc;
-
+- (UIViewController *)viewControllerAtIndex {
+    
+    Post *post = self.allPosts[self.index];
+    NSLog(@"POST %@",post);
+    if (post.isImageLink.intValue == 1) {
+        ImagePostViewController *ivc = [self.storyboard instantiateViewControllerWithIdentifier:@"ImageView"];
+        return ivc;
+    }else{
+        WebPostViewController *wvc = [self.storyboard instantiateViewControllerWithIdentifier:@"WebView"];
+        return wvc;
+    }
 }
 
 - (NSInteger)presentationCountForPageViewController:(UIPageViewController *)pageViewController {

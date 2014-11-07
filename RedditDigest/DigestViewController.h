@@ -14,7 +14,7 @@
 @property NSMutableArray *subredditsForFirstDigest;
 
 -(void)fetchNewDataWithCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler;
--(void)retrievePostsFromCoreData;
+-(void)retrievePostsFromCoreData:(void (^)(BOOL))completionHandler;
 -(void)requestNewLinks;
 
 @end

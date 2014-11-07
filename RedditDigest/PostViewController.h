@@ -17,4 +17,5 @@
 @property NSMutableArray *allPosts;
 @property Post *selectedPost; //if from core data
 @property RKLink *selectedLink; //if from web
+@property NSInteger index;
 @end
