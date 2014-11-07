@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		3413401D1A0C996F004C8C15 /* DigestCellWithImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 3413401C1A0C996F004C8C15 /* DigestCellWithImage.m */; };
+		3413401D1A0C996F004C8C15 /* DigestCellWithImageTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3413401C1A0C996F004C8C15 /* DigestCellWithImageTableViewCell.m */; };
 		3417AC0D1A092D970026961C /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3417AC0C1A092D970026961C /* SettingsViewController.m */; };
 		3417AC0F1A092EBA0026961C /* SubredditSelectionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3417AC0E1A092EBA0026961C /* SubredditSelectionCell.xib */; };
 		3417AC131A0945B40026961C /* KTCenterFlowLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 3417AC121A0945B40026961C /* KTCenterFlowLayout.m */; };
@@ -47,8 +47,8 @@
 
 /* Begin PBXFileReference section */
 		0C4AAC9EB76DD8D441DD99F5 /* Pods-RedditDigest.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RedditDigest.debug.xcconfig"; path = "Pods/Target Support Files/Pods-RedditDigest/Pods-RedditDigest.debug.xcconfig"; sourceTree = "<group>"; };
-		3413401B1A0C996F004C8C15 /* DigestCellWithImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DigestCellWithImage.h; sourceTree = "<group>"; };
-		3413401C1A0C996F004C8C15 /* DigestCellWithImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DigestCellWithImage.m; sourceTree = "<group>"; };
+		3413401B1A0C996F004C8C15 /* DigestCellWithImageTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DigestCellWithImageTableViewCell.h; sourceTree = "<group>"; };
+		3413401C1A0C996F004C8C15 /* DigestCellWithImageTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DigestCellWithImageTableViewCell.m; sourceTree = "<group>"; };
 		3417AC0B1A092D970026961C /* SettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsViewController.h; sourceTree = "<group>"; };
 		3417AC0C1A092D970026961C /* SettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsViewController.m; sourceTree = "<group>"; };
 		3417AC0E1A092EBA0026961C /* SubredditSelectionCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SubredditSelectionCell.xib; sourceTree = "<group>"; };
@@ -131,8 +131,8 @@
 		3413401A1A0C993F004C8C15 /* Digest Cells */ = {
 			isa = PBXGroup;
 			children = (
-				3413401B1A0C996F004C8C15 /* DigestCellWithImage.h */,
-				3413401C1A0C996F004C8C15 /* DigestCellWithImage.m */,
+				3413401B1A0C996F004C8C15 /* DigestCellWithImageTableViewCell.h */,
+				3413401C1A0C996F004C8C15 /* DigestCellWithImageTableViewCell.m */,
 			);
 			name = "Digest Cells";
 			sourceTree = "<group>";
@@ -400,7 +400,7 @@
 				3417AC0D1A092D970026961C /* SettingsViewController.m in Sources */,
 				5D5C12C61A05716E002902A8 /* AppDelegate.m in Sources */,
 				81D523811A0C0E710059C9B3 /* SettingsAboutRedditViewController.m in Sources */,
-				3413401D1A0C996F004C8C15 /* DigestCellWithImage.m in Sources */,
+				3413401D1A0C996F004C8C15 /* DigestCellWithImageTableViewCell.m in Sources */,
 				34D1B93A1A081D0C00C0C15F /* LoginViewController.m in Sources */,
 				815EED181A097E36006286FF /* EditSubredditViewController.m in Sources */,
 				343257411A0A96CF003A3115 /* SubredditSelectionCollectionReusableView.m in Sources */,

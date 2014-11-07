@@ -6,9 +6,9 @@
 //  Copyright (c) 2014 Richmond. All rights reserved.
 //
 
-#import "DigestCellWithImage.h"
+#import "DigestCellWithImageTableViewCell.h"
 
-@implementation DigestCellWithImage
+@implementation DigestCellWithImageTableViewCell
 
 - (void)awakeFromNib {
     // Initialization code
