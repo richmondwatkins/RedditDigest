@@ -16,21 +16,24 @@
 #import "PostViewController.h"
 #import "RedditRequests.h"
 #import "UserRequests.h"
+#import "DigestCellWithImageTableViewCell.h"
+
 @interface DigestViewController () <UITableViewDataSource, UITableViewDelegate>
+
 @property (strong, nonatomic) IBOutlet UITableView *digestTableView;
 @property NSMutableArray *digestPosts;
+
 @end
 
 @implementation DigestViewController
 
 - (void)viewWillAppear:(BOOL)animated
 {
-
     [super viewWillAppear:animated];
 
     if ([[NSUserDefaults standardUserDefaults] boolForKey:@"HasLaunchedOnce"])
     {
-        
+        [self performNewFetchedDataActionsWithDataArray];
     }
     else
     {
@@ -42,9 +45,15 @@
         [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"HasLaunchedOnce"];
         [[NSUserDefaults standardUserDefaults] synchronize];
     }
-
 }
 
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    // These two lines enable automatic cell resizing thanks to iOS 8 💃
+    self.digestTableView.estimatedRowHeight = 68.0;
+    self.digestTableView.rowHeight = UITableViewAutomaticDimension;
+}
 
 #pragma mark - TableView Delegate Methods
 
@@ -54,11 +63,11 @@
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
 
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"DigestCell"];
+    DigestCellWithImageTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"DigestCell"];
     RKLink *post = self.digestPosts[indexPath.row];
 
-    cell.textLabel.text = post.title;
-    cell.detailTextLabel.text = post.subreddit;
+    cell.titleLabel.text = post.title;
+    cell.subredditAndAuthorLabel.text = post.subreddit;
 
     return cell;
 }
