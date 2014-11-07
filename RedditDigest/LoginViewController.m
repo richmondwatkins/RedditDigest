@@ -28,6 +28,15 @@
 
     [self.usernameTextField addTarget:self.passwordTextField action:@selector(becomeFirstResponder) forControlEvents:UIControlEventEditingDidEndOnExit];
     [self.passwordTextField addTarget:self action:@selector(login:) forControlEvents:UIControlEventEditingDidEndOnExit];
+
+    if (self.isFromSettings == YES) {
+
+        NSLog(@"IS from Settings");
+
+        } else {
+            
+            NSLog(@"IS NOT from Settings");
+        }
 }
 
 - (IBAction)login:(id)sender
