@@ -17,7 +17,7 @@
 #import "RedditRequests.h"
 #import "UserRequests.h"
 #import "DigestCellWithImageTableViewCell.h"
-
+#import "WelcomViewController.h"
 @interface DigestViewController () <UITableViewDataSource, UITableViewDelegate>
 
 @property (strong, nonatomic) IBOutlet UITableView *digestTableView;
@@ -33,13 +33,13 @@
 
     if ([[NSUserDefaults standardUserDefaults] boolForKey:@"HasLaunchedOnce"])
     {
-        [self performNewFetchedDataActionsWithDataArray];
+        [self performNewFetchedDataActions];
     }
     else
     {
         UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-        UIViewController *welcomeViewController = [storyboard instantiateViewControllerWithIdentifier:@"WelcomeViewController"];
-
+        WelcomViewController *welcomeViewController = [storyboard instantiateViewControllerWithIdentifier:@"WelcomeViewController"];
+        welcomeViewController.managedObject = self.managedObjectContext;
         [self.parentViewController presentViewController:welcomeViewController animated:YES completion:nil];
 
         [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"HasLaunchedOnce"];
@@ -65,17 +65,10 @@
 
     DigestCellWithImageTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"DigestCell"];
 
-    if ([self.digestPosts.firstObject isKindOfClass:[RKLink class]]) {
-        RKLink *post = self.digestPosts[indexPath.row];
-        cell.titleLabel.text = post.title;
-        cell.subredditAndAuthorLabel.text = post.subreddit;
-    }else{
-        Post *post = self.digestPosts[indexPath.row];
-        cell.titleLabel.text = post.title;
-        cell.subredditAndAuthorLabel.text = post.subreddit;
+    Post *post = self.digestPosts[indexPath.row];
+    cell.titleLabel.text = post.title;
+    cell.subredditAndAuthorLabel.text = post.subreddit;
 //        cell.imageView.image = [UIImage imageWithData:post.thumbnailImage];
-    }
-
 
     return cell;
 }
@@ -90,7 +83,7 @@
     NSString *deviceString = [NSString stringWithFormat:@"%@", deviceID];
     [UserRequests retrieveUsersSubreddits:deviceString withCompletion:^(NSDictionary *results) {
         [RedditRequests retrieveLatestPostFromArray:results[@"subreddits"] withManagedObject:self.managedObjectContext withCompletion:^(BOOL completed) {
-            [self performNewFetchedDataActionsWithDataArray];
+            [self performNewFetchedDataActions];
             completionHandler(UIBackgroundFetchResultNewData);
             [self fireLocalNotificationAndMarkComplete];
         }];
@@ -129,9 +122,9 @@
     NSUUID *deviceID = [UIDevice currentDevice].identifierForVendor;
     NSString *deviceString = [NSString stringWithFormat:@"%@", deviceID];
     [UserRequests retrieveUsersSubreddits:deviceString withCompletion:^(NSDictionary *results) {
-        NSLog(@"Results %@",results);
+
         [RedditRequests retrieveLatestPostFromArray:results[@"subreddits"] withManagedObject:self.managedObjectContext withCompletion:^(BOOL completed) {
-            [self performNewFetchedDataActionsWithDataArray];
+            [self performNewFetchedDataActions];
             [self fireLocalNotificationAndMarkComplete];
         }];
     }];
@@ -139,7 +132,7 @@
 }
 
 
--(void)performNewFetchedDataActionsWithDataArray{
+-(void)performNewFetchedDataActions{
     [self retrievePostsFromCoreData];
     [self.digestTableView reloadData];
 }
@@ -162,7 +155,7 @@
 -(IBAction)unwindFromSubredditSelectionViewController:(UIStoryboardSegue *)segue{
     [RedditRequests retrieveLatestPostFromArray:self.subredditsForFirstDigest withManagedObject:self.managedObjectContext withCompletion:^(BOOL completed) {
         if (completed) {
-            [self performNewFetchedDataActionsWithDataArray];
+            [self performNewFetchedDataActions];
         }
     }];
 }

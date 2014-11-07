@@ -10,4 +10,5 @@
 
 @interface WelcomViewController : UIViewController
 
+@property NSManagedObjectContext *managedObject;
 @end

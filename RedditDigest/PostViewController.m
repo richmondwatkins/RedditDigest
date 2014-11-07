@@ -29,9 +29,9 @@
 
 -(void)loadPageFromCoreData{
     if (self.selectedPost.isImageLink.intValue == 1) {
-//        self.imageView.hidden = NO;
-//        self.imageView.image = [UIImage imageWithData:self.selectedPost.image];
-//        NSLog(@"IMAGE %@",self.imageView.image);
+        self.imageView.hidden = NO;
+        self.imageView.image = [UIImage imageWithData:self.selectedPost.image];
+        NSLog(@"IMAGE %@",self.imageView.image);
         [self prepareAndDisplayGif];
     }else if(self.selectedPost.isSelfPost != nil){
         self.textView.hidden = NO;
@@ -69,7 +69,7 @@
 
 -(void)prepareAndDisplayGif{
     dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(void){
-        FLAnimatedImage *image = [FLAnimatedImage animatedImageWithGIFData:[NSData dataWithContentsOfURL:[NSURL URLWithString:@"http://i.imgur.com/xevNO8W.gif"]]];
+        FLAnimatedImage *image = [FLAnimatedImage animatedImageWithGIFData:[NSData dataWithContentsOfURL:[NSURL URLWithString:self.selectedPost.url]]];
         dispatch_async(dispatch_get_main_queue(), ^(void){
             FLAnimatedImageView *imageView = [[FLAnimatedImageView alloc] init];
             imageView.animatedImage = image;

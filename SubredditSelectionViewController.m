@@ -15,7 +15,7 @@
 #import "SubredditSelectionCollectionReusableView.h"
 #import "DigestViewController.h"
 #import "UserRequests.h"
-
+#import "RedditRequests.h"
 @interface SubredditSelectionViewController () <UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, UIAlertViewDelegate, UITextFieldDelegate>
 
 @property (strong, nonatomic) IBOutlet UICollectionView *subredditCollectionView;
@@ -49,7 +49,6 @@
     self.subredditCollectionView.allowsMultipleSelection = YES;
 
     self.posts = [NSMutableArray array];
-    [self getAllPosts];
     self.selectedSubreddits = [[NSMutableArray alloc] init];
 
     // Logged in with reddit account
@@ -136,7 +135,6 @@
                 NSMutableDictionary *subredditDict = [[NSMutableDictionary alloc] initWithObjectsAndKeys:subredditDictionary[@"name"], @"subreddit",subredditDictionary[@"url"], @"url", nil];
 
                 [self.selectedSubreddits addObject:subredditDict];
-                NSLog(@"SUBREDDIT %@",self.selectedSubreddits);
             }
 
             if (self.selectedSubreddits.count > 0) {
@@ -180,7 +178,6 @@
         NSMutableDictionary *subredditDict = [[NSMutableDictionary alloc] initWithObjectsAndKeys:subreddit.name, @"name",subreddit.URL, @"url", nil];
         if ([self.selectedSubreddits containsObject:subredditDict]) {
             [self.selectedSubreddits removeObject:subredditDict];
-//            NSLog(@"sizelkj: %lu", (unsigned long)self.selectedSubreddits.count);
         }
     }
     else {
@@ -319,36 +316,15 @@
     NSString *deviceString = [NSString stringWithFormat:@"%@", deviceID];
     NSDictionary *dataDictionary = [[NSDictionary alloc] initWithObjectsAndKeys:self.selectedSubreddits, @"subreddits", nil];
 
-    [UserRequests postSelectedSubreddits:deviceString selections:dataDictionary];
 
-}
-
-
--(void)getAllPosts
-{
-    NSUUID *deviceID = [UIDevice currentDevice].identifierForVendor;
-    NSString *deviceString = [NSString stringWithFormat:@"%@", deviceID];
-    [UserRequests retrieveUsersSubreddits:deviceString withCompletion:^(NSDictionary *results) {
-
-        for (NSDictionary *subredditDict in results[@"subreddits"]) {
-            NSDictionary *setUpForRKKitObject = [[NSDictionary alloc] initWithObjectsAndKeys:subredditDict[@"subreddit"], @"name", subredditDict[@"url"], @"URL", nil];
-            RKSubreddit *subreddit = [[RKSubreddit alloc] initWithDictionary:setUpForRKKitObject error:nil];
-            [self findTopPostsFromSubreddit:subreddit];
+    [UserRequests postSelectedSubreddits:deviceString selections:dataDictionary withCompletion:^(BOOL completed) {
+        if (completed) {
+            //
         }
     }];
 
 }
 
--(void)findTopPostsFromSubreddit:(RKSubreddit *)subreddit
-{
-    [[RKClient sharedClient] linksInSubreddit:subreddit pagination:nil completion:^(NSArray *links, RKPagination *pagination, NSError *error) {
-        RKLink *topPost = links.firstObject;
-        if (topPost.stickied) {
-            topPost = links[1];
-        }
-        [self.posts addObject:topPost];
-    }];
-}
 
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
     DigestViewController *digestViewController = segue.destinationViewController;

@@ -10,4 +10,5 @@
 
 @interface SubredditSelectionViewController : UIViewController
 
+@property NSManagedObjectContext *managedObject;
 @end

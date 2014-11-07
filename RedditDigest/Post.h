@@ -31,6 +31,6 @@
 @property (nonatomic, retain) NSString * url;
 @property (nonatomic, retain) NSNumber * voteRatio;
 
-+(void)savePost:(RKLink *)post withManagedObject:(NSManagedObjectContext *)managedObjectContext;
++(void)savePost:(RKLink *)post withManagedObject:(NSManagedObjectContext *)managedObjectContext withCompletion:(void (^)(BOOL completed))complete;
 +(void)removeAllPostsFromCoreData:(NSManagedObjectContext *)managedObjectContext;
 @end

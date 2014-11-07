@@ -7,7 +7,7 @@
 //
 
 #import "WelcomViewController.h"
-
+#import "SubredditSelectionViewController.h"
 @interface WelcomViewController ()
 
 @end
@@ -23,12 +23,6 @@
 {
     [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"HasRedditAccount"];
     [[NSUserDefaults standardUserDefaults] synchronize];
-}
-
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-
 }
 
 

@@ -23,7 +23,6 @@
 #import "DigestViewController.h"
 #import <SSKeychain/SSKeychain.h>
 #import <RedditKit/RedditKit.h>
-
 @interface AppDelegate ()
 @property NSString *token;
 @property (nonatomic, strong) NSString *temperature;
@@ -117,10 +116,10 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+
     UINavigationController *navigationController = (UINavigationController *)self.window.rootViewController;
     DigestViewController *digestController = (DigestViewController *)navigationController.topViewController;
     digestController.managedObjectContext = self.managedObjectContext;
-
 
     [self showWelcomeViewOrDigestView];
     [[UIApplication sharedApplication] setMinimumBackgroundFetchInterval:UIApplicationBackgroundFetchIntervalMinimum];

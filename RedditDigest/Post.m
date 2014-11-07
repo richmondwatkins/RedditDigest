@@ -29,7 +29,7 @@
 @dynamic voteRatio;
 
 
-+(void)savePost:(RKLink *)post withManagedObject:(NSManagedObjectContext *)managedObjectContext{
++(void)savePost:(RKLink *)post withManagedObject:(NSManagedObjectContext *)managedObjectContext withCompletion:(void (^)(BOOL))complete{
     Post *savedPost = [NSEntityDescription insertNewObjectForEntityForName:@"Post" inManagedObjectContext:managedObjectContext];
     savedPost.title = post.title;
     savedPost.subreddit = post.subreddit;
@@ -51,13 +51,16 @@
             savedPost.isImageLink = [NSNumber numberWithBool:YES];
             NSURLRequest *mainImageRequest = [NSURLRequest requestWithURL:post.URL];
             [NSURLConnection sendAsynchronousRequest:mainImageRequest queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
+
                 NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse*)response;
                 NSString *contentType = [httpResponse allHeaderFields][@"Content-Type"];
+
                 if ([contentType isEqualToString:@"image/gif"]) {
                     savedPost.isImageLink = [NSNumber numberWithBool:NO];
                     savedPost.isGif = [NSNumber numberWithBool:YES];
                 }
                 savedPost.image = data;
+                complete(YES);
             }];
         }else{
             savedPost.isImageLink = [NSNumber numberWithBool:NO];
@@ -75,6 +78,7 @@
             }
         }
         [managedObjectContext save:nil];
+        complete(YES);
     }];
 }
 

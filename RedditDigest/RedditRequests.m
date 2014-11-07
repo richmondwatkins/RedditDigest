@@ -11,6 +11,7 @@
 @implementation RedditRequests
 
 +(void)retrieveLatestPostFromArray:(NSArray *)subreddits withManagedObject:(NSManagedObjectContext *)managedObjectContext withCompletion:(void (^)(BOOL completed))complete{
+    NSLog(@"SUBSSS %@",subreddits);
     __block int j = 0;
     for (NSDictionary *subredditDict in subreddits) {
         NSDictionary *setUpForRKKitObject = [[NSDictionary alloc] initWithObjectsAndKeys:subredditDict[@"subreddit"], @"name", subredditDict[@"url"], @"URL", nil];
@@ -21,13 +22,14 @@
             if (topPost.stickied) {
                 topPost = links[1];
             }
-            [Post savePost:topPost withManagedObject:managedObjectContext];
-
-            j += 1;
-
-            if (j  == subreddits.count) {
-                complete(YES);
-            }
+            [Post savePost:topPost withManagedObject:managedObjectContext withCompletion:^(BOOL completedFromCoreData) {
+                if (completedFromCoreData) {
+                    if (j == subreddits.count) {
+                        complete(YES);
+                    }
+                }
+                j += 1;
+            }];
         }];
     }
 

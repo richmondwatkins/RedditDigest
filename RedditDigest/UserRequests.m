@@ -27,7 +27,9 @@
     }];
 }
 
-+(void)postSelectedSubreddits:(NSString *)deviceID selections:(NSDictionary *)selectionsDictionary{
++(void)postSelectedSubreddits:(NSString *)deviceID selections:(NSDictionary *)selectionsDictionary withCompletion:(void (^)(BOOL completed))complete{
+
+
     NSError *error;
 
     NSString *urlString = [NSString stringWithFormat:@"http://192.168.129.228:3000/subreddits/%@",  deviceID];
@@ -46,7 +48,7 @@
 
     NSURLSessionDataTask* dataTask = [session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
         if (!error) {
-            //                NSLog(@"%@",response);
+            complete(YES);
         }
     }];
     [dataTask resume];
