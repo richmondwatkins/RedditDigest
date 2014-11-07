@@ -114,7 +114,7 @@
         {
             NSMutableDictionary *subredditDict = [[NSMutableDictionary alloc] initWithObjectsAndKeys:subreddit.name, @"subreddit",subreddit.URL, @"url", nil];
             [self.selectedSubreddits addObject:subredditDict];
-//            NSLog(@"SELECTED SUBREDDITS %@",self.selectedSubreddits);
+
             if (self.selectedSubreddits.count > 0) {
                 [UIView animateWithDuration:0.3 animations:^{
                     self.doneSelectingSubredditsButton.alpha = 1.0;
@@ -134,7 +134,7 @@
 
             for (NSDictionary *subredditDictionary in subreddit[@"subreddits"]) {
                 NSMutableDictionary *subredditDict = [[NSMutableDictionary alloc] initWithObjectsAndKeys:subredditDictionary[@"name"], @"subreddit",subredditDictionary[@"url"], @"url", nil];
-                NSLog(@"TEMP SREDDDITTTTT %@",subredditDict);
+
                 [self.selectedSubreddits addObject:subredditDict];
                 NSLog(@"SUBREDDIT %@",self.selectedSubreddits);
             }
@@ -313,34 +313,13 @@
    |     I     |
  ***************************************
  */
-- (IBAction)finishSelectingSubreddits:(id)sender
-{
+- (IBAction)finishSelectingSubreddits:(id)sender{
 
     NSUUID *deviceID = [UIDevice currentDevice].identifierForVendor;
     NSString *deviceString = [NSString stringWithFormat:@"%@", deviceID];
-    NSString *urlString = [NSString stringWithFormat:@"http://192.168.129.228:3000/subreddits/%@",  deviceString];
-
     NSDictionary *dataDictionary = [[NSDictionary alloc] initWithObjectsAndKeys:self.selectedSubreddits, @"subreddits", nil];
-    NSError *error;
 
-    NSData *postData = [NSJSONSerialization dataWithJSONObject:dataDictionary options:0 error:&error];
-    NSURL *url = [[NSURL alloc] initWithString:[urlString stringByAddingPercentEscapesUsingEncoding:NSASCIIStringEncoding]];
-
-    NSMutableURLRequest* request = [NSMutableURLRequest requestWithURL:url];
-    request.HTTPMethod = @"POST";
-
-    [request addValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
-    [request setHTTPBody:postData];
-
-    NSURLSessionConfiguration* config = [NSURLSessionConfiguration defaultSessionConfiguration];
-    NSURLSession* session = [NSURLSession sessionWithConfiguration:config];
-
-    NSURLSessionDataTask* dataTask = [session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
-        if (!error) {
-//                NSLog(@"%@",response);
-        }
-    }];
-    [dataTask resume];
+    [UserRequests postSelectedSubreddits:deviceString selections:dataDictionary];
 
 }
 
