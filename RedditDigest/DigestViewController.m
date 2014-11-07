@@ -112,6 +112,7 @@
     NSUUID *deviceID = [UIDevice currentDevice].identifierForVendor;
     NSString *deviceString = [NSString stringWithFormat:@"%@", deviceID];
     [UserRequests retrieveUsersSubreddits:deviceString withCompletion:^(NSDictionary *results) {
+        NSLog(@"Results %@",results);
         [RedditRequests retrieveLatestPostFromArray:results[@"subreddits"] withManagedObject:self.managedObjectContext withCompletion:^(BOOL completed) {
             [self performNewFetchedDataActionsWithDataArray];
             [self fireLocalNotificationAndMarkComplete];

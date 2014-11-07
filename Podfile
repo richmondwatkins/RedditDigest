@@ -7,7 +7,7 @@ target 'RedditDigest' do
 pod "ZeroPush"
 pod 'RedditKit', '~> 1.3'
 pod 'SSKeychain'
-
+pod 'FLAnimatedImage', '~> 1.0'
 end
 
 target 'RedditDigestTests' do

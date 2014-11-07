@@ -7,6 +7,7 @@
 //
 
 #import "PostViewController.h"
+#import "FLAnimatedImage.h"
 
 @interface PostViewController ()
 @property (strong, nonatomic) IBOutlet UIImageView *imageView;
@@ -34,6 +35,13 @@
     }else if(self.selectedPost.isSelfPost != nil){
         self.textView.hidden = NO;
         self.textView.text = self.selectedPost.selfText;
+    }
+    else if(self.selectedPost.isGif.intValue == 1){
+        FLAnimatedImage *image = [FLAnimatedImage animatedImageWithGIFData:[NSData dataWithContentsOfURL:[NSURL URLWithString:@"http://i.imgur.com/xevNO8W.gif"]]];
+        FLAnimatedImageView *imageView = [[FLAnimatedImageView alloc] init];
+        imageView.animatedImage = image;
+        imageView.frame = CGRectMake(0.0, 0.0, 100.0, 100.0);
+        [self.view addSubview:imageView];
     }else{
         self.webView.hidden = NO;
         [self.webView setAllowsInlineMediaPlayback:YES];

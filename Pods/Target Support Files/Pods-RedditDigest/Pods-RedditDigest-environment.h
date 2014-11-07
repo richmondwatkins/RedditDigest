@@ -48,6 +48,12 @@
 #define COCOAPODS_VERSION_MINOR_AFNetworking_UIKit 4
 #define COCOAPODS_VERSION_PATCH_AFNetworking_UIKit 1
 
+// FLAnimatedImage
+#define COCOAPODS_POD_AVAILABLE_FLAnimatedImage
+#define COCOAPODS_VERSION_MAJOR_FLAnimatedImage 1
+#define COCOAPODS_VERSION_MINOR_FLAnimatedImage 0
+#define COCOAPODS_VERSION_PATCH_FLAnimatedImage 4
+
 // Mantle
 #define COCOAPODS_POD_AVAILABLE_Mantle
 #define COCOAPODS_VERSION_MAJOR_Mantle 1
