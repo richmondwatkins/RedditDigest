@@ -14,6 +14,7 @@
 #import "KTCenterFlowLayout.h"
 #import "SubredditSelectionCollectionReusableView.h"
 #import "DigestViewController.h"
+#import "UserRequests.h"
 
 @interface SubredditSelectionViewController () <UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, UIAlertViewDelegate, UITextFieldDelegate>
 
@@ -342,32 +343,20 @@
 
 }
 
-//testing GET for subreddits and recreating a RKSubreddit object
+
 -(void)getAllPosts
 {
-    NSURLSessionConfiguration* config = [NSURLSessionConfiguration defaultSessionConfiguration];
-    NSURLSession* session = [NSURLSession sessionWithConfiguration:config];
-
     NSUUID *deviceID = [UIDevice currentDevice].identifierForVendor;
     NSString *deviceString = [NSString stringWithFormat:@"%@", deviceID];
-    NSString *urlString = [NSString stringWithFormat:@"http://192.168.129.228:3000/subreddits/%@",deviceString];
-    NSURL *url = [[NSURL alloc] initWithString:[urlString stringByAddingPercentEscapesUsingEncoding:NSASCIIStringEncoding]];
+    [UserRequests retrieveUsersSubreddits:deviceString withCompletion:^(NSDictionary *results) {
 
-    NSURLSessionDataTask * dataTask = [session dataTaskWithURL:url completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
-        if(error == nil)
-        {
-            NSDictionary *results = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
-            NSArray *usersSubredditsArray = results[@"subreddits"];
-
-            for (NSDictionary *subredditDict in usersSubredditsArray) {
-                NSDictionary *setUpForRKKitObject = [[NSDictionary alloc] initWithObjectsAndKeys:subredditDict[@"subreddit"], @"name", subredditDict[@"url"], @"URL", nil];
-                RKSubreddit *subreddit = [[RKSubreddit alloc] initWithDictionary:setUpForRKKitObject error:nil];
-                [self findTopPostsFromSubreddit:subreddit];
-            }
+        for (NSDictionary *subredditDict in results[@"subreddits"]) {
+            NSDictionary *setUpForRKKitObject = [[NSDictionary alloc] initWithObjectsAndKeys:subredditDict[@"subreddit"], @"name", subredditDict[@"url"], @"URL", nil];
+            RKSubreddit *subreddit = [[RKSubreddit alloc] initWithDictionary:setUpForRKKitObject error:nil];
+            [self findTopPostsFromSubreddit:subreddit];
         }
     }];
 
-    [dataTask resume];
 }
 
 -(void)findTopPostsFromSubreddit:(RKSubreddit *)subreddit
