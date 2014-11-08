@@ -20,7 +20,6 @@
 }
 
 -(void)viewDidAppear:(BOOL)animated{
-    self.screenNumber.text = [NSString stringWithFormat:@"Screen #%d", self.index];
 
 }
 

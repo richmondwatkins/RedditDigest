@@ -44,8 +44,6 @@
     }
 
 
-
-
     NSURLRequest *thumbnailRequest = [NSURLRequest requestWithURL:post.thumbnailURL];
     [NSURLConnection sendAsynchronousRequest:thumbnailRequest queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
         savedPost.thumbnailImage = data;

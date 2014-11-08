@@ -9,5 +9,6 @@
 #import <UIKit/UIKit.h>
 
 @interface SelfPostViewController : UIViewController
-
+@property (strong, nonatomic) IBOutlet UITextView *textView;
+@property NSString *selfPostText;
 @end

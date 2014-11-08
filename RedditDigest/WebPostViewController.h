@@ -9,5 +9,6 @@
 #import <UIKit/UIKit.h>
 
 @interface WebPostViewController : UIViewController
-
+@property (strong, nonatomic) IBOutlet UIWebView *webView;
+@property NSString *urlString;
 @end

@@ -9,7 +9,6 @@
 #import <UIKit/UIKit.h>
 
 @interface ImagePostViewController : UIViewController
-@property (assign, nonatomic) NSInteger index;
-@property (strong, nonatomic) IBOutlet UILabel *screenNumber;
+@property (strong, nonatomic) IBOutlet UIImageView *imageView;
 
 @end

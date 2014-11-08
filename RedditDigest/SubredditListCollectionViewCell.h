@@ -9,7 +9,6 @@
 #import <UIKit/UIKit.h>
 #import <RedditKit.h>
 #import <RKSubreddit.h>
-#import "CustomSubredditLabel.h"
 @interface SubredditListCollectionViewCell : UICollectionViewCell
 
 @property (weak, nonatomic) IBOutlet UILabel *subredditTitleLabel;

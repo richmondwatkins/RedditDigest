@@ -19,19 +19,20 @@
     // Do any additional setup after loading the view.
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
+-(void)viewWillAppear:(BOOL)animated{
+    CGRect screenRect =[[UIScreen mainScreen] bounds];
+    CGFloat screenWidth = screenRect.size.width;
+    CGFloat screenHeight = screenRect.size.height;
 
-/*
-#pragma mark - Navigation
+    NSString* embedHTML = [NSString stringWithFormat:@"\
+                           <html>\
+                           <body style='margin:0px;padding:0px;'>\
+                           <script type='text/javascript' src='http://www.youtube.com/iframe_api'></script>\
+                           <iframe id='playerId' type='text/html' width='%f' height='%f' src='http://%@?enablejsapi=1&rel=0&playsinline=1&autoplay=1' frameborder='0'>\
+                           </body>\
+                           </html>", screenWidth, screenHeight/2, self.url];
+    [self.videoView loadHTMLString:embedHTML baseURL:[[NSBundle mainBundle] resourceURL]];
 
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
 }
-*/
 
 @end

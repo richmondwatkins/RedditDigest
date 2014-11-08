@@ -7,6 +7,7 @@
 //
 
 #import "GifPostViewController.h"
+#import "FLAnimatedImage.h"
 
 @interface GifPostViewController ()
 
@@ -19,19 +20,19 @@
     // Do any additional setup after loading the view.
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+-(void)viewWillAppear:(BOOL)animated{
+    dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(void){
+        FLAnimatedImage *image = [FLAnimatedImage animatedImageWithGIFData:[NSData dataWithContentsOfURL:[NSURL URLWithString:self.url]]];
+        dispatch_async(dispatch_get_main_queue(), ^(void){
+            FLAnimatedImageView *imageView = [[FLAnimatedImageView alloc] init];
+            imageView.animatedImage = image;
+            CGRect screenRect =[[UIScreen mainScreen] bounds];
+            CGFloat screenWidth = screenRect.size.width;
+            CGFloat screenHeight = screenRect.size.height;
+            imageView.frame = CGRectMake(0.0, 0.0, screenWidth, screenHeight/2);
+            [self.view addSubview:imageView];
+        });
+    });
 }
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end

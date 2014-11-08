@@ -9,5 +9,5 @@
 #import <UIKit/UIKit.h>
 
 @interface GifPostViewController : UIViewController
-
+@property NSString *url;
 @end

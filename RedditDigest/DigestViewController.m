@@ -110,9 +110,13 @@
 -(void)retrievePostsFromCoreData:(void (^)(BOOL))completionHandler{
     self.digestPosts = [NSMutableArray array];
 
-    NSFetchRequest * allPosts = [[NSFetchRequest alloc] init];
-    [allPosts setEntity:[NSEntityDescription entityForName:@"Post" inManagedObjectContext:self.managedObjectContext]];
-    NSArray * posts = [self.managedObjectContext executeFetchRequest:allPosts error:nil];
+    NSFetchRequest * fetch = [[NSFetchRequest alloc] init];
+    [fetch setEntity:[NSEntityDescription entityForName:@"Post" inManagedObjectContext:self.managedObjectContext]];
+    NSSortDescriptor *sorter = [[NSSortDescriptor alloc] initWithKey:@"subreddit" ascending:YES selector:@selector(localizedCaseInsensitiveCompare:)];
+
+    [fetch setSortDescriptors:@[sorter]];
+
+    NSArray * posts = [self.managedObjectContext executeFetchRequest:fetch error:nil];
     self.digestPosts = [NSMutableArray arrayWithArray:posts];
     NSLog(@"RETRIEVED ALL POSTS FROM CORE DATA %@",posts);
     if (self.digestPosts.count) {

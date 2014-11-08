@@ -9,5 +9,6 @@
 #import <UIKit/UIKit.h>
 
 @interface VideoPostViewController : UIViewController
-
+@property (strong, nonatomic) IBOutlet UIWebView *videoView;
+@property NSString *url;
 @end
