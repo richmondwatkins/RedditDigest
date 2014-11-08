@@ -181,8 +181,8 @@
 		5D5C12BF1A05716E002902A8 /* RedditDigest */ = {
 			isa = PBXGroup;
 			children = (
-				5D5C12C51A05716E002902A8 /* AppDelegate.m */,
 				5D5C12C41A05716E002902A8 /* AppDelegate.h */,
+				5D5C12C51A05716E002902A8 /* AppDelegate.m */,
 				5D5C12CD1A05716E002902A8 /* Main.storyboard */,
 				5DE75CA41A0D98B30031F0F7 /* PaginatedViewControllers */,
 				5DE75CA31A0D98930031F0F7 /* HttpRequestHelpers */,

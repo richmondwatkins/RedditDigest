@@ -47,7 +47,40 @@
     [application registerForRemoteNotifications];
 }
 
+- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
+{
+    UINavigationController *navigationController = (UINavigationController *)self.window.rootViewController;
+    DigestViewController *digestController = (DigestViewController *)navigationController.topViewController;
+    digestController.managedObjectContext = self.managedObjectContext;
 
+    [self setUpUI];
+
+    [self showWelcomeViewOrDigestView];
+    [[UIApplication sharedApplication] setMinimumBackgroundFetchInterval:UIApplicationBackgroundFetchIntervalMinimum];
+
+    [self reloadFromCoreDataOrFetch:digestController];
+
+    // WE NEED THIS:   if ([[NSUserDefaults standardUserDefaults] boolForKey:@"HasLaunchedOnce"]){
+    NSUUID *deviceID = [UIDevice currentDevice].identifierForVendor;
+    self.deviceString = [NSString stringWithFormat:@"%@", deviceID];
+    [self registerDevice];
+    //    }
+    
+    return YES;
+}
+
+- (void)setUpUI
+{
+    // #336699 - reddit dark blue
+    [[UINavigationBar appearance] setBarTintColor:[UIColor colorWithRed:0.2 green:0.4 blue:0.6 alpha:1]];
+    // Nav bar buttons white
+    [[UINavigationBar appearance] setTintColor:[UIColor whiteColor]];
+    // White nav bar text color
+    [[UINavigationBar appearance] setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor whiteColor]}];
+    [[UINavigationBar appearance] setTranslucent:NO];
+    // White status bar
+    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
+}
 
 - (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)tokenData
 {
@@ -113,27 +146,6 @@
     NSLog(@"%@", error.localizedDescription);
 }
 
-
-- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
-{
-
-    UINavigationController *navigationController = (UINavigationController *)self.window.rootViewController;
-    DigestViewController *digestController = (DigestViewController *)navigationController.topViewController;
-    digestController.managedObjectContext = self.managedObjectContext;
-
-    [self showWelcomeViewOrDigestView];
-    [[UIApplication sharedApplication] setMinimumBackgroundFetchInterval:UIApplicationBackgroundFetchIntervalMinimum];
-
-    [self reloadFromCoreDataOrFetch:digestController];
-
-// WE NEED THIS:   if ([[NSUserDefaults standardUserDefaults] boolForKey:@"HasLaunchedOnce"]){
-    NSUUID *deviceID = [UIDevice currentDevice].identifierForVendor;
-    self.deviceString = [NSString stringWithFormat:@"%@", deviceID];
-    [self registerDevice];
-//    }
-
-    return YES;
-}
 
 -(void)reloadFromCoreDataOrFetch:(DigestViewController *)digestController{
     NSCalendar* myCalendar = [NSCalendar currentCalendar];
