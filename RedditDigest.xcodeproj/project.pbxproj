@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3400A13D1A0EB50D00A39D3F /* CustomButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 3400A13C1A0EB50D00A39D3F /* CustomButton.m */; };
 		3413401D1A0C996F004C8C15 /* DigestCellWithImageTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3413401C1A0C996F004C8C15 /* DigestCellWithImageTableViewCell.m */; };
 		3417AC0D1A092D970026961C /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3417AC0C1A092D970026961C /* SettingsViewController.m */; };
 		3417AC0F1A092EBA0026961C /* SubredditSelectionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3417AC0E1A092EBA0026961C /* SubredditSelectionCell.xib */; };
@@ -52,6 +53,8 @@
 
 /* Begin PBXFileReference section */
 		0C4AAC9EB76DD8D441DD99F5 /* Pods-RedditDigest.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RedditDigest.debug.xcconfig"; path = "Pods/Target Support Files/Pods-RedditDigest/Pods-RedditDigest.debug.xcconfig"; sourceTree = "<group>"; };
+		3400A13B1A0EB50D00A39D3F /* CustomButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomButton.h; sourceTree = "<group>"; };
+		3400A13C1A0EB50D00A39D3F /* CustomButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomButton.m; sourceTree = "<group>"; };
 		3413401B1A0C996F004C8C15 /* DigestCellWithImageTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DigestCellWithImageTableViewCell.h; sourceTree = "<group>"; };
 		3413401C1A0C996F004C8C15 /* DigestCellWithImageTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DigestCellWithImageTableViewCell.m; sourceTree = "<group>"; };
 		3417AC0B1A092D970026961C /* SettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsViewController.h; sourceTree = "<group>"; };
@@ -133,6 +136,19 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		3400A13A1A0EB30F00A39D3F /* Welcome & Login Views */ = {
+			isa = PBXGroup;
+			children = (
+				34D1B9351A081B4D00C0C15F /* WelcomViewController.h */,
+				34D1B9361A081B4D00C0C15F /* WelcomViewController.m */,
+				3400A13B1A0EB50D00A39D3F /* CustomButton.h */,
+				3400A13C1A0EB50D00A39D3F /* CustomButton.m */,
+				34D1B9381A081D0C00C0C15F /* LoginViewController.h */,
+				34D1B9391A081D0C00C0C15F /* LoginViewController.m */,
+			);
+			name = "Welcome & Login Views";
+			sourceTree = "<group>";
+		};
 		341340191A0C9925004C8C15 /* Digest View */ = {
 			isa = PBXGroup;
 			children = (
@@ -187,6 +203,7 @@
 				5D5C12C41A05716E002902A8 /* AppDelegate.h */,
 				5D5C12C51A05716E002902A8 /* AppDelegate.m */,
 				5D5C12CD1A05716E002902A8 /* Main.storyboard */,
+				3400A13A1A0EB30F00A39D3F /* Welcome & Login Views */,
 				341340191A0C9925004C8C15 /* Digest View */,
 				5DE75CA41A0D98B30031F0F7 /* PaginatedViewControllers */,
 				5DE75CA31A0D98930031F0F7 /* HttpRequestHelpers */,
@@ -194,10 +211,6 @@
 				5DB47A5B1A0ABA5B0034EA84 /* PostViewController.h */,
 				5DB47A5C1A0ABA5B0034EA84 /* PostViewController.m */,
 				5DE75CA61A0D99720031F0F7 /* SubredditSelection */,
-				34D1B9351A081B4D00C0C15F /* WelcomViewController.h */,
-				34D1B9361A081B4D00C0C15F /* WelcomViewController.m */,
-				34D1B9381A081D0C00C0C15F /* LoginViewController.h */,
-				34D1B9391A081D0C00C0C15F /* LoginViewController.m */,
 				3417AC0B1A092D970026961C /* SettingsViewController.h */,
 				3417AC0C1A092D970026961C /* SettingsViewController.m */,
 				81D5237F1A0C0E710059C9B3 /* SettingsAboutRedditViewController.h */,
@@ -474,6 +487,7 @@
 				5D5C12C31A05716E002902A8 /* main.m in Sources */,
 				34D1B9371A081B4D00C0C15F /* WelcomViewController.m in Sources */,
 				5DB47AEB1A0C45190034EA84 /* RedditRequests.m in Sources */,
+				3400A13D1A0EB50D00A39D3F /* CustomButton.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
