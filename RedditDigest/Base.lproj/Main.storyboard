@@ -486,16 +486,16 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="COR-ut-o5n">
-                                                    <rect key="frame" x="66" y="8" width="475" height="21"/>
+                                                    <rect key="frame" x="66" y="6" width="475" height="21"/>
                                                     <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="17"/>
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ouz-k5-Hlx">
-                                                    <rect key="frame" x="66" y="30" width="475" height="20"/>
+                                                    <rect key="frame" x="66" y="28" width="475" height="20"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="subreddit" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="u9V-3r-XgS">
-                                                            <rect key="frame" x="0.0" y="0.0" width="43" height="20"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="42.5" height="20"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="height" constant="20" id="ibZ-fT-rYH"/>
                                                             </constraints>
@@ -511,7 +511,7 @@
                                                             </constraints>
                                                         </imageView>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="hankthedog" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Qch-SH-AKQ">
-                                                            <rect key="frame" x="66" y="0.0" width="50" height="20"/>
+                                                            <rect key="frame" x="66" y="0.0" width="49.5" height="20"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="height" constant="20" id="PzX-YJ-GrQ"/>
                                                             </constraints>
@@ -532,7 +532,7 @@
                                                     </constraints>
                                                 </view>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="OBv-tB-CM9">
-                                                    <rect key="frame" x="549" y="8" width="41" height="31"/>
+                                                    <rect key="frame" x="549" y="6" width="41" height="31"/>
                                                     <subviews>
                                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="upvote_downvote_square_gray" translatesAutoresizingMaskIntoConstraints="NO" id="ril-Bg-TFk">
                                                             <rect key="frame" x="0.0" y="2" width="15" height="15"/>
@@ -542,7 +542,7 @@
                                                             </constraints>
                                                         </imageView>
                                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="comment_square_gray" translatesAutoresizingMaskIntoConstraints="NO" id="K34-8w-MfF">
-                                                            <rect key="frame" x="0.0" y="14" width="15" height="15"/>
+                                                            <rect key="frame" x="0.0" y="17" width="15" height="15"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="height" constant="15" id="OQd-Hh-Jkf"/>
                                                                 <constraint firstAttribute="width" constant="15" id="yUF-ox-3cc"/>
@@ -559,7 +559,7 @@
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="500" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9Ya-Iv-4Cx">
-                                                            <rect key="frame" x="17" y="16" width="24" height="12"/>
+                                                            <rect key="frame" x="17" y="19" width="24" height="12"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="height" constant="12" id="2DK-qF-I7p"/>
                                                                 <constraint firstAttribute="width" constant="24" id="TrE-2A-FVx"/>
@@ -573,8 +573,8 @@
                                                     <constraints>
                                                         <constraint firstItem="9Ya-Iv-4Cx" firstAttribute="leading" secondItem="K34-8w-MfF" secondAttribute="trailing" constant="2" id="FRv-iw-9Vu"/>
                                                         <constraint firstItem="ril-Bg-TFk" firstAttribute="leading" secondItem="OBv-tB-CM9" secondAttribute="leading" id="Q5s-um-t5D"/>
-                                                        <constraint firstItem="K34-8w-MfF" firstAttribute="top" secondItem="OBv-tB-CM9" secondAttribute="top" constant="14" id="WFW-7K-OJm"/>
-                                                        <constraint firstItem="9Ya-Iv-4Cx" firstAttribute="top" secondItem="OBv-tB-CM9" secondAttribute="top" constant="16" id="amv-pF-868"/>
+                                                        <constraint firstItem="K34-8w-MfF" firstAttribute="top" secondItem="OBv-tB-CM9" secondAttribute="top" constant="17" id="WFW-7K-OJm"/>
+                                                        <constraint firstItem="9Ya-Iv-4Cx" firstAttribute="top" secondItem="OBv-tB-CM9" secondAttribute="top" constant="19" id="amv-pF-868"/>
                                                         <constraint firstAttribute="width" constant="41" id="cRu-wO-syH"/>
                                                         <constraint firstItem="8si-Mc-4aB" firstAttribute="leading" secondItem="K34-8w-MfF" secondAttribute="trailing" constant="1" id="dwm-m8-Smv"/>
                                                         <constraint firstAttribute="height" constant="31" id="hM8-qr-QoZ"/>
@@ -592,7 +592,7 @@
                                                 </imageView>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstItem="OBv-tB-CM9" firstAttribute="top" secondItem="TIW-74-Ifz" secondAttribute="topMargin" id="3gq-uW-Unh"/>
+                                                <constraint firstItem="OBv-tB-CM9" firstAttribute="top" secondItem="TIW-74-Ifz" secondAttribute="topMargin" constant="-2" id="3gq-uW-Unh"/>
                                                 <constraint firstAttribute="trailingMargin" secondItem="COR-ut-o5n" secondAttribute="trailing" constant="51" id="4YY-76-6c7"/>
                                                 <constraint firstItem="Ouz-k5-Hlx" firstAttribute="leading" secondItem="TIW-74-Ifz" secondAttribute="leadingMargin" constant="58" id="8X1-s3-PJT"/>
                                                 <constraint firstItem="Ouz-k5-Hlx" firstAttribute="top" secondItem="COR-ut-o5n" secondAttribute="bottom" constant="1" id="B99-nv-pdH"/>
@@ -600,14 +600,15 @@
                                                 <constraint firstAttribute="trailingMargin" secondItem="OBv-tB-CM9" secondAttribute="trailing" constant="2" id="RfH-gc-4ee"/>
                                                 <constraint firstItem="gNq-N4-MhL" firstAttribute="leading" secondItem="TIW-74-Ifz" secondAttribute="leadingMargin" id="UER-z5-zil"/>
                                                 <constraint firstItem="gNq-N4-MhL" firstAttribute="top" secondItem="TIW-74-Ifz" secondAttribute="topMargin" id="W6l-JN-jrg"/>
-                                                <constraint firstItem="COR-ut-o5n" firstAttribute="top" secondItem="TIW-74-Ifz" secondAttribute="topMargin" id="b6i-Hz-alv"/>
+                                                <constraint firstItem="COR-ut-o5n" firstAttribute="top" secondItem="TIW-74-Ifz" secondAttribute="topMargin" constant="-2" id="b6i-Hz-alv"/>
                                                 <constraint firstItem="COR-ut-o5n" firstAttribute="leading" secondItem="TIW-74-Ifz" secondAttribute="leadingMargin" constant="58" id="fJy-Wj-11A"/>
-                                                <constraint firstAttribute="bottomMargin" secondItem="Ouz-k5-Hlx" secondAttribute="bottom" constant="7" id="w63-r9-NiQ"/>
+                                                <constraint firstAttribute="bottomMargin" secondItem="Ouz-k5-Hlx" secondAttribute="bottom" constant="9" id="w63-r9-NiQ"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <connections>
+                                            <outlet property="authorLabel" destination="Qch-SH-AKQ" id="zx4-I4-CX2"/>
                                             <outlet property="commentsLabel" destination="9Ya-Iv-4Cx" id="bh6-9M-8L9"/>
-                                            <outlet property="subredditAndAuthorLabel" destination="Qch-SH-AKQ" id="TRv-vv-3YV"/>
+                                            <outlet property="subredditLabel" destination="u9V-3r-XgS" id="Wqu-jq-YYv"/>
                                             <outlet property="thumbnailImage" destination="gNq-N4-MhL" id="TwS-q8-JHt"/>
                                             <outlet property="titleLabel" destination="COR-ut-o5n" id="xun-P1-k0j"/>
                                             <outlet property="upVoteDownVoteLabel" destination="8si-Mc-4aB" id="glW-KD-icW"/>

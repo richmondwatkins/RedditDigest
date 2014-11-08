@@ -12,8 +12,9 @@
 
 @property (weak, nonatomic) IBOutlet UIImageView *thumbnailImage;
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
-@property (weak, nonatomic) IBOutlet UILabel *subredditAndAuthorLabel;
+@property (weak, nonatomic) IBOutlet UILabel *subredditLabel;
 @property (weak, nonatomic) IBOutlet UILabel *upVoteDownVoteLabel;
 @property (weak, nonatomic) IBOutlet UILabel *commentsLabel;
+@property (weak, nonatomic) IBOutlet UILabel *authorLabel;
 
 @end
