@@ -155,11 +155,6 @@
         NSIndexPath *indexPath = [self.digestTableView indexPathForSelectedRow];
         postViewController.allPosts = self.digestPosts;
         postViewController.index = indexPath.row;
-        if ([self.digestPosts[indexPath.row] isKindOfClass:[Post class]]) {
-            postViewController.selectedPost = self.digestPosts[indexPath.row];
-        }else{
-            postViewController.selectedLink = self.digestPosts[indexPath.row];
-        }
     }
 }
 

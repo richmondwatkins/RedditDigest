@@ -23,7 +23,6 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    NSLog(@"IN DETAIL VIEW %@",self.selectedPost);
 
 //    if (self.selectedPost) {
 //        [self loadPageFromCoreData];
@@ -51,32 +50,32 @@
 
 - (UIViewController *)pageViewController:(UIPageViewController *)pageViewController viewControllerBeforeViewController:(UIViewController *)viewController {
 
-    self.index--;
+    --self.index;
 
     if (self.index == 0) {
         return nil;
     }
 
     return [self viewControllerAtIndex];
-
 }
 
 - (UIViewController *)pageViewController:(UIPageViewController *)pageViewController viewControllerAfterViewController:(UIViewController *)viewController {
 
-    self.index++;
+    ++self.index;
+
 
     if (self.index == self.allPosts.count) {
         return nil;
     }
 
     return [self viewControllerAtIndex];
-
 }
 
+
 - (UIViewController *)viewControllerAtIndex {
-    
+    NSLog(@"%i",self.index);
     Post *post = self.allPosts[self.index];
-    NSLog(@"POST %@",post);
+//    NSLog(@"POST %@",post);
     if (post.isImageLink.intValue == 1) {
         ImagePostViewController *ivc = [self.storyboard instantiateViewControllerWithIdentifier:@"ImageView"];
         dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(void){
