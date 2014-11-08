@@ -38,7 +38,7 @@
     savedPost.author = post.author;
     savedPost.voteRatio = [NSNumber numberWithFloat:post.score];
 
-    if ([[post.URL absoluteString] containsString:@"youtube.com"]) {
+    if ([[post.URL absoluteString] containsString:@"youtube.com"] || [[post.URL absoluteString] containsString:@"youtu.be"]) {
         savedPost.url = [self performRegexOnYoutube:post.URL];
         savedPost.isYouTube = [NSNumber numberWithBool:YES];
     }

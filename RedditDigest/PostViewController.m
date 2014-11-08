@@ -12,6 +12,7 @@
 #import "GifPostViewController.h"
 #import "SelfPostViewController.h"
 #import "VideoPostViewController.h"
+#import "PageWrapperViewController.h"
 @interface PostViewController ()
 @property (strong, nonatomic) IBOutlet UIImageView *imageView;
 @property (strong, nonatomic) IBOutlet UIWebView *webView;
@@ -37,7 +38,7 @@
     self.pageController.dataSource = self;
     [[self.pageController view] setFrame:[[self view] bounds]];
 
-    UIViewController *initialViewController = [self viewControllerAtIndex];
+    PageWrapperViewController *initialViewController = [self viewControllerAtIndex:self.index];
 
     NSArray *viewControllers = [NSArray arrayWithObject:initialViewController];
 
@@ -50,70 +51,57 @@
 
 - (UIViewController *)pageViewController:(UIPageViewController *)pageViewController viewControllerBeforeViewController:(UIViewController *)viewController {
 
-    --self.index;
-
-    if (self.index == 0) {
-        return nil;
-    }
-
-    return [self viewControllerAtIndex];
+    PageWrapperViewController *p = (PageWrapperViewController *)viewController;
+    return [self viewControllerAtIndex:(p.index - 1)];
 }
 
 - (UIViewController *)pageViewController:(UIPageViewController *)pageViewController viewControllerAfterViewController:(UIViewController *)viewController {
 
-    ++self.index;
-
-
-    if (self.index == self.allPosts.count) {
-        return nil;
-    }
-
-    return [self viewControllerAtIndex];
+    PageWrapperViewController *p = (PageWrapperViewController *)viewController;
+    return [self viewControllerAtIndex:(p.index + 1)];
 }
 
 
-- (UIViewController *)viewControllerAtIndex {
-    NSLog(@"%i",self.index);
-    Post *post = self.allPosts[self.index];
-//    NSLog(@"POST %@",post);
+
+
+- (PageWrapperViewController *)viewControllerAtIndex:(NSInteger)index {
+
+    if (index<0) {
+        return nil;
+    }
+    if (index >= self.allPosts.count) {
+        return nil;
+    }
+
+    Post *post = self.allPosts[index];
+    NSLog(@"POST %@",post);
     if (post.isImageLink.intValue == 1) {
         ImagePostViewController *ivc = [self.storyboard instantiateViewControllerWithIdentifier:@"ImageView"];
-        dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(void){
-            UIImage *image = [UIImage imageWithData:post.image];
-                    dispatch_async(dispatch_get_main_queue(), ^(void){
-                        ivc.imageView.image = image;
-                    });
-                });
+        ivc.imageData = post.image;
+        ivc.index = index;
         return ivc;
     }else if(post.isYouTube.intValue == 1){
         VideoPostViewController *vvc = [self.storyboard instantiateViewControllerWithIdentifier:@"VideoView"];
         vvc.url = post.url;
+        vvc.index = index;
         return vvc;
     }else if(post.isGif.intValue == 1){
         GifPostViewController *gvc = [self.storyboard instantiateViewControllerWithIdentifier:@"GifView"];
         gvc.url = post.url;
+        gvc.index = index;
         return gvc;
-    }else if(post.isSelfPost.integerValue == 1){
-          SelfPostViewController *svc = [self.storyboard instantiateViewControllerWithIdentifier:@"SelfPostView"];
+    }else if(post.isSelfPost.integerValue ==1){
+        SelfPostViewController *svc = [self.storyboard instantiateViewControllerWithIdentifier:@"SelfPostView"];
         svc.selfPostText = post.selfText;
+        svc.index = index;
         return svc;
     }else{
         WebPostViewController *wvc = [self.storyboard instantiateViewControllerWithIdentifier:@"WebView"];
         wvc.urlString = post.url;
+        wvc.index = index;
         return wvc;
     }
 }
-
-- (NSInteger)presentationCountForPageViewController:(UIPageViewController *)pageViewController {
-    // The number of items reflected in the page indicator.
-    return self.allPosts.count;
-}
-
-- (NSInteger)presentationIndexForPageViewController:(UIPageViewController *)pageViewController {
-    // The selected item reflected in the page indicator.
-    return 0;
-}
-
 
 
 @end

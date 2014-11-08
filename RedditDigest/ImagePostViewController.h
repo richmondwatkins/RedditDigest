@@ -7,8 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
-
-@interface ImagePostViewController : UIViewController
+#import "PageWrapperViewController.h"
+@interface ImagePostViewController : PageWrapperViewController
 @property (strong, nonatomic) IBOutlet UIImageView *imageView;
-
+@property NSData *imageData;
 @end

@@ -7,8 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
-
-@interface VideoPostViewController : UIViewController
+#import "PageWrapperViewController.h"
+@interface VideoPostViewController : PageWrapperViewController
 @property (strong, nonatomic) IBOutlet UIWebView *videoView;
 @property NSString *url;
 @end

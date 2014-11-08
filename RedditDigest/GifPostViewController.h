@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-
-@interface GifPostViewController : UIViewController
+#import "PageWrapperViewController.h"
+@interface GifPostViewController : PageWrapperViewController
 @property NSString *url;
 @end

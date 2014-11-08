@@ -23,7 +23,7 @@
     CGRect screenRect =[[UIScreen mainScreen] bounds];
     CGFloat screenWidth = screenRect.size.width;
     CGFloat screenHeight = screenRect.size.height;
-
+    NSLog(@"URLLLLL %@",self.url);
     NSString* embedHTML = [NSString stringWithFormat:@"\
                            <html>\
                            <body style='margin:0px;padding:0px;'>\

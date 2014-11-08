@@ -7,8 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
-
-@interface SelfPostViewController : UIViewController
+#import "PageWrapperViewController.h"
+@interface SelfPostViewController : PageWrapperViewController
 @property (strong, nonatomic) IBOutlet UITextView *textView;
 @property NSString *selfPostText;
 @end
