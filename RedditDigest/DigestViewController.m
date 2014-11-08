@@ -72,6 +72,7 @@
     if (!post.thumbnailImage) {
         cell.thumbnailImage.image = [self squareCropImageToSideLength:[UIImage imageNamed:@"snoo_camera_placeholder"] sideLength:50];
         cell.thumbnailImage.alpha = 0.5;
+        cell.upVoteDownVoteLabel.text = @"5.6k";
     }
     else {
         cell.thumbnailImage.image = [self squareCropImageToSideLength:[UIImage imageWithData:post.thumbnailImage] sideLength:50];

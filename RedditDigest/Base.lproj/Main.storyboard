@@ -606,9 +606,11 @@
                                             </constraints>
                                         </tableViewCellContentView>
                                         <connections>
+                                            <outlet property="commentsLabel" destination="9Ya-Iv-4Cx" id="bh6-9M-8L9"/>
                                             <outlet property="subredditAndAuthorLabel" destination="Qch-SH-AKQ" id="TRv-vv-3YV"/>
                                             <outlet property="thumbnailImage" destination="gNq-N4-MhL" id="TwS-q8-JHt"/>
                                             <outlet property="titleLabel" destination="COR-ut-o5n" id="xun-P1-k0j"/>
+                                            <outlet property="upVoteDownVoteLabel" destination="8si-Mc-4aB" id="glW-KD-icW"/>
                                             <segue destination="5uv-Oq-P6m" kind="show" identifier="PostSegue" id="Rer-8f-YQK"/>
                                         </connections>
                                     </tableViewCell>
