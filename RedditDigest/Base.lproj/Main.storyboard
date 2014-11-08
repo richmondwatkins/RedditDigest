@@ -683,6 +683,96 @@
             </objects>
             <point key="canvasLocation" x="174" y="-155"/>
         </scene>
+        <!--Self Post View Controller-->
+        <scene sceneID="cLa-ju-UEN">
+            <objects>
+                <viewController storyboardIdentifier="SelfPostView" id="ifK-Yt-vLY" customClass="SelfPostViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="ot6-YI-PWG"/>
+                        <viewControllerLayoutGuide type="bottom" id="HUr-NA-PG8"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="x1O-IM-3Cu">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Self Post" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DhX-ju-bWJ">
+                                <rect key="frame" x="266" y="289" width="69" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="centerX" secondItem="DhX-ju-bWJ" secondAttribute="centerX" id="Vad-fd-Z4k"/>
+                            <constraint firstAttribute="centerY" secondItem="DhX-ju-bWJ" secondAttribute="centerY" id="veQ-yR-Xq6"/>
+                        </constraints>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Bnc-d4-jlR" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="174" y="511"/>
+        </scene>
+        <!--Gif Post View Controller-->
+        <scene sceneID="021-Dd-lv4">
+            <objects>
+                <viewController storyboardIdentifier="GifView" id="SW4-4c-RCO" customClass="GifPostViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="NIY-zX-cGu"/>
+                        <viewControllerLayoutGuide type="bottom" id="ZsC-gR-IYU"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="PRd-nZ-FOl">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Gif View" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EuH-Pr-5k1">
+                                <rect key="frame" x="269" y="289" width="63" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="centerY" secondItem="EuH-Pr-5k1" secondAttribute="centerY" id="7mM-B0-CSv"/>
+                            <constraint firstAttribute="centerX" secondItem="EuH-Pr-5k1" secondAttribute="centerX" id="ORT-3h-YSl"/>
+                        </constraints>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="j3N-lV-b48" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="174" y="1182"/>
+        </scene>
+        <!--Video Post View Controller-->
+        <scene sceneID="4FI-Sp-DX2">
+            <objects>
+                <viewController storyboardIdentifier="VideoView" id="8af-0V-Opd" customClass="VideoPostViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="fW6-WQ-Bk6"/>
+                        <viewControllerLayoutGuide type="bottom" id="C6W-Kx-3Rr"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="5xM-jd-KS8">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="VideoView" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lN2-pa-jLl">
+                                <rect key="frame" x="260" y="289" width="80" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="centerX" secondItem="lN2-pa-jLl" secondAttribute="centerX" id="ER9-TG-dJh"/>
+                            <constraint firstAttribute="centerY" secondItem="lN2-pa-jLl" secondAttribute="centerY" id="v1g-16-xyz"/>
+                        </constraints>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="0s7-F9-JpU" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="174" y="1850"/>
+        </scene>
         <!--Navigation Controller-->
         <scene sceneID="xjk-nU-YvO">
             <objects>

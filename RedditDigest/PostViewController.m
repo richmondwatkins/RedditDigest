@@ -10,6 +10,9 @@
 #import "FLAnimatedImage.h"
 #import "ImagePostViewController.h"
 #import "WebPostViewController.h"
+#import "GifPostViewController.h"
+#import "SelfPostViewController.h"
+#import "VideoPostViewController.h"
 @interface PostViewController ()
 @property (strong, nonatomic) IBOutlet UIImageView *imageView;
 @property (strong, nonatomic) IBOutlet UIWebView *webView;
@@ -63,7 +66,7 @@
 
     self.index++;
 
-    if (self.index == self.allPosts.count -1) {
+    if (self.index == self.allPosts.count) {
         return nil;
     }
 
@@ -78,6 +81,15 @@
     if (post.isImageLink.intValue == 1) {
         ImagePostViewController *ivc = [self.storyboard instantiateViewControllerWithIdentifier:@"ImageView"];
         return ivc;
+    }else if(post.isYouTube.intValue == 1){
+        VideoPostViewController *vvc = [self.storyboard instantiateViewControllerWithIdentifier:@"VideoView"];
+        return vvc;
+    }else if(post.isGif.intValue == 1){
+        GifPostViewController *gvc = [self.storyboard instantiateViewControllerWithIdentifier:@"GifView"];
+        return gvc;
+    }else if(post.isSelfPost.integerValue ==1){
+          SelfPostViewController *svc = [self.storyboard instantiateViewControllerWithIdentifier:@"SelfPostView"];
+        return svc;
     }else{
         WebPostViewController *wvc = [self.storyboard instantiateViewControllerWithIdentifier:@"WebView"];
         return wvc;
