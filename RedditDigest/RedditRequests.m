@@ -22,14 +22,16 @@
             if (topPost.stickied) {
                 topPost = links[1];
             }
-            [Post savePost:topPost withManagedObject:managedObjectContext withCompletion:^(BOOL completedFromCoreData) {
-                if (completedFromCoreData) {
-                    j += 1;
-                    if (j == subreddits.count) {
-                        complete(YES);
-                    }
-                }
 
+            [[RKClient sharedClient] commentsForLink:topPost completion:^(NSArray *collection, RKPagination *pagination, NSError *error) {
+                [Post savePost:topPost withManagedObject:managedObjectContext withComments:collection andCompletion:^(BOOL completedFromCoreData) {
+                    if (completedFromCoreData) {
+                        j += 1;
+                        if (j == subreddits.count) {
+                            complete(YES);
+                        }
+                    }
+                }];
             }];
         }];
     }

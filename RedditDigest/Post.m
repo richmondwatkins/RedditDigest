@@ -29,7 +29,10 @@
 @dynamic voteRatio;
 
 
-+(void)savePost:(RKLink *)post withManagedObject:(NSManagedObjectContext *)managedObjectContext withCompletion:(void (^)(BOOL))complete{
++(void)savePost:(RKLink *)post withManagedObject:(NSManagedObjectContext *)managedObjectContext withComments:(NSArray *)comments andCompletion:(void (^)(BOOL))complete{
+
+    NSLog(@"Ccomments %@",comments);
+
     Post *savedPost = [NSEntityDescription insertNewObjectForEntityForName:@"Post" inManagedObjectContext:managedObjectContext];
     savedPost.title = post.title;
     savedPost.subreddit = post.subreddit;
@@ -80,7 +83,6 @@
             }
         }
         [managedObjectContext save:nil];
-        NSLog(@"SAVED POST %@",savedPost);
         complete(YES);
     }];
 }

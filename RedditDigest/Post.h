@@ -32,6 +32,7 @@
 @property (nonatomic, retain) NSNumber * voteRatio;
 
 
-+(void)savePost:(RKLink *)post withManagedObject:(NSManagedObjectContext *)managedObjectContext withCompletion:(void (^)(BOOL completed))complete;
++(void)savePost:(RKLink *)post withManagedObject:(NSManagedObjectContext *)managedObjectContext withComments:(NSArray *)comment andCompletion:(void (^)(BOOL completed))complete;
+
 +(void)removeAllPostsFromCoreData:(NSManagedObjectContext *)managedObjectContext;
 @end
