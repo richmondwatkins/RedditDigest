@@ -43,11 +43,12 @@
     layout.minimumInteritemSpacing = 10.f;
     layout.minimumLineSpacing = 10.f;
     self.subredditCollectionView = [self.subredditCollectionView initWithFrame:self.view.frame collectionViewLayout:layout];
+    self.subredditCollectionView.allowsMultipleSelection = YES;
 
     self.doneSelectingSubredditsButton.alpha = 0.0;
     self.doneSelectingSubredditsButton.layer.borderWidth = 1.0;
     self.doneSelectingSubredditsButton.layer.borderColor = [UIColor grayColor].CGColor;
-    self.subredditCollectionView.allowsMultipleSelection = YES;
+
 
     self.posts = [NSMutableArray array];
     self.selectedSubreddits = [[NSMutableArray alloc] init];
@@ -236,6 +237,12 @@
 
         [headerView.textField addTarget:self action:@selector(searchForSubreddit:) forControlEvents:UIControlEventEditingDidEndOnExit];
         reusableview = headerView;
+    }
+
+    if (kind == UICollectionElementKindSectionFooter)
+    {
+        // TODO add footer in storyboard of size 44 or something make it white so cells don't get covered by done button
+        reusableview = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionFooter withReuseIdentifier:@"footer" forIndexPath:indexPath];
     }
 
     return reusableview;
