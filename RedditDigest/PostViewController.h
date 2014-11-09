@@ -16,4 +16,5 @@
 @property (strong, nonatomic) UIPageViewController *pageController;
 @property NSMutableArray *allPosts;
 @property NSInteger index;
+
 @end

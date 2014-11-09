@@ -9,7 +9,7 @@
 #import "WelcomViewController.h"
 #import "SubredditSelectionViewController.h"
 #import "CustomButton.h"
-
+#import "LoginViewController.h"
 @interface WelcomViewController ()
 
 @property (weak, nonatomic) IBOutlet CustomButton *signInWithRedditAccountButton;
@@ -37,6 +37,17 @@
 {
     [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"HasRedditAccount"];
     [[NSUserDefaults standardUserDefaults] synchronize];
+}
+
+-(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
+
+    if ([segue.identifier isEqualToString:@"LoginSegue"]) {
+        LoginViewController *logInViewController = segue.destinationViewController;
+        logInViewController.managedObject = self.managedObject;
+    }else{
+        SubredditSelectionViewController *selectionController = segue.destinationViewController;
+        selectionController.managedObject = self.managedObject;
+    }
 }
 
 

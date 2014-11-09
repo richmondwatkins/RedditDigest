@@ -10,4 +10,9 @@
 
 @interface PageWrapperViewController : UIViewController
 @property NSInteger index;
+@property NSMutableArray *comments;
+@property NSString *url;
+@property NSString *selfPostText;
+@property NSData *imageData;
+
 @end

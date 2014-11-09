@@ -10,5 +10,5 @@
 
 @interface LoginViewController : UIViewController
 @property BOOL isFromSettings;
-
+@property NSManagedObjectContext *managedObject;
 @end

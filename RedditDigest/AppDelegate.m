@@ -35,8 +35,6 @@
 
 - (void)applicationDidBecomeActive:(UIApplication *)application
 {
-    
-    NSLog(@"%@", BaseURL);
 
     [ZeroPush engageWithAPIKey:@"PM4ouAj1rzxmQysu5ej6" delegate:self];
     [[UIApplication sharedApplication] registerUserNotificationSettings:[UIUserNotificationSettings settingsForTypes:(UIUserNotificationTypeSound | UIUserNotificationTypeAlert | UIUserNotificationTypeBadge) categories:nil]];
@@ -166,11 +164,15 @@
     NSDate *lastDigest = [[NSUserDefaults standardUserDefaults] valueForKey:@"LastDigest"];
 
     if([[NSDate date] compare: lastDigest] == NSOrderedDescending && [lastDigest compare: morningDigest] == NSOrderedDescending){
-//        [digestController retrievePostsFromCoreData];
+//        [digestController retrievePostsFromCoreData:^(BOOL completed) {
+//            NSLog(@"log");
+//        }];
         [digestController requestNewLinks];
 
     }else if([[NSDate date] compare: eveningDigest] == NSOrderedDescending && [lastDigest compare: eveningDigest] == NSOrderedDescending){
-//        [digestController retrievePostsFromCoreData];
+//        [digestController retrievePostsFromCoreData:^(BOOL completed) {
+//            NSLog(@"log");
+//        }];
         [digestController requestNewLinks];
 
     }else{

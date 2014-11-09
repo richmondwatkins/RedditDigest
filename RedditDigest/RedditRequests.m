@@ -7,11 +7,14 @@
 //
 
 #import "RedditRequests.h"
-
+#import "Subreddit.h"
 @implementation RedditRequests
 
 +(void)retrieveLatestPostFromArray:(NSArray *)subreddits withManagedObject:(NSManagedObjectContext *)managedObjectContext withCompletion:(void (^)(BOOL completed))complete{
-    NSLog(@"SUBSSS %@",subreddits);
+    if ([subreddits.firstObject isKindOfClass:[Subreddit class]]) {
+        subreddits = [self formatSubredditsArray:subreddits];
+    }
+
     __block int j = 0;
     for (NSDictionary *subredditDict in subreddits) {
         NSDictionary *setUpForRKKitObject = [[NSDictionary alloc] initWithObjectsAndKeys:subredditDict[@"subreddit"], @"name", subredditDict[@"url"], @"URL", nil];
@@ -22,18 +25,28 @@
             if (topPost.stickied) {
                 topPost = links[1];
             }
-            [Post savePost:topPost withManagedObject:managedObjectContext withCompletion:^(BOOL completedFromCoreData) {
-                if (completedFromCoreData) {
-                    j += 1;
-                    if (j == subreddits.count) {
-                        complete(YES);
-                    }
-                }
 
+            [[RKClient sharedClient] commentsForLink:topPost completion:^(NSArray *collection, RKPagination *pagination, NSError *error) {
+                [Post savePost:topPost withManagedObject:managedObjectContext withComments:collection andCompletion:^(BOOL completedFromCoreData) {
+                    if (completedFromCoreData) {
+                        j += 1;
+                        if (j == subreddits.count) {
+                            complete(YES);
+                        }
+                    }
+                }];
             }];
         }];
     }
+}
 
++(NSArray *)formatSubredditsArray:(NSArray *)subreddits{
+    NSMutableArray *allSubreddits = [NSMutableArray array];
+    for (Subreddit *subreddit in subreddits) {
+        NSDictionary *tempSubDict = [[NSDictionary alloc] initWithObjectsAndKeys:subreddit.subreddit, @"subreddit", subreddit.url, @"url", nil];
+        [allSubreddits addObject:tempSubDict];
+    }
+    return [NSArray arrayWithArray:allSubreddits];
 }
 
 @end

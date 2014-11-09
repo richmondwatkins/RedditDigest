@@ -18,6 +18,7 @@
 #import "UserRequests.h"
 #import "DigestCellWithImageTableViewCell.h"
 #import "WelcomViewController.h"
+#import "SettingsViewController.h"
 @interface DigestViewController () <UITableViewDataSource, UITableViewDelegate>
 
 @property (strong, nonatomic) IBOutlet UITableView *digestTableView;
@@ -226,7 +227,6 @@
 
     NSArray * posts = [self.managedObjectContext executeFetchRequest:fetch error:nil];
     self.digestPosts = [NSMutableArray arrayWithArray:posts];
-    NSLog(@"RETRIEVED ALL POSTS FROM CORE DATA %@",posts);
     if (self.digestPosts.count) {
         completionHandler(YES);
     }
@@ -235,16 +235,15 @@
 -(void)requestNewLinks{
     [Post removeAllPostsFromCoreData:self.managedObjectContext];
 
-    NSUUID *deviceID = [UIDevice currentDevice].identifierForVendor;
-    NSString *deviceString = [NSString stringWithFormat:@"%@", deviceID];
-    [UserRequests retrieveUsersSubreddits:deviceString withCompletion:^(NSDictionary *results) {
+    NSFetchRequest * fetch = [[NSFetchRequest alloc] init];
+    [fetch setEntity:[NSEntityDescription entityForName:@"Subreddit" inManagedObjectContext:self.managedObjectContext]];
 
-        [RedditRequests retrieveLatestPostFromArray:results[@"subreddits"] withManagedObject:self.managedObjectContext withCompletion:^(BOOL completed) {
-            [self performNewFetchedDataActions];
-            [self fireLocalNotificationAndMarkComplete];
-        }];
+    NSArray *subreddits = [self.managedObjectContext executeFetchRequest:fetch error:nil];
+    
+    [RedditRequests retrieveLatestPostFromArray:subreddits withManagedObject:self.managedObjectContext withCompletion:^(BOOL completed) {
+        [self performNewFetchedDataActions];
+        [self fireLocalNotificationAndMarkComplete];
     }];
-
 }
 
 
