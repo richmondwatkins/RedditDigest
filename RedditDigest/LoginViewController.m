@@ -15,6 +15,7 @@
 
 @property (weak, nonatomic) IBOutlet UITextField *usernameTextField;
 @property (weak, nonatomic) IBOutlet UITextField *passwordTextField;
+@property (weak, nonatomic) IBOutlet UIButton *loginButton;
 
 @end
 
@@ -23,6 +24,26 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+
+    // Username textField style
+    self.usernameTextField.layer.borderWidth = 0.5;
+    self.usernameTextField.layer.cornerRadius = 5.0;
+    self.usernameTextField.layer.borderColor = [UIColor colorWithRed:0.2 green:0.4 blue:0.6 alpha:1].CGColor;
+    self.usernameTextField.textColor = [UIColor colorWithRed:0.2 green:0.4 blue:0.6 alpha:1];
+
+    // password textField style
+    self.passwordTextField.layer.borderWidth = 0.5;
+    self.passwordTextField.layer.cornerRadius = 5.0;
+    self.passwordTextField.layer.borderColor = [UIColor colorWithRed:0.2 green:0.4 blue:0.6 alpha:1].CGColor;
+    self.passwordTextField.textColor = [UIColor colorWithRed:0.2 green:0.4 blue:0.6 alpha:1];
+
+    // Add action to password text field to show login button if user begins typing.
+    [self.passwordTextField addTarget:self
+                               action:@selector(textFieldDidChange:)
+                     forControlEvents:UIControlEventEditingChanged];
+
+    // Hide login button until user has typed in password field as well as username field
+    self.loginButton.alpha = 0.0;
     
     [self.usernameTextField becomeFirstResponder];
 
@@ -38,6 +59,18 @@
             NSLog(@"IS NOT from Settings");
         }
 }
+
+- (IBAction)onTapHideKeyboard:(id)sender
+{
+    if ([self.usernameTextField isFirstResponder]) {
+        [self.usernameTextField resignFirstResponder];
+    }
+    else if ([self.passwordTextField isFirstResponder]) {
+        [self.passwordTextField resignFirstResponder];
+    }
+}
+
+#pragma mark - Login
 
 - (IBAction)login:(id)sender
 {
@@ -77,6 +110,24 @@
     }];
 }
 
+#pragma mark - TextField
+
+- (void)textFieldDidChange:(UITextField *)textField
+{
+    if ([textField isEqual:self.passwordTextField]) {
+        // Only do this once, not each time the user types a letter and only do it if the username textField is
+        // not empty and the password textField is not empty
+        if (![textField.text isEqualToString:@""] && ![self.usernameTextField.text isEqualToString:@""] && self.loginButton.alpha != 1.0) {
+            [UIView animateWithDuration:0.3 animations:^
+            {
+                self.loginButton.alpha = 1.0;
+            }];
+        }
+    }
+}
+
+#pragma mark -  Alert View
+
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
     // If user fails a login clear textFields and let them try again
@@ -87,11 +138,18 @@
     }
 }
 
--(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
+#pragma mark - Navigation methods
+
+-(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
     if ([segue.identifier isEqualToString:@"SubredditSelectionFromLoginSegue"]) {
         SubredditSelectionViewController *selectionController = segue.destinationViewController;
         selectionController.managedObject = self.managedObject;
     }
 }
 
+- (IBAction)onTakeMeBackButtonPressed:(id)sender
+{
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
 @end
