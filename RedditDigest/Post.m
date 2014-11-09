@@ -51,14 +51,26 @@
         savedPost.isYouTube = [NSNumber numberWithBool:YES];
     }
 
+    if (post.isImageLink) {
+        post.customIsImage = YES;
+        post.customURL = post.URL;
+    }
+
+    if ([[post.URL absoluteString] containsString:@"imgur"] && ![[post.URL absoluteString] containsString:@"/a/"] && ![[post.URL absoluteString] containsString:@"gallery"]) {
+        post.customURL = [self performRegexOnImgur:post.URL];
+        post.customIsImage = YES;
+        if (post.customURL == nil) {
+            post.customIsImage = NO;
+        }
+    }
 
     NSURLRequest *thumbnailRequest = [NSURLRequest requestWithURL:post.thumbnailURL];
     [NSURLConnection sendAsynchronousRequest:thumbnailRequest queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
         savedPost.thumbnailImage = data;
 
-        if (post.isImageLink) {
+        if (post.customIsImage) {
             savedPost.isImageLink = [NSNumber numberWithBool:YES];
-            NSURLRequest *mainImageRequest = [NSURLRequest requestWithURL:post.URL];
+            NSURLRequest *mainImageRequest = [NSURLRequest requestWithURL:post.customURL];
             [NSURLConnection sendAsynchronousRequest:mainImageRequest queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
 
                 NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse*)response;
@@ -116,6 +128,20 @@
     NSString *youTubeID = [urlString substringWithRange:videoIDRange];
     
     return [NSString stringWithFormat:@"www.youtube.com/embed/%@", youTubeID];
+}
+
++(NSURL *)performRegexOnImgur:(NSURL *)url{
+    NSString *regexString = @"(?:imgur.+[/])([-a-zA-Z0-9_]+)";
+    NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:regexString options:NSRegularExpressionCaseInsensitive error:nil];
+    NSString *urlString = [url absoluteString];
+    NSTextCheckingResult *match = [regex firstMatchInString:urlString options:0 range:NSMakeRange(0, [urlString length])];
+
+    if (!match) {
+        return nil;
+    }
+    NSRange iDRange = [match rangeAtIndex:1];
+    NSString *imgurID = [urlString substringWithRange:iDRange];
+    return [NSURL URLWithString:[NSString stringWithFormat:@"http://imgur.com/%@.jpg", imgurID]];
 }
 
 

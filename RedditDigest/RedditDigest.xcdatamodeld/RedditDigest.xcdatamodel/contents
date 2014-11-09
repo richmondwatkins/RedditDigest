@@ -10,7 +10,7 @@
         <attribute name="author" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="body" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="score" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
-        <relationship name="childcomments" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="ChildComment" inverseName="comment" inverseEntity="ChildComment" syncable="YES"/>
+        <relationship name="childcomments" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="ChildComment" inverseName="comment" inverseEntity="ChildComment" syncable="YES"/>
         <relationship name="post" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Post" inverseName="comments" inverseEntity="Post" syncable="YES"/>
     </entity>
     <entity name="Post" representedClassName="Post" syncable="YES">
@@ -30,11 +30,11 @@
         <attribute name="totalComments" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
         <attribute name="url" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="voteRatio" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
-        <relationship name="comments" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Comment" inverseName="post" inverseEntity="Comment" syncable="YES"/>
+        <relationship name="comments" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Comment" inverseName="post" inverseEntity="Comment" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Post" positionX="-63" positionY="-18" width="128" height="298"/>
-        <element name="Comment" positionX="-63" positionY="99" width="128" height="118"/>
         <element name="ChildComment" positionX="-45" positionY="126" width="128" height="103"/>
+        <element name="Comment" positionX="-63" positionY="99" width="128" height="118"/>
+        <element name="Post" positionX="-63" positionY="-18" width="128" height="298"/>
     </elements>
 </model>

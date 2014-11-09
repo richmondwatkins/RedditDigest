@@ -192,7 +192,7 @@
  Whether or not the link has an image URL.
  */
 - (BOOL)isImageLink;
-
+//
 /**
  Returns the URL in a shortened format. This uses reddit's URL shortener.
  
@@ -200,4 +200,6 @@
  */
 - (NSURL *)shortURL;
 
+@property BOOL customIsImage;
+@property NSURL *customURL;
 @end
