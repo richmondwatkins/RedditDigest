@@ -81,6 +81,7 @@
     if (buttonIndex == 0) {
 //        NSLog(@"SELECTED TO DELETE %@",self.digestPosts[self.editingIndex.row] );
         [self deleter:self.digestPosts[self.editingIndex.row]];
+        [self removeFromCoreData:self.digestPosts[self.editingIndex.row]];
         [self.digestPosts removeObjectAtIndex:self.editingIndex.row];
         [self.tableView deleteRowsAtIndexPaths:@[self.editingIndex] withRowAnimation:UITableViewRowAnimationFade];
         [self.tableView reloadData];
@@ -150,6 +151,19 @@
         }
     }];
     [dataTask resume];
+}
+
+-(void)removeFromCoreData:(NSDictionary *)subredditDictionary{
+//    NSFetchRequest * allCars = [[NSFetchRequest alloc] init];
+//    [allCars setEntity:[NSEntityDescription entityForName:@"Post" inManagedObjectContext:managedObjectContext]];
+//
+//    NSError * error = nil;
+//    NSArray * posts = [self.managedObjectContext executeFetchRequest:allCars error:&error];
+//
+//    for (NSManagedObject * post in posts) {
+//        [managedObjectContext deleteObject:post];
+//    }
+//    [managedObjectContext save:nil];
 }
 
 

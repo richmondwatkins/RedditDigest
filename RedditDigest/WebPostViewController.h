@@ -10,5 +10,5 @@
 #import "PageWrapperViewController.h"
 @interface WebPostViewController : PageWrapperViewController
 @property (strong, nonatomic) IBOutlet UIWebView *webView;
-@property NSString *urlString;
+
 @end

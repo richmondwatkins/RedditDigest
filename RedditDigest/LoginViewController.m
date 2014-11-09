@@ -9,7 +9,7 @@
 #import "LoginViewController.h"
 #import <RedditKit.h>
 #import <SSKeychain/SSKeychain.h>
-
+#import "SubredditSelectionViewController.h"
 
 @interface LoginViewController () <UIAlertViewDelegate>
 
@@ -87,10 +87,11 @@
     }
 }
 
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
+-(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
+    if ([segue.identifier isEqualToString:@"SubredditSelectionFromLoginSegue"]) {
+        SubredditSelectionViewController *selectionController = segue.destinationViewController;
+        selectionController.managedObject = self.managedObject;
+    }
 }
-
 
 @end

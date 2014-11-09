@@ -26,6 +26,8 @@
             self.imageView.image = image;
         });
     });
+
+    NSLog(@"COMments %@",self.comments);
 }
 
 - (void)didReceiveMemoryWarning {

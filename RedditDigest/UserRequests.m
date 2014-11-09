@@ -21,7 +21,6 @@
         if(connectionError == nil)
         {
             NSDictionary *results = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&connectionError];
-            NSLog(@"%@",results);
             complete(results);
         }
     }];

@@ -2,7 +2,7 @@
 //  Post.h
 //  
 //
-//  Created by Richmond on 11/7/14.
+//  Created by Richmond on 11/8/14.
 //
 //
 
@@ -11,6 +11,8 @@
 #import "DigestViewController.h"
 #import <RedditKit.h>
 #import <RKLink.h>
+
+@class Comment;
 
 @interface Post : NSManagedObject
 
@@ -30,8 +32,21 @@
 @property (nonatomic, retain) NSNumber * totalComments;
 @property (nonatomic, retain) NSString * url;
 @property (nonatomic, retain) NSNumber * voteRatio;
+@property (nonatomic, retain) NSSet *comments;
 
+@end
 
-+(void)savePost:(RKLink *)post withManagedObject:(NSManagedObjectContext *)managedObjectContext withCompletion:(void (^)(BOOL completed))complete;
+@interface Post (CoreDataGeneratedAccessors)
+
+- (void)addCommentsObject:(Comment *)value;
+- (void)removeCommentsObject:(Comment *)value;
+- (void)addComments:(NSSet *)values;
+- (void)removeComments:(NSSet *)values;
+
++(void)savePost:(RKLink *)post withManagedObject:(NSManagedObjectContext *)managedObjectContext withComments:(NSArray *)comment andCompletion:(void (^)(BOOL completed))complete;
+
 +(void)removeAllPostsFromCoreData:(NSManagedObjectContext *)managedObjectContext;
+
+
+
 @end
