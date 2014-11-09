@@ -214,12 +214,12 @@
 				5D5C12CD1A05716E002902A8 /* Main.storyboard */,
 				3400A13A1A0EB30F00A39D3F /* Welcome & Login Views */,
 				341340191A0C9925004C8C15 /* Digest View */,
+				5DE75CA61A0D99720031F0F7 /* SubredditSelection */,
 				5DE75CA41A0D98B30031F0F7 /* PaginatedViewControllers */,
 				5DE75CA31A0D98930031F0F7 /* HttpRequestHelpers */,
 				5DE75CA21A0D98740031F0F7 /* Models */,
 				5DB47A5B1A0ABA5B0034EA84 /* PostViewController.h */,
 				5DB47A5C1A0ABA5B0034EA84 /* PostViewController.m */,
-				5DE75CA61A0D99720031F0F7 /* SubredditSelection */,
 				3417AC0B1A092D970026961C /* SettingsViewController.h */,
 				3417AC0C1A092D970026961C /* SettingsViewController.m */,
 				81D5237F1A0C0E710059C9B3 /* SettingsAboutRedditViewController.h */,
@@ -310,13 +310,13 @@
 		5DE75CA61A0D99720031F0F7 /* SubredditSelection */ = {
 			isa = PBXGroup;
 			children = (
-				3432573F1A0A96CF003A3115 /* SubredditSelectionCollectionReusableView.h */,
-				343257401A0A96CF003A3115 /* SubredditSelectionCollectionReusableView.m */,
 				5DB5B8471A083DF0007DC036 /* SubredditSelectionViewController.h */,
 				5DB5B8481A083DF0007DC036 /* SubredditSelectionViewController.m */,
 				5DB5B84A1A084055007DC036 /* SubredditListCollectionViewCell.h */,
 				5DB5B84B1A084055007DC036 /* SubredditListCollectionViewCell.m */,
 				3417AC0E1A092EBA0026961C /* SubredditSelectionCell.xib */,
+				3432573F1A0A96CF003A3115 /* SubredditSelectionCollectionReusableView.h */,
+				343257401A0A96CF003A3115 /* SubredditSelectionCollectionReusableView.m */,
 			);
 			name = SubredditSelection;
 			path = ..;

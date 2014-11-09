@@ -161,8 +161,9 @@
 
         cell.subredditTitleLabel.text = self.catagories[indexPath.row][@"category"][@"name"];
     }
-
 }
+
+
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -172,18 +173,15 @@
 
 - (void)collectionView:(UICollectionView *)collectionView didDeselectItemAtIndexPath:(NSIndexPath *)indexPath
 {
-
-    if (self.hasRedditAccount) {
+    // Remove subreddit(reddit user) or catagory(non reddit user) from selected list.
+    if (self.hasRedditAccount)
+    {
         RKSubreddit *subreddit = self.subreddits[indexPath.row];
-
-        NSMutableDictionary *subredditDict = [[NSMutableDictionary alloc] initWithObjectsAndKeys:subreddit.name, @"subreddit",subreddit.URL, @"url", nil];
-
-        if ([self.selectedSubreddits containsObject:subredditDict]) {
-            [self.selectedSubreddits removeObject:subredditDict];
-        }
+        [self removeSubredditFromSelectedSubreddits:subreddit];
     }
-    else {
-        [self.selectedSubreddits removeObject:self.catagories[indexPath.row]];
+    else
+    {
+        [self removeCatagoryFromSelectedCatagories:indexPath];
     }
 
     if (self.selectedSubreddits.count == 0) {
@@ -195,6 +193,22 @@
         [UIView animateWithDuration:0.3 animations:^{
             self.doneSelectingSubredditsButton.alpha = 1.0;
         }];
+    }
+}
+
+// Used for users without reddit accounts
+- (void)removeCatagoryFromSelectedCatagories:(NSIndexPath *)indexPath
+{
+    [self.selectedSubreddits removeObject:self.catagories[indexPath.row]];
+}
+
+// Used for users with reddit accounts
+- (void)removeSubredditFromSelectedSubreddits:(RKSubreddit *)subreddit
+{
+    NSMutableDictionary *subredditDict = [[NSMutableDictionary alloc] initWithObjectsAndKeys:subreddit.name, @"subreddit",subreddit.URL, @"url", nil];
+
+    if ([self.selectedSubreddits containsObject:subredditDict]) {
+        [self.selectedSubreddits removeObject:subredditDict];
     }
 }
 
@@ -247,7 +261,9 @@
     [[RKClient sharedClient] subredditWithName:subredditName completion:^(RKSubreddit *subreddit, NSError *error) {
         if (subreddit != NULL) {
             [self.subreddits insertObject:subreddit atIndex:0];
-            [self.subredditCollectionView reloadData];
+            // Add the new subreddit in the collectionView at index 0.
+            NSIndexPath *firstIndex = [NSIndexPath indexPathForRow:0 inSection:0];
+            [self.subredditCollectionView insertItemsAtIndexPaths:@[firstIndex]];
         }
         else
         {
