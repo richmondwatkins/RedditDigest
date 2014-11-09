@@ -10,5 +10,4 @@
 #import "PageWrapperViewController.h"
 @interface ImagePostViewController : PageWrapperViewController
 @property (strong, nonatomic) IBOutlet UIImageView *imageView;
-@property NSData *imageData;
 @end

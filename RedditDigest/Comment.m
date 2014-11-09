@@ -31,8 +31,10 @@
         savedComment.score = [NSNumber numberWithInteger:comment.score];
         totalCommentCount += comment.replies.count;
         [post addCommentsObject:savedComment];
-        
-        [ChildComment addChildrenToComment:savedComment childrenCommentsArray:comment.replies withMangedObject:managedObjectContext];
+
+        if (comment.replies) {
+            [ChildComment addChildrenToComment:savedComment childrenCommentsArray:comment.replies withMangedObject:managedObjectContext];
+        }
 
         [managedObjectContext save:nil];
     }

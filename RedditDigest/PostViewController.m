@@ -76,38 +76,49 @@
     }
 
     Post *post = self.allPosts[index];
-    NSArray *allComments = [post.comments allObjects];
-    Comment *comment = allComments.firstObject;
-    NSArray *childComments = [comment.childcomments allObjects];
+    NSArray *allComments = [self commentSorter:[post.comments allObjects]];
+    NSMutableArray *parentChildComments = [self matchChildCommentsToParent:allComments];
 
-    ChildComment *child = childComments.firstObject;
-    NSLog(@"CHID COMMENTS %@",child);
+    PageWrapperViewController *viewController;
     if (post.isImageLink.intValue == 1) {
-        ImagePostViewController *ivc = [self.storyboard instantiateViewControllerWithIdentifier:@"ImageView"];
-        ivc.imageData = post.image;
-        ivc.index = index;
-        return ivc;
+        viewController = [self.storyboard instantiateViewControllerWithIdentifier:@"ImageView"];
+        viewController.imageData = post.image;
     }else if(post.isYouTube.intValue == 1){
-        VideoPostViewController *vvc = [self.storyboard instantiateViewControllerWithIdentifier:@"VideoView"];
-        vvc.url = post.url;
-        vvc.index = index;
-        return vvc;
+        viewController = [self.storyboard instantiateViewControllerWithIdentifier:@"VideoView"];
+        viewController.url = post.url;
     }else if(post.isGif.intValue == 1){
-        GifPostViewController *gvc = [self.storyboard instantiateViewControllerWithIdentifier:@"GifView"];
-        gvc.url = post.url;
-        gvc.index = index;
-        return gvc;
-    }else if(post.isSelfPost.integerValue ==1){
-        SelfPostViewController *svc = [self.storyboard instantiateViewControllerWithIdentifier:@"SelfPostView"];
-        svc.selfPostText = post.selfText;
-        svc.index = index;
-        return svc;
+        viewController =[self.storyboard instantiateViewControllerWithIdentifier:@"GifView"];
+        viewController.url = post.url;
+    }else if(post.isSelfPost.integerValue == 1){
+        viewController = [self.storyboard instantiateViewControllerWithIdentifier:@"SelfPostView"];
+        viewController.selfPostText = post.selfText;
     }else{
-        WebPostViewController *wvc = [self.storyboard instantiateViewControllerWithIdentifier:@"WebView"];
-        wvc.urlString = post.url;
-        wvc.index = index;
-        return wvc;
+        viewController =[self.storyboard instantiateViewControllerWithIdentifier:@"WebView"];
+        viewController.url = post.url;
     }
+
+    viewController.comments = parentChildComments;
+    viewController.index = index;
+    return viewController;
+}
+
+-(NSArray *)commentSorter:(NSArray *)comments{
+    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"score" ascending:NO];
+    NSArray *sortDescriptors = [NSArray arrayWithObject:sortDescriptor];
+
+    return [comments sortedArrayUsingDescriptors:sortDescriptors];
+}
+
+-(NSMutableArray *)matchChildCommentsToParent:(NSArray *)parentComments{
+    NSMutableArray *matchedComments = [NSMutableArray array];
+
+    for(Comment *comment in parentComments){
+        NSArray *childComments = [self commentSorter:[comment.childcomments allObjects]];
+        NSDictionary *parentChildComment = [[NSDictionary alloc] initWithObjectsAndKeys:comment, @"parent", childComments, @"children", nil];
+        [matchedComments addObject:parentChildComment];
+    }
+
+        return matchedComments;
 }
 
 
