@@ -23,6 +23,16 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    // Username textField style
+    self.usernameTextField.layer.borderWidth = 0.5;
+    self.usernameTextField.layer.borderColor = [UIColor colorWithRed:0.2 green:0.4 blue:0.6 alpha:1].CGColor;
+    self.usernameTextField.textColor = [UIColor colorWithRed:0.2 green:0.4 blue:0.6 alpha:1];
+    self.usernameTextField.layer.cornerRadius = 5.0;
+    // password textField style
+    self.passwordTextField.layer.borderWidth = 0.5;
+    self.passwordTextField.layer.borderColor = [UIColor colorWithRed:0.2 green:0.4 blue:0.6 alpha:1].CGColor;
+    self.passwordTextField.textColor = [UIColor colorWithRed:0.2 green:0.4 blue:0.6 alpha:1];
+    self.passwordTextField.layer.cornerRadius = 5.0;
     
     [self.usernameTextField becomeFirstResponder];
 
