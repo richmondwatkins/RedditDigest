@@ -262,6 +262,9 @@
         NSIndexPath *indexPath = [self.digestTableView indexPathForSelectedRow];
         postViewController.allPosts = self.digestPosts;
         postViewController.index = indexPath.row;
+    }else if ([segue.identifier isEqualToString:@"SettingsSegue"]){
+        SettingsViewController *settingsController = segue.destinationViewController;
+        settingsController.managedObject = self.managedObjectContext;
     }
 }
 

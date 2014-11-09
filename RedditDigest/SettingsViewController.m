@@ -10,7 +10,7 @@
 #import "RKUser.h"
 #import <SSKeychain/SSKeychain.h>
 #import "LoginViewController.h"
-
+#import "EditSubredditViewController.h"
 
 @interface SettingsViewController () <UITableViewDataSource, UITableViewDelegate>
 
@@ -140,6 +140,11 @@
 //    LoginViewController *viewController = segue.destinationViewController;
 //    viewController.isFromSettings = YES;   // Get the new view controller using [segue destinationViewController].
     // Pass the selected object to the new view controller.
+
+    if ([segue.identifier isEqualToString:@"goToEditSubreddits"]) {
+        EditSubredditViewController *editController = segue.destinationViewController;
+        editController.managedObject = self.managedObject;
+    }
 }
 
 @end
