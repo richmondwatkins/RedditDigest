@@ -16,22 +16,33 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
+    self.imageCommentsTableView.delegate = self;
+    self.imageCommentsTableView.dataSource = self;
+
+    self.selfPostCommentsTableView.delegate = self;
+    self.selfPostCommentsTableView.dataSource = self;
+
+    self.gifCommentsTableView.delegate = self;
+    self.gifCommentsTableView.dataSource = self;
+
+    self.videoCommentsTableView.delegate = self;
+    self.videoCommentsTableView.dataSource = self;
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+-(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
+    return self.comments.count;
 }
 
-/*
-#pragma mark - Navigation
 
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+-(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"CommentCell"];
+    NSDictionary *commentDictionary = self.comments[indexPath.row];
+    NSLog(@"COMMENT DICT %@",commentDictionary);
+    Comment *comment = commentDictionary[@"parent"];
+    cell.textLabel.text = comment.body;
+    cell.detailTextLabel.text = comment.author;
+    return cell;
 }
-*/
+
 
 @end

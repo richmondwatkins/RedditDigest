@@ -11,5 +11,5 @@
 @interface SubredditSelectionViewController : UIViewController
 
 @property NSManagedObjectContext *managedObject;
-
+@property BOOL isFromSettings;
 @end

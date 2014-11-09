@@ -59,7 +59,10 @@
         [self.activityIndicator startAnimating];
         self.hasRedditAccount = YES;
         [[RKClient sharedClient] subscribedSubredditsWithCompletion:^(NSArray *collection, RKPagination *pagination, NSError *error) {
-             self.subreddits = [[NSMutableArray alloc] initWithArray:collection];
+            self.subreddits = [[NSMutableArray alloc] initWithArray:collection];
+
+            if (self.isFromSettings) {[self checkForExistingSubscription];}
+
              [self.subredditCollectionView reloadData];
              [self.activityIndicator stopAnimating];
              self.activityIndicator.hidden = YES;
@@ -355,6 +358,13 @@
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
     DigestViewController *digestViewController = segue.destinationViewController;
     digestViewController.subredditsForFirstDigest = self.selectedSubreddits;
+}
+
+-(void)checkForExistingSubscription{
+    NSFetchRequest *subredditFetch = [NSFetchRequest fetchRequestWithEntityName:@"Subreddit"];
+    NSArray *subscribedSubreddits = [self.managedObject executeFetchRequest:subredditFetch error:nil];
+    NSLog(@"CORE DATA SUBSSS %@",subscribedSubreddits);
+
 }
 
 @end

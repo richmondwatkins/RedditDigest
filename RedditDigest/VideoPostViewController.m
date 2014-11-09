@@ -31,7 +31,7 @@
                            </body>\
                            </html>", screenWidth, screenHeight/2, self.url];
     [self.videoView loadHTMLString:embedHTML baseURL:[[NSBundle mainBundle] resourceURL]];
-
+    [self.videoCommentsTableView reloadData];
 }
 
 @end

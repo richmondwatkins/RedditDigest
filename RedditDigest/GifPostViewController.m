@@ -33,6 +33,7 @@
             [self.view addSubview:imageView];
         });
     });
+    [self.gifCommentsTableView reloadData];
 }
 
 @end

@@ -11,7 +11,7 @@
 #import <SSKeychain/SSKeychain.h>
 #import "LoginViewController.h"
 #import "EditSubredditViewController.h"
-
+#import "SubredditSelectionViewController.h"
 @interface SettingsViewController () <UITableViewDataSource, UITableViewDelegate>
 
 @property (strong, nonatomic) IBOutlet UITableView *tableView;
@@ -141,9 +141,10 @@
 //    viewController.isFromSettings = YES;   // Get the new view controller using [segue destinationViewController].
     // Pass the selected object to the new view controller.
 
-    if ([segue.identifier isEqualToString:@"goToEditSubreddits"]) {
-        EditSubredditViewController *editController = segue.destinationViewController;
-        editController.managedObject = self.managedObject;
+    if ([segue.identifier isEqualToString:@"SubredditCollectionView"]) {
+        SubredditSelectionViewController *subredditSelection = segue.destinationViewController;
+        subredditSelection.isFromSettings = YES;
+        subredditSelection.managedObject = self.managedObject;
     }
 }
 
