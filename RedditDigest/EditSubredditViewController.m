@@ -9,7 +9,7 @@
 #import "EditSubredditViewController.h"
 #import <RKLink.h>
 #import <RKSubreddit.h>
-
+#import "Subreddit.h"
 @interface EditSubredditViewController () <UITableViewDelegate, UITableViewDataSource, UIAlertViewDelegate>
 @property (strong) NSMutableArray *digestPosts;
 @property (strong, nonatomic) IBOutlet UITableView *tableView;
@@ -22,7 +22,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self fetchNewData];
+//    [self fetchNewData];
+    [self fetchSubredditsFromCoreData];
     [self.tableView reloadData];
 }
 
@@ -40,13 +41,12 @@
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Cell"];
-    NSDictionary *temp = self.digestPosts[indexPath.row];
-    NSString *subredditTitle = [temp objectForKey:@"subreddit"];
+    Subreddit *subreddit = self.digestPosts[indexPath.row];
+
 //    NSData *yourData = [temp objectForKey:(id)];
 //    UIImage *subredditLogo = [UIImage imageWithData:yourData];
-    cell.textLabel.text = subredditTitle;
+    cell.textLabel.text = subreddit.subreddit;
 //    cell.imageView.image = subredditLogo;
-    NSLog(@"Dictionary %@ and key %@", temp, subredditTitle);
     return cell;
 }
 
@@ -97,7 +97,7 @@
 
     NSUUID *deviceID = [UIDevice currentDevice].identifierForVendor;
     NSString *deviceString = [NSString stringWithFormat:@"%@", deviceID];
-    NSString *urlString = [NSString stringWithFormat:@"http://192.168.129.228:3000/subreddits/%@",deviceString];
+    NSString *urlString = [NSString stringWithFormat:@"http://192.168.1.4:3000/subreddits/%@",deviceString];
     NSURL *url = [[NSURL alloc] initWithString:[urlString stringByAddingPercentEscapesUsingEncoding:NSASCIIStringEncoding]];
 
     NSURLSessionDataTask * dataTask = [session dataTaskWithURL:url completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
@@ -109,8 +109,8 @@
             NSDictionary *results = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
             NSMutableArray *usersSubredditsArray = [results[@"subreddits"] mutableCopy];
             self.digestPosts = usersSubredditsArray;
-            NSLog(@"self.digestPosts %@", self.digestPosts);
-            NSLog(@"userSubredditsArray %@", usersSubredditsArray);
+//            NSLog(@"self.digestPosts %@", self.digestPosts);
+//            NSLog(@"userSubredditsArray %@", usersSubredditsArray);
             [self.tableView reloadData];
         });
     }];
@@ -122,9 +122,9 @@
 
 #pragma mark - Delete from Database
 
--(void)deleter:(NSDictionary *)subredditDictionary
+-(void)deleter:(Subreddit *)subreddit
 {
-    NSMutableDictionary *tempDict = [[NSMutableDictionary alloc] initWithObjectsAndKeys:subredditDictionary[@"subreddit"], @"name", subredditDictionary[@"url"], @"url", nil];//testing puproses
+    NSMutableDictionary *tempDict = [[NSMutableDictionary alloc] initWithObjectsAndKeys:subreddit.subreddit, @"name", subreddit.url, @"url", nil];//testing puproses
 
     NSUUID *deviceID = [UIDevice currentDevice].identifierForVendor;
     NSString *deviceString = [NSString stringWithFormat:@"%@", deviceID];
@@ -146,16 +146,26 @@
 
     NSURLSessionDataTask* dataTask = [session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
         if (!error) {
-            NSLog(@"%@",response);
             //[self getter]; //THIS IS FOR TESTING THE SUBREDDIT GETTER METHOD
         }
     }];
     [dataTask resume];
 }
 
--(void)removeFromCoreData:(NSDictionary *)subredditDictionary{
-//    NSFetchRequest * allCars = [[NSFetchRequest alloc] init];
-//    [allCars setEntity:[NSEntityDescription entityForName:@"Post" inManagedObjectContext:managedObjectContext]];
+-(void)fetchSubredditsFromCoreData{
+    NSFetchRequest *fetchSubreddits = [[NSFetchRequest alloc] initWithEntityName:@"Subreddit"];
+    NSArray *subreddits = [self.managedObject executeFetchRequest:fetchSubreddits error:nil];
+    NSLog(@"SUBSSS %@",subreddits);
+    self.digestPosts = [NSMutableArray arrayWithArray:subreddits];
+}
+
+-(void)removeFromCoreData:(Subreddit *)subreddit{
+    NSFetchRequest * subredditFetch = [[NSFetchRequest alloc] init];
+    [subredditFetch setEntity:[NSEntityDescription entityForName:@"Subreddit" inManagedObjectContext:self.managedObject]];
+    subredditFetch.predicate = [NSPredicate predicateWithFormat:@"subreddit == %@", subreddit.subreddit];
+    NSArray *results = [self.managedObject executeFetchRequest:subredditFetch error:nil];
+    [self.managedObject deleteObject:results.firstObject];
+    [self.managedObject save:nil];
 //
 //    NSError * error = nil;
 //    NSArray * posts = [self.managedObjectContext executeFetchRequest:allCars error:&error];

@@ -9,5 +9,5 @@
 #import <UIKit/UIKit.h>
 
 @interface EditSubredditViewController : UITableViewController
-
+@property NSManagedObjectContext *managedObject;
 @end
