@@ -175,7 +175,8 @@
     if (self.hasRedditAccount) {
         RKSubreddit *subreddit = self.subreddits[indexPath.row];
 
-        NSMutableDictionary *subredditDict = [[NSMutableDictionary alloc] initWithObjectsAndKeys:subreddit.name, @"name",subreddit.URL, @"url", nil];
+        NSMutableDictionary *subredditDict = [[NSMutableDictionary alloc] initWithObjectsAndKeys:subreddit.name, @"subreddit",subreddit.URL, @"url", nil];
+
         if ([self.selectedSubreddits containsObject:subredditDict]) {
             [self.selectedSubreddits removeObject:subredditDict];
         }
