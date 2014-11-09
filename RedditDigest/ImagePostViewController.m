@@ -9,6 +9,7 @@
 #import "ImagePostViewController.h"
 
 @interface ImagePostViewController ()
+//@property (strong, nonatomic) IBOutlet UITableView *tableView;
 
 @end
 
@@ -26,23 +27,22 @@
             self.imageView.image = image;
         });
     });
-
-    NSLog(@"COMments %@",self.comments);
+    [self.imageCommentsTableView reloadData];
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
 
-/*
-#pragma mark - Navigation
 
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
+//-(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
+//    return self.comments.count;
+//}
+//
+//-(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
+//    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"ImageCell"];
+//    NSDictionary *commentDictionary = self.comments[indexPath.row];
+//    Comment *comment = commentDictionary[@"parent"];
+//    cell.textLabel.text = comment.body;
+//    cell.detailTextLabel.text = comment.author;
+//    return cell;
+//}
 
 @end
