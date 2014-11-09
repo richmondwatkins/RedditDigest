@@ -53,7 +53,7 @@
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <segue destination="WOc-nv-58w" kind="show" id="bKw-lt-3Nc"/>
+                                    <segue destination="WOc-nv-58w" kind="show" identifier="LoginSegue" id="bKw-lt-3Nc"/>
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="WELCOME" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rIz-sw-bP4">
@@ -661,7 +661,7 @@
                     <navigationItem key="navigationItem" title="Thursday September 12th" id="Qty-cj-ePJ">
                         <barButtonItem key="rightBarButtonItem" image="settings_icon" id="MS0-GG-KNW">
                             <connections>
-                                <segue destination="TR2-7E-2C6" kind="show" id="Ycp-Jl-p5z"/>
+                                <segue destination="TR2-7E-2C6" kind="show" identifier="SettingsSegue" id="Ycp-Jl-p5z"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -908,6 +908,6 @@
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="bKw-lt-3Nc"/>
-        <segue reference="IWx-eg-FxF"/>
+        <segue reference="UQ5-hC-TYb"/>
     </inferredMetricsTieBreakers>
 </document>

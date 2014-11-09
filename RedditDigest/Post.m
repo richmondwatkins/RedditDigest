@@ -104,12 +104,12 @@
 }
 
 +(void)removeAllPostsFromCoreData:(NSManagedObjectContext *)managedObjectContext{
-    NSFetchRequest * allCars = [[NSFetchRequest alloc] init];
-    [allCars setEntity:[NSEntityDescription entityForName:@"Post" inManagedObjectContext:managedObjectContext]];
-    [allCars setIncludesPropertyValues:NO];
+    NSFetchRequest * allPosts = [[NSFetchRequest alloc] init];
+    [allPosts setEntity:[NSEntityDescription entityForName:@"Post" inManagedObjectContext:managedObjectContext]];
+    [allPosts setIncludesPropertyValues:NO];
 
     NSError * error = nil;
-    NSArray * posts = [managedObjectContext executeFetchRequest:allCars error:&error];
+    NSArray * posts = [managedObjectContext executeFetchRequest:allPosts error:&error];
 
     for (NSManagedObject * post in posts) {
         [managedObjectContext deleteObject:post];

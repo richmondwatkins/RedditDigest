@@ -24,6 +24,7 @@
 		5D5C12D11A05716E002902A8 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5D5C12D01A05716E002902A8 /* Images.xcassets */; };
 		5D5C12D41A05716E002902A8 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5D5C12D21A05716E002902A8 /* LaunchScreen.xib */; };
 		5D5C12E01A05716E002902A8 /* RedditDigestTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D5C12DF1A05716E002902A8 /* RedditDigestTests.m */; };
+		5D7F16741A0F562A000360B3 /* Subreddit.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D7F16731A0F562A000360B3 /* Subreddit.m */; };
 		5DA1F1491A0EEE480017DE39 /* Post.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DA1F1441A0EEE480017DE39 /* Post.m */; };
 		5DA1F14A1A0EEE480017DE39 /* ChildComment.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DA1F1461A0EEE480017DE39 /* ChildComment.m */; };
 		5DA1F14B1A0EEE480017DE39 /* Comment.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DA1F1481A0EEE480017DE39 /* Comment.m */; };
@@ -86,6 +87,8 @@
 		5D5C12DE1A05716E002902A8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5D5C12DF1A05716E002902A8 /* RedditDigestTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RedditDigestTests.m; sourceTree = "<group>"; };
 		5D5C12E91A05758E002902A8 /* RedditDigest_Push_Development.mobileprovision */ = {isa = PBXFileReference; lastKnownFileType = file; path = RedditDigest_Push_Development.mobileprovision; sourceTree = "<group>"; };
+		5D7F16721A0F562A000360B3 /* Subreddit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Subreddit.h; sourceTree = "<group>"; };
+		5D7F16731A0F562A000360B3 /* Subreddit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Subreddit.m; sourceTree = "<group>"; };
 		5DA1F1431A0EEE480017DE39 /* Post.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Post.h; sourceTree = "<group>"; };
 		5DA1F1441A0EEE480017DE39 /* Post.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Post.m; sourceTree = "<group>"; };
 		5DA1F1451A0EEE480017DE39 /* ChildComment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChildComment.h; sourceTree = "<group>"; };
@@ -261,6 +264,8 @@
 		5DE75CA21A0D98740031F0F7 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				5D7F16721A0F562A000360B3 /* Subreddit.h */,
+				5D7F16731A0F562A000360B3 /* Subreddit.m */,
 				5DA1F1431A0EEE480017DE39 /* Post.h */,
 				5DA1F1441A0EEE480017DE39 /* Post.m */,
 				5DA1F1451A0EEE480017DE39 /* ChildComment.h */,
@@ -489,6 +494,7 @@
 				34D1B93A1A081D0C00C0C15F /* LoginViewController.m in Sources */,
 				5DA1F14A1A0EEE480017DE39 /* ChildComment.m in Sources */,
 				5DAADDD51A0D502600BB91AB /* WebPostViewController.m in Sources */,
+				5D7F16741A0F562A000360B3 /* Subreddit.m in Sources */,
 				5DA1F14B1A0EEE480017DE39 /* Comment.m in Sources */,
 				5DA1F1491A0EEE480017DE39 /* Post.m in Sources */,
 				5DAADDD21A0D4CD200BB91AB /* ImagePostViewController.m in Sources */,

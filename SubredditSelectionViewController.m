@@ -16,6 +16,7 @@
 #import "DigestViewController.h"
 #import "UserRequests.h"
 #import "RedditRequests.h"
+#import "Subreddit.h"
 @interface SubredditSelectionViewController () <UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, UIAlertViewDelegate, UITextFieldDelegate>
 
 @property (strong, nonatomic) IBOutlet UICollectionView *subredditCollectionView;
@@ -317,6 +318,7 @@
     NSString *deviceString = [NSString stringWithFormat:@"%@", deviceID];
     NSDictionary *dataDictionary = [[NSDictionary alloc] initWithObjectsAndKeys:self.selectedSubreddits, @"subreddits", nil];
 
+    [Subreddit addSubredditsToCoreData:self.selectedSubreddits withManagedObject:self.managedObject];
 
     [UserRequests postSelectedSubreddits:deviceString selections:dataDictionary withCompletion:^(BOOL completed) {
         if (completed) {

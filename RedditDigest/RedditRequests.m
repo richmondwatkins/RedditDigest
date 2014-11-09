@@ -7,10 +7,13 @@
 //
 
 #import "RedditRequests.h"
-
+#import "Subreddit.h"
 @implementation RedditRequests
 
 +(void)retrieveLatestPostFromArray:(NSArray *)subreddits withManagedObject:(NSManagedObjectContext *)managedObjectContext withCompletion:(void (^)(BOOL completed))complete{
+    if ([subreddits.firstObject isKindOfClass:[Subreddit class]]) {
+        subreddits = [self formatSubredditsArray:subreddits];
+    }
 
     __block int j = 0;
     for (NSDictionary *subredditDict in subreddits) {
@@ -35,7 +38,15 @@
             }];
         }];
     }
+}
 
++(NSArray *)formatSubredditsArray:(NSArray *)subreddits{
+    NSMutableArray *allSubreddits = [NSMutableArray array];
+    for (Subreddit *subreddit in subreddits) {
+        NSDictionary *tempSubDict = [[NSDictionary alloc] initWithObjectsAndKeys:subreddit.subreddit, @"subreddit", subreddit.url, @"url", nil];
+        [allSubreddits addObject:tempSubDict];
+    }
+    return [NSArray arrayWithArray:allSubreddits];
 }
 
 @end
