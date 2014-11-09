@@ -20,6 +20,10 @@
 - (void)saveContext;
 - (NSURL *)applicationDocumentsDirectory;
 
+/* App colors
+ dark reddit blue
+ [UIColor colorWithRed:0.2 green:0.4 blue:0.6 alpha:1]
+*/
 
 @end
 

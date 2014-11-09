@@ -18,7 +18,7 @@
     self.backgroundView = [UIView new];
 
     self.backgroundView.backgroundColor = [UIColor whiteColor];
-    self.selectedBackgroundView.backgroundColor = [UIColor blueColor];
+    self.selectedBackgroundView.backgroundColor = [UIColor colorWithRed:0.2 green:0.4 blue:0.6 alpha:1];
 
     for (CALayer *layer in @[self.backgroundView.layer, self.selectedBackgroundView.layer]) {
         layer.cornerRadius = 8.0;

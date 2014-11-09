@@ -147,10 +147,10 @@
 			children = (
 				34D1B9351A081B4D00C0C15F /* WelcomViewController.h */,
 				34D1B9361A081B4D00C0C15F /* WelcomViewController.m */,
-				3400A13B1A0EB50D00A39D3F /* CustomButton.h */,
-				3400A13C1A0EB50D00A39D3F /* CustomButton.m */,
 				34D1B9381A081D0C00C0C15F /* LoginViewController.h */,
 				34D1B9391A081D0C00C0C15F /* LoginViewController.m */,
+				3400A13B1A0EB50D00A39D3F /* CustomButton.h */,
+				3400A13C1A0EB50D00A39D3F /* CustomButton.m */,
 			);
 			name = "Welcome & Login Views";
 			sourceTree = "<group>";

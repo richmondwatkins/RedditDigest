@@ -8,7 +8,6 @@ pod "ZeroPush"
 pod 'RedditKit', '~> 1.3'
 pod 'SSKeychain'
 pod 'FLAnimatedImage', '~> 1.0'
-pod "RATreeView", "~> 0.9.2"
 end
 
 target 'RedditDigestTests' do
