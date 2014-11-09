@@ -74,7 +74,7 @@
     }
 
     Post *post = self.allPosts[index];
-    NSLog(@"POST %@",post);
+    NSLog(@"COMMENTS %@",post.comments);
     if (post.isImageLink.intValue == 1) {
         ImagePostViewController *ivc = [self.storyboard instantiateViewControllerWithIdentifier:@"ImageView"];
         ivc.imageData = post.image;

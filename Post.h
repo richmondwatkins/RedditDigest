@@ -8,10 +8,6 @@
 
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
-#import "DigestViewController.h"
-#import <RedditKit.h>
-#import <RKLink.h>
-
 
 @class Comment;
 
@@ -42,9 +38,5 @@
 - (void)removeCommentsObject:(Comment *)value;
 - (void)addComments:(NSSet *)values;
 - (void)removeComments:(NSSet *)values;
-
-+(void)savePost:(RKLink *)post withManagedObject:(NSManagedObjectContext *)managedObjectContext withComments:(NSArray *)comment andCompletion:(void (^)(BOOL completed))complete;
-
-+(void)removeAllPostsFromCoreData:(NSManagedObjectContext *)managedObjectContext;
 
 @end

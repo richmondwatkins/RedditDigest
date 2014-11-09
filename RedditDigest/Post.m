@@ -2,11 +2,12 @@
 //  Post.m
 //  
 //
-//  Created by Richmond on 11/7/14.
+//  Created by Richmond on 11/8/14.
 //
 //
 
 #import "Post.h"
+#import "Comment.h"
 
 
 @implementation Post
@@ -27,11 +28,9 @@
 @dynamic totalComments;
 @dynamic url;
 @dynamic voteRatio;
-
+@dynamic comments;
 
 +(void)savePost:(RKLink *)post withManagedObject:(NSManagedObjectContext *)managedObjectContext withComments:(NSArray *)comments andCompletion:(void (^)(BOOL))complete{
-
-    NSLog(@"Ccomments %@",comments);
 
     Post *savedPost = [NSEntityDescription insertNewObjectForEntityForName:@"Post" inManagedObjectContext:managedObjectContext];
     savedPost.title = post.title;
@@ -40,6 +39,11 @@
     savedPost.nsfw = [NSNumber numberWithBool:post.NSFW];
     savedPost.author = post.author;
     savedPost.voteRatio = [NSNumber numberWithFloat:post.score];
+
+
+    if (comments) {
+        [self addCommentsToPost:savedPost commentsArray:comments withMangedObject:managedObjectContext];
+    }
 
     if ([[post.URL absoluteString] containsString:@"youtube.com"] || [[post.URL absoluteString] containsString:@"youtu.be"]) {
         savedPost.url = [self performRegexOnYoutube:post.URL];
@@ -87,6 +91,20 @@
     }];
 }
 
++(void)addCommentsToPost:(Post *)post  commentsArray:(NSArray *)comments withMangedObject:(NSManagedObjectContext *)managedObjectContext{
+
+    for(RKComment *comment in comments){
+        Comment *savedComment = [NSEntityDescription insertNewObjectForEntityForName:@"Comment" inManagedObjectContext:managedObjectContext];
+        savedComment.author = comment.author;
+        savedComment.body = comment.body;
+        savedComment.score = [NSNumber numberWithInteger:comment.score];
+        post.totalComments = [NSNumber numberWithInteger:comments.count];
+        [post addCommentsObject:savedComment];
+        [managedObjectContext save:nil];
+    }
+}
+
+
 +(void)removeAllPostsFromCoreData:(NSManagedObjectContext *)managedObjectContext{
     NSFetchRequest * allCars = [[NSFetchRequest alloc] init];
     [allCars setEntity:[NSEntityDescription entityForName:@"Post" inManagedObjectContext:managedObjectContext]];
@@ -109,8 +127,10 @@
     NSTextCheckingResult *match = [regex firstMatchInString:urlString options:0 range:NSMakeRange(0, [urlString length])];
     NSRange videoIDRange = [match rangeAtIndex:1];
     NSString *youTubeID = [urlString substringWithRange:videoIDRange];
-
+    
     return [NSString stringWithFormat:@"www.youtube.com/embed/%@", youTubeID];
 }
 
 @end
+
+

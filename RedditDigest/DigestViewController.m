@@ -226,7 +226,6 @@
 
     NSArray * posts = [self.managedObjectContext executeFetchRequest:fetch error:nil];
     self.digestPosts = [NSMutableArray arrayWithArray:posts];
-    NSLog(@"RETRIEVED ALL POSTS FROM CORE DATA %@",posts);
     if (self.digestPosts.count) {
         completionHandler(YES);
     }
