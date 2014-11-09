@@ -2,18 +2,6 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "group:Comment.h">
-   </FileRef>
-   <FileRef
-      location = "group:Comment.m">
-   </FileRef>
-   <FileRef
-      location = "group:Post.h">
-   </FileRef>
-   <FileRef
-      location = "group:Post.m">
-   </FileRef>
-   <FileRef
       location = "group:RedditDigest.xcodeproj">
    </FileRef>
    <FileRef

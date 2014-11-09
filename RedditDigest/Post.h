@@ -12,7 +12,6 @@
 #import <RedditKit.h>
 #import <RKLink.h>
 
-
 @class Comment;
 
 @interface Post : NSManagedObject
@@ -46,5 +45,7 @@
 +(void)savePost:(RKLink *)post withManagedObject:(NSManagedObjectContext *)managedObjectContext withComments:(NSArray *)comment andCompletion:(void (^)(BOOL completed))complete;
 
 +(void)removeAllPostsFromCoreData:(NSManagedObjectContext *)managedObjectContext;
+
+
 
 @end

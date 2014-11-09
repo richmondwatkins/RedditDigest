@@ -13,6 +13,8 @@
 #import "SelfPostViewController.h"
 #import "VideoPostViewController.h"
 #import "PageWrapperViewController.h"
+#import "Comment.h"
+#import "ChildComment.h"
 @interface PostViewController ()
 @property (strong, nonatomic) IBOutlet UIImageView *imageView;
 @property (strong, nonatomic) IBOutlet UIWebView *webView;
@@ -74,7 +76,12 @@
     }
 
     Post *post = self.allPosts[index];
-    NSLog(@"COMMENTS %@",post.comments);
+    NSArray *allComments = [post.comments allObjects];
+    Comment *comment = allComments.firstObject;
+    NSArray *childComments = [comment.childcomments allObjects];
+
+    ChildComment *child = childComments.firstObject;
+    NSLog(@"CHID COMMENTS %@",child);
     if (post.isImageLink.intValue == 1) {
         ImagePostViewController *ivc = [self.storyboard instantiateViewControllerWithIdentifier:@"ImageView"];
         ivc.imageData = post.image;

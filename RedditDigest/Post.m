@@ -30,6 +30,7 @@
 @dynamic voteRatio;
 @dynamic comments;
 
+
 +(void)savePost:(RKLink *)post withManagedObject:(NSManagedObjectContext *)managedObjectContext withComments:(NSArray *)comments andCompletion:(void (^)(BOOL))complete{
 
     Post *savedPost = [NSEntityDescription insertNewObjectForEntityForName:@"Post" inManagedObjectContext:managedObjectContext];
@@ -42,7 +43,7 @@
 
 
     if (comments) {
-        [self addCommentsToPost:savedPost commentsArray:comments withMangedObject:managedObjectContext];
+        [Comment addCommentsToPost:savedPost commentsArray:comments withMangedObject:managedObjectContext];
     }
 
     if ([[post.URL absoluteString] containsString:@"youtube.com"] || [[post.URL absoluteString] containsString:@"youtu.be"]) {
@@ -91,20 +92,6 @@
     }];
 }
 
-+(void)addCommentsToPost:(Post *)post  commentsArray:(NSArray *)comments withMangedObject:(NSManagedObjectContext *)managedObjectContext{
-
-    for(RKComment *comment in comments){
-        Comment *savedComment = [NSEntityDescription insertNewObjectForEntityForName:@"Comment" inManagedObjectContext:managedObjectContext];
-        savedComment.author = comment.author;
-        savedComment.body = comment.body;
-        savedComment.score = [NSNumber numberWithInteger:comment.score];
-        post.totalComments = [NSNumber numberWithInteger:comments.count];
-        [post addCommentsObject:savedComment];
-        [managedObjectContext save:nil];
-    }
-}
-
-
 +(void)removeAllPostsFromCoreData:(NSManagedObjectContext *)managedObjectContext{
     NSFetchRequest * allCars = [[NSFetchRequest alloc] init];
     [allCars setEntity:[NSEntityDescription entityForName:@"Post" inManagedObjectContext:managedObjectContext]];
@@ -131,6 +118,6 @@
     return [NSString stringWithFormat:@"www.youtube.com/embed/%@", youTubeID];
 }
 
+
+
 @end
-
-
