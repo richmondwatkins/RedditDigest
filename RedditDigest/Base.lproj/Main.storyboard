@@ -221,10 +221,6 @@
                                     <size key="footerReferenceSize" width="0.0" height="0.0"/>
                                     <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 </collectionViewFlowLayout>
-                                <activityIndicatorView key="backgroundView" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="gray" id="b0S-Vu-cX3">
-                                    <rect key="frame" x="0.0" y="0.0" width="600" height="536"/>
-                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                </activityIndicatorView>
                                 <cells/>
                                 <collectionReusableView key="sectionHeaderView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="HeaderView" id="GJL-o9-yD4" customClass="SubredditSelectionCollectionReusableView">
                                     <rect key="frame" x="0.0" y="64" width="600" height="50"/>
@@ -307,7 +303,6 @@
                         </variation>
                     </view>
                     <connections>
-                        <outlet property="activityIndicator" destination="b0S-Vu-cX3" id="kWD-5X-crM"/>
                         <outlet property="doneSelectingSubredditsButton" destination="J8O-Nf-ZfV" id="ec1-Rm-yja"/>
                         <outlet property="subredditCollectionView" destination="jsl-Cu-EB1" id="BxS-MP-GUV"/>
                     </connections>
@@ -358,6 +353,9 @@
                                                 </label>
                                             </subviews>
                                         </tableViewCellContentView>
+                                        <connections>
+                                            <segue destination="e1g-HR-koU" kind="show" identifier="SubredditCollectionView" id="PcQ-bC-EQa"/>
+                                        </connections>
                                     </tableViewCell>
                                 </cells>
                             </tableViewSection>
@@ -377,7 +375,7 @@
                                             </subviews>
                                         </tableViewCellContentView>
                                         <connections>
-                                            <segue destination="WOc-nv-58w" kind="show" id="LaA-qT-0SF"/>
+                                            <segue destination="WOc-nv-58w" kind="show" identifier="" id="LaA-qT-0SF"/>
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="TyP-pz-lcZ">
@@ -437,7 +435,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="prp-Qo-4Mm" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="886" y="-1257"/>
+            <point key="canvasLocation" x="885" y="-1228"/>
         </scene>
         <!--Settings About Reddit View Controller-->
         <scene sceneID="NUo-nm-YjV">
@@ -1068,7 +1066,7 @@
         <image name="welcome_snoo" width="400" height="537"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="bKw-lt-3Nc"/>
-        <segue reference="UQ5-hC-TYb"/>
+        <segue reference="PcQ-bC-EQa"/>
+        <segue reference="LaA-qT-0SF"/>
     </inferredMetricsTieBreakers>
 </document>
