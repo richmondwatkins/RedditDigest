@@ -66,6 +66,12 @@
 #define COCOAPODS_VERSION_MINOR_Mantle_extobjc 5
 #define COCOAPODS_VERSION_PATCH_Mantle_extobjc 1
 
+// RATreeView
+#define COCOAPODS_POD_AVAILABLE_RATreeView
+#define COCOAPODS_VERSION_MAJOR_RATreeView 0
+#define COCOAPODS_VERSION_MINOR_RATreeView 9
+#define COCOAPODS_VERSION_PATCH_RATreeView 2
+
 // RedditKit
 #define COCOAPODS_POD_AVAILABLE_RedditKit
 #define COCOAPODS_VERSION_MAJOR_RedditKit 1
