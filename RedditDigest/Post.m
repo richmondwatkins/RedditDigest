@@ -30,7 +30,6 @@
 @dynamic voteRatio;
 @dynamic comments;
 
-
 +(void)savePost:(RKLink *)post withManagedObject:(NSManagedObjectContext *)managedObjectContext withComments:(NSArray *)comments andCompletion:(void (^)(BOOL))complete{
 
     Post *savedPost = [NSEntityDescription insertNewObjectForEntityForName:@"Post" inManagedObjectContext:managedObjectContext];
@@ -56,13 +55,13 @@
         post.customURL = post.URL;
     }
 
-    if ([[post.URL absoluteString] containsString:@"imgur"] && ![[post.URL absoluteString] containsString:@"/a/"] && ![[post.URL absoluteString] containsString:@"gallery"]) {
-        post.customURL = [self performRegexOnImgur:post.URL];
-        post.customIsImage = YES;
-        if (post.customURL == nil) {
-            post.customIsImage = NO;
-        }
-    }
+//    if ([[post.URL absoluteString] containsString:@"imgur"] && ![[post.URL absoluteString] containsString:@"/a/"] && ![[post.URL absoluteString] containsString:@"gallery"]) {
+//        post.customURL = [self performRegexOnImgur:post.URL];
+//        post.customIsImage = YES;
+//        if (post.customURL == nil) {
+//            post.customIsImage = NO;
+//        }
+//    }
 
     NSURLRequest *thumbnailRequest = [NSURLRequest requestWithURL:post.thumbnailURL];
     [NSURLConnection sendAsynchronousRequest:thumbnailRequest queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
@@ -111,7 +110,7 @@
 
     NSError * error = nil;
     NSArray * posts = [managedObjectContext executeFetchRequest:allCars error:&error];
-    //error handling goes here
+
     for (NSManagedObject * post in posts) {
         [managedObjectContext deleteObject:post];
     }
@@ -131,7 +130,7 @@
 }
 
 +(NSURL *)performRegexOnImgur:(NSURL *)url{
-    NSString *regexString = @"(?:imgur.+[/])([-a-zA-Z0-9_]+)";
+    NSString *regexString = @"(?:imgur.com.+[/])([-a-zA-Z0-9_]+)";
     NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:regexString options:NSRegularExpressionCaseInsensitive error:nil];
     NSString *urlString = [url absoluteString];
     NSTextCheckingResult *match = [regex firstMatchInString:urlString options:0 range:NSMakeRange(0, [urlString length])];
@@ -141,7 +140,7 @@
     }
     NSRange iDRange = [match rangeAtIndex:1];
     NSString *imgurID = [urlString substringWithRange:iDRange];
-    return [NSURL URLWithString:[NSString stringWithFormat:@"http://imgur.com/%@.jpg", imgurID]];
+    return [NSURL URLWithString:[NSString stringWithFormat:@"http://imgur.com/%@.png", imgurID]];
 }
 
 

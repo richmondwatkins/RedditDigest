@@ -33,6 +33,7 @@
 @property (nonatomic, retain) NSString * url;
 @property (nonatomic, retain) NSNumber * voteRatio;
 @property (nonatomic, retain) NSSet *comments;
+
 @end
 
 @interface Post (CoreDataGeneratedAccessors)

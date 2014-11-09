@@ -20,7 +20,7 @@
 }
 
 -(void)viewWillAppear:(BOOL)animated{
-    NSLog(@"COMMENTS %@",self.comments);
+    NSLog(@"COMMENTS %@",self.url);
     NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:self.url]];
     [self.webView loadRequest:request];
 }
