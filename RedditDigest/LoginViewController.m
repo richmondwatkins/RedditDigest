@@ -6,6 +6,8 @@
 //  Copyright (c) 2014 Richmond. All rights reserved.
 //
 
+#define REDDIT_DARK_BLUE [UIColor colorWithRed:0.2 green:0.4 blue:0.6 alpha:1];
+
 #import "LoginViewController.h"
 #import <RedditKit.h>
 #import <SSKeychain/SSKeychain.h>
@@ -29,13 +31,13 @@
     self.usernameTextField.layer.borderWidth = 0.5;
     self.usernameTextField.layer.cornerRadius = 5.0;
     self.usernameTextField.layer.borderColor = [UIColor colorWithRed:0.2 green:0.4 blue:0.6 alpha:1].CGColor;
-    self.usernameTextField.textColor = [UIColor colorWithRed:0.2 green:0.4 blue:0.6 alpha:1];
+    self.usernameTextField.textColor = REDDIT_DARK_BLUE;
 
     // password textField style
     self.passwordTextField.layer.borderWidth = 0.5;
     self.passwordTextField.layer.cornerRadius = 5.0;
     self.passwordTextField.layer.borderColor = [UIColor colorWithRed:0.2 green:0.4 blue:0.6 alpha:1].CGColor;
-    self.passwordTextField.textColor = [UIColor colorWithRed:0.2 green:0.4 blue:0.6 alpha:1];
+    self.passwordTextField.textColor =REDDIT_DARK_BLUE;
 
     // Add action to password text field to show login button if user begins typing.
     [self.passwordTextField addTarget:self
@@ -143,7 +145,10 @@
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
     if ([segue.identifier isEqualToString:@"SubredditSelectionFromLoginSegue"]) {
-        SubredditSelectionViewController *selectionController = segue.destinationViewController;
+        // SubredditSelectionViewController is embeded in a Navigation Controller so the color of the status bar
+        // could be set correctly. Thus the following extra step is needed.
+        UINavigationController *selectionControllerNavigationParentVC = segue.destinationViewController;
+        SubredditSelectionViewController *selectionController = selectionControllerNavigationParentVC.childViewControllers.firstObject;
         selectionController.managedObject = self.managedObject;
     }
 }

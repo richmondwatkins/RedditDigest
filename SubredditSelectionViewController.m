@@ -6,17 +6,20 @@
 //  Copyright (c) 2014 Richmond. All rights reserved.
 //
 
+#define REDDIT_DARK_BLUE [UIColor colorWithRed:0.2 green:0.4 blue:0.6 alpha:1];
+
 #import "SubredditSelectionViewController.h"
 #import "SubredditListCollectionViewCell.h"
 #import <RedditKit.h>
 #import <RKLink.h>
 #import <RKSubreddit.h>
 #import "KTCenterFlowLayout.h"
-#import "SubredditSelectionCollectionReusableView.h"
+#import "HeaderCollectionReusableView.h"
 #import "DigestViewController.h"
 #import "UserRequests.h"
 #import "RedditRequests.h"
 #import "Subreddit.h"
+
 @interface SubredditSelectionViewController () <UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, UIAlertViewDelegate, UITextFieldDelegate>
 
 @property (strong, nonatomic) IBOutlet UICollectionView *subredditCollectionView;
@@ -43,11 +46,12 @@
     layout.minimumInteritemSpacing = 10.f;
     layout.minimumLineSpacing = 10.f;
     self.subredditCollectionView = [self.subredditCollectionView initWithFrame:self.view.frame collectionViewLayout:layout];
+    self.subredditCollectionView.allowsMultipleSelection = YES;
 
     self.doneSelectingSubredditsButton.alpha = 0.0;
-    self.doneSelectingSubredditsButton.layer.borderWidth = 1.0;
-    self.doneSelectingSubredditsButton.layer.borderColor = [UIColor grayColor].CGColor;
-    self.subredditCollectionView.allowsMultipleSelection = YES;
+    self.doneSelectingSubredditsButton.layer.borderWidth = 0.5;
+    self.doneSelectingSubredditsButton.layer.borderColor = [UIColor colorWithRed:0.2 green:0.4 blue:0.6 alpha:1].CGColor;
+
 
     self.posts = [NSMutableArray array];
     self.selectedSubreddits = [[NSMutableArray alloc] init];
@@ -66,6 +70,8 @@
              [self.activityIndicator stopAnimating];
              self.activityIndicator.hidden = YES;
          }];
+        // If user has account set the nav title to the following
+        self.navigationItem.title = @"Choose your subreddits";
     }
     else // Didn't login with reddit account
     {
@@ -79,6 +85,9 @@
             self.catagories = results[@"allCategories"];
             [self.subredditCollectionView reloadData];
         }];
+        // If the user has not reddit accounts set the nav title to the following
+        // If user has account set the nav title to the following
+        self.navigationItem.title = @"Choose your catagories";
     }
 
 
@@ -164,8 +173,12 @@
 
         cell.subredditTitleLabel.text = self.catagories[indexPath.row][@"category"][@"name"];
     }
-
+    // SubredditTitleLabel font and color
+    cell.subredditTitleLabel.font = [UIFont fontWithName:@"Helvetica" size:16.0];
+    cell.subredditTitleLabel.textColor = REDDIT_DARK_BLUE;
 }
+
+
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -175,18 +188,15 @@
 
 - (void)collectionView:(UICollectionView *)collectionView didDeselectItemAtIndexPath:(NSIndexPath *)indexPath
 {
-
-    if (self.hasRedditAccount) {
+    // Remove subreddit(reddit user) or catagory(non reddit user) from selected list.
+    if (self.hasRedditAccount)
+    {
         RKSubreddit *subreddit = self.subreddits[indexPath.row];
-
-        NSMutableDictionary *subredditDict = [[NSMutableDictionary alloc] initWithObjectsAndKeys:subreddit.name, @"subreddit",subreddit.URL, @"url", nil];
-
-        if ([self.selectedSubreddits containsObject:subredditDict]) {
-            [self.selectedSubreddits removeObject:subredditDict];
-        }
+        [self removeSubredditFromSelectedSubreddits:subreddit];
     }
-    else {
-        [self.selectedSubreddits removeObject:self.catagories[indexPath.row]];
+    else
+    {
+        [self removeCatagoryFromSelectedCatagories:indexPath];
     }
 
     if (self.selectedSubreddits.count == 0) {
@@ -198,6 +208,22 @@
         [UIView animateWithDuration:0.3 animations:^{
             self.doneSelectingSubredditsButton.alpha = 1.0;
         }];
+    }
+}
+
+// Used for users without reddit accounts
+- (void)removeCatagoryFromSelectedCatagories:(NSIndexPath *)indexPath
+{
+    [self.selectedSubreddits removeObject:self.catagories[indexPath.row]];
+}
+
+// Used for users with reddit accounts
+- (void)removeSubredditFromSelectedSubreddits:(RKSubreddit *)subreddit
+{
+    NSMutableDictionary *subredditDict = [[NSMutableDictionary alloc] initWithObjectsAndKeys:subreddit.name, @"subreddit",subreddit.URL, @"url", nil];
+
+    if ([self.selectedSubreddits containsObject:subredditDict]) {
+        [self.selectedSubreddits removeObject:subredditDict];
     }
 }
 
@@ -221,11 +247,28 @@
 
     if (kind == UICollectionElementKindSectionHeader)
     {
-        SubredditSelectionCollectionReusableView *headerView = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"HeaderView" forIndexPath:indexPath];
+        HeaderCollectionReusableView *headerView = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"HeaderView" forIndexPath:indexPath];
+
+        // Add tap gesture recognizer to resignkeyboard when user taps outside of textField and is first responder
+        UIGestureRecognizer *tapToResignFirstResponderGesture = [[UITapGestureRecognizer alloc] initWithTarget:headerView action:@selector(hideKeyboardOnTapInHeaderView:)];
+        [headerView addGestureRecognizer:tapToResignFirstResponderGesture];
+
+        // Style textField
+        headerView.textField.layer.borderWidth = 0.5;
+        headerView.textField.layer.cornerRadius = 5.0;
+        headerView.textField.layer.borderColor = [UIColor colorWithRed:0.2 green:0.4 blue:0.6 alpha:1].CGColor;
+        headerView.textField.textColor = REDDIT_DARK_BLUE;
 
         [headerView.textField addTarget:self action:@selector(searchForSubreddit:) forControlEvents:UIControlEventEditingDidEndOnExit];
         reusableview = headerView;
     }
+
+    if (kind == UICollectionElementKindSectionFooter) {
+        UICollectionReusableView *footerview = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionFooter withReuseIdentifier:@"FooterView" forIndexPath:indexPath];
+
+        reusableview = footerview;
+    }
+
 
     return reusableview;
 }
@@ -241,6 +284,12 @@
     }
 }
 
+// Footer Height and Width
+- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout referenceSizeForFooterInSection:(NSInteger)section
+{
+    return CGSizeMake(self.view.frame.size.width, 44.0);
+}
+
 #pragma mark - Search
 
 - (void)searchForSubreddit:(UITextField *)textField
@@ -250,7 +299,9 @@
     [[RKClient sharedClient] subredditWithName:subredditName completion:^(RKSubreddit *subreddit, NSError *error) {
         if (subreddit != NULL) {
             [self.subreddits insertObject:subreddit atIndex:0];
-            [self.subredditCollectionView reloadData];
+            // Add the new subreddit in the collectionView at index 0.
+            NSIndexPath *firstIndex = [NSIndexPath indexPathForRow:0 inSection:0];
+            [self.subredditCollectionView insertItemsAtIndexPaths:@[firstIndex]];
         }
         else
         {
@@ -298,6 +349,12 @@
              return;
          }
      }];
+}
+
+- (IBAction)hideKeyboardOnTapInHeaderView:(id)sender
+{
+    // Nothing needs to happen here because the method gets called in the HeaderCollectionReusableView
+    // But a warning gets thrown if this isn't here
 }
 
 #pragma mark - Backend

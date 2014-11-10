@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface SubredditSelectionCollectionReusableView : UICollectionReusableView
+@interface HeaderCollectionReusableView : UICollectionReusableView
 
 @property (weak, nonatomic) IBOutlet UITextField *textField;
 
