@@ -165,14 +165,23 @@
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="login_snoo" translatesAutoresizingMaskIntoConstraints="NO" id="NgV-zc-7hK">
+                                <rect key="frame" x="223" y="93" width="153" height="65"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="153" id="ePF-rd-ojz"/>
+                                    <constraint firstAttribute="width" secondItem="NgV-zc-7hK" secondAttribute="height" multiplier="153:65" id="v2b-RN-t0m"/>
+                                </constraints>
+                            </imageView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <gestureRecognizers/>
                         <constraints>
                             <constraint firstAttribute="centerX" secondItem="uTJ-T6-hsy" secondAttribute="centerX" id="1TQ-cM-240"/>
                             <constraint firstAttribute="centerX" secondItem="YVl-9K-NMa" secondAttribute="centerX" id="74K-XE-lBu"/>
+                            <constraint firstItem="NgV-zc-7hK" firstAttribute="top" secondItem="1Oa-VI-A8F" secondAttribute="bottom" constant="29" id="FU9-Jy-shk"/>
                             <constraint firstItem="KWC-Gh-RuF" firstAttribute="top" secondItem="7r9-Ve-Dmx" secondAttribute="bottom" constant="20" id="GSB-rr-0DV"/>
                             <constraint firstAttribute="centerX" secondItem="HsC-en-qIL" secondAttribute="centerX" id="QR2-CP-vfj"/>
+                            <constraint firstAttribute="centerX" secondItem="NgV-zc-7hK" secondAttribute="centerX" id="ZaD-UG-FZf"/>
                             <constraint firstAttribute="centerX" secondItem="7r9-Ve-Dmx" secondAttribute="centerX" id="cqj-32-8YG"/>
                             <constraint firstItem="uTJ-T6-hsy" firstAttribute="top" secondItem="YVl-9K-NMa" secondAttribute="bottom" constant="12" id="dfh-E3-g1j"/>
                             <constraint firstAttribute="centerX" secondItem="xMh-Sq-VlA" secondAttribute="centerX" id="f2l-HL-h0N"/>
@@ -1079,6 +1088,7 @@
     </scenes>
     <resources>
         <image name="comment_square_gray" width="60" height="60"/>
+        <image name="login_snoo" width="173" height="80"/>
         <image name="settings_icon" width="33" height="33"/>
         <image name="snoo_square_gray" width="60" height="60"/>
         <image name="upvote_downvote_square_gray" width="60" height="60"/>
