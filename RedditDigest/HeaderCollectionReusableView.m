@@ -10,4 +10,11 @@
 
 @implementation HeaderCollectionReusableView
 
+- (IBAction)hideKeyboardOnTapInHeaderView:(id)sender
+{
+    if ([self.textField isFirstResponder]) {
+        [self.textField resignFirstResponder];
+    }
+}
+
 @end

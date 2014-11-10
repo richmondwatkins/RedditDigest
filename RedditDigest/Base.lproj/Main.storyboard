@@ -238,6 +238,7 @@
                                             <nil key="highlightedColor"/>
                                         </label>
                                     </subviews>
+                                    <gestureRecognizers/>
                                     <constraints>
                                         <constraint firstItem="9DB-Wl-HjA" firstAttribute="top" secondItem="GJL-o9-yD4" secondAttribute="topMargin" constant="2" id="2kn-v1-8si"/>
                                         <constraint firstAttribute="trailingMargin" secondItem="9DB-Wl-HjA" secondAttribute="trailing" constant="63" id="ANn-jM-z3s"/>
@@ -275,6 +276,7 @@
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <gestureRecognizers/>
                         <constraints>
                             <constraint firstItem="jsl-Cu-EB1" firstAttribute="leading" secondItem="H4a-Ni-sHg" secondAttribute="leading" id="HR7-nf-afE"/>
                             <constraint firstItem="J8O-Nf-ZfV" firstAttribute="leading" secondItem="H4a-Ni-sHg" secondAttribute="leadingMargin" constant="-16" id="HxG-TA-fKx"/>

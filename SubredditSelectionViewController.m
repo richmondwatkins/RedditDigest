@@ -67,9 +67,9 @@
              [self.subredditCollectionView reloadData];
              [self.activityIndicator stopAnimating];
              self.activityIndicator.hidden = YES;
-            // If user has account set the nav title to the following
-            self.navigationItem.title = @"Choose your subreddits";
          }];
+        // If user has account set the nav title to the following
+        self.navigationItem.title = @"Choose your subreddits";
     }
     else // Didn't login with reddit account
     {
@@ -82,11 +82,10 @@
             NSDictionary *results = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:nil];
             self.catagories = results[@"allCategories"];
             [self.subredditCollectionView reloadData];
-
-            // If the user has not reddit accounts set the nav title to the following
-            // If user has account set the nav title to the following
-            self.navigationItem.title = @"Choose your catagories";
         }];
+        // If the user has not reddit accounts set the nav title to the following
+        // If user has account set the nav title to the following
+        self.navigationItem.title = @"Choose your catagories";
     }
 
 
@@ -245,6 +244,11 @@
     {
         HeaderCollectionReusableView *headerView = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"HeaderView" forIndexPath:indexPath];
 
+        // Add tap gesture recognizer to resignkeyboard when user taps outside of textField and is first responder
+        UIGestureRecognizer *tapToResignFirstResponderGesture = [[UITapGestureRecognizer alloc] initWithTarget:headerView action:@selector(hideKeyboardOnTapInHeaderView:)];
+
+        [headerView addGestureRecognizer:tapToResignFirstResponderGesture];
+
         [headerView.textField addTarget:self action:@selector(searchForSubreddit:) forControlEvents:UIControlEventEditingDidEndOnExit];
         reusableview = headerView;
     }
@@ -335,6 +339,12 @@
              return;
          }
      }];
+}
+
+- (IBAction)hideKeyboardOnTapInHeaderView:(id)sender
+{
+    // Nothing needs to happen here because the method gets called in the HeaderCollectionReusableView
+    // But a warning gets thrown if this isn't here
 }
 
 #pragma mark - Backend
