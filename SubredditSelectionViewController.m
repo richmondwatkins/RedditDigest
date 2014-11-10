@@ -246,8 +246,13 @@
 
         // Add tap gesture recognizer to resignkeyboard when user taps outside of textField and is first responder
         UIGestureRecognizer *tapToResignFirstResponderGesture = [[UITapGestureRecognizer alloc] initWithTarget:headerView action:@selector(hideKeyboardOnTapInHeaderView:)];
-
         [headerView addGestureRecognizer:tapToResignFirstResponderGesture];
+
+        // Style textField
+        headerView.textField.layer.borderWidth = 0.5;
+        headerView.textField.layer.cornerRadius = 5.0;
+        headerView.textField.layer.borderColor = [UIColor colorWithRed:0.2 green:0.4 blue:0.6 alpha:1].CGColor;
+        headerView.textField.textColor = [UIColor colorWithRed:0.2 green:0.4 blue:0.6 alpha:1];
 
         [headerView.textField addTarget:self action:@selector(searchForSubreddit:) forControlEvents:UIControlEventEditingDidEndOnExit];
         reusableview = headerView;

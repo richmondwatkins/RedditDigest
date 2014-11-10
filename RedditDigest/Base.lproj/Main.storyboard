@@ -232,9 +232,9 @@
                                             <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" returnKeyType="search"/>
                                         </textField>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="r/" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vVQ-NM-ZfZ">
-                                            <rect key="frame" x="51" y="14" width="12" height="21"/>
+                                            <rect key="frame" x="54" y="14" width="12" height="21"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                     </subviews>
@@ -244,7 +244,7 @@
                                         <constraint firstAttribute="trailingMargin" secondItem="9DB-Wl-HjA" secondAttribute="trailing" constant="63" id="ANn-jM-z3s"/>
                                         <constraint firstAttribute="bottomMargin" secondItem="9DB-Wl-HjA" secondAttribute="bottom" constant="2" id="UOU-7z-x4g"/>
                                         <constraint firstItem="vVQ-NM-ZfZ" firstAttribute="top" secondItem="GJL-o9-yD4" secondAttribute="topMargin" constant="6" id="aS9-ke-MNQ"/>
-                                        <constraint firstItem="9DB-Wl-HjA" firstAttribute="leading" secondItem="vVQ-NM-ZfZ" secondAttribute="trailing" constant="8" symbolic="YES" id="efv-SY-8cN"/>
+                                        <constraint firstItem="9DB-Wl-HjA" firstAttribute="leading" secondItem="vVQ-NM-ZfZ" secondAttribute="trailing" constant="5" id="efv-SY-8cN"/>
                                         <constraint firstItem="9DB-Wl-HjA" firstAttribute="leading" secondItem="GJL-o9-yD4" secondAttribute="leadingMargin" constant="63" id="hnn-ne-28C"/>
                                     </constraints>
                                     <connections>
