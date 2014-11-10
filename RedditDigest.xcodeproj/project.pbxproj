@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		3400A13D1A0EB50D00A39D3F /* CustomButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 3400A13C1A0EB50D00A39D3F /* CustomButton.m */; };
 		3413401D1A0C996F004C8C15 /* DigestCellWithImageTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3413401C1A0C996F004C8C15 /* DigestCellWithImageTableViewCell.m */; };
+		3413FC361A1117490018A172 /* LoadingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3413FC351A1117490018A172 /* LoadingViewController.m */; };
 		3417AC0D1A092D970026961C /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3417AC0C1A092D970026961C /* SettingsViewController.m */; };
 		3417AC0F1A092EBA0026961C /* SubredditSelectionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3417AC0E1A092EBA0026961C /* SubredditSelectionCell.xib */; };
 		3417AC131A0945B40026961C /* KTCenterFlowLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 3417AC121A0945B40026961C /* KTCenterFlowLayout.m */; };
@@ -61,6 +62,8 @@
 		3400A13C1A0EB50D00A39D3F /* CustomButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomButton.m; sourceTree = "<group>"; };
 		3413401B1A0C996F004C8C15 /* DigestCellWithImageTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DigestCellWithImageTableViewCell.h; sourceTree = "<group>"; };
 		3413401C1A0C996F004C8C15 /* DigestCellWithImageTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DigestCellWithImageTableViewCell.m; sourceTree = "<group>"; };
+		3413FC341A1117490018A172 /* LoadingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoadingViewController.h; sourceTree = "<group>"; };
+		3413FC351A1117490018A172 /* LoadingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoadingViewController.m; sourceTree = "<group>"; };
 		3417AC0B1A092D970026961C /* SettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsViewController.h; sourceTree = "<group>"; };
 		3417AC0C1A092D970026961C /* SettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsViewController.m; sourceTree = "<group>"; };
 		3417AC0E1A092EBA0026961C /* SubredditSelectionCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = SubredditSelectionCell.xib; path = RedditDigest/SubredditSelectionCell.xib; sourceTree = "<group>"; };
@@ -180,6 +183,15 @@
 			name = "Digest Cells";
 			sourceTree = "<group>";
 		};
+		3413FC331A11172C0018A172 /* Loading View */ = {
+			isa = PBXGroup;
+			children = (
+				3413FC341A1117490018A172 /* LoadingViewController.h */,
+				3413FC351A1117490018A172 /* LoadingViewController.m */,
+			);
+			name = "Loading View";
+			sourceTree = "<group>";
+		};
 		3417AC101A0945B40026961C /* CenterFlowLayout */ = {
 			isa = PBXGroup;
 			children = (
@@ -217,6 +229,7 @@
 				5D5C12CD1A05716E002902A8 /* Main.storyboard */,
 				3400A13A1A0EB30F00A39D3F /* Welcome & Login Views */,
 				5DE75CA61A0D99720031F0F7 /* SubredditSelection */,
+				3413FC331A11172C0018A172 /* Loading View */,
 				341340191A0C9925004C8C15 /* Digest View */,
 				5DE75CA41A0D98B30031F0F7 /* PaginatedViewControllers */,
 				5DE75CA31A0D98930031F0F7 /* HttpRequestHelpers */,
@@ -490,6 +503,7 @@
 				5D311EDE1A10A359002AFC3C /* CommentTableViewCell.m in Sources */,
 				5DB5B8491A083DF0007DC036 /* SubredditSelectionViewController.m in Sources */,
 				3417AC131A0945B40026961C /* KTCenterFlowLayout.m in Sources */,
+				3413FC361A1117490018A172 /* LoadingViewController.m in Sources */,
 				5DB47A5D1A0ABA5B0034EA84 /* PostViewController.m in Sources */,
 				5D5C12C91A05716E002902A8 /* RedditDigest.xcdatamodeld in Sources */,
 				3417AC0D1A092D970026961C /* SettingsViewController.m in Sources */,

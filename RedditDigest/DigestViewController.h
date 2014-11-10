@@ -12,6 +12,7 @@
 
 @property (strong, nonatomic) NSManagedObjectContext *managedObjectContext;
 @property NSMutableArray *subredditsForFirstDigest;
+@property BOOL isComingFromSubredditSelectionView;
 
 -(void)fetchNewDataWithCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler;
 -(void)retrievePostsFromCoreData:(void (^)(BOOL))completionHandler;
