@@ -23,10 +23,17 @@
 
 @property (strong, nonatomic) IBOutlet UITableView *digestTableView;
 @property NSMutableArray *digestPosts;
-
+@property UIRefreshControl *refreshControl;
 @end
 
 @implementation DigestViewController
+
+-(void)viewDidLoad{
+    [super viewDidLoad];
+    self.refreshControl = [[UIRefreshControl alloc] init];
+    [self.refreshControl addTarget:self action:@selector(requestNewLinks) forControlEvents:UIControlEventValueChanged];
+    [self.digestTableView addSubview:self.refreshControl];
+}
 
 - (void)viewWillAppear:(BOOL)animated
 {
@@ -242,7 +249,6 @@
     
     [RedditRequests retrieveLatestPostFromArray:subreddits withManagedObject:self.managedObjectContext withCompletion:^(BOOL completed) {
         [self performNewFetchedDataActions];
-        [self fireLocalNotificationAndMarkComplete];
     }];
 }
 
@@ -251,6 +257,7 @@
     [self retrievePostsFromCoreData:^(BOOL completed) {
         if (completed) {
             [self.digestTableView reloadData];
+            [self.refreshControl endRefreshing];
         }
     }];
 }
