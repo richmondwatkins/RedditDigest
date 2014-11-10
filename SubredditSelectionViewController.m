@@ -354,7 +354,6 @@
                 subFromReddit.isCurrentlySubscribed = YES;
                 NSMutableDictionary *subredditDict = [[NSMutableDictionary alloc] initWithObjectsAndKeys:subFromReddit.name, @"subreddit",subFromReddit.URL, @"url", [NSNumber numberWithBool:subFromReddit.isCurrentlySubscribed], @"currentlySubscribed", nil];
                 [self.selectedSubreddits addObject:subredditDict];
-//                [self.subreddits addObject:subFromReddit];
             }
         }
     }
