@@ -266,7 +266,9 @@
                                 <constraints>
                                     <constraint firstAttribute="height" constant="49" id="mna-2x-1M5"/>
                                 </constraints>
+                                <fontDescription key="fontDescription" name="HelveticaNeue-CondensedBold" family="Helvetica Neue" pointSize="20"/>
                                 <state key="normal" title="Done">
+                                    <color key="titleColor" red="0.20000000000000001" green="0.40000000000000002" blue="0.59999999999999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
@@ -1083,7 +1085,7 @@
         <image name="welcome_snoo" width="400" height="537"/>
     </resources>
     <inferredMetricsTieBreakers>
+        <segue reference="UQ5-hC-TYb"/>
         <segue reference="LaA-qT-0SF"/>
-        <segue reference="IWx-eg-FxF"/>
     </inferredMetricsTieBreakers>
 </document>

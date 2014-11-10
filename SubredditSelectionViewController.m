@@ -47,8 +47,8 @@
     self.subredditCollectionView.allowsMultipleSelection = YES;
 
     self.doneSelectingSubredditsButton.alpha = 0.0;
-    self.doneSelectingSubredditsButton.layer.borderWidth = 1.0;
-    self.doneSelectingSubredditsButton.layer.borderColor = [UIColor grayColor].CGColor;
+    self.doneSelectingSubredditsButton.layer.borderWidth = 0.5;
+    self.doneSelectingSubredditsButton.layer.borderColor = [UIColor colorWithRed:0.2 green:0.4 blue:0.6 alpha:1].CGColor;
 
 
     self.posts = [NSMutableArray array];
