@@ -541,7 +541,7 @@
         <!--Loading View Controller-->
         <scene sceneID="DAn-pm-3Ok">
             <objects>
-                <viewController id="kJM-Gu-Erb" customClass="LoadingViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="LoadingView" useStoryboardIdentifierAsRestorationIdentifier="YES" id="kJM-Gu-Erb" customClass="LoadingViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="S40-l1-PzJ"/>
                         <viewControllerLayoutGuide type="bottom" id="tuA-0S-UKQ"/>
@@ -550,31 +550,17 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="CaW-Pl-S7Y">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="CaW-Pl-S7Y">
                                 <rect key="frame" x="178" y="121" width="244" height="345"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="244" id="NAC-bN-bbz"/>
-                                    <constraint firstAttribute="height" constant="345" id="SYD-9h-RLC"/>
-                                </constraints>
                             </imageView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Creating your digest..." lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aGj-E2-w8d">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Creating your digest..." lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aGj-E2-w8d">
                                 <rect key="frame" x="204" y="474" width="193" height="29"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="193" id="85M-pX-OiZ"/>
-                                    <constraint firstAttribute="height" constant="29" id="VxZ-kS-VMF"/>
-                                </constraints>
                                 <fontDescription key="fontDescription" name="HelveticaNeue-Thin" family="Helvetica Neue" pointSize="20"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <constraints>
-                            <constraint firstAttribute="centerX" secondItem="CaW-Pl-S7Y" secondAttribute="centerX" id="84O-Cp-EnO"/>
-                            <constraint firstItem="CaW-Pl-S7Y" firstAttribute="top" secondItem="S40-l1-PzJ" secondAttribute="bottom" constant="101" id="BfT-Se-WoL"/>
-                            <constraint firstAttribute="centerX" secondItem="aGj-E2-w8d" secondAttribute="centerX" id="GsX-2j-eJ4"/>
-                            <constraint firstItem="aGj-E2-w8d" firstAttribute="top" secondItem="CaW-Pl-S7Y" secondAttribute="bottom" constant="8" id="n0I-dJ-1Kn"/>
-                        </constraints>
                     </view>
                     <connections>
                         <outlet property="createDigestLabel" destination="aGj-E2-w8d" id="iTW-Io-FYv"/>

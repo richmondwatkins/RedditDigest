@@ -19,6 +19,7 @@
 #import "UserRequests.h"
 #import "RedditRequests.h"
 #import "Subreddit.h"
+#import "LoginViewController.h"
 
 @interface SubredditSelectionViewController () <UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, UIAlertViewDelegate, UITextFieldDelegate>
 
@@ -381,8 +382,8 @@
    |     I     |
  ***************************************
  */
-- (IBAction)finishSelectingSubreddits:(id)sender{
-
+- (IBAction)finishSelectingSubreddits:(id)sender
+{
     NSUUID *deviceID = [UIDevice currentDevice].identifierForVendor;
     NSString *deviceString = [NSString stringWithFormat:@"%@", deviceID];
     NSDictionary *dataDictionary = [[NSDictionary alloc] initWithObjectsAndKeys:self.selectedSubreddits, @"subreddits", nil];
@@ -398,13 +399,16 @@
 }
 
 
--(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
+-(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
     DigestViewController *digestViewController = segue.destinationViewController;
     NSLog(@"%@",self.selectedSubreddits);
     digestViewController.subredditsForFirstDigest = self.selectedSubreddits;
+    digestViewController.isComingFromSubredditSelectionView = YES;
 }
 
--(void)checkForExistingSubscription{
+-(void)checkForExistingSubscription
+{
     NSFetchRequest *subredditFetch = [NSFetchRequest fetchRequestWithEntityName:@"Subreddit"];
     NSArray *subscribedSubreddits = [self.managedObject executeFetchRequest:subredditFetch error:nil];
     NSLog(@"CORE DATA SUBSSS %@",self.subreddits);

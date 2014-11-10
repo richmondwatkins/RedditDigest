@@ -19,6 +19,10 @@
 #import "DigestCellWithImageTableViewCell.h"
 #import "WelcomViewController.h"
 #import "SettingsViewController.h"
+#import "LoadingViewController.h"
+#import "LoginViewController.h"
+
+
 @interface DigestViewController () <UITableViewDataSource, UITableViewDelegate>
 
 @property (strong, nonatomic) IBOutlet UITableView *digestTableView;
@@ -35,12 +39,33 @@
     [self.digestTableView addSubview:self.refreshControl];
 }
 
+- (void)loadView
+{
+    [super loadView];
+}
+
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
 
     if ([[NSUserDefaults standardUserDefaults] boolForKey:@"HasLaunchedOnce"])
     {
+        // If user is coming from selecting subreddits for their digest then show the loading snoo
+//        if (self.isComingFromSubredditSelectionView) {
+//            LoadingViewController *loadingViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"LoadingView"];
+//            loadingViewController.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
+//            loadingViewController.view.tag = 1;
+//
+////            CGRect fixedFrame = loadingViewController.view.frame;
+////            fixedFrame.origin.y = self.view.frame.origin.y/2;
+////            NSLog(@"%f", self.view.frame.origin.y);
+////            loadingViewController.view.frame = fixedFrame;
+//
+//            loadingViewController.view.center = self.view.center;
+//            [self.view addSubview:loadingViewController.view];
+//            //[self presentViewController:loadingViewController animated:YES completion:nil];
+//        }
+
         [self performNewFetchedDataActions];
     }
     else
@@ -61,15 +86,57 @@
     // These two lines enable automatic cell resizing thanks to iOS 8 💃
     self.digestTableView.estimatedRowHeight = 68.0;
     self.digestTableView.rowHeight = UITableViewAutomaticDimension;
+
+    if (self.isComingFromSubredditSelectionView) {
+        LoadingViewController *loadingViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"LoadingView"];
+        // Make sure storyboard doesn't try to add any constraints
+        loadingViewController.view.translatesAutoresizingMaskIntoConstraints = NO;
+        [self.view addSubview:loadingViewController.view];
+
+        NSLayoutConstraint *headlineHeight = [NSLayoutConstraint constraintWithItem:loadingViewController.view
+                                                                          attribute:NSLayoutAttributeWidth
+                                                                          relatedBy:NSLayoutRelationEqual
+                                                                             toItem:nil //loadingViewController.view
+                                                                          attribute:NSLayoutAttributeNotAnAttribute
+                                                                         multiplier:1.0
+                                                                           constant:244];
+        [loadingViewController.view addConstraint:headlineHeight];
+
+        NSLayoutConstraint *headlineTop = [NSLayoutConstraint constraintWithItem:loadingViewController.view
+                                                                       attribute:NSLayoutAttributeTop
+                                                                       relatedBy:NSLayoutRelationEqual
+                                                                          toItem:self.view
+                                                                       attribute:NSLayoutAttributeTop
+                                                                      multiplier:1.0
+                                                                        constant:60];
+        // Find most common ansestor view to add this top constraint to. If added to loadingView it won't know what to constrain it to
+        [self.view addConstraint:headlineTop];
+
+        NSLog(@"%f %f %f %f", loadingViewController.loadingImageView.frame.origin.x, loadingViewController.loadingImageView.frame.origin.y, loadingViewController.loadingImageView.frame.size.height, loadingViewController.loadingImageView.frame.size.width);
+        //loadingViewController.loadingImageView.frame = CGRectMake(0, 0, 244, 345);
+        loadingViewController.view.tag = 1;
+       // loadingViewController.view.backgroundColor = [UIColor greenColor];
+        //CGRect fixedFrame = self.view.frame;
+
+        //fixedFrame.origin.y = 500.0; ///self.view.frame.origin.y/2;
+        //NSLog(@"%f", self.view.frame.origin.y);
+        //loadingViewController.view.frame = fixedFrame;
+
+        //loadingViewController.view.center = self.view.center;
+        //[self presentViewController:loadingViewController animated:YES completion:nil];
+    }
+
 }
 
 #pragma mark - TableView Delegate Methods
 
--(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
+-(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
     return self.digestPosts.count;
 }
 
--(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
+-(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
 
     DigestCellWithImageTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"DigestCell"];
 
@@ -91,6 +158,21 @@
     cell.thumbnailImage.layer.masksToBounds = YES;
 
     return cell;
+}
+
+-(void) tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if([indexPath row] == ((NSIndexPath*)[[tableView indexPathsForVisibleRows] lastObject]).row){
+        //end of loading
+        //for example [activityIndicator stopAnimating];
+        // Close the loading snoo when subreddit loading is done
+        if (self.isComingFromSubredditSelectionView) {
+            UIView *viewToRemove = [self.view viewWithTag:1];
+            [viewToRemove removeFromSuperview];
+            [self dismissViewControllerAnimated:YES completion:nil];
+            self.isComingFromSubredditSelectionView = NO;
+        }
+    }
 }
 
 -(NSString *)abbreviateNumber:(int)num
@@ -192,7 +274,8 @@
 
 #pragma mark - Fetch from Server
 
--(void)fetchNewDataWithCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler{
+-(void)fetchNewDataWithCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
+{
     [Post removeAllPostsFromCoreData:self.managedObjectContext];
 
     NSUUID *deviceID = [UIDevice currentDevice].identifierForVendor;
@@ -207,7 +290,8 @@
 
 }
 
--(void)fireLocalNotificationAndMarkComplete{
+-(void)fireLocalNotificationAndMarkComplete
+{
     UILocalNotification* localNotification = [[UILocalNotification alloc] init];
     localNotification.fireDate = [NSDate date];
     localNotification.timeZone = [NSTimeZone defaultTimeZone];
@@ -223,7 +307,8 @@
 
 }
 
--(void)retrievePostsFromCoreData:(void (^)(BOOL))completionHandler{
+-(void)retrievePostsFromCoreData:(void (^)(BOOL))completionHandler
+{
     self.digestPosts = [NSMutableArray array];
 
     NSFetchRequest * fetch = [[NSFetchRequest alloc] init];
@@ -239,7 +324,8 @@
     }
 }
 
--(void)requestNewLinks{
+-(void)requestNewLinks
+{
     [Post removeAllPostsFromCoreData:self.managedObjectContext];
 
     NSFetchRequest * fetch = [[NSFetchRequest alloc] init];
@@ -253,7 +339,8 @@
 }
 
 
--(void)performNewFetchedDataActions{
+-(void)performNewFetchedDataActions
+{
     [self retrievePostsFromCoreData:^(BOOL completed) {
         if (completed) {
             [self.digestTableView reloadData];
@@ -262,7 +349,8 @@
     }];
 }
 
--(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
+-(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
 
     if ([segue.identifier isEqualToString:@"PostSegue"]) {
         PostViewController *postViewController = segue.destinationViewController;
@@ -276,7 +364,8 @@
 }
 
 
--(IBAction)unwindFromSubredditSelectionViewController:(UIStoryboardSegue *)segue{
+-(IBAction)unwindFromSubredditSelectionViewController:(UIStoryboardSegue *)segue
+{
     [Post removeAllPostsFromCoreData:self.managedObjectContext];
 
     [RedditRequests retrieveLatestPostFromArray:self.subredditsForFirstDigest withManagedObject:self.managedObjectContext withCompletion:^(BOOL completed) {
