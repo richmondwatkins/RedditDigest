@@ -28,6 +28,7 @@
 @property (strong, nonatomic) IBOutlet UITableView *digestTableView;
 @property NSMutableArray *digestPosts;
 @property UIRefreshControl *refreshControl;
+
 @end
 
 @implementation DigestViewController
@@ -80,6 +81,10 @@
     }
 }
 
+- (void)viewDidLayoutSubviews
+{
+    [super viewDidLayoutSubviews];
+}
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
@@ -88,44 +93,150 @@
     self.digestTableView.rowHeight = UITableViewAutomaticDimension;
 
     if (self.isComingFromSubredditSelectionView) {
-        LoadingViewController *loadingViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"LoadingView"];
+       // LoadingViewController *loadingViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"LoadingView"];
         // Make sure storyboard doesn't try to add any constraints
-        loadingViewController.view.translatesAutoresizingMaskIntoConstraints = NO;
-        [self.view addSubview:loadingViewController.view];
+        //loadingViewController.view.translatesAutoresizingMaskIntoConstraints = NO;
+        [self createLoadingSnoo];
 
-        NSLayoutConstraint *headlineHeight = [NSLayoutConstraint constraintWithItem:loadingViewController.view
-                                                                          attribute:NSLayoutAttributeWidth
-                                                                          relatedBy:NSLayoutRelationEqual
-                                                                             toItem:nil //loadingViewController.view
-                                                                          attribute:NSLayoutAttributeNotAnAttribute
-                                                                         multiplier:1.0
-                                                                           constant:244];
-        [loadingViewController.view addConstraint:headlineHeight];
+        //NSLog(@"%f %f %f %f", loadingViewController.view.frame.origin.x, loadingViewController.view.frame.origin.y, loadingViewController.view.frame.size.height, loadingViewController.view.frame.size.width);
+        //CGRect newFrame = CGRectMake(-178, -121, loadingViewController.view.frame.size.width, loadingViewController.view.frame.size.height);
+       // loadingViewController.view.frame = newFrame;
+        //[self.view addSubview:loadingViewController.view];
 
-        NSLayoutConstraint *headlineTop = [NSLayoutConstraint constraintWithItem:loadingViewController.view
-                                                                       attribute:NSLayoutAttributeTop
-                                                                       relatedBy:NSLayoutRelationEqual
-                                                                          toItem:self.view
-                                                                       attribute:NSLayoutAttributeTop
-                                                                      multiplier:1.0
-                                                                        constant:60];
-        // Find most common ansestor view to add this top constraint to. If added to loadingView it won't know what to constrain it to
-        [self.view addConstraint:headlineTop];
 
-        NSLog(@"%f %f %f %f", loadingViewController.loadingImageView.frame.origin.x, loadingViewController.loadingImageView.frame.origin.y, loadingViewController.loadingImageView.frame.size.height, loadingViewController.loadingImageView.frame.size.width);
-        //loadingViewController.loadingImageView.frame = CGRectMake(0, 0, 244, 345);
-        loadingViewController.view.tag = 1;
-       // loadingViewController.view.backgroundColor = [UIColor greenColor];
-        //CGRect fixedFrame = self.view.frame;
+//
+//        NSLayoutConstraint *fdss = [NSLayoutConstraint constraintWithItem:loadingViewController.view
+//                                          attribute:NSLayoutAttributeHeight
+//                                          relatedBy:NSLayoutRelationEqual
+//                                             toItem:nil
+//                                          attribute:NSLayoutAttributeNotAnAttribute
+//                                         multiplier:1
+//                                           constant:2];
+//        [loadingViewController.view addConstraint:fdss];
+//
+//        NSLayoutConstraint *casdfn = [NSLayoutConstraint constraintWithItem:loadingViewController.view
+//                                          attribute:NSLayoutAttributeWidth
+//                                          relatedBy:NSLayoutRelationEqual
+//                                             toItem:nil
+//                                          attribute:NSLayoutAttributeNotAnAttribute
+//                                         multiplier:1
+//                                           constant:2];
+//        [loadingViewController.view addConstraint: casdfn];
+//
+//        NSLayoutConstraint *headlineWidth = [NSLayoutConstraint constraintWithItem:loadingViewController.view
+//                                                                          attribute:NSLayoutAttributeWidth
+//                                                                          relatedBy:NSLayoutRelationEqual
+//                                                                             toItem:nil //loadingViewController.view
+//                                                                          attribute:NSLayoutAttributeNotAnAttribute
+//                                                                         multiplier:1.0
+//                                                                           constant:5];
+//        [loadingViewController.view addConstraint:headlineWidth];
 
-        //fixedFrame.origin.y = 500.0; ///self.view.frame.origin.y/2;
-        //NSLog(@"%f", self.view.frame.origin.y);
-        //loadingViewController.view.frame = fixedFrame;
+//        NSLayoutConstraint *headlineTop = [NSLayoutConstraint constraintWithItem:loadingViewController.view
+//                                                                       attribute:NSLayoutAttributeTop
+//                                                                       relatedBy:NSLayoutRelationEqual
+//                                                                          toItem:self.view
+//                                                                       attribute:NSLayoutAttributeTop
+//                                                                      multiplier:1.0
+//                                                                        constant:60];
+//
+//        [self.view addConstraint:[NSLayoutConstraint constraintWithItem:loadingViewController.view
+//                                                                    attribute:NSLayoutAttributeCenterX
+//                                                                    relatedBy:NSLayoutRelationEqual
+//                                                                       toItem:self.view
+//                                                                    attribute:NSLayoutAttributeCenterX
+//                                                                   multiplier:1.0
+//                                                                     constant:-self.view.center.x*2]];
+//
+//        [self.view addConstraint:[NSLayoutConstraint constraintWithItem:loadingViewController.view
+//                                                                    attribute:NSLayoutAttributeCenterY
+//                                                                    relatedBy:NSLayoutRelationEqual
+//                                                                       toItem:self.view
+//                                                                    attribute:NSLayoutAttributeCenterY
+//                                                                   multiplier:1.0
+//                                                                     constant:-self.view.center.y]];
+//        NSLog(@"%f %f", -self.view.center.y, self.view.center.x);
+//
+//        NSLog(@"%f %f %f %f", loadingViewController.view.frame.origin.x, loadingViewController.view.frame.origin.y, loadingViewController.view.frame.size.height, loadingViewController.view.frame.size.width);
+//        loadingViewController.view.tag = 1;
+//
+    }
+}
 
-        //loadingViewController.view.center = self.view.center;
-        //[self presentViewController:loadingViewController animated:YES completion:nil];
+- (void)createLoadingSnoo
+{
+    NSArray *imageNames = @[@"loading_snoo0000", @"loading_snoo0001", @"loading_snoo0002", @"loading_snoo0003",
+                            @"loading_snoo0004", @"loading_snoo0005", @"loading_snoo0006", @"loading_snoo0007",
+                            @"loading_snoo0008", @"loading_snoo0009", @"loading_snoo0010", @"loading_snoo0011"];
+
+    NSMutableArray *images = [[NSMutableArray alloc] init];
+    for (int i = 0; i < imageNames.count; i++) {
+        [images addObject:[UIImage imageNamed:[imageNames objectAtIndex:i]]];
     }
 
+    UIBlurEffect *blurEffect = [UIBlurEffect effectWithStyle:UIBlurEffectStyleLight];
+    UIVisualEffectView *blurEffectView = [[UIVisualEffectView alloc] initWithEffect:blurEffect];
+    blurEffectView.translatesAutoresizingMaskIntoConstraints = NO;
+    [blurEffectView setFrame:self.view.bounds];
+    blurEffectView.tag = 1;
+    [self.view addSubview:blurEffectView];
+
+    // Add imageView for snoo
+    UIImageView *animatingSnooImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 244, 345)];
+    animatingSnooImageView.center = blurEffectView.center;
+    animatingSnooImageView.animationImages = images;
+    animatingSnooImageView.animationDuration = 0.7;
+
+    // Constraints for blurEffectView
+    NSLayoutConstraint *blurEffectViewHeight = [NSLayoutConstraint constraintWithItem:blurEffectView
+                                                                      attribute:NSLayoutAttributeHeight
+                                                                      relatedBy:NSLayoutRelationEqual
+                                                                         toItem:nil
+                                                                      attribute:NSLayoutAttributeNotAnAttribute
+                                                                     multiplier:1.0
+                                                                       constant:self.view.bounds.size.height];
+    [blurEffectView addConstraint:blurEffectViewHeight];
+
+    NSLayoutConstraint *blurEffectViewWidth = [NSLayoutConstraint constraintWithItem:blurEffectView
+                                                                            attribute:NSLayoutAttributeWidth
+                                                                            relatedBy:NSLayoutRelationEqual
+                                                                               toItem:nil
+                                                                            attribute:NSLayoutAttributeNotAnAttribute
+                                                                           multiplier:1.0
+                                                                             constant:self.view.bounds.size.width];
+    [blurEffectView addConstraint:blurEffectViewWidth];
+
+
+    NSLayoutConstraint *blurEffectViewTop = [NSLayoutConstraint constraintWithItem:blurEffectView
+                                                                   attribute:NSLayoutAttributeTop
+                                                                   relatedBy:NSLayoutRelationEqual
+                                                                      toItem:self.view
+                                                                   attribute:NSLayoutAttributeTop
+                                                                  multiplier:1.0
+                                                                    constant:0];
+    [self.view addConstraint:blurEffectViewTop];
+
+
+    NSLayoutConstraint *blurEffectViewLeft = [NSLayoutConstraint constraintWithItem:blurEffectView
+                                                                    attribute:NSLayoutAttributeLeading
+                                                                    relatedBy:NSLayoutRelationEqual
+                                                                       toItem:self.view
+                                                                    attribute:NSLayoutAttributeLeft
+                                                                   multiplier:1.0
+                                                                     constant:0];
+    [self.view addConstraint:blurEffectViewLeft];
+
+    NSLayoutConstraint *blurEffectViewRight = [NSLayoutConstraint constraintWithItem:blurEffectView
+                                                                     attribute:NSLayoutAttributeTrailing
+                                                                     relatedBy:NSLayoutRelationEqual
+                                                                        toItem:self.view
+                                                                     attribute:NSLayoutAttributeRight
+                                                                    multiplier:1.0
+                                                                      constant:0];
+    [self.view addConstraint:blurEffectViewRight];
+
+    [blurEffectView.contentView addSubview:animatingSnooImageView];
+    [animatingSnooImageView startAnimating];
 }
 
 #pragma mark - TableView Delegate Methods
@@ -169,7 +280,7 @@
         if (self.isComingFromSubredditSelectionView) {
             UIView *viewToRemove = [self.view viewWithTag:1];
             [viewToRemove removeFromSuperview];
-            [self dismissViewControllerAnimated:YES completion:nil];
+            //[self dismissViewControllerAnimated:YES completion:nil];
             self.isComingFromSubredditSelectionView = NO;
         }
     }
