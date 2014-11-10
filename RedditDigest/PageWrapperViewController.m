@@ -40,24 +40,12 @@
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     CommentTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"CommentCell"];
     NSDictionary *commentDictionary = self.comments[indexPath.row];
-//    NSLog(@"COMMENT DICT %@",commentDictionary);
-//    Comment *comment = commentDictionary[@"parent"];
-//    NSString *html = [self textToHtml:comment.body];
-//    cell.commentWebView.userInteractionEnabled = NO;
-//    cell.commentWebView.delegate = self;
-//    [cell.commentWebView loadHTMLString:html baseURL:nil];
+    Comment *comment = commentDictionary[@"parent"];
+    NSString *htmlString = [self textToHtml:comment.body];
+    cell.commentWebView.scrollView.scrollEnabled = NO;
+    [cell.commentWebView loadHTMLString:htmlString baseURL:nil];
 
-  
 
-//    dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(void){
-//
-//    NSAttributedString * attrStr = [[NSAttributedString alloc] initWithData:[html dataUsingEncoding:NSUnicodeStringEncoding] options:@{ NSDocumentTypeDocumentAttribute: NSHTMLTextDocumentType } documentAttributes:nil error:nil];
-//
-//        dispatch_async(dispatch_get_main_queue(), ^(void){
-//            cell.textLabel.attributedText = attrStr;
-//            cell.detailTextLabel.text = comment.author;
-//        });
-//    });
     return cell;
 }
 
