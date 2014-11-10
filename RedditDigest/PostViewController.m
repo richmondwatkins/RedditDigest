@@ -82,18 +82,23 @@
     PageWrapperViewController *viewController;
     if (post.isImageLink.intValue == 1) {
         viewController = [self.storyboard instantiateViewControllerWithIdentifier:@"ImageView"];
+        viewController.sourceViewIdentifier = 1;
         viewController.imageData = post.image;
     }else if(post.isYouTube.intValue == 1){
         viewController = [self.storyboard instantiateViewControllerWithIdentifier:@"VideoView"];
+        viewController.sourceViewIdentifier = 2;
         viewController.url = post.url;
     }else if(post.isGif.intValue == 1){
         viewController =[self.storyboard instantiateViewControllerWithIdentifier:@"GifView"];
+        viewController.sourceViewIdentifier = 3;
         viewController.url = post.url;
     }else if(post.isSelfPost.integerValue == 1){
         viewController = [self.storyboard instantiateViewControllerWithIdentifier:@"SelfPostView"];
+        viewController.sourceViewIdentifier = 4;
         viewController.selfPostText = post.selfText;
     }else{
         viewController =[self.storyboard instantiateViewControllerWithIdentifier:@"WebView"];
+        viewController.sourceViewIdentifier = 5;
         viewController.url = post.url;
     }
 

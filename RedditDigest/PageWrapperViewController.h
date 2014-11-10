@@ -18,5 +18,5 @@
 @property (strong, nonatomic) IBOutlet UITableView *selfPostCommentsTableView;
 @property (strong, nonatomic) IBOutlet UITableView *gifCommentsTableView;
 @property (strong, nonatomic) IBOutlet UITableView *videoCommentsTableView;
-
+@property int sourceViewIdentifier;
 @end

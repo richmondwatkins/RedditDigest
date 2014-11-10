@@ -8,8 +8,9 @@
 
 #import "PageWrapperViewController.h"
 #import "CommentTableViewCell.h"
-@interface PageWrapperViewController () <UIWebViewDelegate>
-
+#import "ExpandedCommentViewController.h"
+@interface PageWrapperViewController () <UIWebViewDelegate, CommentCellDelegate>
+@property Comment *selectedComment;
 @end
 
 @implementation PageWrapperViewController
@@ -41,19 +42,24 @@
     CommentTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"CommentCell"];
     NSDictionary *commentDictionary = self.comments[indexPath.row];
     Comment *comment = commentDictionary[@"parent"];
-    NSString *htmlString = [self textToHtml:comment.body];
-    cell.commentWebView.scrollView.scrollEnabled = NO;
-    [cell.commentWebView loadHTMLString:htmlString baseURL:nil];
+    NSString *partialComment = [self textToHtml:comment.body withCell:cell andComment:comment];
 
+    cell.comment = comment;
+    cell.delegate = self;
+    cell.commentWebView.scrollView.scrollEnabled = NO;
+    [cell.commentWebView loadHTMLString:partialComment baseURL:nil];
+    cell.commentWebView.delegate = self;
 
     return cell;
 }
 
 -(void)webViewDidFinishLoad:(UIWebView *)webView{
-    [webView sizeToFit];
+//    [webView sizeToFit];
+//    [webView stringByEvaluatingJavaScriptFromString:@"document.getElementsByID('comment').childNode.remove"];
+
 }
 
-- (NSString*)textToHtml:(NSString*)string{
+- (NSString*)textToHtml:(NSString*)string withCell:(CommentTableViewCell *)cell andComment:(Comment *)comment{
 
     string = [string stringByReplacingOccurrencesOfString:@"&quot;" withString:@"\""];
     string = [string stringByReplacingOccurrencesOfString:@"&apos;" withString:@"'"];
@@ -61,9 +67,42 @@
     string = [string stringByReplacingOccurrencesOfString:@"&lt;" withString:@"<"];
     string = [string stringByReplacingOccurrencesOfString:@"&gt;" withString:@">"];
 
+    if ([string length] >= 175){
+        string = [string substringToIndex:175];
+        string = [NSString stringWithFormat:@"%@…", string];
+        cell.showMoreButton.hidden = NO;
+    }
     return string;
 }
 
+
+-(void)onShowMoreButtonTapped:(CommentTableViewCell *)cell{
+    self.selectedComment = cell.comment;
+    switch (self.sourceViewIdentifier) {
+        case 1:
+            [self performSegueWithIdentifier:@"ImageSegue" sender:self];
+            break;
+        case 2:
+            [self performSegueWithIdentifier:@"VideoSegue" sender:self];
+            break;
+        case 3:
+            [self performSegueWithIdentifier:@"GifSegue" sender:self];
+            break;
+        case 4:
+            [self performSegueWithIdentifier:@"SelfPostSegue" sender:self];
+            break;
+        case 5:
+            [self performSegueWithIdentifier:@"WebSegue" sender:self];
+            break;
+        default:
+            break;
+    }
+}
+
+-(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
+    ExpandedCommentViewController *commentViewController = segue.destinationViewController;
+    commentViewController.comment = self.selectedComment;
+}
 
 
 @end
