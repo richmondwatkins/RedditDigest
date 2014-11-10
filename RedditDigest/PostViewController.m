@@ -49,6 +49,7 @@
     [self addChildViewController:self.pageController];
     [[self view] addSubview:[self.pageController view]];
     [self.pageController didMoveToParentViewController:self];
+//    self.title = [NSString stringWithFormat:@"%li / %lu", (long)initialViewController.index + 1, (unsigned long)self.allPosts.count];
 }
 
 - (UIViewController *)pageViewController:(UIPageViewController *)pageViewController viewControllerBeforeViewController:(UIViewController *)viewController {
@@ -60,6 +61,7 @@
 - (UIViewController *)pageViewController:(UIPageViewController *)pageViewController viewControllerAfterViewController:(UIViewController *)viewController {
 
     PageWrapperViewController *p = (PageWrapperViewController *)viewController;
+
     return [self viewControllerAtIndex:(p.index + 1)];
 }
 

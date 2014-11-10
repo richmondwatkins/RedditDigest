@@ -16,15 +16,25 @@
 
 
 +(void)addSubredditsToCoreData:(NSMutableArray *)selectedSubreddits withManagedObject:(NSManagedObjectContext *)managedObject{
-
     for (NSDictionary *subreddit in selectedSubreddits) {
-          Subreddit *savedSubreddit = [NSEntityDescription insertNewObjectForEntityForName:@"Subreddit" inManagedObjectContext:managedObject];
 
-        savedSubreddit.subreddit = subreddit[@"subreddit"];
-        savedSubreddit.url = subreddit[@"url"];
-        [managedObject save:nil];
+        if (![subreddit[@"currentlySubscribed"] boolValue]) {
+            Subreddit *savedSubreddit = [NSEntityDescription insertNewObjectForEntityForName:@"Subreddit" inManagedObjectContext:managedObject];
+            savedSubreddit.subreddit = subreddit[@"subreddit"];
+            savedSubreddit.url = subreddit[@"url"];
+            [managedObject save:nil];
+        }
+
     }
 }
 
++(void)removeFromCoreData:(NSString *)subreddit withManagedObject:(NSManagedObjectContext *)managedObject{
+    NSFetchRequest * subredditFetch = [[NSFetchRequest alloc] init];
+    [subredditFetch setEntity:[NSEntityDescription entityForName:@"Subreddit" inManagedObjectContext:managedObject]];
+    subredditFetch.predicate = [NSPredicate predicateWithFormat:@"subreddit == %@", subreddit];
+    NSArray *results = [managedObject executeFetchRequest:subredditFetch error:nil];
+    [managedObject deleteObject:results.firstObject];
+    [managedObject save:nil];
+}
 
 @end

@@ -67,9 +67,9 @@
     [NSURLConnection sendAsynchronousRequest:thumbnailRequest queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
         savedPost.thumbnailImage = data;
 
-        if (post.customIsImage) {
+        if (post.isImageLink) {
             savedPost.isImageLink = [NSNumber numberWithBool:YES];
-            NSURLRequest *mainImageRequest = [NSURLRequest requestWithURL:post.customURL];
+            NSURLRequest *mainImageRequest = [NSURLRequest requestWithURL:post.URL];
             [NSURLConnection sendAsynchronousRequest:mainImageRequest queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
 
                 NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse*)response;
@@ -81,6 +81,7 @@
                 }
                 savedPost.image = data;
 
+                [managedObjectContext save:nil];
                 complete(YES);
             }];
         }else{
@@ -94,12 +95,14 @@
                 }else{
                     savedPost.selfText = post.selfText;
                 }
+                [managedObjectContext save:nil];
+                complete(YES);
             }else{
                 savedPost.isWebPage = [NSNumber numberWithBool:YES];
+                [managedObjectContext save:nil];
+                complete(YES);
             }
         }
-        [managedObjectContext save:nil];
-        complete(YES);
     }];
 }
 

@@ -183,4 +183,7 @@ typedef NS_ENUM(NSUInteger, RKSpamFilterStrength) {
  */
 @property (nonatomic, assign, readonly) BOOL trafficPagePubliclyAccessible;
 
+//custom for RedditDigest..tells if the user is already subscribed when selecting new subreddits
+@property BOOL isCurrentlySubscribed;
+
 @end
