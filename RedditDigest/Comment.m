@@ -24,10 +24,11 @@
 +(void)addCommentsToPost:(Post *)post  commentsArray:(NSArray *)comments withMangedObject:(NSManagedObjectContext *)managedObjectContext{
 
     NSInteger totalCommentCount = comments.count;
+    int commentCount = 0;
     for(RKComment *comment in comments){
         Comment *savedComment = [NSEntityDescription insertNewObjectForEntityForName:@"Comment" inManagedObjectContext:managedObjectContext];
         savedComment.author = comment.author;
-        savedComment.body = comment.body;
+        savedComment.body = comment.bodyHTML;
         savedComment.score = [NSNumber numberWithInteger:comment.score];
         totalCommentCount += comment.replies.count;
         [post addCommentsObject:savedComment];
@@ -36,7 +37,11 @@
             [ChildComment addChildrenToComment:savedComment childrenCommentsArray:comment.replies withMangedObject:managedObjectContext];
         }
 
+        commentCount++;
         [managedObjectContext save:nil];
+        if (commentCount == 11) {
+            break;
+        }
     }
     post.totalComments = [NSNumber numberWithInteger:totalCommentCount];
 }

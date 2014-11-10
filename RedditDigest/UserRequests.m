@@ -12,7 +12,7 @@
 
 +(void)retrieveUsersSubreddits:(NSString *)deviceID withCompletion:(void (^)(NSDictionary *results))complete{
 
-    NSString *urlString = [NSString stringWithFormat:@"http://192.168.0.18:3000/subreddits/%@",deviceID];
+    NSString *urlString = [NSString stringWithFormat:@"http://192.168.129.228:3000/subreddits/%@",deviceID];
     NSURL *url = [[NSURL alloc] initWithString:[urlString stringByAddingPercentEscapesUsingEncoding:NSASCIIStringEncoding]];
 
     NSURLRequest *request = [NSURLRequest requestWithURL:url];
@@ -31,7 +31,7 @@
 
     NSError *error;
 
-    NSString *urlString = [NSString stringWithFormat:@"http://192.168.0.18:3000/subreddits/%@",  deviceID];
+    NSString *urlString = [NSString stringWithFormat:@"http://192.168.129.228:3000/subreddits/%@",  deviceID];
 
     NSData *postData = [NSJSONSerialization dataWithJSONObject:selectionsDictionary options:0 error:&error];
     NSURL *url = [[NSURL alloc] initWithString:[urlString stringByAddingPercentEscapesUsingEncoding:NSASCIIStringEncoding]];

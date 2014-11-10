@@ -77,7 +77,7 @@
         self.hasRedditAccount = NO;
         self.activityIndicator.hidden = YES;
 
-        NSURL *categoryURL = [NSURL URLWithString:@"http://192.168.0.18:3000/get/categories"];
+        NSURL *categoryURL = [NSURL URLWithString:@"http://192.168.129.228:3000/get/categories"];
         NSURLRequest *request = [NSURLRequest requestWithURL:categoryURL];
         [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
             NSDictionary *results = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:nil];

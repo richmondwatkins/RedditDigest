@@ -92,7 +92,7 @@
 }
 
 -(void)registerDevice{
-    NSString* deviceURLString = @"http://192.168.0.18:3000/register/device";
+    NSString* deviceURLString = @"http://192.168.129.228:3000/register/device";
     NSURL *url = [[NSURL alloc] initWithString:[deviceURLString stringByAddingPercentEscapesUsingEncoding:NSASCIIStringEncoding]];
 
     NSError *error;
@@ -119,7 +119,7 @@
 
 -(void)registerDeviceForPushNotifications{
 
-    NSString* urlString = @"http://192.168.0.18:3000/register/push";
+    NSString* urlString = @"http://192.168.129.228:3000/register/push";
 
     NSURL *url = [[NSURL alloc] initWithString:[urlString stringByAddingPercentEscapesUsingEncoding:NSASCIIStringEncoding]];
 

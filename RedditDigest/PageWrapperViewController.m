@@ -7,8 +7,8 @@
 //
 
 #import "PageWrapperViewController.h"
-
-@interface PageWrapperViewController ()
+#import "CommentTableViewCell.h"
+@interface PageWrapperViewController () <UIWebViewDelegate>
 
 @end
 
@@ -27,6 +27,9 @@
 
     self.videoCommentsTableView.delegate = self;
     self.videoCommentsTableView.dataSource = self;
+
+    self.imageCommentsTableView.estimatedRowHeight = 43.0;
+    self.imageCommentsTableView.rowHeight = UITableViewAutomaticDimension;
 }
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
@@ -35,14 +38,44 @@
 
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"CommentCell"];
+    CommentTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"CommentCell"];
     NSDictionary *commentDictionary = self.comments[indexPath.row];
-    NSLog(@"COMMENT DICT %@",commentDictionary);
-    Comment *comment = commentDictionary[@"parent"];
-    cell.textLabel.text = comment.body;
-    cell.detailTextLabel.text = comment.author;
+//    NSLog(@"COMMENT DICT %@",commentDictionary);
+//    Comment *comment = commentDictionary[@"parent"];
+//    NSString *html = [self textToHtml:comment.body];
+//    cell.commentWebView.userInteractionEnabled = NO;
+//    cell.commentWebView.delegate = self;
+//    [cell.commentWebView loadHTMLString:html baseURL:nil];
+
+  
+
+//    dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(void){
+//
+//    NSAttributedString * attrStr = [[NSAttributedString alloc] initWithData:[html dataUsingEncoding:NSUnicodeStringEncoding] options:@{ NSDocumentTypeDocumentAttribute: NSHTMLTextDocumentType } documentAttributes:nil error:nil];
+//
+//        dispatch_async(dispatch_get_main_queue(), ^(void){
+//            cell.textLabel.attributedText = attrStr;
+//            cell.detailTextLabel.text = comment.author;
+//        });
+//    });
     return cell;
 }
+
+-(void)webViewDidFinishLoad:(UIWebView *)webView{
+    [webView sizeToFit];
+}
+
+- (NSString*)textToHtml:(NSString*)string{
+
+    string = [string stringByReplacingOccurrencesOfString:@"&quot;" withString:@"\""];
+    string = [string stringByReplacingOccurrencesOfString:@"&apos;" withString:@"'"];
+    string = [string stringByReplacingOccurrencesOfString:@"&amp;" withString:@"&"];
+    string = [string stringByReplacingOccurrencesOfString:@"&lt;" withString:@"<"];
+    string = [string stringByReplacingOccurrencesOfString:@"&gt;" withString:@">"];
+
+    return string;
+}
+
 
 
 @end
