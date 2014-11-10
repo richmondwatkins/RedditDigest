@@ -6,8 +6,8 @@
 //  Copyright (c) 2014 Richmond. All rights reserved.
 //
 
-#import "SubredditSelectionCollectionReusableView.h"
+#import "HeaderCollectionReusableView.h"
 
-@implementation SubredditSelectionCollectionReusableView
+@implementation HeaderCollectionReusableView
 
 @end

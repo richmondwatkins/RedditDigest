@@ -12,11 +12,12 @@
 #import <RKLink.h>
 #import <RKSubreddit.h>
 #import "KTCenterFlowLayout.h"
-#import "SubredditSelectionCollectionReusableView.h"
+#import "HeaderCollectionReusableView.h"
 #import "DigestViewController.h"
 #import "UserRequests.h"
 #import "RedditRequests.h"
 #import "Subreddit.h"
+
 @interface SubredditSelectionViewController () <UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, UIAlertViewDelegate, UITextFieldDelegate>
 
 @property (strong, nonatomic) IBOutlet UICollectionView *subredditCollectionView;
@@ -66,6 +67,8 @@
              [self.subredditCollectionView reloadData];
              [self.activityIndicator stopAnimating];
              self.activityIndicator.hidden = YES;
+            // If user has account set the nav title to the following
+            self.navigationItem.title = @"Choose your subreddits";
          }];
     }
     else // Didn't login with reddit account
@@ -79,6 +82,10 @@
             NSDictionary *results = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:nil];
             self.catagories = results[@"allCategories"];
             [self.subredditCollectionView reloadData];
+
+            // If the user has not reddit accounts set the nav title to the following
+            // If user has account set the nav title to the following
+            self.navigationItem.title = @"Choose your catagories";
         }];
     }
 
@@ -236,17 +243,18 @@
 
     if (kind == UICollectionElementKindSectionHeader)
     {
-        SubredditSelectionCollectionReusableView *headerView = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"HeaderView" forIndexPath:indexPath];
+        HeaderCollectionReusableView *headerView = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"HeaderView" forIndexPath:indexPath];
 
         [headerView.textField addTarget:self action:@selector(searchForSubreddit:) forControlEvents:UIControlEventEditingDidEndOnExit];
         reusableview = headerView;
     }
 
-    if (kind == UICollectionElementKindSectionFooter)
-    {
-        // TODO add footer in storyboard of size 44 or something make it white so cells don't get covered by done button
-        reusableview = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionFooter withReuseIdentifier:@"footer" forIndexPath:indexPath];
+    if (kind == UICollectionElementKindSectionFooter) {
+        UICollectionReusableView *footerview = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionFooter withReuseIdentifier:@"FooterView" forIndexPath:indexPath];
+
+        reusableview = footerview;
     }
+
 
     return reusableview;
 }
@@ -260,6 +268,12 @@
     else {
         return CGSizeMake(0, 0);
     }
+}
+
+// Footer Height and Width
+- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout referenceSizeForFooterInSection:(NSInteger)section
+{
+    return CGSizeMake(self.view.frame.size.width, 44.0);
 }
 
 #pragma mark - Search

@@ -143,7 +143,10 @@
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
     if ([segue.identifier isEqualToString:@"SubredditSelectionFromLoginSegue"]) {
-        SubredditSelectionViewController *selectionController = segue.destinationViewController;
+        // SubredditSelectionViewController is embeded in a Navigation Controller so the color of the status bar
+        // could be set correctly. Thus the following extra step is needed.
+        UINavigationController *selectionControllerNavigationParentVC = segue.destinationViewController;
+        SubredditSelectionViewController *selectionController = selectionControllerNavigationParentVC.childViewControllers.firstObject;
         selectionController.managedObject = self.managedObject;
     }
 }

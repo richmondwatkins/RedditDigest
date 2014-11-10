@@ -31,7 +31,7 @@
                                 </state>
                                 <connections>
                                     <action selector="onContinueWithoutRedditAccountButtonPressed:" destination="xQ7-9y-dXT" eventType="touchUpInside" id="drs-aN-bkT"/>
-                                    <segue destination="e1g-HR-koU" kind="show" identifier="SubredditSelectionFromLoginSegue" id="IWx-eg-FxF"/>
+                                    <segue destination="iu8-FS-lzV" kind="show" identifier="SubredditSelectionFromLoginSegue" id="IWx-eg-FxF"/>
                                 </connections>
                             </button>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="welcome_snoo" translatesAutoresizingMaskIntoConstraints="NO" id="bgZ-AJ-shO">
@@ -188,7 +188,7 @@
                         <outlet property="loginButton" destination="uTJ-T6-hsy" id="Lll-ex-hpP"/>
                         <outlet property="passwordTextField" destination="YVl-9K-NMa" id="nc2-O2-dUW"/>
                         <outlet property="usernameTextField" destination="xMh-Sq-VlA" id="3FK-ZS-Cqw"/>
-                        <segue destination="e1g-HR-koU" kind="show" identifier="SubredditSelectionFromLoginSegue" id="UQ5-hC-TYb"/>
+                        <segue destination="iu8-FS-lzV" kind="show" identifier="SubredditSelectionFromLoginSegue" id="UQ5-hC-TYb"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="f2U-BX-3ah" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -200,7 +200,7 @@
             </objects>
             <point key="canvasLocation" x="233" y="-2344"/>
         </scene>
-        <!--Subreddit Selection View Controller-->
+        <!--Subreddits-->
         <scene sceneID="HSq-y9-90H">
             <objects>
                 <viewController id="e1g-HR-koU" customClass="SubredditSelectionViewController" sceneMemberID="viewController">
@@ -213,16 +213,16 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="jsl-Cu-EB1">
-                                <rect key="frame" x="0.0" y="64" width="600" height="536"/>
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="Vqe-X7-dFy">
                                     <size key="itemSize" width="102" height="30"/>
                                     <size key="headerReferenceSize" width="50" height="50"/>
-                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                    <size key="footerReferenceSize" width="50" height="50"/>
                                     <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 </collectionViewFlowLayout>
                                 <cells/>
-                                <collectionReusableView key="sectionHeaderView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="HeaderView" id="GJL-o9-yD4" customClass="SubredditSelectionCollectionReusableView">
+                                <collectionReusableView key="sectionHeaderView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="HeaderView" id="GJL-o9-yD4" customClass="HeaderCollectionReusableView">
                                     <rect key="frame" x="0.0" y="64" width="600" height="50"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
@@ -250,17 +250,15 @@
                                         <outlet property="textField" destination="9DB-Wl-HjA" id="Vfq-HH-6DM"/>
                                     </connections>
                                 </collectionReusableView>
+                                <collectionReusableView key="sectionFooterView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="FooterView" id="T6C-4M-PfQ">
+                                    <rect key="frame" x="0.0" y="0.0" width="600" height="50"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                </collectionReusableView>
                                 <connections>
                                     <outlet property="dataSource" destination="e1g-HR-koU" id="Ia6-tt-bEk"/>
                                     <outlet property="delegate" destination="e1g-HR-koU" id="EtN-Ec-UpB"/>
                                 </connections>
                             </collectionView>
-                            <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="D7a-ly-kna">
-                                <rect key="frame" x="0.0" y="20" width="600" height="44"/>
-                                <items>
-                                    <navigationItem title="Subreddits" id="YhO-V6-lYj"/>
-                                </items>
-                            </navigationBar>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="J8O-Nf-ZfV">
                                 <rect key="frame" x="0.0" y="551" width="600" height="49"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -278,17 +276,14 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="D7a-ly-kna" firstAttribute="top" secondItem="H4a-Ni-sHg" secondAttribute="topMargin" constant="20" id="6LB-k1-XxG"/>
                             <constraint firstItem="jsl-Cu-EB1" firstAttribute="leading" secondItem="H4a-Ni-sHg" secondAttribute="leading" id="HR7-nf-afE"/>
                             <constraint firstItem="J8O-Nf-ZfV" firstAttribute="leading" secondItem="H4a-Ni-sHg" secondAttribute="leadingMargin" constant="-16" id="HxG-TA-fKx"/>
                             <constraint firstAttribute="trailing" secondItem="jsl-Cu-EB1" secondAttribute="trailing" id="Ifb-mw-PXI"/>
                             <constraint firstItem="jsl-Cu-EB1" firstAttribute="leading" secondItem="H4a-Ni-sHg" secondAttribute="leading" id="KG9-J9-5O4"/>
                             <constraint firstItem="jsl-Cu-EB1" firstAttribute="top" secondItem="H4a-Ni-sHg" secondAttribute="top" constant="64" id="RkP-Ei-AnE"/>
-                            <constraint firstItem="jsl-Cu-EB1" firstAttribute="top" secondItem="H4a-Ni-sHg" secondAttribute="topMargin" constant="64" id="Sjv-MO-N0g"/>
+                            <constraint firstItem="jsl-Cu-EB1" firstAttribute="top" secondItem="H4a-Ni-sHg" secondAttribute="topMargin" id="Sjv-MO-N0g"/>
                             <constraint firstAttribute="trailing" secondItem="jsl-Cu-EB1" secondAttribute="trailing" id="W0J-ax-nrN"/>
-                            <constraint firstItem="D7a-ly-kna" firstAttribute="leading" secondItem="H4a-Ni-sHg" secondAttribute="leading" id="lUE-uQ-bea"/>
                             <constraint firstAttribute="trailingMargin" secondItem="J8O-Nf-ZfV" secondAttribute="trailing" constant="-16" id="ljx-zR-TPE"/>
-                            <constraint firstAttribute="trailing" secondItem="D7a-ly-kna" secondAttribute="trailing" id="qFL-gB-8IN"/>
                             <constraint firstItem="4Dj-3k-U5H" firstAttribute="top" secondItem="jsl-Cu-EB1" secondAttribute="bottom" id="qmb-xs-YHF"/>
                             <constraint firstItem="J8O-Nf-ZfV" firstAttribute="bottom" secondItem="4Dj-3k-U5H" secondAttribute="top" id="sGf-OE-KbO"/>
                             <constraint firstItem="4Dj-3k-U5H" firstAttribute="top" secondItem="jsl-Cu-EB1" secondAttribute="bottom" id="vYc-IA-vi1"/>
@@ -302,6 +297,8 @@
                             </mask>
                         </variation>
                     </view>
+                    <navigationItem key="navigationItem" title="Subreddits" id="qVF-ff-WVh"/>
+                    <simulatedStatusBarMetrics key="simulatedStatusBarMetrics" statusBarStyle="lightContent"/>
                     <connections>
                         <outlet property="doneSelectingSubredditsButton" destination="J8O-Nf-ZfV" id="ec1-Rm-yja"/>
                         <outlet property="subredditCollectionView" destination="jsl-Cu-EB1" id="BxS-MP-GUV"/>
@@ -310,7 +307,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="3EZ-Qk-GC1" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="lpW-nw-A4U" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="233" y="-1640"/>
+            <point key="canvasLocation" x="931" y="-1644"/>
         </scene>
         <!--Settings View Controller-->
         <scene sceneID="KFU-Cf-Oay">
@@ -354,7 +351,7 @@
                                             </subviews>
                                         </tableViewCellContentView>
                                         <connections>
-                                            <segue destination="e1g-HR-koU" kind="show" identifier="SubredditCollectionView" id="PcQ-bC-EQa"/>
+                                            <segue destination="iu8-FS-lzV" kind="show" identifier="SubredditCollectionView" id="PcQ-bC-EQa"/>
                                         </connections>
                                     </tableViewCell>
                                 </cells>
@@ -435,7 +432,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="prp-Qo-4Mm" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="885" y="-1228"/>
+            <point key="canvasLocation" x="1669" y="-1238"/>
         </scene>
         <!--Settings About Reddit View Controller-->
         <scene sceneID="NUo-nm-YjV">
@@ -487,7 +484,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="OeC-4k-jF3" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="Ll6-be-N5A" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="1608" y="-1782"/>
+            <point key="canvasLocation" x="2420" y="-1782"/>
         </scene>
         <!--Edit Digest-->
         <scene sceneID="FMl-Bs-7d0">
@@ -525,7 +522,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4HK-h7-o78" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="D6c-O0-7re" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="1608" y="-1099"/>
+            <point key="canvasLocation" x="2420" y="-1099"/>
         </scene>
         <!--Thursday September 12th-->
         <scene sceneID="ufC-wZ-h7g">
@@ -1057,6 +1054,24 @@
             </objects>
             <point key="canvasLocation" x="-1884" y="-1257"/>
         </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="Ytg-RG-pAZ">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="iu8-FS-lzV" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="fFC-za-Thg">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="e1g-HR-koU" kind="relationship" relationship="rootViewController" id="V0D-eI-dic"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Jee-rK-cSV" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="233" y="-1644"/>
+        </scene>
     </scenes>
     <resources>
         <image name="comment_square_gray" width="60" height="60"/>
@@ -1066,7 +1081,7 @@
         <image name="welcome_snoo" width="400" height="537"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="PcQ-bC-EQa"/>
         <segue reference="LaA-qT-0SF"/>
+        <segue reference="IWx-eg-FxF"/>
     </inferredMetricsTieBreakers>
 </document>
