@@ -30,7 +30,6 @@
 @property BOOL hasRedditAccount;
 @property NSInteger direction;
 @property NSInteger shakes;
-
 @end
 
 @implementation SubredditSelectionViewController
@@ -115,7 +114,7 @@
 
         if (self.selectedSubreddits.count < 10)
         {
-            NSMutableDictionary *subredditDict = [[NSMutableDictionary alloc] initWithObjectsAndKeys:subreddit.name, @"subreddit",subreddit.URL, @"url", nil];
+            NSMutableDictionary *subredditDict = [[NSMutableDictionary alloc] initWithObjectsAndKeys:subreddit.name, @"subreddit",subreddit.URL, @"url", [NSNumber numberWithBool:subreddit.isCurrentlySubscribed], @"currentlySubscribed", nil];
             [self.selectedSubreddits addObject:subredditDict];
 
             if (self.selectedSubreddits.count > 0) {
@@ -158,6 +157,11 @@
 {
     if (self.hasRedditAccount) {
         RKSubreddit *subreddit = self.subreddits[indexPath.row];
+        if (subreddit.isCurrentlySubscribed) {
+            [self.subreddits addObject:subreddit];
+            cell.selected = YES;
+            [self.subredditCollectionView selectItemAtIndexPath:indexPath animated:NO scrollPosition:NO];
+        }
         cell.subredditTitleLabel.text = subreddit.name;
     }
     else {
@@ -178,11 +182,13 @@
 
     if (self.hasRedditAccount) {
         RKSubreddit *subreddit = self.subreddits[indexPath.row];
-
-        NSMutableDictionary *subredditDict = [[NSMutableDictionary alloc] initWithObjectsAndKeys:subreddit.name, @"subreddit",subreddit.URL, @"url", nil];
+        NSMutableDictionary *subredditDict = [[NSMutableDictionary alloc] initWithObjectsAndKeys:subreddit.name, @"subreddit",subreddit.URL, @"url", [NSNumber numberWithBool:subreddit.isCurrentlySubscribed], @"currentlySubscribed",  nil];
 
         if ([self.selectedSubreddits containsObject:subredditDict]) {
             [self.selectedSubreddits removeObject:subredditDict];
+            if (subreddit.isCurrentlySubscribed) {
+                [Subreddit removeFromCoreData:subreddit.name withManagedObject:self.managedObject];
+            }
         }
     }
     else {
@@ -334,13 +340,24 @@
 
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
     DigestViewController *digestViewController = segue.destinationViewController;
+    NSLog(@"%@",self.selectedSubreddits);
     digestViewController.subredditsForFirstDigest = self.selectedSubreddits;
 }
 
 -(void)checkForExistingSubscription{
     NSFetchRequest *subredditFetch = [NSFetchRequest fetchRequestWithEntityName:@"Subreddit"];
     NSArray *subscribedSubreddits = [self.managedObject executeFetchRequest:subredditFetch error:nil];
-    NSLog(@"CORE DATA SUBSSS %@",subscribedSubreddits);
+    NSLog(@"CORE DATA SUBSSS %@",self.subreddits);
+    for (Subreddit *subscribedSub in subscribedSubreddits) {
+        for (RKSubreddit *subFromReddit in self.subreddits) {
+            if ([subscribedSub.subreddit isEqualToString:subFromReddit.name]) {
+                subFromReddit.isCurrentlySubscribed = YES;
+                NSMutableDictionary *subredditDict = [[NSMutableDictionary alloc] initWithObjectsAndKeys:subFromReddit.name, @"subreddit",subFromReddit.URL, @"url", [NSNumber numberWithBool:subFromReddit.isCurrentlySubscribed], @"currentlySubscribed", nil];
+                [self.selectedSubreddits addObject:subredditDict];
+//                [self.subreddits addObject:subFromReddit];
+            }
+        }
+    }
 
 }
 

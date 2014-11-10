@@ -81,7 +81,6 @@
     if (buttonIndex == 0) {
 //        NSLog(@"SELECTED TO DELETE %@",self.digestPosts[self.editingIndex.row] );
         [self deleter:self.digestPosts[self.editingIndex.row]];
-        [self removeFromCoreData:self.digestPosts[self.editingIndex.row]];
         [self.digestPosts removeObjectAtIndex:self.editingIndex.row];
         [self.tableView deleteRowsAtIndexPaths:@[self.editingIndex] withRowAnimation:UITableViewRowAnimationFade];
         [self.tableView reloadData];
@@ -159,22 +158,6 @@
     self.digestPosts = [NSMutableArray arrayWithArray:subreddits];
 }
 
--(void)removeFromCoreData:(Subreddit *)subreddit{
-    NSFetchRequest * subredditFetch = [[NSFetchRequest alloc] init];
-    [subredditFetch setEntity:[NSEntityDescription entityForName:@"Subreddit" inManagedObjectContext:self.managedObject]];
-    subredditFetch.predicate = [NSPredicate predicateWithFormat:@"subreddit == %@", subreddit.subreddit];
-    NSArray *results = [self.managedObject executeFetchRequest:subredditFetch error:nil];
-    [self.managedObject deleteObject:results.firstObject];
-    [self.managedObject save:nil];
-//
-//    NSError * error = nil;
-//    NSArray * posts = [self.managedObjectContext executeFetchRequest:allCars error:&error];
-//
-//    for (NSManagedObject * post in posts) {
-//        [managedObjectContext deleteObject:post];
-//    }
-//    [managedObjectContext save:nil];
-}
 
 
 

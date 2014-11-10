@@ -188,8 +188,7 @@
  */
 @property (nonatomic, copy, readonly) NSString *linkFlairText;
 
-//custom for RedditDigest..tells if the user is already subscribed when selecting new subreddits
-@property BOOL isCurrentlySubscribed;
+
 /**
  Whether or not the link has an image URL.
  */
