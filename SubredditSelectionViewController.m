@@ -6,6 +6,8 @@
 //  Copyright (c) 2014 Richmond. All rights reserved.
 //
 
+#define REDDIT_DARK_BLUE [UIColor colorWithRed:0.2 green:0.4 blue:0.6 alpha:1];
+
 #import "SubredditSelectionViewController.h"
 #import "SubredditListCollectionViewCell.h"
 #import <RedditKit.h>
@@ -171,6 +173,9 @@
 
         cell.subredditTitleLabel.text = self.catagories[indexPath.row][@"category"][@"name"];
     }
+    // SubredditTitleLabel font and color
+    cell.subredditTitleLabel.font = [UIFont fontWithName:@"Helvetica" size:16.0];
+    cell.subredditTitleLabel.textColor = REDDIT_DARK_BLUE;
 }
 
 
@@ -252,7 +257,7 @@
         headerView.textField.layer.borderWidth = 0.5;
         headerView.textField.layer.cornerRadius = 5.0;
         headerView.textField.layer.borderColor = [UIColor colorWithRed:0.2 green:0.4 blue:0.6 alpha:1].CGColor;
-        headerView.textField.textColor = [UIColor colorWithRed:0.2 green:0.4 blue:0.6 alpha:1];
+        headerView.textField.textColor = REDDIT_DARK_BLUE;
 
         [headerView.textField addTarget:self action:@selector(searchForSubreddit:) forControlEvents:UIControlEventEditingDidEndOnExit];
         reusableview = headerView;

@@ -9,7 +9,6 @@
 #import "AppDelegate.h"
 #import <ZeroPush.h>
 
-
 //
 //  AppDelegate.m
 //  RedditDigest
@@ -73,9 +72,14 @@
     [[UINavigationBar appearance] setBarTintColor:[UIColor colorWithRed:0.2 green:0.4 blue:0.6 alpha:1]];
     // Nav bar buttons white
     [[UINavigationBar appearance] setTintColor:[UIColor whiteColor]];
-    // White nav bar text color
-    [[UINavigationBar appearance] setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor whiteColor]}];
+    // White nav bar text color - font Helvetica Neue Regular
+    [[UINavigationBar appearance] setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor whiteColor],
+                                                                      NSFontAttributeName : [UIFont fontWithName:@"Helvetica-Bold" size:18.0]}];
+  
+
+
     [[UINavigationBar appearance] setTranslucent:NO];
+
     // White status bar
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
 }
