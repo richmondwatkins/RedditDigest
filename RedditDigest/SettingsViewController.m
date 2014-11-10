@@ -142,9 +142,12 @@
     // Pass the selected object to the new view controller.
 
     if ([segue.identifier isEqualToString:@"SubredditCollectionView"]) {
-        SubredditSelectionViewController *subredditSelection = segue.destinationViewController;
-        subredditSelection.isFromSettings = YES;
-        subredditSelection.managedObject = self.managedObject;
+        // SubredditSelectionViewController is embeded in a Navigation Controller so the color of the status bar
+        // could be set correctly. Thus the following extra step is needed.
+        UINavigationController *selectionControllerNavigationParentVC = segue.destinationViewController;
+        SubredditSelectionViewController *selectionController = selectionControllerNavigationParentVC.childViewControllers.firstObject;
+        selectionController.isFromSettings = YES;
+        selectionController.managedObject = self.managedObject;
     }
 }
 

@@ -10,4 +10,5 @@
 
 @interface SettingsViewController : UITableViewController
 @property NSManagedObjectContext *managedObject;
+@property BOOL isFromSettings;
 @end
