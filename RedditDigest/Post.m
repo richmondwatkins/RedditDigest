@@ -43,7 +43,7 @@
     savedPost.author = post.author;
     savedPost.voteRatio = [NSNumber numberWithFloat:post.score];
     savedPost.postID = post.fullName;
-    NSLog(@"ID ID ID %@",post.fullName);
+
     if (comments) {
         [Comment addCommentsToPost:savedPost commentsArray:comments withMangedObject:managedObjectContext];
     }

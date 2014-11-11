@@ -533,7 +533,7 @@
 
 -(void)downVoteButtonPressed:(DigestCellWithImageTableViewCell *)cell{
     cell.post.downvoted = [NSNumber numberWithBool:YES];
-    cell.post.upvoted = [NSNumber numberWithBool:YES];
+    cell.post.upvoted = [NSNumber numberWithBool:NO];
     [self.managedObjectContext save:nil];
 
     cell.downVoteButton.backgroundColor = [UIColor blueColor];
