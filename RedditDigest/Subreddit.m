@@ -1,19 +1,22 @@
 //
 //  Subreddit.m
-//  RedditDigest
+//  
 //
-//  Created by Richmond on 11/9/14.
-//  Copyright (c) 2014 Richmond. All rights reserved.
+//  Created by Richmond on 11/11/14.
+//
 //
 
 #import "Subreddit.h"
+#import "Post.h"
 
 
 @implementation Subreddit
 
+@dynamic image;
 @dynamic subreddit;
 @dynamic url;
-@dynamic image;
+@dynamic post;
+
 
 +(void)addSubredditsToCoreData:(NSMutableArray *)selectedSubreddits withManagedObject:(NSManagedObjectContext *)managedObject{
     for (NSDictionary *subreddit in selectedSubreddits) {
@@ -22,10 +25,11 @@
             Subreddit *savedSubreddit = [NSEntityDescription insertNewObjectForEntityForName:@"Subreddit" inManagedObjectContext:managedObject];
             savedSubreddit.subreddit = subreddit[@"subreddit"];
             savedSubreddit.url = subreddit[@"url"];
-
+            NSLog(@"SUBREDDIT NAME %@",subreddit[@"subreddit"]);
             if (subreddit[@"image"] != nil) {
                 [NSURLConnection sendAsynchronousRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:subreddit[@"image"]]] queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
                     if (data) {
+                        NSLog(@"data %@",data);
                         savedSubreddit.image = data;
                         [managedObject save:nil];
                     }
@@ -45,5 +49,10 @@
     [managedObject deleteObject:results.firstObject];
     [managedObject save:nil];
 }
+
+
+
+
+
 
 @end

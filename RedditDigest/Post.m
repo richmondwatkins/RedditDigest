@@ -2,17 +2,19 @@
 //  Post.m
 //  
 //
-//  Created by Richmond on 11/8/14.
+//  Created by Richmond on 11/11/14.
 //
 //
 
 #import "Post.h"
 #import "Comment.h"
+#import "Subreddit.h"
 
 
 @implementation Post
 
 @dynamic author;
+@dynamic downvoted;
 @dynamic html;
 @dynamic image;
 @dynamic isGif;
@@ -21,23 +23,22 @@
 @dynamic isWebPage;
 @dynamic isYouTube;
 @dynamic nsfw;
+@dynamic postID;
 @dynamic selfText;
-@dynamic subreddit;
 @dynamic thumbnailImage;
 @dynamic title;
 @dynamic totalComments;
+@dynamic upvoted;
 @dynamic url;
+@dynamic viewed;
 @dynamic voteRatio;
 @dynamic comments;
-@dynamic postID;
-@dynamic viewed;
-@dynamic upvoted;
-@dynamic downvoted;
+@dynamic subreddit;
+
 +(void)savePost:(RKLink *)post withManagedObject:(NSManagedObjectContext *)managedObjectContext withComments:(NSArray *)comments andCompletion:(void (^)(BOOL))complete{
 
     Post *savedPost = [NSEntityDescription insertNewObjectForEntityForName:@"Post" inManagedObjectContext:managedObjectContext];
     savedPost.title = post.title;
-    savedPost.subreddit = post.subreddit;
     savedPost.url = [post.URL absoluteString];
     savedPost.nsfw = [NSNumber numberWithBool:post.NSFW];
     savedPost.author = post.author;
@@ -58,13 +59,7 @@
         post.customURL = post.URL;
     }
 
-//    if ([[post.URL absoluteString] containsString:@"imgur"] && ![[post.URL absoluteString] containsString:@"/a/"] && ![[post.URL absoluteString] containsString:@"gallery"]) {
-//        post.customURL = [self performRegexOnImgur:post.URL];
-//        post.customIsImage = YES;
-//        if (post.customURL == nil) {
-//            post.customIsImage = NO;
-//        }
-//    }
+    [self createSubredditRelationship:post withPostObject:savedPost withManagedObj:managedObjectContext];
 
     NSURLRequest *thumbnailRequest = [NSURLRequest requestWithURL:post.thumbnailURL];
     [NSURLConnection sendAsynchronousRequest:thumbnailRequest queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
@@ -131,8 +126,21 @@
     NSTextCheckingResult *match = [regex firstMatchInString:urlString options:0 range:NSMakeRange(0, [urlString length])];
     NSRange videoIDRange = [match rangeAtIndex:1];
     NSString *youTubeID = [urlString substringWithRange:videoIDRange];
-    
+
     return [NSString stringWithFormat:@"www.youtube.com/embed/%@", youTubeID];
+}
+
++(void)createSubredditRelationship:(RKLink *)rkLink withPostObject:(Post*)postObject withManagedObj:(NSManagedObjectContext *)managedObject{
+    NSFetchRequest * subredditFetch = [[NSFetchRequest alloc] init];
+    [subredditFetch setEntity:[NSEntityDescription entityForName:@"Subreddit" inManagedObjectContext:managedObject]];
+    subredditFetch.predicate = [NSPredicate predicateWithFormat:@"subreddit == %@", rkLink.subreddit];
+
+    NSArray *results = [managedObject executeFetchRequest:subredditFetch error:nil];
+    if (results) {
+        Subreddit *subreddit = results.firstObject;
+        NSLog(@"FOUND SUB %@",subreddit);
+        postObject.subreddit = subreddit;
+    }
 }
 
 +(NSURL *)performRegexOnImgur:(NSURL *)url{
@@ -148,6 +156,14 @@
     NSString *imgurID = [urlString substringWithRange:iDRange];
     return [NSURL URLWithString:[NSString stringWithFormat:@"http://imgur.com/%@.png", imgurID]];
 }
+//SAVE IF WE WANT TO INCORPORATE IMGUR REGEX
+//    if ([[post.URL absoluteString] containsString:@"imgur"] && ![[post.URL absoluteString] containsString:@"/a/"] && ![[post.URL absoluteString] containsString:@"gallery"]) {
+//        post.customURL = [self performRegexOnImgur:post.URL];
+//        post.customIsImage = YES;
+//        if (post.customURL == nil) {
+//            post.customIsImage = NO;
+//        }
+//    }
 
 
 
