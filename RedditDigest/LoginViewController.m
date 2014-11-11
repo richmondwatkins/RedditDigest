@@ -18,7 +18,7 @@
 @property (weak, nonatomic) IBOutlet UITextField *usernameTextField;
 @property (weak, nonatomic) IBOutlet UITextField *passwordTextField;
 @property (weak, nonatomic) IBOutlet UIButton *loginButton;
-@property UIActivityIndicatorView *loginActivityIndicatorView;
+@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *loginActivityIndicatorView;
 
 @end
 
@@ -38,7 +38,7 @@
     self.passwordTextField.layer.borderWidth = 0.5;
     self.passwordTextField.layer.cornerRadius = 5.0;
     self.passwordTextField.layer.borderColor = [UIColor colorWithRed:0.2 green:0.4 blue:0.6 alpha:1].CGColor;
-    self.passwordTextField.textColor =REDDIT_DARK_BLUE;
+    self.passwordTextField.textColor = REDDIT_DARK_BLUE;
 
     // Add action to password text field to show login button if user begins typing.
     [self.passwordTextField addTarget:self
@@ -47,12 +47,8 @@
 
     // Hide login button until user has typed in password field as well as username field
     self.loginButton.alpha = 0.0;
+    self.loginActivityIndicatorView.alpha = 0.0;
 
-    self.loginActivityIndicatorView = [UIActivityIndicatorView new];
-    self.loginActivityIndicatorView.center = self.loginButton.center;
-    self.loginActivityIndicatorView.alpha = 1.0;
-    [self.view addSubview:self.loginActivityIndicatorView];
-    
     [self.usernameTextField becomeFirstResponder];
 
     [self.usernameTextField addTarget:self.passwordTextField action:@selector(becomeFirstResponder) forControlEvents:UIControlEventEditingDidEndOnExit];
@@ -83,13 +79,12 @@
 - (IBAction)login:(id)sender
 {
     [self.loginActivityIndicatorView startAnimating];
-    self.loginActivityIndicatorView.alpha = 1.0;
     // Hide login button to prevent double login error
     // Show activity indicator to indicate logging in.
     [UIView animateWithDuration:0.3 animations:^
     {
         self.loginButton.alpha = 0.0;
-        //self.loginActivityIndicatorView.alpha = 1.0;
+        self.loginActivityIndicatorView.alpha = 1.0;
     }];
 
     [[RKClient sharedClient] signInWithUsername:self.usernameTextField.text password:self.passwordTextField.text completion:^(NSError *error) {
@@ -108,15 +103,19 @@
         }
         else
         {
+            NSLog(@"Error logging in: %@", error.localizedDescription);
+
             UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Invalid Login" message:@"Incorrect username or password, give it another go" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
             alertView.delegate = self;
             [alertView show];
+
             [self.loginActivityIndicatorView stopAnimating];
-            // Show login button if user got wrong password because they'll need to login again.
+
             [UIView animateWithDuration:0.3 animations:^
              {
-                 self.loginButton.alpha = 1.0;
+                 self.loginButton.alpha = 0.0;
                  self.loginActivityIndicatorView.alpha = 0.0;
+                 [self.usernameTextField becomeFirstResponder];
              }];
         }
     }];
@@ -133,6 +132,12 @@
             [UIView animateWithDuration:0.3 animations:^
             {
                 self.loginButton.alpha = 1.0;
+            }];
+        }
+        else if ([textField.text isEqualToString:@""])
+        {
+            [UIView animateWithDuration:0.3 animations:^{
+                self.loginButton.alpha = 0.0;
             }];
         }
     }
