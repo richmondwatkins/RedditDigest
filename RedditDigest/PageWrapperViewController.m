@@ -47,7 +47,7 @@
 
     [cell.textView sizeToFit];
     self.cellHeight = cell.textView.frame.size.height;
-    NSLog(@"height %f",self.cellHeight);
+    cell.commentWebView.frame = CGRectMake(cell.commentWebView.frame.origin.x, cell.commentWebView.frame.origin.y, cell.commentWebView.frame.size.width, self.cellHeight);
     cell.comment = comment;
     cell.delegate = self;
     cell.commentWebView.scrollView.scrollEnabled = NO;
