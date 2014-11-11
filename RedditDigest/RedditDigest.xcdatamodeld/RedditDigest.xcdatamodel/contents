@@ -26,7 +26,6 @@
         <attribute name="nsfw" optional="YES" attributeType="Boolean" syncable="YES"/>
         <attribute name="postID" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="selfText" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="subreddit" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="thumbnailImage" optional="YES" attributeType="Binary" syncable="YES"/>
         <attribute name="title" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="totalComments" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
@@ -35,16 +34,18 @@
         <attribute name="viewed" optional="YES" attributeType="Boolean" syncable="YES"/>
         <attribute name="voteRatio" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
         <relationship name="comments" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Comment" inverseName="post" inverseEntity="Comment" syncable="YES"/>
+        <relationship name="subreddit" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Subreddit" inverseName="post" inverseEntity="Subreddit" syncable="YES"/>
     </entity>
     <entity name="Subreddit" representedClassName="Subreddit" syncable="YES">
-        <attribute name="image" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="image" optional="YES" attributeType="Binary" syncable="YES"/>
         <attribute name="subreddit" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="url" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="post" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Post" inverseName="subreddit" inverseEntity="Post" syncable="YES"/>
     </entity>
     <elements>
         <element name="ChildComment" positionX="-45" positionY="126" width="128" height="103"/>
         <element name="Comment" positionX="-63" positionY="99" width="128" height="120"/>
-        <element name="Post" positionX="-63" positionY="-18" width="128" height="360"/>
-        <element name="Subreddit" positionX="-54" positionY="117" width="128" height="90"/>
+        <element name="Post" positionX="-63" positionY="-18" width="128" height="358"/>
+        <element name="Subreddit" positionX="-54" positionY="117" width="128" height="103"/>
     </elements>
 </model>

@@ -274,7 +274,7 @@
     cell.post = post;
     cell.delegate = self;
     cell.titleLabel.text = post.title;
-    cell.subredditLabel.text = post.subreddit;
+//    cell.subredditLabel.text = post.subreddit;
     cell.authorLabel.text = post.author;
     cell.upVoteDownVoteLabel.text = [self abbreviateNumber:post.voteRatio.integerValue];
     cell.commentsLabel.text = [self abbreviateNumber:post.totalComments.integerValue];
