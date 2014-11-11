@@ -125,7 +125,8 @@
 
         if (self.selectedSubreddits.count < 10)
         {
-            NSMutableDictionary *subredditDict = [[NSMutableDictionary alloc] initWithObjectsAndKeys:subreddit.name, @"subreddit",subreddit.URL, @"url", [NSNumber numberWithBool:subreddit.isCurrentlySubscribed], @"currentlySubscribed", nil];
+            NSString *imageURL = [subreddit.headerImageURL absoluteString];
+            NSMutableDictionary *subredditDict = [[NSMutableDictionary alloc] initWithObjectsAndKeys:subreddit.name, @"subreddit",subreddit.URL, @"url", [NSNumber numberWithBool:subreddit.isCurrentlySubscribed], @"currentlySubscribed", imageURL, @"image", nil];
             [self.selectedSubreddits addObject:subredditDict];
 
             if (self.selectedSubreddits.count > 0) {
@@ -197,7 +198,8 @@
 
     if (self.hasRedditAccount) {
         RKSubreddit *subreddit = self.subreddits[indexPath.row];
-        NSMutableDictionary *subredditDict = [[NSMutableDictionary alloc] initWithObjectsAndKeys:subreddit.name, @"subreddit",subreddit.URL, @"url", [NSNumber numberWithBool:subreddit.isCurrentlySubscribed], @"currentlySubscribed",  nil];
+        NSString *imageURL = [subreddit.headerImageURL absoluteString];
+        NSMutableDictionary *subredditDict = [[NSMutableDictionary alloc] initWithObjectsAndKeys:subreddit.name, @"subreddit",subreddit.URL, @"url", [NSNumber numberWithBool:subreddit.isCurrentlySubscribed], @"currentlySubscribed", imageURL, @"image",  nil];
 
         if ([self.selectedSubreddits containsObject:subredditDict]) {
             [self.selectedSubreddits removeObject:subredditDict];

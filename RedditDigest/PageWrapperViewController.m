@@ -83,7 +83,7 @@
 }
 
 -(void)webViewDidStartLoad:(UIWebView *)webView{
-    NSString *url = webView.request.URL.parameterString;
+    NSURL *url = webView.request.URL;
     NSLog(@"URL %@",url);
 }
 

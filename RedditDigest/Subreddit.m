@@ -22,9 +22,19 @@
             Subreddit *savedSubreddit = [NSEntityDescription insertNewObjectForEntityForName:@"Subreddit" inManagedObjectContext:managedObject];
             savedSubreddit.subreddit = subreddit[@"subreddit"];
             savedSubreddit.url = subreddit[@"url"];
-            [managedObject save:nil];
-        }
+            NSLog(@"adfqweoij %@",subreddit[@"image"]);
 
+            if (subreddit[@"image"] != nil) {
+                [NSURLConnection sendAsynchronousRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:subreddit[@"image"]]] queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
+                    NSLog(@"DATA %@",data);
+                    [managedObject save:nil];
+
+                }];
+            }else{
+                
+                [managedObject save:nil];
+            }
+        }
     }
 }
 
