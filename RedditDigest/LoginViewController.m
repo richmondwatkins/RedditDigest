@@ -18,6 +18,7 @@
 @property (weak, nonatomic) IBOutlet UITextField *usernameTextField;
 @property (weak, nonatomic) IBOutlet UITextField *passwordTextField;
 @property (weak, nonatomic) IBOutlet UIButton *loginButton;
+@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *loginActivityIndicatorView;
 
 @end
 
@@ -37,7 +38,7 @@
     self.passwordTextField.layer.borderWidth = 0.5;
     self.passwordTextField.layer.cornerRadius = 5.0;
     self.passwordTextField.layer.borderColor = [UIColor colorWithRed:0.2 green:0.4 blue:0.6 alpha:1].CGColor;
-    self.passwordTextField.textColor =REDDIT_DARK_BLUE;
+    self.passwordTextField.textColor = REDDIT_DARK_BLUE;
 
     // Add action to password text field to show login button if user begins typing.
     [self.passwordTextField addTarget:self
@@ -46,7 +47,8 @@
 
     // Hide login button until user has typed in password field as well as username field
     self.loginButton.alpha = 0.0;
-    
+    self.loginActivityIndicatorView.alpha = 0.0;
+
     [self.usernameTextField becomeFirstResponder];
 
     [self.usernameTextField addTarget:self.passwordTextField action:@selector(becomeFirstResponder) forControlEvents:UIControlEventEditingDidEndOnExit];
@@ -76,6 +78,15 @@
 
 - (IBAction)login:(id)sender
 {
+    [self.loginActivityIndicatorView startAnimating];
+    // Hide login button to prevent double login error
+    // Show activity indicator to indicate logging in.
+    [UIView animateWithDuration:0.3 animations:^
+    {
+        self.loginButton.alpha = 0.0;
+        self.loginActivityIndicatorView.alpha = 1.0;
+    }];
+
     [[RKClient sharedClient] signInWithUsername:self.usernameTextField.text password:self.passwordTextField.text completion:^(NSError *error) {
         if (!error)
         {
@@ -86,28 +97,26 @@
             BOOL result = [SSKeychain setPassword:self.passwordTextField.text forService:@"friendsOfSnoo" account:self.usernameTextField.text];
 
             if (result) {
+                [self.loginActivityIndicatorView stopAnimating];
                 [self performSegueWithIdentifier:@"SubredditSelectionFromLoginSegue" sender:self];
             }
-            /* // Richmond, uncomment this to get what you need after the user logs in correctly
-            [[RKClient sharedClient] subscribedSubredditsWithCompletion:^(NSArray *collection, RKPagination *pagination, NSError *error) {
-
-                RKSubreddit *subreddit = collection.firstObject;
-
-                [[RKClient sharedClient] linksInSubreddit:subreddit pagination:nil completion:^(NSArray *links, RKPagination *pagination, NSError *error) {
-                    //                    NSLog(@"Links: %@", links);
-                    [[RKClient sharedClient] upvote:links.firstObject completion:^(NSError *error) {
-                        NSLog(@"Upvoted the link!");
-                    }];
-                }];
-                
-            }];
-             */
         }
         else
         {
+            NSLog(@"Error logging in: %@", error.localizedDescription);
+
             UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Invalid Login" message:@"Incorrect username or password, give it another go" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
             alertView.delegate = self;
             [alertView show];
+
+            [self.loginActivityIndicatorView stopAnimating];
+
+            [UIView animateWithDuration:0.3 animations:^
+             {
+                 self.loginButton.alpha = 0.0;
+                 self.loginActivityIndicatorView.alpha = 0.0;
+                 [self.usernameTextField becomeFirstResponder];
+             }];
         }
     }];
 }
@@ -123,6 +132,12 @@
             [UIView animateWithDuration:0.3 animations:^
             {
                 self.loginButton.alpha = 1.0;
+            }];
+        }
+        else if ([textField.text isEqualToString:@""])
+        {
+            [UIView animateWithDuration:0.3 animations:^{
+                self.loginButton.alpha = 0.0;
             }];
         }
     }

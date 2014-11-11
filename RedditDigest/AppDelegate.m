@@ -75,7 +75,7 @@
     [[UINavigationBar appearance] setTintColor:[UIColor whiteColor]];
     // White nav bar text color - font Helvetica Neue Regular
     [[UINavigationBar appearance] setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor whiteColor],
-                                                                      NSFontAttributeName : [UIFont fontWithName:@"Helvetica-Bold" size:18.0]}];
+                                                                      NSFontAttributeName : [UIFont fontWithName:@"HelveticaNeue-Light" size:18.0]}];
   
 
 

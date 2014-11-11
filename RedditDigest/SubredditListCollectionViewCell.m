@@ -19,8 +19,6 @@
     self.selectedBackgroundView = [UIView new];
     self.backgroundView = [UIView new];
 
-   
-
     // Background and selected Background colors
     self.backgroundView.backgroundColor = [UIColor whiteColor];
     self.selectedBackgroundView.backgroundColor = REDDIT_DARK_BLUE;
