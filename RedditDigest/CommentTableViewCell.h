@@ -21,5 +21,6 @@
 @property Comment *comment;
 @property id <CommentCellDelegate> delegate;
 
+@property (strong, nonatomic) IBOutlet UITextView *textView;
 @end
 

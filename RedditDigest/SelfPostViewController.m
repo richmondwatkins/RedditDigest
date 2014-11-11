@@ -21,7 +21,7 @@
 
 -(void)viewWillAppear:(BOOL)animated{
     self.textView.text = self.selfPostText;
-    [self.selfPostCommentsTableView reloadData];
+//    [self.selfPostCommentsTableView reloadData];
 }
 
 @end

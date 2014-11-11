@@ -9,8 +9,9 @@
 #import "PageWrapperViewController.h"
 #import "CommentTableViewCell.h"
 #import "ExpandedCommentViewController.h"
-@interface PageWrapperViewController () <UIWebViewDelegate, CommentCellDelegate>
+@interface PageWrapperViewController () <UIWebViewDelegate, CommentCellDelegate, UITextViewDelegate>
 @property Comment *selectedComment;
+@property CGFloat height;
 @end
 
 @implementation PageWrapperViewController
@@ -19,18 +20,23 @@
     [super viewDidLoad];
     self.imageCommentsTableView.delegate = self;
     self.imageCommentsTableView.dataSource = self;
+    self.imageCommentsTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+
 
     self.selfPostCommentsTableView.delegate = self;
     self.selfPostCommentsTableView.dataSource = self;
+    self.selfPostCommentsTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+
 
     self.gifCommentsTableView.delegate = self;
     self.gifCommentsTableView.dataSource = self;
+    self.gifCommentsTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+
 
     self.videoCommentsTableView.delegate = self;
     self.videoCommentsTableView.dataSource = self;
+    self.videoCommentsTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
 
-    self.imageCommentsTableView.estimatedRowHeight = 43.0;
-    self.imageCommentsTableView.rowHeight = UITableViewAutomaticDimension;
 
 
     [[RKClient sharedClient] linkWithFullName:self.post.postID completion:^(id object, NSError *error) {
@@ -51,18 +57,29 @@
 
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
+    
     CommentTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"CommentCell"];
     NSDictionary *commentDictionary = self.comments[indexPath.row];
     Comment *comment = commentDictionary[@"parent"];
     NSString *partialComment = [self textToHtml:comment.body withCell:cell andComment:comment];
+    cell.textView.text = comment.body;
 
+    NSLog(@"Cell text %@",cell.textView.text);
+    [cell.textView sizeToFit];
+    self.height = cell.textView.frame.size.height;
+    NSLog(@"height %f",self.height);
     cell.comment = comment;
     cell.delegate = self;
     cell.commentWebView.scrollView.scrollEnabled = NO;
     [cell.commentWebView loadHTMLString:partialComment baseURL:nil];
     cell.commentWebView.delegate = self;
+    cell.textView.delegate = self;
 
     return cell;
+}
+
+-(void)webViewDidFinishLoad:(UIWebView *)webView{
+    [webView sizeToFit];
 }
 
 -(void)webViewDidStartLoad:(UIWebView *)webView{
@@ -78,11 +95,11 @@
     string = [string stringByReplacingOccurrencesOfString:@"&lt;" withString:@"<"];
     string = [string stringByReplacingOccurrencesOfString:@"&gt;" withString:@">"];
 
-    if ([string length] >= 175){
-        string = [string substringToIndex:175];
-        string = [NSString stringWithFormat:@"%@…", string];
-        cell.showMoreButton.hidden = NO;
-    }
+//    if ([string length] >= 175){
+//        string = [string substringToIndex:175];
+//        string = [NSString stringWithFormat:@"%@…", string];
+//        cell.showMoreButton.hidden = NO;
+//    }
     return string;
 }
 
@@ -117,8 +134,13 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
 
-    return tableView.rowHeight;
+    return self.height;
+}
 
+- (void)textViewDidChange:(UITextView *)textView
+{
+    [textView sizeToFit];
+    self.height = textView.frame.size.height;
 }
 
 
