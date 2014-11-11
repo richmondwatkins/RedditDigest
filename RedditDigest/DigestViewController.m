@@ -553,6 +553,9 @@
     CGPoint location = [rightSwipe locationInView:self.digestTableView];
     NSIndexPath *swipedIndexPath = [self.digestTableView indexPathForRowAtPoint:location];
     DigestCellWithImageTableViewCell *swipedCell  = (DigestCellWithImageTableViewCell *)[self.digestTableView cellForRowAtIndexPath:swipedIndexPath];
+    Post *post = [self.digestPosts objectAtIndex:swipedIndexPath.row];
+    post.upvoted = [NSNumber numberWithBool:YES];
+
     [self upVoteButtonPressed:swipedCell];
 }
 
@@ -561,6 +564,9 @@
     CGPoint location = [leftSwipe locationInView:self.digestTableView];
     NSIndexPath *swipedIndexPath = [self.digestTableView indexPathForRowAtPoint:location];
     DigestCellWithImageTableViewCell *swipedCell  = (DigestCellWithImageTableViewCell *)[self.digestTableView cellForRowAtIndexPath:swipedIndexPath];
+    Post *post = [self.digestPosts objectAtIndex:swipedIndexPath.row];
+    post.downvoted = [NSNumber numberWithBool:YES];
+
     [self downVoteButtonPressed:swipedCell];
 }
 
