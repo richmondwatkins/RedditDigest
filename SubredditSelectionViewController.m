@@ -417,7 +417,8 @@
         for (RKSubreddit *subFromReddit in self.subreddits) {
             if ([subscribedSub.subreddit isEqualToString:subFromReddit.name]) {
                 subFromReddit.isCurrentlySubscribed = YES;
-                NSMutableDictionary *subredditDict = [[NSMutableDictionary alloc] initWithObjectsAndKeys:subFromReddit.name, @"subreddit",subFromReddit.URL, @"url", [NSNumber numberWithBool:subFromReddit.isCurrentlySubscribed], @"currentlySubscribed", nil];
+                NSString *imageURL = [subFromReddit.headerImageURL absoluteString];
+                NSMutableDictionary *subredditDict = [[NSMutableDictionary alloc] initWithObjectsAndKeys:subFromReddit.name, @"subreddit",subFromReddit.URL, @"url", [NSNumber numberWithBool:subFromReddit.isCurrentlySubscribed], @"currentlySubscribed", imageURL, @"image", nil];
                 [self.selectedSubreddits addObject:subredditDict];
             }
         }

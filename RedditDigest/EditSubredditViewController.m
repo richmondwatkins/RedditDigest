@@ -68,11 +68,7 @@
         [alertView addButtonWithTitle:@"Delete"];
         [alertView addButtonWithTitle:@"Cancel"];
         [alertView show];
-//        self.editingIndex = indexPath;
-//        [self.digestPosts removeObjectAtIndex:indexPath.row];
-//        [self.tableView deleteRowsAtIndexPaths:@[self.editingIndex] withRowAnimation:UITableViewRowAnimationFade];
 
-//        [self deleter:self.digestPosts[indexPath.row]];
     }
 }
 

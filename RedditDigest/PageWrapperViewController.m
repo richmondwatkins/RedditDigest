@@ -11,7 +11,7 @@
 #import "ExpandedCommentViewController.h"
 @interface PageWrapperViewController () <UIWebViewDelegate, CommentCellDelegate, UITextViewDelegate>
 @property Comment *selectedComment;
-@property CGFloat height;
+@property CGFloat cellHeight;
 @end
 
 @implementation PageWrapperViewController
@@ -38,13 +38,6 @@
     self.videoCommentsTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
 
 
-
-    [[RKClient sharedClient] linkWithFullName:self.post.postID completion:^(id object, NSError *error) {
-        [[RKClient sharedClient] upvote:object completion:^(NSError *error) {
-            NSLog(@"LINK ==============%@",self.post.subreddit);
-        }];
-    }];
-
     if (![self.post.viewed boolValue]) {
         self.post.viewed = [NSNumber numberWithBool:YES];
         [self.post.managedObjectContext save:nil];
@@ -64,10 +57,9 @@
     NSString *partialComment = [self textToHtml:comment.body withCell:cell andComment:comment];
     cell.textView.text = comment.body;
 
-    NSLog(@"Cell text %@",cell.textView.text);
     [cell.textView sizeToFit];
-    self.height = cell.textView.frame.size.height;
-    NSLog(@"height %f",self.height);
+    self.cellHeight = cell.textView.frame.size.height;
+    NSLog(@"height %f",self.cellHeight);
     cell.comment = comment;
     cell.delegate = self;
     cell.commentWebView.scrollView.scrollEnabled = NO;
@@ -95,11 +87,6 @@
     string = [string stringByReplacingOccurrencesOfString:@"&lt;" withString:@"<"];
     string = [string stringByReplacingOccurrencesOfString:@"&gt;" withString:@">"];
 
-//    if ([string length] >= 175){
-//        string = [string substringToIndex:175];
-//        string = [NSString stringWithFormat:@"%@…", string];
-//        cell.showMoreButton.hidden = NO;
-//    }
     return string;
 }
 
@@ -134,13 +121,7 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
 
-    return self.height;
-}
-
-- (void)textViewDidChange:(UITextView *)textView
-{
-    [textView sizeToFit];
-    self.height = textView.frame.size.height;
+    return self.cellHeight;
 }
 
 

@@ -21,7 +21,7 @@
 #import "SettingsViewController.h"
 #import "LoadingViewController.h"
 #import "LoginViewController.h"
-
+#import "Subreddit.h"
 
 @interface DigestViewController () <UITableViewDataSource, UITableViewDelegate, DigestCellDelegate>
 
@@ -274,14 +274,18 @@
     cell.post = post;
     cell.delegate = self;
     cell.titleLabel.text = post.title;
-//    cell.subredditLabel.text = post.subreddit;
+    cell.subredditLabel.text = post.subreddit.subreddit;
     cell.authorLabel.text = post.author;
     cell.upVoteDownVoteLabel.text = [self abbreviateNumber:post.voteRatio.integerValue];
     cell.commentsLabel.text = [self abbreviateNumber:post.totalComments.integerValue];
 
     if (!post.thumbnailImage) {
-        cell.thumbnailImage.image = [self squareCropImageToSideLength:[UIImage imageNamed:@"snoo_camera_placeholder"] sideLength:50];
-        cell.thumbnailImage.alpha = 0.5;
+        if (post.subreddit.image) {
+            cell.thumbnailImage.image = [UIImage imageWithData:post.subreddit.image];
+        }else{
+            cell.thumbnailImage.image = [self squareCropImageToSideLength:[UIImage imageNamed:@"snoo_camera_placeholder"] sideLength:50];
+            cell.thumbnailImage.alpha = 0.5;
+        }
     }
     else {
         cell.thumbnailImage.image = [self squareCropImageToSideLength:[UIImage imageWithData:post.thumbnailImage] sideLength:50];
