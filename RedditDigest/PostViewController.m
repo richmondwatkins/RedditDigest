@@ -67,11 +67,10 @@
 
 
 - (PageWrapperViewController *)viewControllerAtIndex:(NSInteger)index {
-
-    if (index<0) {
-        return nil;
-    }
     if (index >= self.allPosts.count) {
+        index = 0;
+    }
+    if (index < 0) {
         return nil;
     }
 

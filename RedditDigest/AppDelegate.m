@@ -93,6 +93,7 @@
 }
 
 -(void)registerDevice{
+
     NSString* deviceURLString = @"http://192.168.129.228:3000/register/device";
     NSURL *url = [[NSURL alloc] initWithString:[deviceURLString stringByAddingPercentEscapesUsingEncoding:NSASCIIStringEncoding]];
 
@@ -125,8 +126,11 @@
     NSURL *url = [[NSURL alloc] initWithString:[urlString stringByAddingPercentEscapesUsingEncoding:NSASCIIStringEncoding]];
 
     NSError *error;
-    NSDictionary *tokenDictionary = [[NSDictionary alloc] initWithObjectsAndKeys:self.token, @"token", self.deviceString, @"deviceid", nil];
-    NSData *postData = [NSJSONSerialization dataWithJSONObject:tokenDictionary options:0 error:&error];
+    NSTimeZone *timeZone = [NSTimeZone localTimeZone];
+    NSNumber *timezoneoffset =  [NSNumber numberWithFloat: ([timeZone secondsFromGMT] / 3600.0)];
+    NSDictionary *deviceInfoDictionary = [[NSDictionary alloc] initWithObjectsAndKeys:self.token, @"token", self.deviceString, @"deviceid", timezoneoffset, @"timeZone", nil];
+
+    NSData *postData = [NSJSONSerialization dataWithJSONObject:deviceInfoDictionary options:0 error:&error];
 
     NSMutableURLRequest* request = [NSMutableURLRequest requestWithURL:url];
     request.HTTPMethod = @"POST";

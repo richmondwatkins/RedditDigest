@@ -291,13 +291,18 @@
         cell.thumbnailImage.image = [self squareCropImageToSideLength:[UIImage imageWithData:post.thumbnailImage] sideLength:50];
     }
 
-    if (post.viewed) {cell.thumbnailImage.alpha = 0.2;}
+    (post.viewed) ? cell.thumbnailImage.alpha = 0.2 : (cell.thumbnailImage.alpha = 1);
 
-    if ([post.upvoted boolValue]) {
+    if ([post.upvoted boolValue] == YES) {
+        NSLog(@"POST %@",post);
         [cell.upVoteButton setBackgroundImage:[UIImage imageNamed:@"upvote_arrow_selected"] forState:UIControlStateNormal];
+    }else{
+        [cell.upVoteButton setBackgroundImage:[UIImage imageNamed:@"upvote_arrow"] forState:UIControlStateNormal];
     }
-    if ([post.downvoted boolValue]) {
+    if ([post.downvoted boolValue] == YES) {
         [cell.downVoteButton setBackgroundImage:[UIImage imageNamed:@"downvote_arrow_selected"] forState:UIControlStateNormal];
+    }else{
+        [cell.downVoteButton setBackgroundImage:[UIImage imageNamed:@"downvote_arrow"] forState:UIControlStateNormal];
     }
 
     cell.thumbnailImage.layer.cornerRadius = 2.0;
