@@ -71,6 +71,9 @@
              [self.subredditCollectionView reloadData];
              [self.activityIndicator stopAnimating];
              self.activityIndicator.hidden = YES;
+            // TODO Add the subredditCollectionView Header here so the collectionview is blank and then it gets added behind the
+            // nav bar and then the user can pull down to show it
+             self.subredditCollectionView.contentOffset = CGPointMake(0, 44);
          }];
         // If user has account set the nav title to the following
         self.navigationItem.title = @"Choose your subreddits";

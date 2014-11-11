@@ -105,7 +105,7 @@
                             @"loading_snoo0004", @"loading_snoo0005", @"loading_snoo0006", @"loading_snoo0007",
                             @"loading_snoo0008", @"loading_snoo0009", @"loading_snoo0010", @"loading_snoo0011"];
 
-    NSMutableArray *images = [[NSMutableArray alloc] init];
+    NSMutableArray *images = [NSMutableArray new];
     for (int i = 0; i < imageNames.count; i++) {
         [images addObject:[UIImage imageNamed:[imageNames objectAtIndex:i]]];
     }
@@ -113,7 +113,7 @@
     UIBlurEffect *blurEffect = [UIBlurEffect effectWithStyle:UIBlurEffectStyleLight];
     UIVisualEffectView *blurEffectView = [[UIVisualEffectView alloc] initWithEffect:blurEffect];
     blurEffectView.translatesAutoresizingMaskIntoConstraints = NO;
-    [blurEffectView setFrame:self.view.bounds];
+    blurEffectView.frame = self.view.bounds;
     blurEffectView.tag = 1;
     [self.view addSubview:blurEffectView];
 
