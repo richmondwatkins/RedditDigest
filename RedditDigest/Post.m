@@ -30,6 +30,9 @@
 @dynamic voteRatio;
 @dynamic comments;
 @dynamic postID;
+@dynamic viewed;
+@dynamic upvoted;
+@dynamic downvoted;
 +(void)savePost:(RKLink *)post withManagedObject:(NSManagedObjectContext *)managedObjectContext withComments:(NSArray *)comments andCompletion:(void (^)(BOOL))complete{
 
     Post *savedPost = [NSEntityDescription insertNewObjectForEntityForName:@"Post" inManagedObjectContext:managedObjectContext];
