@@ -13,7 +13,7 @@
 
 @dynamic subreddit;
 @dynamic url;
-
+@dynamic image;
 
 +(void)addSubredditsToCoreData:(NSMutableArray *)selectedSubreddits withManagedObject:(NSManagedObjectContext *)managedObject{
     for (NSDictionary *subreddit in selectedSubreddits) {
@@ -22,9 +22,18 @@
             Subreddit *savedSubreddit = [NSEntityDescription insertNewObjectForEntityForName:@"Subreddit" inManagedObjectContext:managedObject];
             savedSubreddit.subreddit = subreddit[@"subreddit"];
             savedSubreddit.url = subreddit[@"url"];
-            [managedObject save:nil];
-        }
 
+            if (subreddit[@"image"] != nil) {
+                [NSURLConnection sendAsynchronousRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:subreddit[@"image"]]] queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
+                    if (data) {
+                        savedSubreddit.image = data;
+                        [managedObject save:nil];
+                    }
+                }];
+            }else{
+                [managedObject save:nil];
+            }
+        }
     }
 }
 
