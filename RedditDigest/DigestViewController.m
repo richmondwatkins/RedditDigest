@@ -210,7 +210,7 @@
                                                                   toItem:blurEffectView
                                                                attribute:NSLayoutAttributeBottom
                                                               multiplier:1.0
-                                                                constant:-75.0];
+                                                                constant:-85.0];
     [blurEffectView addConstraint:snooBottom];
 
     NSLayoutConstraint *snooAspectRatio = [NSLayoutConstraint constraintWithItem:animatingSnooImageView
@@ -225,24 +225,23 @@
 
     // Creating your digest label constratins
     NSLayoutConstraint *creatingDigestTextLabelBottom = [NSLayoutConstraint constraintWithItem:self.creatingYourDigestLabel
-                                                                       attribute:NSLayoutAttributeBottom
-                                                                       relatedBy:NSLayoutRelationEqual
-                                                                          toItem:animatingSnooImageView
-                                                                       attribute:NSLayoutAttributeBottom
-                                                                      multiplier:1.0
-                                                                        constant:60];
-
+                                                                                     attribute:NSLayoutAttributeBottom
+                                                                                     relatedBy:NSLayoutRelationEqual
+                                                                                        toItem:animatingSnooImageView
+                                                                                     attribute:NSLayoutAttributeBottom
+                                                                                    multiplier:1.0
+                                                                                      constant:20.0];
 
     [blurEffectView addConstraint:creatingDigestTextLabelBottom];
 
     NSLayoutConstraint *creatingDigestTextLabelCenterX = [NSLayoutConstraint constraintWithItem:self.creatingYourDigestLabel
-                                                                   attribute:NSLayoutAttributeCenterX
-                                                                   relatedBy:NSLayoutRelationEqual
-                                                                      toItem:blurEffectView
-                                                                   attribute:NSLayoutAttributeCenterX
-                                                                  multiplier:1.0
-                                                                    constant:0.0];
-
+                                                                                      attribute:NSLayoutAttributeCenterX
+                                                                                      relatedBy:NSLayoutRelationEqual
+                                                                                         toItem:blurEffectView
+                                                                                      attribute:NSLayoutAttributeCenterX
+                                                                                     multiplier:1.0
+                                                                                       constant:0.0];
+    
     [blurEffectView addConstraint:creatingDigestTextLabelCenterX];
 }
 
