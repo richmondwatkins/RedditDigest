@@ -271,7 +271,6 @@
     DigestCellWithImageTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"DigestCell"];
 
     Post *post = self.digestPosts[indexPath.row];
-    cell.post = post;
     cell.delegate = self;
     cell.titleLabel.text = post.title;
     cell.subredditLabel.text = post.subreddit.subreddit;
@@ -536,8 +535,11 @@
 }
 
 -(void)upVoteButtonPressed:(DigestCellWithImageTableViewCell*)cell{
-    cell.post.upvoted = [NSNumber numberWithBool:YES];
-    cell.post.downvoted = [NSNumber numberWithBool:NO];
+    NSIndexPath *indexPath = [self.digestTableView indexPathForCell:cell];
+    Post *selectedPost = [self.digestPosts objectAtIndex:indexPath.row];
+
+    selectedPost.upvoted = [NSNumber numberWithBool:YES];
+    selectedPost.downvoted = [NSNumber numberWithBool:NO];
     [self.managedObjectContext save:nil];
 
     [cell.upVoteButton setBackgroundImage:[UIImage imageNamed:@"upvote_arrow_selected"] forState:UIControlStateNormal];
@@ -545,8 +547,11 @@
 }
 
 -(void)downVoteButtonPressed:(DigestCellWithImageTableViewCell *)cell{
-    cell.post.downvoted = [NSNumber numberWithBool:YES];
-    cell.post.upvoted = [NSNumber numberWithBool:NO];
+    NSIndexPath *indexPath = [self.digestTableView indexPathForCell:cell];
+    Post *selectedPost = [self.digestPosts objectAtIndex:indexPath.row];
+
+    selectedPost.downvoted = [NSNumber numberWithBool:YES];
+    selectedPost.upvoted = [NSNumber numberWithBool:NO];
     [self.managedObjectContext save:nil];
 
     [cell.downVoteButton setBackgroundImage:[UIImage imageNamed:@"downvote_arrow_selected"] forState:UIControlStateNormal];

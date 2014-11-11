@@ -23,7 +23,6 @@
 @property (weak, nonatomic) IBOutlet UILabel *upVoteDownVoteLabel;
 @property (weak, nonatomic) IBOutlet UILabel *commentsLabel;
 @property (weak, nonatomic) IBOutlet UILabel *authorLabel;
-@property Post *post;
 @property (strong, nonatomic) IBOutlet UIButton *upVoteButton;
 @property (strong, nonatomic) IBOutlet UIButton *downVoteButton;
 
