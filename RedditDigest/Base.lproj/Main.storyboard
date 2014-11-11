@@ -719,6 +719,7 @@
                                             <constraints>
                                                 <constraint firstItem="Ouz-k5-Hlx" firstAttribute="leading" secondItem="TIW-74-Ifz" secondAttribute="leadingMargin" constant="58" id="8X1-s3-PJT"/>
                                                 <constraint firstAttribute="trailingMargin" secondItem="Ouz-k5-Hlx" secondAttribute="trailing" constant="51" id="8Z1-jU-JHS"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="COR-ut-o5n" secondAttribute="trailing" constant="51" id="9Kg-46-hKZ"/>
                                                 <constraint firstItem="Ouz-k5-Hlx" firstAttribute="top" secondItem="COR-ut-o5n" secondAttribute="bottom" constant="-2" id="B99-nv-pdH"/>
                                                 <constraint firstItem="OBv-tB-CM9" firstAttribute="leading" secondItem="Ouz-k5-Hlx" secondAttribute="trailing" constant="6" id="Cn1-IN-dhF"/>
                                                 <constraint firstItem="OBv-tB-CM9" firstAttribute="top" secondItem="TIW-74-Ifz" secondAttribute="topMargin" constant="-8" id="PjW-eB-IGz"/>
@@ -729,7 +730,6 @@
                                                 <constraint firstItem="COR-ut-o5n" firstAttribute="leading" secondItem="TIW-74-Ifz" secondAttribute="leadingMargin" constant="58" id="fJy-Wj-11A"/>
                                                 <constraint firstItem="OBv-tB-CM9" firstAttribute="trailing" secondItem="TIW-74-Ifz" secondAttribute="trailingMargin" id="h8w-wx-SRb"/>
                                                 <constraint firstAttribute="bottomMargin" secondItem="Ouz-k5-Hlx" secondAttribute="bottom" constant="9" id="w63-r9-NiQ"/>
-                                                <constraint firstItem="OBv-tB-CM9" firstAttribute="leading" secondItem="COR-ut-o5n" secondAttribute="trailing" constant="6" id="zEW-LV-fO0"/>
                                             </constraints>
                                             <variation key="default">
                                                 <mask key="constraints">
