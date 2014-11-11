@@ -289,8 +289,12 @@
 
     if (post.viewed) {cell.thumbnailImage.alpha = 0.2;}
 
-    if ([post.upvoted boolValue]) {cell.upVoteButton.backgroundColor = [UIColor orangeColor];}
-    if ([post.downvoted boolValue]) {cell.downVoteButton.backgroundColor = [UIColor blueColor];}
+    if ([post.upvoted boolValue]) {
+        [cell.upVoteButton setBackgroundImage:[UIImage imageNamed:@"upvote_arrow_selected"] forState:UIControlStateNormal];
+    }
+    if ([post.downvoted boolValue]) {
+        [cell.downVoteButton setBackgroundImage:[UIImage imageNamed:@"downvote_arrow_selected"] forState:UIControlStateNormal];
+    }
 
     cell.thumbnailImage.layer.cornerRadius = 2.0;
     cell.thumbnailImage.layer.masksToBounds = YES;
@@ -527,8 +531,8 @@
     cell.post.downvoted = [NSNumber numberWithBool:NO];
     [self.managedObjectContext save:nil];
 
-    cell.upVoteButton.backgroundColor = [UIColor orangeColor];
-    cell.downVoteButton.backgroundColor = [UIColor whiteColor];
+    [cell.upVoteButton setBackgroundImage:[UIImage imageNamed:@"upvote_arrow_selected"] forState:UIControlStateNormal];
+    [cell.downVoteButton setBackgroundImage:[UIImage imageNamed:@"downvote_arrow"] forState:UIControlStateNormal];
 }
 
 -(void)downVoteButtonPressed:(DigestCellWithImageTableViewCell *)cell{
@@ -536,8 +540,8 @@
     cell.post.upvoted = [NSNumber numberWithBool:NO];
     [self.managedObjectContext save:nil];
 
-    cell.downVoteButton.backgroundColor = [UIColor blueColor];
-    cell.upVoteButton.backgroundColor = [UIColor whiteColor];
+    [cell.downVoteButton setBackgroundImage:[UIImage imageNamed:@"downvote_arrow_selected"] forState:UIControlStateNormal];
+    [cell.upVoteButton setBackgroundImage:[UIImage imageNamed:@"upvote_arrow"] forState:UIControlStateNormal];
 }
 
 @end

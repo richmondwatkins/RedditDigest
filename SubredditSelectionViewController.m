@@ -30,10 +30,11 @@
 @property NSMutableArray *posts; 
 @property SubredditListCollectionViewCell *sizingCell;
 @property (weak, nonatomic) IBOutlet UIButton *doneSelectingSubredditsButton;
-@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *activityIndicator;
 @property BOOL hasRedditAccount;
 @property NSInteger direction;
 @property NSInteger shakes;
+@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *activityIndicator;
+
 @end
 
 @implementation SubredditSelectionViewController
