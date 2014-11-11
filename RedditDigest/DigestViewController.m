@@ -548,4 +548,20 @@
     [cell.upVoteButton setBackgroundImage:[UIImage imageNamed:@"upvote_arrow"] forState:UIControlStateNormal];
 }
 
+- (IBAction)onRightSwipeGesture:(UISwipeGestureRecognizer *)rightSwipe
+{
+    CGPoint location = [rightSwipe locationInView:self.digestTableView];
+    NSIndexPath *swipedIndexPath = [self.digestTableView indexPathForRowAtPoint:location];
+    DigestCellWithImageTableViewCell *swipedCell  = (DigestCellWithImageTableViewCell *)[self.digestTableView cellForRowAtIndexPath:swipedIndexPath];
+    [self upVoteButtonPressed:swipedCell];
+}
+
+- (IBAction)onLeftSwipeGesture:(UISwipeGestureRecognizer *)leftSwipe
+{
+    CGPoint location = [leftSwipe locationInView:self.digestTableView];
+    NSIndexPath *swipedIndexPath = [self.digestTableView indexPathForRowAtPoint:location];
+    DigestCellWithImageTableViewCell *swipedCell  = (DigestCellWithImageTableViewCell *)[self.digestTableView cellForRowAtIndexPath:swipedIndexPath];
+    [self downVoteButtonPressed:swipedCell];
+}
+
 @end

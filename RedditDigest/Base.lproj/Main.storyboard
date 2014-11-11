@@ -738,6 +738,7 @@
                                                 </mask>
                                             </variation>
                                         </tableViewCellContentView>
+                                        <gestureRecognizers/>
                                         <connections>
                                             <outlet property="authorLabel" destination="Qch-SH-AKQ" id="B8a-7n-iWM"/>
                                             <outlet property="downVoteButton" destination="WlU-Jy-9SC" id="Ft5-FT-B7F"/>
@@ -746,6 +747,8 @@
                                             <outlet property="titleLabel" destination="COR-ut-o5n" id="M3A-C3-fIW"/>
                                             <outlet property="upVoteButton" destination="Q8d-Df-n05" id="pjY-3O-z9z"/>
                                             <outlet property="upVoteDownVoteLabel" destination="8si-Mc-4aB" id="O2l-m3-fRN"/>
+                                            <outletCollection property="gestureRecognizers" destination="cXu-Q3-x2f" appends="YES" id="J4w-wC-hZW"/>
+                                            <outletCollection property="gestureRecognizers" destination="dQq-Vv-4Pn" appends="YES" id="X0J-8T-Pyg"/>
                                             <segue destination="5uv-Oq-P6m" kind="show" identifier="PostSegue" id="Rer-8f-YQK"/>
                                         </connections>
                                     </tableViewCell>
@@ -780,6 +783,18 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>
+                <swipeGestureRecognizer direction="right" id="cXu-Q3-x2f" userLabel="Right Swipe Gesture Recognizer">
+                    <connections>
+                        <action selector="onRightSwipeGesture:" destination="vXZ-lx-hvc" id="rip-vt-1Ta"/>
+                        <outlet property="delegate" destination="vXZ-lx-hvc" id="Wac-AA-FsF"/>
+                    </connections>
+                </swipeGestureRecognizer>
+                <swipeGestureRecognizer direction="left" id="dQq-Vv-4Pn" userLabel="Left Swipe Gesture Recognizer">
+                    <connections>
+                        <action selector="onLeftSwipeGesture:" destination="vXZ-lx-hvc" id="4EZ-Eh-qxP"/>
+                        <outlet property="delegate" destination="vXZ-lx-hvc" id="XZy-Ms-4BA"/>
+                    </connections>
+                </swipeGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="-1199" y="-1261"/>
         </scene>
