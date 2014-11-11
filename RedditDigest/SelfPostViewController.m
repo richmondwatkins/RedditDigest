@@ -21,6 +21,7 @@
 
 -(void)viewWillAppear:(BOOL)animated{
     self.textView.text = self.selfPostText;
+    NSLog(@"TV %@",self.textView.text);
 //    [self.selfPostCommentsTableView reloadData];
 }
 
