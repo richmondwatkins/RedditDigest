@@ -257,7 +257,6 @@
     } else if ([self.creatingYourDigestLabel.text isEqualToString:@"Creating your digest..."]) {
         self.creatingYourDigestLabel.text = @"Creating your digest";
     }
->>>>>>> features-digestUI
 }
 
 #pragma mark - TableView Delegate Methods
