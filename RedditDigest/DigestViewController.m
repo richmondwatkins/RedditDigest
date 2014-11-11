@@ -230,27 +230,8 @@
                                                                           toItem:animatingSnooImageView
                                                                        attribute:NSLayoutAttributeBottom
                                                                       multiplier:1.0
-<<<<<<< HEAD
                                                                         constant:60];
-        // Find most common ansestor view to add this top constraint to. If added to loadingView it won't know what to constrain it to
-        [self.view addConstraint:headlineTop];
 
-        NSLog(@"%f %f %f %f", loadingViewController.loadingImageView.frame.origin.x, loadingViewController.loadingImageView.frame.origin.y, loadingViewController.loadingImageView.frame.size.height, loadingViewController.loadingImageView.frame.size.width);
-        //loadingViewController.loadingImageView.frame = CGRectMake(0, 0, 244, 345);
-        loadingViewController.view.tag = 1;
-       // loadingViewController.view.backgroundColor = [UIColor greenColor];
-        //CGRect fixedFrame = self.view.frame;
-
-        //fixedFrame.origin.y = 500.0; ///self.view.frame.origin.y/2;
-        //NSLog(@"%f", self.view.frame.origin.y);
-        //loadingViewController.view.frame = fixedFrame;
-
-        //loadingViewController.view.center = self.view.center;
-        //[self presentViewController:loadingViewController animated:YES completion:nil];
-    }
-    [self.digestTableView reloadData];
-=======
-                                                                        constant:20.0];
 
     [blurEffectView addConstraint:creatingDigestTextLabelBottom];
 
