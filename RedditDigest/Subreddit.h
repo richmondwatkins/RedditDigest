@@ -14,6 +14,7 @@
 
 @property (nonatomic, retain) NSString * subreddit;
 @property (nonatomic, retain) NSString * url;
+@property (nonatomic, retain) NSData * image;
 
 +(void)addSubredditsToCoreData:(NSMutableArray *)selectedSubreddits withManagedObject:(NSManagedObjectContext *)managedObject;
 +(void)removeFromCoreData:(NSString *)subreddit withManagedObject:(NSManagedObjectContext *)managedObject;
