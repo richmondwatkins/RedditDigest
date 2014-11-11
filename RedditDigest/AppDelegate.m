@@ -32,20 +32,9 @@
 
 @implementation AppDelegate
 
-- (void)applicationDidBecomeActive:(UIApplication *)application
-{
-
-    [ZeroPush engageWithAPIKey:@"PM4ouAj1rzxmQysu5ej6" delegate:self];
-    [[UIApplication sharedApplication] registerUserNotificationSettings:[UIUserNotificationSettings settingsForTypes:(UIUserNotificationTypeSound | UIUserNotificationTypeAlert | UIUserNotificationTypeBadge) categories:nil]];
-         [[ZeroPush shared] registerForRemoteNotifications];
-
-    [application registerUserNotificationSettings:[UIUserNotificationSettings settingsForTypes:(UIUserNotificationTypeSound | UIUserNotificationTypeAlert | UIUserNotificationTypeBadge) categories:nil]];
-
-    [application registerForRemoteNotifications];
-}
-
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+
     UINavigationController *navigationController = (UINavigationController *)self.window.rootViewController;
     DigestViewController *digestController = (DigestViewController *)navigationController.topViewController;
     digestController.managedObjectContext = self.managedObjectContext;
@@ -67,6 +56,19 @@
     return YES;
 }
 
+
+- (void)applicationDidBecomeActive:(UIApplication *)application
+{
+
+    [ZeroPush engageWithAPIKey:@"PM4ouAj1rzxmQysu5ej6" delegate:self];
+    [[UIApplication sharedApplication] registerUserNotificationSettings:[UIUserNotificationSettings settingsForTypes:(UIUserNotificationTypeSound | UIUserNotificationTypeAlert | UIUserNotificationTypeBadge) categories:nil]];
+         [[ZeroPush shared] registerForRemoteNotifications];
+
+    [application registerUserNotificationSettings:[UIUserNotificationSettings settingsForTypes:(UIUserNotificationTypeSound | UIUserNotificationTypeAlert | UIUserNotificationTypeBadge) categories:nil]];
+
+    [application registerForRemoteNotifications];
+}
+
 - (void)setUpUI
 {
     // #336699 - reddit dark blue
@@ -76,8 +78,6 @@
     // White nav bar text color - font Helvetica Neue Regular
     [[UINavigationBar appearance] setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor whiteColor],
                                                                       NSFontAttributeName : [UIFont fontWithName:@"HelveticaNeue-Light" size:18.0]}];
-  
-
 
     [[UINavigationBar appearance] setTranslucent:NO];
 
@@ -93,7 +93,7 @@
 }
 
 -(void)registerDevice{
-    NSString* deviceURLString = @"http:// 192.168.1.4:3000/register/device";
+    NSString* deviceURLString = @"http://192.168.129.228:3000/register/device";
     NSURL *url = [[NSURL alloc] initWithString:[deviceURLString stringByAddingPercentEscapesUsingEncoding:NSASCIIStringEncoding]];
 
     NSError *error;
@@ -120,7 +120,7 @@
 
 -(void)registerDeviceForPushNotifications{
 
-    NSString* urlString = @"http:// 192.168.1.4:3000/register/push";
+    NSString* urlString = @"http://192.168.129.228:3000/register/push";
 
     NSURL *url = [[NSURL alloc] initWithString:[urlString stringByAddingPercentEscapesUsingEncoding:NSASCIIStringEncoding]];
 

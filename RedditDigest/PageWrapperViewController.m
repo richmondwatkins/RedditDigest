@@ -43,7 +43,7 @@
     NSDictionary *commentDictionary = self.comments[indexPath.row];
     Comment *comment = commentDictionary[@"parent"];
     NSString *partialComment = [self textToHtml:comment.body withCell:cell andComment:comment];
-    cell.textView.text = comment.body;
+    cell.textView.text = partialComment;
 
     [cell.textView sizeToFit];
     self.cellHeight = cell.textView.frame.size.height;
