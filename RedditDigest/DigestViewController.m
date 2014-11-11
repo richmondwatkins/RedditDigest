@@ -299,7 +299,15 @@
         if (self.isComingFromSubredditSelectionView) {
             UIView *viewToRemove = [self.view viewWithTag:1];
             [self.snooTextTimer invalidate];
-            [viewToRemove removeFromSuperview];
+
+            // Fade out loading snoo
+            [UIView animateWithDuration:0.3 delay:0.0
+                                options:UIViewAnimationOptionAllowUserInteraction
+                             animations:^{ viewToRemove.alpha = 0.0;}
+                             completion:^(BOOL fin) {
+                                 if (fin) [viewToRemove removeFromSuperview];
+                             }];
+
             //[self dismissViewControllerAnimated:YES completion:nil];
             self.isComingFromSubredditSelectionView = NO;
         }
