@@ -66,6 +66,7 @@
 
             if (self.isFromSettings) {[self checkForExistingSubscription];}
 
+//            self.subreddits = [self sortSubredditsAlphabetically];
              [self.subredditCollectionView reloadData];
              [self.activityIndicator stopAnimating];
              self.activityIndicator.hidden = YES;
@@ -402,7 +403,6 @@
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
     DigestViewController *digestViewController = segue.destinationViewController;
-    NSLog(@"%@",self.selectedSubreddits);
     digestViewController.subredditsForFirstDigest = self.selectedSubreddits;
     digestViewController.isComingFromSubredditSelectionView = YES;
 }
@@ -411,7 +411,6 @@
 {
     NSFetchRequest *subredditFetch = [NSFetchRequest fetchRequestWithEntityName:@"Subreddit"];
     NSArray *subscribedSubreddits = [self.managedObject executeFetchRequest:subredditFetch error:nil];
-    NSLog(@"CORE DATA SUBSSS %@",self.subreddits);
     for (Subreddit *subscribedSub in subscribedSubreddits) {
         for (RKSubreddit *subFromReddit in self.subreddits) {
             if ([subscribedSub.subreddit isEqualToString:subFromReddit.name]) {
@@ -422,6 +421,15 @@
         }
     }
 
+}
+
+-(NSMutableArray *)sortSubredditsAlphabetically{
+    NSLog(@"SUBREDDITS %@",self.subreddits);
+    NSSortDescriptor*sorter =[[NSSortDescriptor alloc] initWithKey:@"name" ascending:YES selector:@selector(localizedCaseInsensitiveCompare:)];
+    NSArray*sortDescriptors =[NSArray arrayWithObject: sorter];
+    [self.subreddits sortUsingDescriptors:sortDescriptors];
+
+    return [NSMutableArray arrayWithArray:sortDescriptors];
 }
 
 @end

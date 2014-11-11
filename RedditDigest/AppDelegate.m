@@ -62,7 +62,8 @@
     self.deviceString = [NSString stringWithFormat:@"%@", deviceID];
     [self registerDevice];
     //    }
-    
+
+    [[UIApplication sharedApplication] setApplicationIconBadgeNumber:0];
     return YES;
 }
 
