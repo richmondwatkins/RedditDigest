@@ -18,6 +18,7 @@
 @property (weak, nonatomic) IBOutlet UITextField *usernameTextField;
 @property (weak, nonatomic) IBOutlet UITextField *passwordTextField;
 @property (weak, nonatomic) IBOutlet UIButton *loginButton;
+@property UIActivityIndicatorView *loginActivityIndicatorView;
 
 @end
 
@@ -46,6 +47,11 @@
 
     // Hide login button until user has typed in password field as well as username field
     self.loginButton.alpha = 0.0;
+
+    self.loginActivityIndicatorView = [UIActivityIndicatorView new];
+    self.loginActivityIndicatorView.center = self.loginButton.center;
+    self.loginActivityIndicatorView.alpha = 1.0;
+    [self.view addSubview:self.loginActivityIndicatorView];
     
     [self.usernameTextField becomeFirstResponder];
 
@@ -76,6 +82,16 @@
 
 - (IBAction)login:(id)sender
 {
+    [self.loginActivityIndicatorView startAnimating];
+    self.loginActivityIndicatorView.alpha = 1.0;
+    // Hide login button to prevent double login error
+    // Show activity indicator to indicate logging in.
+    [UIView animateWithDuration:0.3 animations:^
+    {
+        self.loginButton.alpha = 0.0;
+        //self.loginActivityIndicatorView.alpha = 1.0;
+    }];
+
     [[RKClient sharedClient] signInWithUsername:self.usernameTextField.text password:self.passwordTextField.text completion:^(NSError *error) {
         if (!error)
         {
@@ -86,28 +102,22 @@
             BOOL result = [SSKeychain setPassword:self.passwordTextField.text forService:@"friendsOfSnoo" account:self.usernameTextField.text];
 
             if (result) {
+                [self.loginActivityIndicatorView stopAnimating];
                 [self performSegueWithIdentifier:@"SubredditSelectionFromLoginSegue" sender:self];
             }
-            /* // Richmond, uncomment this to get what you need after the user logs in correctly
-            [[RKClient sharedClient] subscribedSubredditsWithCompletion:^(NSArray *collection, RKPagination *pagination, NSError *error) {
-
-                RKSubreddit *subreddit = collection.firstObject;
-
-                [[RKClient sharedClient] linksInSubreddit:subreddit pagination:nil completion:^(NSArray *links, RKPagination *pagination, NSError *error) {
-                    //                    NSLog(@"Links: %@", links);
-                    [[RKClient sharedClient] upvote:links.firstObject completion:^(NSError *error) {
-                        NSLog(@"Upvoted the link!");
-                    }];
-                }];
-                
-            }];
-             */
         }
         else
         {
             UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Invalid Login" message:@"Incorrect username or password, give it another go" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
             alertView.delegate = self;
             [alertView show];
+            [self.loginActivityIndicatorView stopAnimating];
+            // Show login button if user got wrong password because they'll need to login again.
+            [UIView animateWithDuration:0.3 animations:^
+             {
+                 self.loginButton.alpha = 1.0;
+                 self.loginActivityIndicatorView.alpha = 0.0;
+             }];
         }
     }];
 }
