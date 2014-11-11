@@ -31,6 +31,18 @@
 
     self.imageCommentsTableView.estimatedRowHeight = 43.0;
     self.imageCommentsTableView.rowHeight = UITableViewAutomaticDimension;
+
+
+    [[RKClient sharedClient] linkWithFullName:self.post.postID completion:^(id object, NSError *error) {
+        [[RKClient sharedClient] upvote:object completion:^(NSError *error) {
+            NSLog(@"LINK ==============%@",self.post.subreddit);
+        }];
+    }];
+
+    if (![self.post.viewed boolValue]) {
+        self.post.viewed = [NSNumber numberWithBool:YES];
+        [self.post.managedObjectContext save:nil];
+    }
 }
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{

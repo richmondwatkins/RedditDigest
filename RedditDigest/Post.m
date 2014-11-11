@@ -29,7 +29,7 @@
 @dynamic url;
 @dynamic voteRatio;
 @dynamic comments;
-
+@dynamic postID;
 +(void)savePost:(RKLink *)post withManagedObject:(NSManagedObjectContext *)managedObjectContext withComments:(NSArray *)comments andCompletion:(void (^)(BOOL))complete{
 
     Post *savedPost = [NSEntityDescription insertNewObjectForEntityForName:@"Post" inManagedObjectContext:managedObjectContext];
@@ -39,8 +39,8 @@
     savedPost.nsfw = [NSNumber numberWithBool:post.NSFW];
     savedPost.author = post.author;
     savedPost.voteRatio = [NSNumber numberWithFloat:post.score];
-
-
+    savedPost.postID = post.fullName;
+    NSLog(@"ID ID ID %@",post.fullName);
     if (comments) {
         [Comment addCommentsToPost:savedPost commentsArray:comments withMangedObject:managedObjectContext];
     }

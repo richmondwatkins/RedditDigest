@@ -168,20 +168,22 @@
     NSDate *lastDigest = [[NSUserDefaults standardUserDefaults] valueForKey:@"LastDigest"];
 
     if([[NSDate date] compare: lastDigest] == NSOrderedDescending && [lastDigest compare: morningDigest] == NSOrderedDescending){
-//        [digestController retrievePostsFromCoreData:^(BOOL completed) {
-//            NSLog(@"log");
-//        }];
-        [digestController requestNewLinks];
+        [digestController retrievePostsFromCoreData:^(BOOL completed) {
+            NSLog(@"log");
+        }];
+//        [digestController requestNewLinks];
 
     }else if([[NSDate date] compare: eveningDigest] == NSOrderedDescending && [lastDigest compare: eveningDigest] == NSOrderedDescending){
-//        [digestController retrievePostsFromCoreData:^(BOOL completed) {
-//            NSLog(@"log");
-//        }];
-        [digestController requestNewLinks];
+        [digestController retrievePostsFromCoreData:^(BOOL completed) {
+            NSLog(@"log");
+        }];
+//        [digestController requestNewLinks];
 
     }else{
-        [digestController requestNewLinks];
-
+//        [digestController requestNewLinks];
+        [digestController retrievePostsFromCoreData:^(BOOL completed) {
+            NSLog(@"log");
+        }];
     }
 }
 

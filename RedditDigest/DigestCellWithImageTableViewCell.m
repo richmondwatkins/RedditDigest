@@ -10,14 +10,15 @@
 
 @implementation DigestCellWithImageTableViewCell
 
-- (void)awakeFromNib {
-    // Initialization code
+
+- (IBAction)upVoteButtonPressed:(UIButton *)sender {
+    [self.delegate upVoteButtonPressed:self];
 }
 
-- (void)setSelected:(BOOL)selected animated:(BOOL)animated {
-    [super setSelected:selected animated:animated];
 
-    // Configure the view for the selected state
+- (IBAction)downVoteButtonPressed:(UIButton *)sender {
+    [self.delegate downVoteButtonPressed:self];
 }
+
 
 @end

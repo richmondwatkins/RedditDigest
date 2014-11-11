@@ -23,7 +23,7 @@
 #import "LoginViewController.h"
 
 
-@interface DigestViewController () <UITableViewDataSource, UITableViewDelegate>
+@interface DigestViewController () <UITableViewDataSource, UITableViewDelegate, DigestCellDelegate>
 
 @property (strong, nonatomic) IBOutlet UITableView *digestTableView;
 @property NSMutableArray *digestPosts;
@@ -125,7 +125,7 @@
         //loadingViewController.view.center = self.view.center;
         //[self presentViewController:loadingViewController animated:YES completion:nil];
     }
-
+    [self.digestTableView reloadData];
 }
 
 #pragma mark - TableView Delegate Methods
@@ -141,6 +141,8 @@
     DigestCellWithImageTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"DigestCell"];
 
     Post *post = self.digestPosts[indexPath.row];
+    cell.post = post;
+    cell.delegate = self;
     cell.titleLabel.text = post.title;
     cell.subredditLabel.text = post.subreddit;
     cell.authorLabel.text = post.author;
@@ -154,6 +156,12 @@
     else {
         cell.thumbnailImage.image = [self squareCropImageToSideLength:[UIImage imageWithData:post.thumbnailImage] sideLength:50];
     }
+
+    if (post.viewed) {cell.thumbnailImage.alpha = 0.2;}
+
+    if ([post.upvoted boolValue]) {cell.upVoteButton.backgroundColor = [UIColor orangeColor];}
+    if ([post.downvoted boolValue]) {cell.downVoteButton.backgroundColor = [UIColor blueColor];}
+
     cell.thumbnailImage.layer.cornerRadius = 2.0;
     cell.thumbnailImage.layer.masksToBounds = YES;
 
@@ -375,5 +383,22 @@
     }];
 }
 
+-(void)upVoteButtonPressed:(DigestCellWithImageTableViewCell*)cell{
+    cell.post.upvoted = [NSNumber numberWithBool:YES];
+    cell.post.downvoted = [NSNumber numberWithBool:NO];
+    [self.managedObjectContext save:nil];
+
+    cell.upVoteButton.backgroundColor = [UIColor orangeColor];
+    cell.downVoteButton.backgroundColor = [UIColor whiteColor];
+}
+
+-(void)downVoteButtonPressed:(DigestCellWithImageTableViewCell *)cell{
+    cell.post.downvoted = [NSNumber numberWithBool:YES];
+    cell.post.upvoted = [NSNumber numberWithBool:YES];
+    [self.managedObjectContext save:nil];
+
+    cell.downVoteButton.backgroundColor = [UIColor blueColor];
+    cell.upVoteButton.backgroundColor = [UIColor whiteColor];
+}
 
 @end

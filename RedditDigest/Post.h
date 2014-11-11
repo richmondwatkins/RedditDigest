@@ -33,6 +33,10 @@
 @property (nonatomic, retain) NSString * url;
 @property (nonatomic, retain) NSNumber * voteRatio;
 @property (nonatomic, retain) NSSet *comments;
+@property (nonatomic, retain) NSString *postID;
+@property (nonatomic, retain) NSNumber * upvoted;
+@property (nonatomic, retain) NSNumber * downvoted;
+@property (nonatomic, retain) NSNumber * viewed;
 
 @end
 

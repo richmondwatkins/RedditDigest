@@ -102,6 +102,7 @@
         viewController.url = post.url;
     }
 
+    viewController.post = post;
     viewController.comments = parentChildComments;
     viewController.index = index;
     return viewController;
