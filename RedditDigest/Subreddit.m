@@ -20,12 +20,13 @@
 
 +(void)addSubredditsToCoreData:(NSMutableArray *)selectedSubreddits withManagedObject:(NSManagedObjectContext *)managedObject{
     for (NSDictionary *subreddit in selectedSubreddits) {
-
+        if (subreddit[@"categoryName"]) {
+            NSLog(@"CATEGORY %@", subreddit[@"categoryName"]);
+        }
         if (![subreddit[@"currentlySubscribed"] boolValue]) {
             Subreddit *savedSubreddit = [NSEntityDescription insertNewObjectForEntityForName:@"Subreddit" inManagedObjectContext:managedObject];
             savedSubreddit.subreddit = subreddit[@"subreddit"];
             savedSubreddit.url = subreddit[@"url"];
-            NSLog(@"SUBREDDIT NAME %@",subreddit[@"subreddit"]);
             if (subreddit[@"image"] != nil) {
                 [NSURLConnection sendAsynchronousRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:subreddit[@"image"]]] queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
                     if (data) {

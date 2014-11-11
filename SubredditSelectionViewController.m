@@ -146,9 +146,10 @@
         {
 
             NSDictionary *subreddit = self.catagories[indexPath.row];
+            NSString *categoryName = subreddit[@"category"][@"name"];
 
             for (NSDictionary *subredditDictionary in subreddit[@"subreddits"]) {
-                NSMutableDictionary *subredditDict = [[NSMutableDictionary alloc] initWithObjectsAndKeys:subredditDictionary[@"name"], @"subreddit",subredditDictionary[@"url"], @"url", nil];
+                NSMutableDictionary *subredditDict = [[NSMutableDictionary alloc] initWithObjectsAndKeys:subredditDictionary[@"name"], @"subreddit",subredditDictionary[@"url"], @"url", categoryName, @"categoryName", nil];
 
                 [self.selectedSubreddits addObject:subredditDict];
             }
