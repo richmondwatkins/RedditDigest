@@ -137,25 +137,6 @@
     [blurEffectView.contentView addSubview:animatingSnooImageView];
     [animatingSnooImageView startAnimating];
     [blurEffectView.contentView addSubview:self.creatingYourDigestLabel];
-    // Constraints for blurEffectView
-//    NSLayoutConstraint *blurEffectViewHeight = [NSLayoutConstraint constraintWithItem:blurEffectView
-//                                                                      attribute:NSLayoutAttributeHeight
-//                                                                      relatedBy:NSLayoutRelationEqual
-//                                                                         toItem:nil
-//                                                                      attribute:NSLayoutAttributeNotAnAttribute
-//                                                                     multiplier:1.0
-//                                                                       constant:self.view.bounds.size.height];
-//    [blurEffectView addConstraint:blurEffectViewHeight];
-//
-//    NSLayoutConstraint *blurEffectViewWidth = [NSLayoutConstraint constraintWithItem:blurEffectView
-//                                                                            attribute:NSLayoutAttributeWidth
-//                                                                            relatedBy:NSLayoutRelationEqual
-//                                                                               toItem:nil
-//                                                                            attribute:NSLayoutAttributeNotAnAttribute
-//                                                                           multiplier:1.0
-//                                                                             constant:self.view.bounds.size.width];
-//    [blurEffectView addConstraint:blurEffectViewWidth];
-
 
     NSLayoutConstraint *blurEffectViewTop = [NSLayoutConstraint constraintWithItem:blurEffectView
                                                                    attribute:NSLayoutAttributeTop
@@ -210,7 +191,7 @@
                                                                             toItem:blurEffectView
                                                                          attribute:NSLayoutAttributeTop
                                                                         multiplier:1.0
-                                                                          constant:0];
+                                                                          constant:45];
     [blurEffectView addConstraint:snooTop];
 
     NSLayoutConstraint *snooCenterX = [NSLayoutConstraint constraintWithItem:animatingSnooImageView
@@ -229,18 +210,18 @@
                                                                   toItem:blurEffectView
                                                                attribute:NSLayoutAttributeBottom
                                                               multiplier:1.0
-                                                                constant:0];
+                                                                constant:-75.0];
     [blurEffectView addConstraint:snooBottom];
 
-//    NSLayoutConstraint *snooAspectRatio = [NSLayoutConstraint constraintWithItem:animatingSnooImageView
-//                                                                       attribute:NSLayoutAttributeHeight
-//                                                                       relatedBy:NSLayoutRelationEqual
-//                                                                          toItem:animatingSnooImageView
-//                                                                       attribute:NSLayoutAttributeWidth
-//                                                                      multiplier:1.66
-//                                                                        constant:0.0];
-//
-//    [animatingSnooImageView addConstraint:snooAspectRatio];
+    NSLayoutConstraint *snooAspectRatio = [NSLayoutConstraint constraintWithItem:animatingSnooImageView
+                                                                       attribute:NSLayoutAttributeHeight
+                                                                       relatedBy:NSLayoutRelationEqual
+                                                                          toItem:animatingSnooImageView
+                                                                       attribute:NSLayoutAttributeWidth
+                                                                      multiplier:1.66
+                                                                        constant:0.0];
+
+    [animatingSnooImageView addConstraint:snooAspectRatio];
 
     // Creating your digest label constratins
     NSLayoutConstraint *creatingDigestTextLabelBottom = [NSLayoutConstraint constraintWithItem:self.creatingYourDigestLabel
@@ -262,15 +243,6 @@
                                                                     constant:0.0];
 
     [blurEffectView addConstraint:creatingDigestTextLabelCenterX];
-
-//    NSLayoutConstraint *blurEffectViewTop = [NSLayoutConstraint constraintWithItem:blurEffectView
-//                                                                         attribute:NSLayoutAttributeTop
-//                                                                         relatedBy:NSLayoutRelationEqual
-//                                                                            toItem:self.view
-//                                                                         attribute:NSLayoutAttributeTop
-//                                                                        multiplier:1.0
-//                                                                          constant:0];
-//    [self.view addConstraint:blurEffectViewTop];
 }
 
 -(void)timerEllipse:(NSTimer*)timer
