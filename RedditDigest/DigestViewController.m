@@ -28,6 +28,9 @@
 @property (strong, nonatomic) IBOutlet UITableView *digestTableView;
 @property NSMutableArray *digestPosts;
 @property UIRefreshControl *refreshControl;
+@property UILabel *creatingYourDigestLabel;
+@property NSTimer *snooTextTimer;
+
 @end
 
 @implementation DigestViewController
@@ -80,34 +83,154 @@
     }
 }
 
+- (void)viewDidLayoutSubviews
+{
+    [super viewDidLayoutSubviews];
+}
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
-    // These two lines enable automatic cell resizing thanks to iOS 8 💃
+    // These two lines enable automatic cell resizing thanks to iOS 8 🐋
     self.digestTableView.estimatedRowHeight = 68.0;
     self.digestTableView.rowHeight = UITableViewAutomaticDimension;
 
     if (self.isComingFromSubredditSelectionView) {
-        LoadingViewController *loadingViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"LoadingView"];
-        // Make sure storyboard doesn't try to add any constraints
-        loadingViewController.view.translatesAutoresizingMaskIntoConstraints = NO;
-        [self.view addSubview:loadingViewController.view];
+        [self createLoadingSnoo];
+    }
+}
 
-        NSLayoutConstraint *headlineHeight = [NSLayoutConstraint constraintWithItem:loadingViewController.view
-                                                                          attribute:NSLayoutAttributeWidth
-                                                                          relatedBy:NSLayoutRelationEqual
-                                                                             toItem:nil //loadingViewController.view
-                                                                          attribute:NSLayoutAttributeNotAnAttribute
-                                                                         multiplier:1.0
-                                                                           constant:244];
-        [loadingViewController.view addConstraint:headlineHeight];
+- (void)createLoadingSnoo
+{
+    NSArray *imageNames = @[@"loading_snoo0000", @"loading_snoo0001", @"loading_snoo0002", @"loading_snoo0003",
+                            @"loading_snoo0004", @"loading_snoo0005", @"loading_snoo0006", @"loading_snoo0007",
+                            @"loading_snoo0008", @"loading_snoo0009", @"loading_snoo0010", @"loading_snoo0011"];
 
-        NSLayoutConstraint *headlineTop = [NSLayoutConstraint constraintWithItem:loadingViewController.view
-                                                                       attribute:NSLayoutAttributeTop
+    NSMutableArray *images = [[NSMutableArray alloc] init];
+    for (int i = 0; i < imageNames.count; i++) {
+        [images addObject:[UIImage imageNamed:[imageNames objectAtIndex:i]]];
+    }
+
+    UIBlurEffect *blurEffect = [UIBlurEffect effectWithStyle:UIBlurEffectStyleLight];
+    UIVisualEffectView *blurEffectView = [[UIVisualEffectView alloc] initWithEffect:blurEffect];
+    blurEffectView.translatesAutoresizingMaskIntoConstraints = NO;
+    [blurEffectView setFrame:self.view.bounds];
+    blurEffectView.tag = 1;
+    [self.view addSubview:blurEffectView];
+
+    // Add imageView for snoo
+    UIImageView *animatingSnooImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 244, 345)];
+    animatingSnooImageView.translatesAutoresizingMaskIntoConstraints = NO;
+    animatingSnooImageView.center = blurEffectView.center;
+    animatingSnooImageView.animationImages = images;
+    animatingSnooImageView.animationDuration = 0.7;
+
+    // Add creating your digest label
+    self.creatingYourDigestLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, animatingSnooImageView.frame.size.width + 20, 20)];
+    self.creatingYourDigestLabel.translatesAutoresizingMaskIntoConstraints = NO;
+    self.creatingYourDigestLabel.text = @"Creating your digest.";
+
+    // Start timer that animates ellipse on the end of the "Creating your digest label..."
+    if (!self.snooTextTimer) {
+        self.snooTextTimer = [NSTimer scheduledTimerWithTimeInterval:0.5 target:self selector:@selector(timerEllipse:) userInfo:nil repeats:YES];
+    }
+
+    [blurEffectView.contentView addSubview:animatingSnooImageView];
+    [animatingSnooImageView startAnimating];
+    [blurEffectView.contentView addSubview:self.creatingYourDigestLabel];
+
+    NSLayoutConstraint *blurEffectViewTop = [NSLayoutConstraint constraintWithItem:blurEffectView
+                                                                   attribute:NSLayoutAttributeTop
+                                                                   relatedBy:NSLayoutRelationEqual
+                                                                      toItem:self.view
+                                                                   attribute:NSLayoutAttributeTop
+                                                                  multiplier:1.0
+                                                                    constant:0];
+    [self.view addConstraint:blurEffectViewTop];
+
+
+    NSLayoutConstraint *blurEffectViewLeft = [NSLayoutConstraint constraintWithItem:blurEffectView
+                                                                    attribute:NSLayoutAttributeLeading
+                                                                    relatedBy:NSLayoutRelationEqual
+                                                                       toItem:self.view
+                                                                    attribute:NSLayoutAttributeLeft
+                                                                   multiplier:1.0
+                                                                     constant:0];
+    [self.view addConstraint:blurEffectViewLeft];
+
+    NSLayoutConstraint *blurEffectViewRight = [NSLayoutConstraint constraintWithItem:blurEffectView
+                                                                     attribute:NSLayoutAttributeTrailing
+                                                                     relatedBy:NSLayoutRelationEqual
+                                                                        toItem:self.view
+                                                                     attribute:NSLayoutAttributeRight
+                                                                    multiplier:1.0
+                                                                      constant:0];
+    [self.view addConstraint:blurEffectViewRight];
+
+    NSLayoutConstraint *blurEffectViewBottom = [NSLayoutConstraint constraintWithItem:blurEffectView
+                                                                           attribute:NSLayoutAttributeBottom
+                                                                           relatedBy:NSLayoutRelationEqual
+                                                                              toItem:self.view
+                                                                           attribute:NSLayoutAttributeBottom
+                                                                          multiplier:1.0
+                                                                            constant:0];
+    [self.view addConstraint:blurEffectViewBottom];
+
+    // Animating snoo constraints
+    NSLayoutConstraint *snooWidth = [NSLayoutConstraint constraintWithItem:animatingSnooImageView
+                                                                 attribute:NSLayoutAttributeWidth
+                                                                 relatedBy:NSLayoutRelationEqual
+                                                                    toItem:nil
+                                                                 attribute:NSLayoutAttributeNotAnAttribute
+                                                                multiplier:1.0
+                                                                  constant:244];
+    [animatingSnooImageView addConstraint:snooWidth];
+
+    NSLayoutConstraint *snooTop = [NSLayoutConstraint constraintWithItem:animatingSnooImageView
+                                                                         attribute:NSLayoutAttributeTop
+                                                                         relatedBy:NSLayoutRelationEqual
+                                                                            toItem:blurEffectView
+                                                                         attribute:NSLayoutAttributeTop
+                                                                        multiplier:1.0
+                                                                          constant:45];
+    [blurEffectView addConstraint:snooTop];
+
+    NSLayoutConstraint *snooCenterX = [NSLayoutConstraint constraintWithItem:animatingSnooImageView
+                                                                   attribute:NSLayoutAttributeCenterX
+                                                                   relatedBy:NSLayoutRelationEqual
+                                                                      toItem:blurEffectView
+                                                                   attribute:NSLayoutAttributeCenterX
+                                                                  multiplier:1.0
+                                                                    constant:0.0];
+
+    [blurEffectView addConstraint:snooCenterX];
+
+    NSLayoutConstraint *snooBottom = [NSLayoutConstraint constraintWithItem:animatingSnooImageView
+                                                               attribute:NSLayoutAttributeBottom
+                                                               relatedBy:NSLayoutRelationEqual
+                                                                  toItem:blurEffectView
+                                                               attribute:NSLayoutAttributeBottom
+                                                              multiplier:1.0
+                                                                constant:-75.0];
+    [blurEffectView addConstraint:snooBottom];
+
+    NSLayoutConstraint *snooAspectRatio = [NSLayoutConstraint constraintWithItem:animatingSnooImageView
+                                                                       attribute:NSLayoutAttributeHeight
                                                                        relatedBy:NSLayoutRelationEqual
-                                                                          toItem:self.view
-                                                                       attribute:NSLayoutAttributeTop
+                                                                          toItem:animatingSnooImageView
+                                                                       attribute:NSLayoutAttributeWidth
+                                                                      multiplier:1.66
+                                                                        constant:0.0];
+
+    [animatingSnooImageView addConstraint:snooAspectRatio];
+
+    // Creating your digest label constratins
+    NSLayoutConstraint *creatingDigestTextLabelBottom = [NSLayoutConstraint constraintWithItem:self.creatingYourDigestLabel
+                                                                       attribute:NSLayoutAttributeBottom
+                                                                       relatedBy:NSLayoutRelationEqual
+                                                                          toItem:animatingSnooImageView
+                                                                       attribute:NSLayoutAttributeBottom
                                                                       multiplier:1.0
+<<<<<<< HEAD
                                                                         constant:60];
         // Find most common ansestor view to add this top constraint to. If added to loadingView it won't know what to constrain it to
         [self.view addConstraint:headlineTop];
@@ -126,6 +249,34 @@
         //[self presentViewController:loadingViewController animated:YES completion:nil];
     }
     [self.digestTableView reloadData];
+=======
+                                                                        constant:20.0];
+
+    [blurEffectView addConstraint:creatingDigestTextLabelBottom];
+
+    NSLayoutConstraint *creatingDigestTextLabelCenterX = [NSLayoutConstraint constraintWithItem:self.creatingYourDigestLabel
+                                                                   attribute:NSLayoutAttributeCenterX
+                                                                   relatedBy:NSLayoutRelationEqual
+                                                                      toItem:blurEffectView
+                                                                   attribute:NSLayoutAttributeCenterX
+                                                                  multiplier:1.0
+                                                                    constant:0.0];
+
+    [blurEffectView addConstraint:creatingDigestTextLabelCenterX];
+}
+
+-(void)timerEllipse:(NSTimer*)timer
+{
+    if ([self.creatingYourDigestLabel.text isEqualToString:@"Creating your digest"]) {
+        self.creatingYourDigestLabel.text = @"Creating your digest.";
+    } else if ([self.creatingYourDigestLabel.text isEqualToString:@"Creating your digest."]) {
+        self.creatingYourDigestLabel.text = @"Creating your digest..";
+    } else if ([self.creatingYourDigestLabel.text isEqualToString:@"Creating your digest.."]) {
+        self.creatingYourDigestLabel.text = @"Creating your digest...";
+    } else if ([self.creatingYourDigestLabel.text isEqualToString:@"Creating your digest..."]) {
+        self.creatingYourDigestLabel.text = @"Creating your digest";
+    }
+>>>>>>> features-digestUI
 }
 
 #pragma mark - TableView Delegate Methods
@@ -176,8 +327,17 @@
         // Close the loading snoo when subreddit loading is done
         if (self.isComingFromSubredditSelectionView) {
             UIView *viewToRemove = [self.view viewWithTag:1];
-            [viewToRemove removeFromSuperview];
-            [self dismissViewControllerAnimated:YES completion:nil];
+            [self.snooTextTimer invalidate];
+
+            // Fade out loading snoo
+            [UIView animateWithDuration:0.3 delay:0.0
+                                options:UIViewAnimationOptionAllowUserInteraction
+                             animations:^{ viewToRemove.alpha = 0.0;}
+                             completion:^(BOOL fin) {
+                                 if (fin) [viewToRemove removeFromSuperview];
+                             }];
+
+            //[self dismissViewControllerAnimated:YES completion:nil];
             self.isComingFromSubredditSelectionView = NO;
         }
     }
