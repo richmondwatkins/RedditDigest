@@ -65,10 +65,9 @@
     return cell;
 }
 
--(void)webViewDidFinishLoad:(UIWebView *)webView{
-//    [webView sizeToFit];
-//    [webView stringByEvaluatingJavaScriptFromString:@"document.getElementsByID('comment').childNode.remove"];
-
+-(void)webViewDidStartLoad:(UIWebView *)webView{
+    NSString *url = webView.request.URL.parameterString;
+    NSLog(@"URL %@",url);
 }
 
 - (NSString*)textToHtml:(NSString*)string withCell:(CommentTableViewCell *)cell andComment:(Comment *)comment{
@@ -114,6 +113,12 @@
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
     ExpandedCommentViewController *commentViewController = segue.destinationViewController;
     commentViewController.comment = self.selectedComment;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
+
+    return tableView.rowHeight;
+
 }
 
 
