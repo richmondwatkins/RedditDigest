@@ -12,36 +12,24 @@
 @interface PageWrapperViewController () <UIWebViewDelegate, CommentCellDelegate, UITextViewDelegate>
 @property Comment *selectedComment;
 @property CGFloat cellHeight;
+@property NSMutableArray *tableCells;
 @end
 
 @implementation PageWrapperViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.imageCommentsTableView.delegate = self;
-    self.imageCommentsTableView.dataSource = self;
-    self.imageCommentsTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-
-
-    self.selfPostCommentsTableView.delegate = self;
-    self.selfPostCommentsTableView.dataSource = self;
-    self.selfPostCommentsTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-
-
-    self.gifCommentsTableView.delegate = self;
-    self.gifCommentsTableView.dataSource = self;
-    self.gifCommentsTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-
-
-    self.videoCommentsTableView.delegate = self;
-    self.videoCommentsTableView.dataSource = self;
-    self.videoCommentsTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-
+    [self setTableDelegatesAndDataSource];
 
     if (![self.post.viewed boolValue]) {
         self.post.viewed = [NSNumber numberWithBool:YES];
         [self.post.managedObjectContext save:nil];
     }
+
+//    self.tableCells = [NSMutableArray array];
+//    for (Comment *comment in self.comments) {
+//        <#statements#>
+//    }
 }
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
@@ -112,6 +100,46 @@
         default:
             break;
     }
+}
+
+-(void)setTableDelegatesAndDataSource{
+    switch (self.sourceViewIdentifier) {
+        case 1:
+            self.imageCommentsTableView.delegate = self;
+            self.imageCommentsTableView.dataSource = self;
+            self.imageCommentsTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+
+            break;
+        case 2:
+            self.videoCommentsTableView.delegate = self;
+            self.videoCommentsTableView.dataSource = self;
+            self.videoCommentsTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+
+            break;
+        case 3:
+            self.gifCommentsTableView.delegate = self;
+            self.gifCommentsTableView.dataSource = self;
+            self.gifCommentsTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+
+            break;
+        case 4:
+            self.selfPostCommentsTableView.delegate = self;
+            self.selfPostCommentsTableView.dataSource = self;
+            self.selfPostCommentsTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+
+            break;
+        case 5:
+
+            break;
+        default:
+            break;
+    }
+
+
+
+
+
+
 }
 
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
