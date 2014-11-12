@@ -461,7 +461,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="prp-Qo-4Mm" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2481" y="-1238"/>
+            <point key="canvasLocation" x="1674" y="-1257"/>
         </scene>
         <!--Settings About Reddit View Controller-->
         <scene sceneID="NUo-nm-YjV">
@@ -513,7 +513,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="OeC-4k-jF3" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="Ll6-be-N5A" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="2420" y="-1782"/>
+            <point key="canvasLocation" x="2372" y="-1746"/>
         </scene>
         <!--Edit Digest-->
         <scene sceneID="FMl-Bs-7d0">
@@ -551,7 +551,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4HK-h7-o78" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="D6c-O0-7re" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="3232" y="-1099"/>
+            <point key="canvasLocation" x="2412" y="-995"/>
         </scene>
         <!--Loading View Controller-->
         <scene sceneID="DAn-pm-3Ok">
