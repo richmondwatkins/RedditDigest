@@ -512,15 +512,16 @@
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
 
-    if ([segue.identifier isEqualToString:@"PostSegue"]) {
+    if ([segue.identifier isEqualToString:@"PostSegue"])
+    {
         UITabBarController *postDetailViewTabBarController = segue.destinationViewController;
         PostViewController *postViewController = postDetailViewTabBarController.childViewControllers[0];
-        CommentViewController *commentsViewController = postDetailViewTabBarController.childViewControllers[1];
-        //commentsViewController.comments =postViewController.comm
         NSIndexPath *indexPath = [self.digestTableView indexPathForSelectedRow];
         postViewController.allPosts = self.digestPosts;
         postViewController.index = indexPath.row;
-    }else if ([segue.identifier isEqualToString:@"SettingsSegue"]){
+    }
+    else if ([segue.identifier isEqualToString:@"SettingsSegue"])
+    {
         SettingsViewController *settingsController = segue.destinationViewController;
         settingsController.managedObject = self.managedObjectContext;
     }
