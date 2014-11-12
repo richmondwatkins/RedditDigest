@@ -13,6 +13,7 @@
 #import "SelfPostViewController.h"
 #import "VideoPostViewController.h"
 #import "PageWrapperViewController.h"
+#import "CommentViewController.h"
 #import "Comment.h"
 #import "ChildComment.h"
 @interface PostViewController ()
@@ -74,6 +75,10 @@
         return nil;
     }
 
+    //[self.tabBarController.delegate tabBarController:self.tabBarController shouldSelectViewController:self.tabBarController.viewControllers[1]];
+    //[self.tabBarController setSelectedIndex:1];
+
+
     Post *post = self.allPosts[index];
     NSArray *allComments = [self commentSorter:[post.comments allObjects]];
     NSMutableArray *parentChildComments = [self matchChildCommentsToParent:allComments];
@@ -102,8 +107,12 @@
     }
 
     viewController.post = post;
-    viewController.comments = parentChildComments;
     viewController.index = index;
+
+    // Give the comments tab the comments from the selected post
+    CommentViewController *commentsViewController = (CommentViewController *)self.tabBarController.viewControllers[1];
+    commentsViewController.comments = parentChildComments;
+
     return viewController;
 }
 

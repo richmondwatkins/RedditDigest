@@ -20,9 +20,5 @@
     // Configure the view for the selected state
 }
 
-- (IBAction)onShowMoreButtonTapped:(id)sender {
-    [self.delegate onShowMoreButtonTapped:self];
-}
-
 
 @end

@@ -461,7 +461,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="prp-Qo-4Mm" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1669" y="-1238"/>
+            <point key="canvasLocation" x="2481" y="-1238"/>
         </scene>
         <!--Settings About Reddit View Controller-->
         <scene sceneID="NUo-nm-YjV">
@@ -551,7 +551,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4HK-h7-o78" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="D6c-O0-7re" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="2420" y="-1099"/>
+            <point key="canvasLocation" x="3232" y="-1099"/>
         </scene>
         <!--Loading View Controller-->
         <scene sceneID="DAn-pm-3Ok">
@@ -749,7 +749,7 @@
                                             <outlet property="upVoteDownVoteLabel" destination="8si-Mc-4aB" id="O2l-m3-fRN"/>
                                             <outletCollection property="gestureRecognizers" destination="cXu-Q3-x2f" appends="YES" id="J4w-wC-hZW"/>
                                             <outletCollection property="gestureRecognizers" destination="dQq-Vv-4Pn" appends="YES" id="X0J-8T-Pyg"/>
-                                            <segue destination="5uv-Oq-P6m" kind="show" identifier="PostSegue" id="Rer-8f-YQK"/>
+                                            <segue destination="tAR-qU-Fq9" kind="show" identifier="PostSegue" id="Rer-8f-YQK"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
@@ -809,47 +809,13 @@
                     <view key="view" contentMode="scaleToFill" id="UbX-54-uAT">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="8bD-j6-fU8">
-                                <rect key="frame" x="0.0" y="64" width="600" height="315"/>
-                            </imageView>
-                            <textView hidden="YES" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Pz7-rn-1w1">
-                                <rect key="frame" x="0.0" y="64" width="600" height="315"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
-                            </textView>
-                            <webView hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8Bg-6O-2Ht">
-                                <rect key="frame" x="0.0" y="64" width="600" height="315"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                            </webView>
-                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <constraints>
-                            <constraint firstItem="ZAd-C1-XKX" firstAttribute="top" secondItem="8bD-j6-fU8" secondAttribute="bottom" constant="221" id="00g-T6-YiO"/>
-                            <constraint firstItem="Pz7-rn-1w1" firstAttribute="top" secondItem="8Bg-6O-2Ht" secondAttribute="top" id="EBM-kb-oWK"/>
-                            <constraint firstItem="8Bg-6O-2Ht" firstAttribute="bottom" secondItem="8bD-j6-fU8" secondAttribute="bottom" id="F2e-UV-uNm"/>
-                            <constraint firstItem="Pz7-rn-1w1" firstAttribute="trailing" secondItem="8Bg-6O-2Ht" secondAttribute="trailing" id="FKA-N2-3R7"/>
-                            <constraint firstItem="8Bg-6O-2Ht" firstAttribute="leading" secondItem="8bD-j6-fU8" secondAttribute="leading" id="UOk-SZ-cns"/>
-                            <constraint firstAttribute="trailing" secondItem="8bD-j6-fU8" secondAttribute="trailing" id="dOd-XQ-Tuy"/>
-                            <constraint firstItem="8Bg-6O-2Ht" firstAttribute="trailing" secondItem="8bD-j6-fU8" secondAttribute="trailing" id="dtU-4S-Fdm"/>
-                            <constraint firstItem="8Bg-6O-2Ht" firstAttribute="top" secondItem="8bD-j6-fU8" secondAttribute="top" id="eW4-0M-cn0"/>
-                            <constraint firstItem="Pz7-rn-1w1" firstAttribute="bottom" secondItem="8Bg-6O-2Ht" secondAttribute="bottom" id="gmb-lO-iDi"/>
-                            <constraint firstItem="Pz7-rn-1w1" firstAttribute="leading" secondItem="8bD-j6-fU8" secondAttribute="leading" id="oTx-MB-nkY"/>
-                            <constraint firstItem="8bD-j6-fU8" firstAttribute="top" secondItem="UbX-54-uAT" secondAttribute="top" constant="64" id="sBC-vg-ZOD"/>
-                            <constraint firstItem="8bD-j6-fU8" firstAttribute="leading" secondItem="UbX-54-uAT" secondAttribute="leading" id="som-9x-mMh"/>
-                        </constraints>
                     </view>
-                    <connections>
-                        <outlet property="imageView" destination="8bD-j6-fU8" id="ACn-n6-Tep"/>
-                        <outlet property="textView" destination="Pz7-rn-1w1" id="HTs-mi-3Ht"/>
-                        <outlet property="webView" destination="8Bg-6O-2Ht" id="oYK-sd-BpN"/>
-                    </connections>
+                    <tabBarItem key="tabBarItem" systemItem="favorites" id="iqI-bJ-aFb"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Jq0-Os-qzQ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-485" y="-815"/>
+            <point key="canvasLocation" x="210" y="-815"/>
         </scene>
         <!--Image Post View Controller-->
         <scene sceneID="hbc-8v-vBY">
@@ -938,12 +904,80 @@
                     <connections>
                         <outlet property="imageCommentsTableView" destination="C4P-qA-24N" id="TLa-4h-20Y"/>
                         <outlet property="imageView" destination="8tw-of-qFa" id="QKj-gM-tVW"/>
-                        <segue destination="FMS-2l-flB" kind="show" identifier="ImageSegue" id="LRR-Mn-QM8"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="NaH-fd-BDo" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="174" y="-826"/>
+            <point key="canvasLocation" x="880" y="-815"/>
+        </scene>
+        <!--Comment View Controller-->
+        <scene sceneID="6dd-yo-DqN">
+            <objects>
+                <viewController id="lJS-Le-QsK" customClass="CommentViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="ZLR-aP-wex"/>
+                        <viewControllerLayoutGuide type="bottom" id="hfO-Cs-Dw7"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="3p4-y1-ZwX">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="89" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="W7d-rk-Yno">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <prototypes>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="CommentCell" rowHeight="90" id="1Su-cK-jcw" customClass="CommentTableViewCell">
+                                        <rect key="frame" x="0.0" y="0.0" width="600" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="1Su-cK-jcw" id="Lkf-eD-zbL">
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <textView hidden="YES" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="TYq-Ju-WbR">
+                                                    <rect key="frame" x="0.0" y="0.0" width="600" height="90"/>
+                                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                    <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                                </textView>
+                                                <webView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hv1-36-sKE">
+                                                    <rect key="frame" x="0.0" y="0.0" width="600" height="90"/>
+                                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                </webView>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="TYq-Ju-WbR" firstAttribute="leading" secondItem="Lkf-eD-zbL" secondAttribute="leading" id="KwY-Kg-REU"/>
+                                                <constraint firstAttribute="trailing" secondItem="TYq-Ju-WbR" secondAttribute="trailing" id="NJG-an-agc"/>
+                                                <constraint firstAttribute="bottom" secondItem="TYq-Ju-WbR" secondAttribute="bottom" id="ZcP-tg-wML"/>
+                                                <constraint firstAttribute="trailing" secondItem="hv1-36-sKE" secondAttribute="trailing" id="lqp-8c-WyX"/>
+                                                <constraint firstItem="hv1-36-sKE" firstAttribute="leading" secondItem="Lkf-eD-zbL" secondAttribute="leading" id="nqX-Rr-VH9"/>
+                                                <constraint firstItem="TYq-Ju-WbR" firstAttribute="top" secondItem="Lkf-eD-zbL" secondAttribute="top" id="r70-eI-HPc"/>
+                                                <constraint firstItem="hv1-36-sKE" firstAttribute="top" secondItem="Lkf-eD-zbL" secondAttribute="top" id="tHO-3L-Vlk"/>
+                                                <constraint firstAttribute="bottom" secondItem="hv1-36-sKE" secondAttribute="bottom" id="tep-uY-fHa"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="commentWebView" destination="hv1-36-sKE" id="2mL-8C-Us0"/>
+                                            <outlet property="textView" destination="TYq-Ju-WbR" id="xBH-of-iqH"/>
+                                        </connections>
+                                    </tableViewCell>
+                                </prototypes>
+                            </tableView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="bottom" secondItem="W7d-rk-Yno" secondAttribute="bottom" id="35L-tz-z1C"/>
+                            <constraint firstItem="W7d-rk-Yno" firstAttribute="leading" secondItem="3p4-y1-ZwX" secondAttribute="leading" id="Wn4-Xt-nky"/>
+                            <constraint firstAttribute="trailing" secondItem="W7d-rk-Yno" secondAttribute="trailing" id="XCd-JV-1V8"/>
+                            <constraint firstItem="W7d-rk-Yno" firstAttribute="top" secondItem="3p4-y1-ZwX" secondAttribute="top" id="tkd-sI-CgO"/>
+                        </constraints>
+                    </view>
+                    <tabBarItem key="tabBarItem" systemItem="bookmarks" id="MLY-S0-c1g"/>
+                    <connections>
+                        <outlet property="tableView" destination="W7d-rk-Yno" id="EDT-fU-uap"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="VAy-o2-vYu" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-485" y="-109"/>
         </scene>
         <!--Web Post View Controller-->
         <scene sceneID="pKa-98-ybb">
@@ -972,45 +1006,11 @@
                     </view>
                     <connections>
                         <outlet property="webView" destination="xAZ-3t-2Y0" id="hA7-ke-RVd"/>
-                        <segue destination="FMS-2l-flB" kind="show" identifier="WebSegue" id="92O-5Q-vfP"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Nbf-Mv-9qo" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="162" y="-179"/>
-        </scene>
-        <!--Expanded Comment View Controller-->
-        <scene sceneID="xps-tC-NZW">
-            <objects>
-                <viewController id="FMS-2l-flB" customClass="ExpandedCommentViewController" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="fCj-a5-Cz7"/>
-                        <viewControllerLayoutGuide type="bottom" id="4Hc-6g-amU"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="0rU-6u-nMb">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <webView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ieB-gh-Vpy">
-                                <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                            </webView>
-                        </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <constraints>
-                            <constraint firstItem="ieB-gh-Vpy" firstAttribute="leading" secondItem="0rU-6u-nMb" secondAttribute="leading" id="5vL-za-8nE"/>
-                            <constraint firstAttribute="centerY" secondItem="ieB-gh-Vpy" secondAttribute="centerY" id="DPo-jA-dFq"/>
-                            <constraint firstItem="ieB-gh-Vpy" firstAttribute="bottom" secondItem="4Hc-6g-amU" secondAttribute="top" id="XN8-cp-gHR"/>
-                            <constraint firstAttribute="centerX" secondItem="ieB-gh-Vpy" secondAttribute="centerX" id="qeI-Lb-tC6"/>
-                        </constraints>
-                    </view>
-                    <connections>
-                        <outlet property="webView" destination="ieB-gh-Vpy" id="KYF-Vh-BC5"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="6Wk-lv-8uF" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="883" y="24"/>
+            <point key="canvasLocation" x="880" y="-161"/>
         </scene>
         <!--Self Post View Controller-->
         <scene sceneID="cLa-ju-UEN">
@@ -1099,12 +1099,11 @@
                     <connections>
                         <outlet property="selfPostCommentsTableView" destination="r7L-zg-vEr" id="9Rh-zo-QYv"/>
                         <outlet property="textView" destination="fLy-Vc-hJK" id="cPc-ca-QAf"/>
-                        <segue destination="FMS-2l-flB" kind="show" identifier="SelfPostSegue" id="MX2-mM-vvT"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Bnc-d4-jlR" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="133" y="503"/>
+            <point key="canvasLocation" x="880" y="499"/>
         </scene>
         <!--Gif Post View Controller-->
         <scene sceneID="021-Dd-lv4">
@@ -1175,12 +1174,11 @@
                     </view>
                     <connections>
                         <outlet property="gifCommentsTableView" destination="NwI-1Q-xhR" id="Qlk-7Y-Y7z"/>
-                        <segue destination="FMS-2l-flB" kind="show" identifier="GifSegue" id="Fcg-HK-9XW"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="j3N-lV-b48" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="174" y="1177"/>
+            <point key="canvasLocation" x="880" y="1163"/>
         </scene>
         <!--Video Post View Controller-->
         <scene sceneID="4FI-Sp-DX2">
@@ -1261,12 +1259,11 @@
                     <connections>
                         <outlet property="videoCommentsTableView" destination="J5S-07-45C" id="aEn-wX-iAQ"/>
                         <outlet property="videoView" destination="54x-dI-T8y" id="jOm-u4-hDs"/>
-                        <segue destination="FMS-2l-flB" kind="show" identifier="VideoSegue" id="Z1T-wi-7lm"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="0s7-F9-JpU" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="174" y="1843"/>
+            <point key="canvasLocation" x="880" y="1820"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="xjk-nU-YvO">
@@ -1304,6 +1301,25 @@
             </objects>
             <point key="canvasLocation" x="233" y="-1644"/>
         </scene>
+        <!--Tab Bar Controller-->
+        <scene sceneID="x9e-bg-dhX">
+            <objects>
+                <tabBarController automaticallyAdjustsScrollViewInsets="NO" id="tAR-qU-Fq9" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <nil key="simulatedBottomBarMetrics"/>
+                    <tabBar key="tabBar" contentMode="scaleToFill" id="blz-RW-d6k">
+                        <autoresizingMask key="autoresizingMask"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                    </tabBar>
+                    <connections>
+                        <segue destination="5uv-Oq-P6m" kind="relationship" relationship="viewControllers" id="78Y-Iv-Ibt"/>
+                        <segue destination="lJS-Le-QsK" kind="relationship" relationship="viewControllers" id="uM5-r3-5eg"/>
+                    </connections>
+                </tabBarController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="6jE-Mr-pR5" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-485" y="-815"/>
+        </scene>
     </scenes>
     <resources>
         <image name="downvote_arrow" width="25" height="41"/>
@@ -1314,8 +1330,7 @@
         <image name="welcome_snoo" width="400" height="537"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="Fcg-HK-9XW"/>
-        <segue reference="LaA-qT-0SF"/>
         <segue reference="PcQ-bC-EQa"/>
+        <segue reference="LaA-qT-0SF"/>
     </inferredMetricsTieBreakers>
 </document>

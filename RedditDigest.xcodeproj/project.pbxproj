@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		3400A13D1A0EB50D00A39D3F /* CustomButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 3400A13C1A0EB50D00A39D3F /* CustomButton.m */; };
+		340531ED1A1312AE000CF33C /* CommentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 340531EC1A1312AE000CF33C /* CommentViewController.m */; };
 		3413401D1A0C996F004C8C15 /* DigestCellWithImageTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3413401C1A0C996F004C8C15 /* DigestCellWithImageTableViewCell.m */; };
 		3413FC361A1117490018A172 /* LoadingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3413FC351A1117490018A172 /* LoadingViewController.m */; };
 		3417AC0D1A092D970026961C /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3417AC0C1A092D970026961C /* SettingsViewController.m */; };
@@ -61,6 +62,8 @@
 		0C4AAC9EB76DD8D441DD99F5 /* Pods-RedditDigest.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RedditDigest.debug.xcconfig"; path = "Pods/Target Support Files/Pods-RedditDigest/Pods-RedditDigest.debug.xcconfig"; sourceTree = "<group>"; };
 		3400A13B1A0EB50D00A39D3F /* CustomButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomButton.h; sourceTree = "<group>"; };
 		3400A13C1A0EB50D00A39D3F /* CustomButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomButton.m; sourceTree = "<group>"; };
+		340531EB1A1312AE000CF33C /* CommentViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CommentViewController.h; sourceTree = "<group>"; };
+		340531EC1A1312AE000CF33C /* CommentViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CommentViewController.m; sourceTree = "<group>"; };
 		3413401B1A0C996F004C8C15 /* DigestCellWithImageTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DigestCellWithImageTableViewCell.h; sourceTree = "<group>"; };
 		3413401C1A0C996F004C8C15 /* DigestCellWithImageTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DigestCellWithImageTableViewCell.m; sourceTree = "<group>"; };
 		3413FC341A1117490018A172 /* LoadingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoadingViewController.h; sourceTree = "<group>"; };
@@ -315,9 +318,9 @@
 				5DAADDD01A0D4CD200BB91AB /* ImagePostViewController.h */,
 				5DAADDD11A0D4CD200BB91AB /* ImagePostViewController.m */,
 				5DAADDD31A0D502600BB91AB /* WebPostViewController.h */,
+				5DAADDD41A0D502600BB91AB /* WebPostViewController.m */,
 				5D311EDF1A10A49D002AFC3C /* CommentTableViewCell.h */,
 				5D311EDD1A10A359002AFC3C /* CommentTableViewCell.m */,
-				5DAADDD41A0D502600BB91AB /* WebPostViewController.m */,
 				5DE75C991A0D92580031F0F7 /* SelfPostViewController.h */,
 				5DE75C9A1A0D92580031F0F7 /* SelfPostViewController.m */,
 				5DE75C9C1A0D92760031F0F7 /* GifPostViewController.h */,
@@ -326,6 +329,8 @@
 				5DE75CA01A0D941D0031F0F7 /* VideoPostViewController.m */,
 				5DE75CAA1A0DC9C30031F0F7 /* PageWrapperViewController.h */,
 				5DE75CAB1A0DC9C30031F0F7 /* PageWrapperViewController.m */,
+				340531EB1A1312AE000CF33C /* CommentViewController.h */,
+				340531EC1A1312AE000CF33C /* CommentViewController.m */,
 			);
 			name = PaginatedViewControllers;
 			sourceTree = "<group>";
@@ -505,6 +510,7 @@
 				5DB5B84C1A084055007DC036 /* SubredditListCollectionViewCell.m in Sources */,
 				5DB47AEE1A0C4A700034EA84 /* UserRequests.m in Sources */,
 				5DE75CAC1A0DC9C30031F0F7 /* PageWrapperViewController.m in Sources */,
+				340531ED1A1312AE000CF33C /* CommentViewController.m in Sources */,
 				5D311EDE1A10A359002AFC3C /* CommentTableViewCell.m in Sources */,
 				5DB5B8491A083DF0007DC036 /* SubredditSelectionViewController.m in Sources */,
 				3417AC131A0945B40026961C /* KTCenterFlowLayout.m in Sources */,
