@@ -52,7 +52,7 @@
 {
     [super viewWillAppear:animated];
 
-    if ([[NSUserDefaults standardUserDefaults] boolForKey:@"HasLaunchedOnce"])
+    if ([[NSUserDefaults standardUserDefaults] boolForKey:@"HasSubscriptions"])
     {
         // If user is coming from selecting subreddits for their digest then show the loading snoo
 //        if (self.isComingFromSubredditSelectionView) {
@@ -78,9 +78,6 @@
         WelcomViewController *welcomeViewController = [storyboard instantiateViewControllerWithIdentifier:@"WelcomeViewController"];
         welcomeViewController.managedObject = self.managedObjectContext;
         [self.parentViewController presentViewController:welcomeViewController animated:YES completion:nil];
-
-        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"HasLaunchedOnce"];
-        [[NSUserDefaults standardUserDefaults] synchronize];
     }
 }
 
@@ -438,9 +435,7 @@
 {
     [Post removeAllPostsFromCoreData:self.managedObjectContext];
 
-    NSUUID *deviceID = [UIDevice currentDevice].identifierForVendor;
-    NSString *deviceString = [NSString stringWithFormat:@"%@", deviceID];
-    [UserRequests retrieveUsersSubreddits:deviceString withCompletion:^(NSDictionary *results) {
+    [UserRequests retrieveUsersSubredditswithCompletion:^(NSDictionary *results) {
         [RedditRequests retrieveLatestPostFromArray:results[@"subreddits"] withManagedObject:self.managedObjectContext withCompletion:^(BOOL completed) {
             [self performNewFetchedDataActions];
             completionHandler(UIBackgroundFetchResultNewData);
@@ -461,10 +456,32 @@
 
 
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-    NSDate *lastUpdateDate = [NSDate date];
-    [userDefaults setObject:lastUpdateDate forKey:@"LastDigest"];
-    [userDefaults synchronize];
+    NSTimeInterval timeInMiliseconds = [[NSDate date] timeIntervalSince1970];
+    NSNumber *timeObject = [NSNumber numberWithDouble:timeInMiliseconds];
+    [userDefaults setObject:timeObject forKey:@"LastDigest"];
 
+    NSNumber *currentDigest = [userDefaults objectForKey:@"NextDigest"];
+    [userDefaults setObject:currentDigest forKey:@"LastScheduled"];
+
+    NSCalendar *calendar = [NSCalendar currentCalendar];
+    NSDateComponents *eveningComponents = [calendar components:NSCalendarUnitDay|NSCalendarUnitMonth|NSCalendarUnitYear fromDate:[NSDate date]];
+    eveningComponents.hour = 20;
+    eveningComponents.timeZone = [NSTimeZone localTimeZone];
+    NSDate *eveningDate = [calendar dateFromComponents:eveningComponents];
+    NSTimeInterval eveningDigest = [eveningDate timeIntervalSince1970];
+
+    NSDateComponents *morningComponents = [calendar components:NSCalendarUnitDay|NSCalendarUnitMonth|NSCalendarUnitYear fromDate:[NSDate date]];
+    morningComponents.hour = 8;
+    morningComponents.timeZone = [NSTimeZone localTimeZone];
+    NSDate *morningDate = [calendar dateFromComponents:morningComponents];
+    NSTimeInterval morningDigest = [morningDate timeIntervalSince1970];
+
+    NSTimeInterval now = [[NSDate date] timeIntervalSince1970];
+    if (now < eveningDigest) {
+        [userDefaults setObject:[NSNumber numberWithDouble:eveningDigest] forKey:@"NextDigest"];
+    }else{
+        [userDefaults setObject:[NSNumber numberWithDouble:morningDigest] forKey:@"NextDigest"];
+    [userDefaults synchronize];
 }
 
 -(void)retrievePostsFromCoreData:(void (^)(BOOL))completionHandler
@@ -481,12 +498,14 @@
     self.digestPosts = [NSMutableArray arrayWithArray:posts];
     if (self.digestPosts.count) {
         completionHandler(YES);
+        [self.digestTableView reloadData];
     }
 }
 
 -(void)requestNewLinks
 {
     [Post removeAllPostsFromCoreData:self.managedObjectContext];
+    [self.digestPosts removeAllObjects];
 
     NSFetchRequest * fetch = [[NSFetchRequest alloc] init];
     [fetch setEntity:[NSEntityDescription entityForName:@"Subreddit" inManagedObjectContext:self.managedObjectContext]];
@@ -532,7 +551,10 @@
 {
     [Post removeAllPostsFromCoreData:self.managedObjectContext];
     [self.digestPosts removeAllObjects];
-    NSLog(@"SUB FOR FIRST DIG %@",self.subredditsForFirstDigest);
+
+    [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"HasSubscriptions"];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+
     [RedditRequests retrieveLatestPostFromArray:self.subredditsForFirstDigest withManagedObject:self.managedObjectContext withCompletion:^(BOOL completed) {
         if (completed) {
             [self performNewFetchedDataActions];

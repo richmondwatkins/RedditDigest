@@ -71,7 +71,8 @@
     if (index >= self.allPosts.count) {
         index = 0;
     }
-    if (index < 0) {
+    if (index <= 0) {
+//        index = self.allPosts.count;
         return nil;
     }
 

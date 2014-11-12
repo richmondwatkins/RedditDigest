@@ -83,7 +83,7 @@
         self.hasRedditAccount = NO;
         self.activityIndicator.hidden = YES;
 
-        NSURL *categoryURL = [NSURL URLWithString:@"http://192.168.1.4:3000/get/categories"];
+        NSURL *categoryURL = [NSURL URLWithString:@"http://192.168.129.228:3000/get/categories"];
         NSURLRequest *request = [NSURLRequest requestWithURL:categoryURL];
         [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
             NSDictionary *results = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:nil];
@@ -218,6 +218,7 @@
         SubredditCategory *category = self.catagories[indexPath.row];
 
         for (SelectableSubreddit *sub in category.subreddits) {
+            [Subreddit removeFromCoreData:sub.name withManagedObject:self.managedObject];
             [self.selectedSubreddits removeObject:sub];
         }
 
@@ -383,13 +384,11 @@
  */
 - (IBAction)finishSelectingSubreddits:(id)sender
 {
-    NSUUID *deviceID = [UIDevice currentDevice].identifierForVendor;
-    NSString *deviceString = [NSString stringWithFormat:@"%@", deviceID];
-    NSDictionary *dataDictionary = [[NSDictionary alloc] initWithObjectsAndKeys:self.selectedSubreddits, @"subreddits", nil];
 
+    NSDictionary *dataDictionary = [[NSDictionary alloc] initWithObjectsAndKeys:self.selectedSubreddits, @"subreddits", nil];
     [Subreddit addSubredditsToCoreData:self.selectedSubreddits withManagedObject:self.managedObject];
 
-    [UserRequests postSelectedSubreddits:deviceString selections:dataDictionary withCompletion:^(BOOL completed) {
+    [UserRequests postSelectedSubreddits:dataDictionary withCompletion:^(BOOL completed) {
         if (completed) {
             //
         }

@@ -34,26 +34,25 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    if (![[NSUserDefaults standardUserDefaults] boolForKey:@"HasLaunchedOnce"]){
-        [UserRequests registerDevice];
-    }
-
     UINavigationController *navigationController = (UINavigationController *)self.window.rootViewController;
     DigestViewController *digestController = (DigestViewController *)navigationController.topViewController;
     digestController.managedObjectContext = self.managedObjectContext;
+
+    if (![[NSUserDefaults standardUserDefaults] valueForKey:@"DeviceID"]) {
+        [self performFirstTimeUserMethods];
+    }else{
+        [self reloadFromCoreDataOrFetch:digestController];
+    }
+
 
     [self setUpUI];
 
     [self showWelcomeViewOrDigestView];
     [[UIApplication sharedApplication] setMinimumBackgroundFetchInterval:UIApplicationBackgroundFetchIntervalMinimum];
-
-    [self reloadFromCoreDataOrFetch:digestController];
-
-
     [[UIApplication sharedApplication] setApplicationIconBadgeNumber:0];
+
     return YES;
 }
-
 
 - (void)applicationDidBecomeActive:(UIApplication *)application
 {
@@ -97,46 +96,58 @@
 
 
 -(void)reloadFromCoreDataOrFetch:(DigestViewController *)digestController{
-    NSCalendar* myCalendar = [NSCalendar currentCalendar];
-    NSDateComponents* morningComponents = [myCalendar components:NSCalendarUnitYear|NSCalendarUnitMonth|NSCalendarUnitDay
-                                                 fromDate:[NSDate date]];
-    [morningComponents setHour: 2];
-    [morningComponents setMinute: 0];
-    [morningComponents setSecond: 0];
-    NSDate *morningDigest = [myCalendar dateFromComponents:morningComponents];
 
-    NSDateComponents *eveningComponents = [myCalendar components:NSCalendarUnitYear|NSCalendarUnitMonth|NSCalendarUnitDay
-                                                 fromDate:[NSDate date]];
-    [eveningComponents setHour: 18];
-    [eveningComponents setMinute: 0];
-    [eveningComponents setSecond: 0];
-    NSDate *eveningDigest = [myCalendar dateFromComponents:eveningComponents];
+    NSNumber *lastDigest = [[NSUserDefaults standardUserDefaults] valueForKey:@"LastDigest"];
+    NSNumber *lastScheduled = [[NSUserDefaults standardUserDefaults] valueForKey:@"LastScheduledDigest"];
 
-    NSDate *lastDigest = [[NSUserDefaults standardUserDefaults] valueForKey:@"LastDigest"];
-
-    if([[NSDate date] compare: lastDigest] == NSOrderedDescending && [lastDigest compare: morningDigest] == NSOrderedDescending){
+    if (lastScheduled.intValue < lastDigest.intValue) {
         [digestController retrievePostsFromCoreData:^(BOOL completed) {
-            NSLog(@"log");
+            NSLog(@"CORRECT");
         }];
-        [digestController requestNewLinks];
-
-    }else if([[NSDate date] compare: eveningDigest] == NSOrderedDescending && [lastDigest compare: eveningDigest] == NSOrderedDescending){
-//        [digestController retrievePostsFromCoreData:^(BOOL completed) {
-//            NSLog(@"log");
-//        }];
-        [digestController requestNewLinks];
-
     }else{
         [digestController requestNewLinks];
-//        [digestController retrievePostsFromCoreData:^(BOOL completed) {
-//            NSLog(@"log");
-//        }];
     }
 }
 
+-(void)performFirstTimeUserMethods{
+    CFUUIDRef uuidObject = CFUUIDCreate(NULL);
+
+    NSString *uuidStr = (__bridge_transfer NSString *)CFUUIDCreateString(NULL, uuidObject);
+    CFRelease(uuidObject);
+
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    [userDefaults setObject:uuidStr forKey:@"DeviceID"];
+
+    NSCalendar *calendar = [NSCalendar currentCalendar];
+    NSDateComponents *eveningComponents = [calendar components:NSCalendarUnitDay|NSCalendarUnitMonth|NSCalendarUnitYear fromDate:[NSDate date]];
+    eveningComponents.hour = 20;
+    eveningComponents.timeZone = [NSTimeZone localTimeZone];
+    NSDate *eveningDate = [calendar dateFromComponents:eveningComponents];
+    NSTimeInterval eveningDigest = [eveningDate timeIntervalSince1970];
+
+    NSDateComponents *morningComponents = [calendar components:NSCalendarUnitDay|NSCalendarUnitMonth|NSCalendarUnitYear fromDate:[NSDate date]];
+    morningComponents.hour = 8;
+    morningComponents.timeZone = [NSTimeZone localTimeZone];
+    NSDate *morningDate = [calendar dateFromComponents:morningComponents];
+    NSTimeInterval morningDigest = [morningDate timeIntervalSince1970];
+
+    NSTimeInterval now = [[NSDate date] timeIntervalSince1970];
+    if (now < eveningDigest) {
+        [userDefaults setObject:[NSNumber numberWithDouble:eveningDigest] forKey:@"NextDigest"];
+        [userDefaults setObject:[NSNumber numberWithDouble:morningDigest] forKey:@"LastScheduled"];
+    }else{
+        [userDefaults setObject:[NSNumber numberWithDouble:morningDigest] forKey:@"NextDigest"];
+        [userDefaults setObject:[NSNumber numberWithDouble:eveningDigest] forKey:@"LastScheduledDigest"];
+    }
+    [userDefaults setObject:[NSNumber numberWithDouble:now] forKey:@"LastDigest"];
+    [userDefaults synchronize];
+    [UserRequests registerDevice:uuidStr];
+}
+
+
 - (void)showWelcomeViewOrDigestView
 {
-    if ([[NSUserDefaults standardUserDefaults] boolForKey:@"HasLaunchedOnce"])
+    if ([[NSUserDefaults standardUserDefaults] valueForKey:@"DeviceID"])
     {
         if ([[NSUserDefaults standardUserDefaults] boolForKey:@"HasRedditAccount"])
         {
