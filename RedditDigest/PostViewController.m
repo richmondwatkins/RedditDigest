@@ -75,10 +75,6 @@
         return nil;
     }
 
-    //[self.tabBarController.delegate tabBarController:self.tabBarController shouldSelectViewController:self.tabBarController.viewControllers[1]];
-    //[self.tabBarController setSelectedIndex:1];
-
-
     Post *post = self.allPosts[index];
     NSArray *allComments = [self commentSorter:[post.comments allObjects]];
     NSMutableArray *parentChildComments = [self matchChildCommentsToParent:allComments];
