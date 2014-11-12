@@ -454,7 +454,6 @@
     localNotification.applicationIconBadgeNumber = [[UIApplication sharedApplication] applicationIconBadgeNumber] + 1;
     [[UIApplication sharedApplication] scheduleLocalNotification:localNotification];
 
-
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
     NSTimeInterval timeInMiliseconds = [[NSDate date] timeIntervalSince1970];
     NSNumber *timeObject = [NSNumber numberWithDouble:timeInMiliseconds];
@@ -482,6 +481,7 @@
     }else{
         [userDefaults setObject:[NSNumber numberWithDouble:morningDigest] forKey:@"NextDigest"];
     [userDefaults synchronize];
+    }
 }
 
 -(void)retrievePostsFromCoreData:(void (^)(BOOL))completionHandler

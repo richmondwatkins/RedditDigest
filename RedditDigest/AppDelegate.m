@@ -197,8 +197,10 @@
 
 
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo fetchCompletionHandler:(void (^)(UIBackgroundFetchResult result))handler{
-
-    handler(UIBackgroundFetchResultNewData);
+    DigestViewController *digestViewController = [(id)self.window.rootViewController viewControllers][0];
+    [digestViewController fetchNewDataWithCompletionHandler:^(UIBackgroundFetchResult result) {
+        handler(result);
+    }];
 }
 
 - (void)application:(UIApplication *)application didReceiveLocalNotification:(UILocalNotification *)notification
