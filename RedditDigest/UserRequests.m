@@ -58,4 +58,58 @@
     [dataTask resume];
 }
 
++(void)registerDevice{
+    NSUUID *deviceID = [UIDevice currentDevice].identifierForVendor;
+    NSString *deviceString = [NSString stringWithFormat:@"%@", deviceID];
+    NSString* deviceURLString = @"http://192.168.1.4:3000/register/device";
+    NSURL *url = [[NSURL alloc] initWithString:[deviceURLString stringByAddingPercentEscapesUsingEncoding:NSASCIIStringEncoding]];
+
+    NSError *error;
+    NSDictionary *deviceIdDictionary = [[NSDictionary alloc] initWithObjectsAndKeys:deviceString, @"deviceid", nil];
+    NSData *postData = [NSJSONSerialization dataWithJSONObject:deviceIdDictionary options:0 error:&error];
+
+    NSMutableURLRequest* request = [NSMutableURLRequest requestWithURL:url];
+    request.HTTPMethod = @"POST";
+
+    [request addValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
+    [request setHTTPBody:postData];
+
+    [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
+        if (error) {
+            NSLog(@"Error from device registration %@",error);
+        }
+    }];
+
+}
+
++(void)registerDeviceForPushNotifications:(NSString *)token{
+    NSUUID *deviceID = [UIDevice currentDevice].identifierForVendor;
+    NSString *deviceString = [NSString stringWithFormat:@"%@", deviceID];
+
+    NSString* urlString = @"http://192.168.1.4:3000/register/push";
+
+    NSURL *url = [[NSURL alloc] initWithString:[urlString stringByAddingPercentEscapesUsingEncoding:NSASCIIStringEncoding]];
+
+    NSError *error;
+    NSTimeZone *timeZone = [NSTimeZone localTimeZone];
+    NSNumber *timezoneoffset =  [NSNumber numberWithFloat: ([timeZone secondsFromGMT] / 3600.0)];
+    NSDictionary *deviceInfoDictionary = [[NSDictionary alloc] initWithObjectsAndKeys:token, @"token", deviceString, @"deviceid", timezoneoffset, @"timeZone", nil];
+
+    NSData *postData = [NSJSONSerialization dataWithJSONObject:deviceInfoDictionary options:0 error:&error];
+
+    NSMutableURLRequest* request = [NSMutableURLRequest requestWithURL:url];
+    request.HTTPMethod = @"POST";
+
+    [request addValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
+    [request setHTTPBody:postData];
+
+
+    [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
+        if (error) {
+            NSLog(@"Push Notification Error: %@",error);
+        }
+    }];
+
+}
+
 @end

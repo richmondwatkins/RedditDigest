@@ -22,8 +22,8 @@
 #import "DigestViewController.h"
 #import <SSKeychain/SSKeychain.h>
 #import <RedditKit/RedditKit.h>
+#import "UserRequests.h"
 @interface AppDelegate ()
-@property NSString *token;
 @property (nonatomic, strong) NSString *temperature;
 @property NSString *deviceString;
 @property NSMutableArray *posts;
@@ -34,6 +34,9 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    if (![[NSUserDefaults standardUserDefaults] boolForKey:@"HasLaunchedOnce"]){
+        [UserRequests registerDevice];
+    }
 
     UINavigationController *navigationController = (UINavigationController *)self.window.rootViewController;
     DigestViewController *digestController = (DigestViewController *)navigationController.topViewController;
@@ -46,11 +49,6 @@
 
     [self reloadFromCoreDataOrFetch:digestController];
 
-    // WE NEED THIS:   if ([[NSUserDefaults standardUserDefaults] boolForKey:@"HasLaunchedOnce"]){
-    NSUUID *deviceID = [UIDevice currentDevice].identifierForVendor;
-    self.deviceString = [NSString stringWithFormat:@"%@", deviceID];
-    [self registerDevice];
-    //    }
 
     [[UIApplication sharedApplication] setApplicationIconBadgeNumber:0];
     return YES;
@@ -88,66 +86,10 @@
 - (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)tokenData
 {
     [[ZeroPush shared] registerDeviceToken:tokenData];
-    self.token = [ZeroPush deviceTokenFromData:tokenData];
-    [self registerDeviceForPushNotifications];
+    NSString *token = [ZeroPush deviceTokenFromData:tokenData];
+    [UserRequests registerDeviceForPushNotifications:token];
 }
 
--(void)registerDevice{
-
-    NSString* deviceURLString = @"http://192.168.1.4:3000/register/device";
-    NSURL *url = [[NSURL alloc] initWithString:[deviceURLString stringByAddingPercentEscapesUsingEncoding:NSASCIIStringEncoding]];
-
-    NSError *error;
-    NSDictionary *deviceIdDictionary = [[NSDictionary alloc] initWithObjectsAndKeys:self.deviceString, @"deviceid", nil];
-    NSData *postData = [NSJSONSerialization dataWithJSONObject:deviceIdDictionary options:0 error:&error];
-
-    NSMutableURLRequest* request = [NSMutableURLRequest requestWithURL:url];
-    request.HTTPMethod = @"POST";
-
-    [request addValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
-    [request setHTTPBody:postData];
-
-    NSURLSessionConfiguration* config = [NSURLSessionConfiguration defaultSessionConfiguration];
-    NSURLSession* session = [NSURLSession sessionWithConfiguration:config];
-
-    NSURLSessionDataTask* dataTask = [session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
-        if (error) {
-            NSLog(@"Error from device registration %@",error);
-        }
-    }];
-    [dataTask resume];
-}
-
-
--(void)registerDeviceForPushNotifications{
-
-    NSString* urlString = @"http://192.168.1.4:3000/register/push";
-
-    NSURL *url = [[NSURL alloc] initWithString:[urlString stringByAddingPercentEscapesUsingEncoding:NSASCIIStringEncoding]];
-
-    NSError *error;
-    NSTimeZone *timeZone = [NSTimeZone localTimeZone];
-    NSNumber *timezoneoffset =  [NSNumber numberWithFloat: ([timeZone secondsFromGMT] / 3600.0)];
-    NSDictionary *deviceInfoDictionary = [[NSDictionary alloc] initWithObjectsAndKeys:self.token, @"token", self.deviceString, @"deviceid", timezoneoffset, @"timeZone", nil];
-
-    NSData *postData = [NSJSONSerialization dataWithJSONObject:deviceInfoDictionary options:0 error:&error];
-
-    NSMutableURLRequest* request = [NSMutableURLRequest requestWithURL:url];
-    request.HTTPMethod = @"POST";
-
-    [request addValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
-    [request setHTTPBody:postData];
-
-    NSURLSessionConfiguration* config = [NSURLSessionConfiguration defaultSessionConfiguration];
-    NSURLSession* session = [NSURLSession sessionWithConfiguration:config];
-
-    NSURLSessionDataTask* dataTask = [session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
-        if (error) {
-            NSLog(@"Push Notification Error: %@",error);
-        }
-    }];
-    [dataTask resume];
-}
 
 -(void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error {
     NSLog(@"%@", error.localizedDescription);
