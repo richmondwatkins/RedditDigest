@@ -22,6 +22,7 @@
 #import "LoginViewController.h"
 #import "DigestCategory.h"
 #import "SelectableSubreddit.h"
+#import "SubredditCategory.h"
 @interface SubredditSelectionViewController () <UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, UIAlertViewDelegate, UITextFieldDelegate>
 
 @property (strong, nonatomic) IBOutlet UICollectionView *subredditCollectionView;
@@ -65,7 +66,6 @@
         self.hasRedditAccount = YES;
         [[RKClient sharedClient] subscribedSubredditsWithCompletion:^(NSArray *collection, RKPagination *pagination, NSError *error) {
             self.subreddits = [[NSMutableArray alloc] initWithArray:[self convertToSelectableSubredditFromRKSubreddit:collection]];
-
             if (self.isFromSettings) {[self checkForExistingSubscription];}
 
              [self.subredditCollectionView reloadData];
@@ -84,7 +84,9 @@
         NSURLRequest *request = [NSURLRequest requestWithURL:categoryURL];
         [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
             NSDictionary *results = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:nil];
-            self.catagories = [self convertToSelectableSubredditFromCategory:results[@"allCategories"]];
+            self.catagories = [SubredditCategory createCategoriesAndSubreddit:results[@"allCategories"]];
+            NSLog(@"SELF SUBS %@",self.catagories);
+
 //            self.catagories = results[@"allCategories"];
 //            NSLog(@"ALL CATS %@",self.catagories);
             [self checkForExistingCategory];
@@ -147,11 +149,9 @@
         if (self.selectedSubreddits.count < 10)
         {
 
-            SelectableSubreddit *category = self.catagories[indexPath.row];
+            SubredditCategory *category = self.catagories[indexPath.row];
 
-            for (NSDictionary *subredditDictionary in category.subreddits) {
-                SelectableSubreddit *subreddit = [SelectableSubreddit createSubredditInstanceFromCategoryDictionary:subredditDictionary withCategoryName:category.name];
-
+            for (SelectableSubreddit *subreddit in category.subreddits) {
                 [self.selectedSubreddits addObject:subreddit];
             }
 
@@ -180,7 +180,7 @@
         cell.subredditTitleLabel.text = subreddit.name;
     }
     else {
-        SelectableSubreddit *category = self.catagories[indexPath.row];
+        SubredditCategory *category = self.catagories[indexPath.row];
         if (category.currentlySubscribed) {
             [self.subreddits addObject:category];
             cell.selected = YES;
@@ -215,23 +215,13 @@
         }
     }
     else {
-        SelectableSubreddit *category = self.catagories[indexPath.row];
-        SelectableSubreddit *sub = category.subreddits.firstObject;
-        [DigestCategory removeFromCoreData:category.name withManagedObject:self.managedObject];
-        NSMutableArray *subsToDelete = [NSMutableArray array];
-        for (NSDictionary *subDictionary in category.subreddits) {
-            for (SelectableSubreddit *selectedSub in self.selectedSubreddits) {
-                if ([subDictionary[@"name"] isEqualToString:selectedSub.name]) {
-                    [subsToDelete addObject:selectedSub];
-                }
-            }
+        SubredditCategory *category = self.catagories[indexPath.row];
+
+        for (SelectableSubreddit *sub in category.subreddits) {
+            [self.selectedSubreddits removeObject:sub];
         }
 
-        if (subsToDelete) {
-            for (SelectableSubreddit *subredditDelete in subsToDelete) {
-                [self.selectedSubreddits removeObject:subredditDelete];
-            }
-        }
+        [DigestCategory removeFromCoreData:category.name withManagedObject:self.managedObject];
     }
 
     if (self.selectedSubreddits.count == 0) {
@@ -414,14 +404,6 @@
     digestViewController.isComingFromSubredditSelectionView = YES;
 }
 
--(NSMutableArray *)convertToSelectableSubredditFromCategory:(NSArray *)categories{
-    NSMutableArray *subredditCategories = [NSMutableArray array];
-    for (NSDictionary *category in categories) {
-        [subredditCategories addObject:[SelectableSubreddit createInstanceFromCategoryDictionary:category]];
-        NSLog(@"CONVERTED %@",subredditCategories);
-    }
-    return subredditCategories;
-}
 
 -(NSMutableArray *)convertToSelectableSubredditFromRKSubreddit:(NSArray *)subreddits{
     NSMutableArray *mutableSubredditsArray = [NSMutableArray array];
@@ -453,12 +435,9 @@
     for(DigestCategory *digestCategory in categories){
         for (SelectableSubreddit *fromRailsCategory in self.catagories) {
             if ([digestCategory.name isEqualToString:fromRailsCategory.name]) {
-                for (NSDictionary *subredditDictionary in fromRailsCategory.subreddits) {
-                    SelectableSubreddit *selectableSubFromCategory = [SelectableSubreddit createSubredditInstanceFromCategoryDictionary:subredditDictionary withCategoryName:digestCategory.name];
-
-                    selectableSubFromCategory.currentlySubscribed = YES;
+                for (SelectableSubreddit *selectableSub in fromRailsCategory.subreddits) {
                     fromRailsCategory.currentlySubscribed = YES;
-                        [self.selectedSubreddits addObject:selectableSubFromCategory];
+                        [self.selectedSubreddits addObject:selectableSub];
                 }
             }
         }
