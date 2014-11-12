@@ -448,7 +448,7 @@
 -(void)fireLocalNotificationAndMarkComplete
 {
     UILocalNotification* localNotification = [[UILocalNotification alloc] init];
-    localNotification.fireDate = [NSDate date];
+    localNotification.fireDate = [NSDate dateWithTimeIntervalSinceNow:1];
     localNotification.timeZone = [NSTimeZone defaultTimeZone];
     localNotification.alertBody = @"Your reddit digest is ready for viewing";
     localNotification.applicationIconBadgeNumber = [[UIApplication sharedApplication] applicationIconBadgeNumber] + 1;
