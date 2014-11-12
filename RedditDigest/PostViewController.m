@@ -13,6 +13,7 @@
 #import "SelfPostViewController.h"
 #import "VideoPostViewController.h"
 #import "PageWrapperViewController.h"
+#import "CommentViewController.h"
 #import "Comment.h"
 #import "ChildComment.h"
 @interface PostViewController ()
@@ -102,8 +103,12 @@
     }
 
     viewController.post = post;
-    viewController.comments = parentChildComments;
     viewController.index = index;
+
+    // Give the comments tab the comments from the selected post
+    CommentViewController *commentsViewController = (CommentViewController *)self.tabBarController.viewControllers[1];
+    commentsViewController.comments = parentChildComments;
+
     return viewController;
 }
 

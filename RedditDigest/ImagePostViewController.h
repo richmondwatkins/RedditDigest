@@ -8,6 +8,9 @@
 
 #import <UIKit/UIKit.h>
 #import "PageWrapperViewController.h"
+
 @interface ImagePostViewController : PageWrapperViewController
+
 @property (strong, nonatomic) IBOutlet UIImageView *imageView;
+
 @end

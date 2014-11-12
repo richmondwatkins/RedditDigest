@@ -8,6 +8,8 @@
 
 #import <UIKit/UIKit.h>
 #import "PageWrapperViewController.h"
+
 @interface GifPostViewController : PageWrapperViewController
 @property NSString *url;
+
 @end
