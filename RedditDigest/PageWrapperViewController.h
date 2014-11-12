@@ -18,5 +18,6 @@
 @property NSData *imageData;
 @property Post *post;
 @property int sourceViewIdentifier;
+@property NSMutableArray *comments;
 
 @end

@@ -22,7 +22,7 @@
 #import "LoadingViewController.h"
 #import "LoginViewController.h"
 #import "Subreddit.h"
-#import "CommentViewController.h"
+#import "DetailPostTabBarViewController.h"
 
 @interface DigestViewController () <UITableViewDataSource, UITableViewDelegate, DigestCellDelegate>
 
@@ -533,11 +533,11 @@
 
     if ([segue.identifier isEqualToString:@"PostSegue"])
     {
-        UITabBarController *postDetailViewTabBarController = segue.destinationViewController;
-        PostViewController *postViewController = postDetailViewTabBarController.childViewControllers[0];
+        DetailPostTabBarViewController *postDetailViewTabBarController = segue.destinationViewController;
+        //PostViewController *postViewController = postDetailViewTabBarController.childViewControllers[0];
         NSIndexPath *indexPath = [self.digestTableView indexPathForSelectedRow];
-        postViewController.allPosts = self.digestPosts;
-        postViewController.index = indexPath.row;
+        postDetailViewTabBarController.allPosts = self.digestPosts;
+        postDetailViewTabBarController.index = indexPath.row;
     }
     else if ([segue.identifier isEqualToString:@"SettingsSegue"])
     {

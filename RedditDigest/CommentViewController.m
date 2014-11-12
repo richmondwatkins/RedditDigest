@@ -9,7 +9,7 @@
 #import "CommentViewController.h"
 #import "CommentTableViewCell.h"
 
-@interface CommentViewController () <UITableViewDelegate, UITableViewDataSource, UIWebViewDelegate, UITextViewDelegate>
+@interface CommentViewController () <UITableViewDelegate, UITableViewDataSource, UIWebViewDelegate, UITextViewDelegate, UITabBarControllerDelegate>
 
 @property Comment *selectedComment;
 @property CGFloat cellHeight;
@@ -25,7 +25,24 @@
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    NSLog(@"comments %@", self.comments);
 }
+
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+}
+
+- (void)tabBarController:(UITabBarController *)tabBarController didSelectViewController:(UIViewController *)viewController {
+//    NSLog(@"onglet sélectionné : %d / %d", [tabBarController selectedIndex], [[tabBarController viewControllers]count]);
+//    //select the index where your logout button is
+//    if ([tabBarController selectedIndex] == [[tabBarController viewControllers]count]-1) {
+//        NSLog(@"logout");
+//    }
+    NSLog(@"lksdjflksdjlsakjflsdkfjalsdkfjalsdjf;asdlkfja;slkfj;dlkj;lkj");
+}
+
+
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {

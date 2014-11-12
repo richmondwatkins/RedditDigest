@@ -12,8 +12,7 @@
 #import <RKLink.h>
 @interface PostViewController : UIViewController <UIPageViewControllerDataSource>
 
-
-@property (strong, nonatomic) UIPageViewController *pageController;
+@property (strong, nonatomic) UIPageViewController *postsPageController;
 @property NSMutableArray *allPosts;
 @property NSInteger index;
 
