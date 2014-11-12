@@ -526,7 +526,8 @@
 -(IBAction)unwindFromSubredditSelectionViewController:(UIStoryboardSegue *)segue
 {
     [Post removeAllPostsFromCoreData:self.managedObjectContext];
-
+    [self.digestPosts removeAllObjects];
+    NSLog(@"SUB FOR FIRST DIG %@",self.subredditsForFirstDigest);
     [RedditRequests retrieveLatestPostFromArray:self.subredditsForFirstDigest withManagedObject:self.managedObjectContext withCompletion:^(BOOL completed) {
         if (completed) {
             [self performNewFetchedDataActions];

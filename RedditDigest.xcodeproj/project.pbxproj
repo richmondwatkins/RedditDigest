@@ -18,6 +18,8 @@
 		34D1B93A1A081D0C00C0C15F /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 34D1B9391A081D0C00C0C15F /* LoginViewController.m */; };
 		34D1B93C1A08463500C0C15F /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 34D1B93B1A08463500C0C15F /* Security.framework */; };
 		5D311EDE1A10A359002AFC3C /* CommentTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D311EDD1A10A359002AFC3C /* CommentTableViewCell.m */; };
+		5D3AC6331A12BCCC0093E79E /* DigestCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D3AC6321A12BCCC0093E79E /* DigestCategory.m */; };
+		5D3AC6361A12DE230093E79E /* SelectableSubreddit.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D3AC6351A12DE230093E79E /* SelectableSubreddit.m */; };
 		5D5C12C31A05716E002902A8 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D5C12C21A05716E002902A8 /* main.m */; };
 		5D5C12C61A05716E002902A8 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D5C12C51A05716E002902A8 /* AppDelegate.m */; };
 		5D5C12C91A05716E002902A8 /* RedditDigest.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 5D5C12C71A05716E002902A8 /* RedditDigest.xcdatamodeld */; };
@@ -79,6 +81,10 @@
 		34D1B93B1A08463500C0C15F /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		5D311EDD1A10A359002AFC3C /* CommentTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CommentTableViewCell.m; sourceTree = "<group>"; };
 		5D311EDF1A10A49D002AFC3C /* CommentTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CommentTableViewCell.h; sourceTree = "<group>"; };
+		5D3AC6311A12BCCC0093E79E /* DigestCategory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DigestCategory.h; sourceTree = "<group>"; };
+		5D3AC6321A12BCCC0093E79E /* DigestCategory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DigestCategory.m; sourceTree = "<group>"; };
+		5D3AC6341A12DE230093E79E /* SelectableSubreddit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SelectableSubreddit.h; path = RedditDigest/SelectableSubreddit.h; sourceTree = "<group>"; };
+		5D3AC6351A12DE230093E79E /* SelectableSubreddit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SelectableSubreddit.m; path = RedditDigest/SelectableSubreddit.m; sourceTree = "<group>"; };
 		5D5C12BD1A05716E002902A8 /* RedditDigest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RedditDigest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5D5C12C11A05716E002902A8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5D5C12C21A05716E002902A8 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -207,6 +213,8 @@
 		5D5C12B41A05716E002902A8 = {
 			isa = PBXGroup;
 			children = (
+				5D3AC6341A12DE230093E79E /* SelectableSubreddit.h */,
+				5D3AC6351A12DE230093E79E /* SelectableSubreddit.m */,
 				5D5C12BF1A05716E002902A8 /* RedditDigest */,
 				5D5C12DC1A05716E002902A8 /* RedditDigestTests */,
 				5D5C12BE1A05716E002902A8 /* Products */,
@@ -236,7 +244,7 @@
 				341340191A0C9925004C8C15 /* Digest View */,
 				5DE75CA41A0D98B30031F0F7 /* PaginatedViewControllers */,
 				5DE75CA31A0D98930031F0F7 /* HttpRequestHelpers */,
-				5DE75CA21A0D98740031F0F7 /* Models */,
+				5DE75CA21A0D98740031F0F7 /* CoreDataModels */,
 				5DB47A5B1A0ABA5B0034EA84 /* PostViewController.h */,
 				5DB47A5C1A0ABA5B0034EA84 /* PostViewController.m */,
 				3417AC0B1A092D970026961C /* SettingsViewController.h */,
@@ -280,7 +288,7 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		5DE75CA21A0D98740031F0F7 /* Models */ = {
+		5DE75CA21A0D98740031F0F7 /* CoreDataModels */ = {
 			isa = PBXGroup;
 			children = (
 				5DDA80BB1A11DED900527AF9 /* Subreddit.h */,
@@ -291,8 +299,10 @@
 				5DA1F1461A0EEE480017DE39 /* ChildComment.m */,
 				5DA1F1471A0EEE480017DE39 /* Comment.h */,
 				5DA1F1481A0EEE480017DE39 /* Comment.m */,
+				5D3AC6311A12BCCC0093E79E /* DigestCategory.h */,
+				5D3AC6321A12BCCC0093E79E /* DigestCategory.m */,
 			);
-			name = Models;
+			name = CoreDataModels;
 			sourceTree = "<group>";
 		};
 		5DE75CA31A0D98930031F0F7 /* HttpRequestHelpers */ = {
@@ -510,6 +520,7 @@
 				3417AC131A0945B40026961C /* KTCenterFlowLayout.m in Sources */,
 				3413FC361A1117490018A172 /* LoadingViewController.m in Sources */,
 				5DDA80BF1A11DED900527AF9 /* Subreddit.m in Sources */,
+				5D3AC6331A12BCCC0093E79E /* DigestCategory.m in Sources */,
 				5DB47A5D1A0ABA5B0034EA84 /* PostViewController.m in Sources */,
 				5D5C12C91A05716E002902A8 /* RedditDigest.xcdatamodeld in Sources */,
 				3417AC0D1A092D970026961C /* SettingsViewController.m in Sources */,
@@ -519,6 +530,7 @@
 				3413401D1A0C996F004C8C15 /* DigestCellWithImageTableViewCell.m in Sources */,
 				5DE75C9E1A0D92760031F0F7 /* GifPostViewController.m in Sources */,
 				34D1B93A1A081D0C00C0C15F /* LoginViewController.m in Sources */,
+				5D3AC6361A12DE230093E79E /* SelectableSubreddit.m in Sources */,
 				5DA1F14A1A0EEE480017DE39 /* ChildComment.m in Sources */,
 				5DAADDD51A0D502600BB91AB /* WebPostViewController.m in Sources */,
 				5DA1F14B1A0EEE480017DE39 /* Comment.m in Sources */,

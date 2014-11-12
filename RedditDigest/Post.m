@@ -138,7 +138,6 @@
     NSArray *results = [managedObject executeFetchRequest:subredditFetch error:nil];
     if (results) {
         Subreddit *subreddit = results.firstObject;
-        NSLog(@"FOUND SUB %@",subreddit);
         postObject.subreddit = subreddit;
     }
 }

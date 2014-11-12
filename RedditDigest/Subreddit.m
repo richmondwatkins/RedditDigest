@@ -8,8 +8,8 @@
 
 #import "Subreddit.h"
 #import "Post.h"
-
-
+#import "DigestCategory.h"
+#import "SelectableSubreddit.h"
 @implementation Subreddit
 
 @dynamic image;
@@ -19,16 +19,16 @@
 
 
 +(void)addSubredditsToCoreData:(NSMutableArray *)selectedSubreddits withManagedObject:(NSManagedObjectContext *)managedObject{
-    for (NSDictionary *subreddit in selectedSubreddits) {
-        if (subreddit[@"categoryName"]) {
-            NSLog(@"CATEGORY %@", subreddit[@"categoryName"]);
-        }
-        if (![subreddit[@"currentlySubscribed"] boolValue]) {
+    for (SelectableSubreddit *subreddit in selectedSubreddits) {
+        if (!subreddit.currentlySubscribed) {
             Subreddit *savedSubreddit = [NSEntityDescription insertNewObjectForEntityForName:@"Subreddit" inManagedObjectContext:managedObject];
-            savedSubreddit.subreddit = subreddit[@"subreddit"];
-            savedSubreddit.url = subreddit[@"url"];
-            if (subreddit[@"image"] != nil) {
-                [NSURLConnection sendAsynchronousRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:subreddit[@"image"]]] queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
+            savedSubreddit.subreddit = subreddit.name;
+            savedSubreddit.url = subreddit.url;
+            if (subreddit.categoryName) {
+                [DigestCategory addCategoryWithSubredditsToCoreData:subreddit.categoryName withSubreddit:savedSubreddit withManagedObject:managedObject];
+            }
+            if (subreddit.imageLink != nil) {
+                [NSURLConnection sendAsynchronousRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:subreddit.imageLink]] queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
                     if (data) {
                         NSLog(@"data %@",data);
                         savedSubreddit.image = data;
@@ -51,6 +51,19 @@
     [managedObject save:nil];
 }
 
++(void)removeAllSubredditsFromCoreData:(NSManagedObjectContext *)managedObjectContext{
+    NSFetchRequest * allSubreddits = [[NSFetchRequest alloc] init];
+    [allSubreddits setEntity:[NSEntityDescription entityForName:@"Subreddit" inManagedObjectContext:managedObjectContext]];
+    [allSubreddits setIncludesPropertyValues:NO];
+
+    NSError * error = nil;
+    NSArray * subreddits = [managedObjectContext executeFetchRequest:allSubreddits error:&error];
+
+    for (NSManagedObject * subreddit in subreddits) {
+        [managedObjectContext deleteObject:subreddit];
+    }
+    [managedObjectContext save:nil];
+}
 
 
 

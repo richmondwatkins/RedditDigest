@@ -7,12 +7,12 @@
 //
 
 #import "UserRequests.h"
-
+#import "SelectableSubreddit.h"
 @implementation UserRequests
 
 +(void)retrieveUsersSubreddits:(NSString *)deviceID withCompletion:(void (^)(NSDictionary *results))complete{
 
-    NSString *urlString = [NSString stringWithFormat:@"http://192.168.129.228:3000/subreddits/%@",deviceID];
+    NSString *urlString = [NSString stringWithFormat:@"http://192.168.1.4:3000/subreddits/%@",deviceID];
     NSURL *url = [[NSURL alloc] initWithString:[urlString stringByAddingPercentEscapesUsingEncoding:NSASCIIStringEncoding]];
 
     NSURLRequest *request = [NSURLRequest requestWithURL:url];
@@ -28,12 +28,17 @@
 
 +(void)postSelectedSubreddits:(NSString *)deviceID selections:(NSDictionary *)selectionsDictionary withCompletion:(void (^)(BOOL completed))complete{
 
-
     NSError *error;
 
-    NSString *urlString = [NSString stringWithFormat:@"http://192.168.129.228:3000/subreddits/%@",  deviceID];
-
-    NSData *postData = [NSJSONSerialization dataWithJSONObject:selectionsDictionary options:0 error:&error];
+    NSString *urlString = [NSString stringWithFormat:@"http://192.168.1.4:3000/subreddits/%@",  deviceID];
+    NSMutableArray *subsArray = [NSMutableArray array];
+    for (SelectableSubreddit *selectableSubbreddit in selectionsDictionary[@"subreddits"]) {
+        NSDictionary *subredditDict = [[NSDictionary alloc] initWithObjectsAndKeys:selectableSubbreddit.name, @"subreddit", selectableSubbreddit.url, @"url", nil];
+        [subsArray addObject:subredditDict];
+    }
+    
+    NSDictionary *dictionaryToPost = @{@"subreddits":subsArray};
+    NSData *postData = [NSJSONSerialization dataWithJSONObject:dictionaryToPost options:0 error:&error];
     NSURL *url = [[NSURL alloc] initWithString:[urlString stringByAddingPercentEscapesUsingEncoding:NSASCIIStringEncoding]];
 
     NSMutableURLRequest* request = [NSMutableURLRequest requestWithURL:url];
