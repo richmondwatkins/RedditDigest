@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6250" systemVersion="14B17" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="9zg-4H-k34">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6250" systemVersion="14B23" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="9zg-4H-k34">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6244"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
@@ -798,25 +798,6 @@
             </objects>
             <point key="canvasLocation" x="-1199" y="-1261"/>
         </scene>
-        <!--Post View Controller-->
-        <scene sceneID="6cM-va-gTw">
-            <objects>
-                <viewController id="5uv-Oq-P6m" customClass="PostViewController" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="lDg-jd-6lO"/>
-                        <viewControllerLayoutGuide type="bottom" id="ZAd-C1-XKX"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="UbX-54-uAT">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                    </view>
-                    <tabBarItem key="tabBarItem" systemItem="favorites" id="iqI-bJ-aFb"/>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="Jq0-Os-qzQ" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="210" y="-815"/>
-        </scene>
         <!--Image Post View Controller-->
         <scene sceneID="hbc-8v-vBY">
             <objects>
@@ -852,7 +833,7 @@
         <!--Comment View Controller-->
         <scene sceneID="6dd-yo-DqN">
             <objects>
-                <viewController id="lJS-Le-QsK" customClass="CommentViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="CommentView" id="lJS-Le-QsK" customClass="CommentViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="ZLR-aP-wex"/>
                         <viewControllerLayoutGuide type="bottom" id="hfO-Cs-Dw7"/>
@@ -1074,10 +1055,10 @@
             </objects>
             <point key="canvasLocation" x="233" y="-1644"/>
         </scene>
-        <!--Tab Bar Controller-->
+        <!--Detail Post Tab Bar View Controller-->
         <scene sceneID="x9e-bg-dhX">
             <objects>
-                <tabBarController automaticallyAdjustsScrollViewInsets="NO" id="tAR-qU-Fq9" sceneMemberID="viewController">
+                <tabBarController automaticallyAdjustsScrollViewInsets="NO" id="tAR-qU-Fq9" customClass="DetailPostTabBarViewController" sceneMemberID="viewController">
                     <toolbarItems/>
                     <nil key="simulatedBottomBarMetrics"/>
                     <tabBar key="tabBar" contentMode="scaleToFill" id="blz-RW-d6k">
@@ -1085,8 +1066,7 @@
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     </tabBar>
                     <connections>
-                        <segue destination="5uv-Oq-P6m" kind="relationship" relationship="viewControllers" id="78Y-Iv-Ibt"/>
-                        <segue destination="lJS-Le-QsK" kind="relationship" relationship="viewControllers" id="uM5-r3-5eg"/>
+                        <outlet property="tabBar" destination="blz-RW-d6k" id="qam-WF-MLk"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="6jE-Mr-pR5" userLabel="First Responder" sceneMemberID="firstResponder"/>

@@ -20,11 +20,6 @@
     }
 }
 
--(void)webViewDidFinishLoad:(UIWebView *)webView
-{
-    [webView sizeToFit];
-}
-
 -(void)webViewDidStartLoad:(UIWebView *)webView
 {
     NSURL *url = webView.request.URL;
