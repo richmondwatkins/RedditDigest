@@ -19,7 +19,8 @@
     // Do any additional setup after loading the view.
 }
 
--(void)viewWillAppear:(BOOL)animated{
+-(void)viewWillAppear:(BOOL)animated
+{
     CGRect screenRect =[[UIScreen mainScreen] bounds];
     CGFloat screenWidth = screenRect.size.width;
     CGFloat screenHeight = screenRect.size.height;
@@ -31,7 +32,6 @@
                            </body>\
                            </html>", screenWidth, screenHeight/2, self.url];
     [self.videoView loadHTMLString:embedHTML baseURL:[[NSBundle mainBundle] resourceURL]];
-    [self.videoCommentsTableView reloadData];
 }
 
 @end

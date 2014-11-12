@@ -9,10 +9,6 @@
 #import "GifPostViewController.h"
 #import "FLAnimatedImage.h"
 
-@interface GifPostViewController ()
-
-@end
-
 @implementation GifPostViewController
 
 - (void)viewDidLoad {
@@ -20,7 +16,8 @@
     // Do any additional setup after loading the view.
 }
 
--(void)viewWillAppear:(BOOL)animated{
+-(void)viewWillAppear:(BOOL)animated
+{
     dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(void){
         FLAnimatedImage *image = [FLAnimatedImage animatedImageWithGIFData:[NSData dataWithContentsOfURL:[NSURL URLWithString:self.url]]];
         dispatch_async(dispatch_get_main_queue(), ^(void){
@@ -33,7 +30,6 @@
             [self.view addSubview:imageView];
         });
     });
-    [self.gifCommentsTableView reloadData];
 }
 
 @end

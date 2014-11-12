@@ -10,16 +10,13 @@
 #import "Comment.h"
 #import "Post.h"
 #import <RKLink.h>
-@interface PageWrapperViewController : UIViewController <UITableViewDelegate, UITableViewDataSource>
+@interface PageWrapperViewController : UIViewController
+
 @property NSInteger index;
-@property NSMutableArray *comments;
 @property NSString *url;
 @property NSString *selfPostText;
 @property NSData *imageData;
-@property (strong, nonatomic) IBOutlet UITableView *imageCommentsTableView;
-@property (strong, nonatomic) IBOutlet UITableView *selfPostCommentsTableView;
-@property (strong, nonatomic) IBOutlet UITableView *gifCommentsTableView;
-@property (strong, nonatomic) IBOutlet UITableView *videoCommentsTableView;
 @property Post *post;
 @property int sourceViewIdentifier;
+
 @end

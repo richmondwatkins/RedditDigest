@@ -8,6 +8,9 @@
 
 #import <UIKit/UIKit.h>
 #import "PageWrapperViewController.h"
+
 @interface VideoPostViewController : PageWrapperViewController
+
 @property (strong, nonatomic) IBOutlet UIWebView *videoView;
+
 @end

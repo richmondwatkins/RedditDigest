@@ -8,7 +8,9 @@
 
 #import <UIKit/UIKit.h>
 #import "PageWrapperViewController.h"
+
 @interface WebPostViewController : PageWrapperViewController
+
 @property (strong, nonatomic) IBOutlet UIWebView *webView;
 
 @end
