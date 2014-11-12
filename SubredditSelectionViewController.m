@@ -85,10 +85,7 @@
         [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
             NSDictionary *results = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:nil];
             self.catagories = [SubredditCategory createCategoriesAndSubreddit:results[@"allCategories"]];
-            NSLog(@"SELF SUBS %@",self.catagories);
 
-//            self.catagories = results[@"allCategories"];
-//            NSLog(@"ALL CATS %@",self.catagories);
             [self checkForExistingCategory];
             [self.subredditCollectionView reloadData];
         }];
@@ -404,7 +401,7 @@
     digestViewController.isComingFromSubredditSelectionView = YES;
 }
 
-
+//TODO All of this functionality should be in SelectableSubreddit Class
 -(NSMutableArray *)convertToSelectableSubredditFromRKSubreddit:(NSArray *)subreddits{
     NSMutableArray *mutableSubredditsArray = [NSMutableArray array];
     for (RKSubreddit *subreddit in subreddits) {
@@ -414,6 +411,7 @@
     return mutableSubredditsArray;
 }
 
+//TODO Move to Subbreddit Core Data Class
 -(void)checkForExistingSubscription
 {
     NSFetchRequest *subredditFetch = [NSFetchRequest fetchRequestWithEntityName:@"Subreddit"];
@@ -428,6 +426,7 @@
     }
 }
 
+//TODO Should be moved to SubredditCategory class
 -(void)checkForExistingCategory{
     NSFetchRequest *categoryFetch = [NSFetchRequest fetchRequestWithEntityName:@"DigestCategory"];
     NSArray *categories = [self.managedObject executeFetchRequest:categoryFetch error:nil];
