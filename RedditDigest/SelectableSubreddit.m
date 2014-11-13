@@ -7,7 +7,6 @@
 //
 
 #import "SelectableSubreddit.h"
-
 @implementation SelectableSubreddit
 
 
@@ -54,5 +53,6 @@
 
     return arrayToReturn;
 }
+
 
 @end

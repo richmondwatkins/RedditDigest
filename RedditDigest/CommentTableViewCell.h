@@ -9,6 +9,8 @@
 #import <UIKit/UIKit.h>
 #import "Comment.h"
 
+//static UITextView *_textView;
+
 @interface CommentTableViewCell : UITableViewCell
 
 @property (strong, nonatomic) IBOutlet UIWebView *commentWebView;

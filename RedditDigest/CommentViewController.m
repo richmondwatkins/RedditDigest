@@ -47,7 +47,6 @@
     cell.commentWebView.scrollView.scrollEnabled = NO;
     [cell.commentWebView loadHTMLString:partialComment baseURL:nil];
     cell.commentWebView.delegate = self;
-    cell.textView.delegate = self;
 
     return cell;
 }

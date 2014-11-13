@@ -554,11 +554,9 @@
     [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"HasSubscriptions"];
     [[NSUserDefaults standardUserDefaults] synchronize];
 
-    [RedditRequests retrieveLatestPostFromArray:self.subredditsForFirstDigest withManagedObject:self.managedObjectContext withCompletion:^(BOOL completed) {
-        if (completed) {
-            [self performNewFetchedDataActions];
-        }
-    }];
+    if (self.isComingFromSubredditSelectionView) {
+        [self requestNewLinks];
+    }
 }
 
 -(void)upVoteButtonPressed:(DigestCellWithImageTableViewCell*)cell{

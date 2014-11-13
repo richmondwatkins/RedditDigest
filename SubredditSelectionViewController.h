@@ -12,4 +12,6 @@
 
 @property NSManagedObjectContext *managedObject;
 @property BOOL isFromSettings;
+@property NSMutableArray *selectedSubreddits;
+
 @end

@@ -20,28 +20,33 @@
 
 +(void)addSubredditsToCoreData:(NSMutableArray *)selectedSubreddits withManagedObject:(NSManagedObjectContext *)managedObject{
     for (SelectableSubreddit *subreddit in selectedSubreddits) {
-        NSLog(@"NEW SUB NEW SUB %@",subreddit.name);
-        if (!subreddit.currentlySubscribed) {
-            Subreddit *savedSubreddit = [NSEntityDescription insertNewObjectForEntityForName:@"Subreddit" inManagedObjectContext:managedObject];
-            savedSubreddit.subreddit = subreddit.name;
-            savedSubreddit.url = subreddit.url;
-            if (subreddit.categoryName) {
-                [DigestCategory addCategoryWithSubredditsToCoreData:subreddit.categoryName withSubreddit:savedSubreddit withManagedObject:managedObject];
-            }
-            if (subreddit.imageLink != nil) {
-                [NSURLConnection sendAsynchronousRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:subreddit.imageLink]] queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
-                    if (data) {
-                        NSLog(@"data %@",data);
-                        savedSubreddit.image = data;
-                        [managedObject save:nil];
-                    }
-                }];
-            }else{
-//                NSLog(@"THIS ONE WILL SAVE %@",savedSubreddit.subreddit);
-//                NSLog(@"THIS ONE WILL SAVE  URLLL%@",savedSubreddit.url);
-                NSError *error;
-                [managedObject save:&error];
-                NSLog(@"ERROR ERROR %@",error);
+        NSFetchRequest * subredditFetch = [[NSFetchRequest alloc] init];
+        [subredditFetch setEntity:[NSEntityDescription entityForName:@"Subreddit" inManagedObjectContext:managedObject]];
+        subredditFetch.predicate = [NSPredicate predicateWithFormat:@"subreddit == %@", subreddit.name];
+        NSArray *results = [managedObject executeFetchRequest:subredditFetch error:nil];
+        if (!results.count) {
+            if (!subreddit.currentlySubscribed) {
+                Subreddit *savedSubreddit = [NSEntityDescription insertNewObjectForEntityForName:@"Subreddit" inManagedObjectContext:managedObject];
+                savedSubreddit.subreddit = subreddit.name;
+                savedSubreddit.url = subreddit.url;
+                if (subreddit.categoryName) {
+                    [DigestCategory addCategoryWithSubredditsToCoreData:subreddit.categoryName withSubreddit:savedSubreddit withManagedObject:managedObject];
+                }
+                if (subreddit.imageLink != nil) {
+                    [NSURLConnection sendAsynchronousRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:subreddit.imageLink]] queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
+                        if (data) {
+                            NSLog(@"data %@",data);
+                            savedSubreddit.image = data;
+                            [managedObject save:nil];
+                        }
+                    }];
+                }else{
+                    //                NSLog(@"THIS ONE WILL SAVE %@",savedSubreddit.subreddit);
+                    //                NSLog(@"THIS ONE WILL SAVE  URLLL%@",savedSubreddit.url);
+                    NSError *error;
+                    [managedObject save:&error];
+                    NSLog(@"ERROR ERROR %@",error);
+                }
             }
         }
     }
@@ -54,9 +59,7 @@
     [subredditFetch setEntity:[NSEntityDescription entityForName:@"Subreddit" inManagedObjectContext:managedObject]];
 //    subredditFetch.predicate = [NSPredicate predicateWithFormat:@"subreddit == %@", subreddit];
     NSArray *results = [managedObject executeFetchRequest:subredditFetch error:nil];
-    NSLog(@")*U$#)9490890 %@",results);
     for(Subreddit *sub in results){
-        NSLog(@"From Data %@  from View %@",sub.subreddit, subreddit);
         if ([sub.subreddit isEqualToString:subreddit]) {
             [managedObject deleteObject:sub];
             [managedObject save:nil];

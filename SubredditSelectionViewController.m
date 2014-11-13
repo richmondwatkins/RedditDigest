@@ -28,7 +28,6 @@
 @property (strong, nonatomic) IBOutlet UICollectionView *subredditCollectionView;
 @property NSMutableArray *subreddits;
 @property NSMutableArray *catagories;
-@property NSMutableArray *selectedSubreddits;
 @property NSMutableArray *posts; 
 @property SubredditListCollectionViewCell *sizingCell;
 @property (weak, nonatomic) IBOutlet UIButton *doneSelectingSubredditsButton;
@@ -83,7 +82,7 @@
         self.hasRedditAccount = NO;
         self.activityIndicator.hidden = YES;
         self.categoriesAndSubreddits = [NSMutableArray array];
-        NSURL *categoryURL = [NSURL URLWithString:@"http://192.168.1.4:3000/get/categories"];
+        NSURL *categoryURL = [NSURL URLWithString:@"http://192.168.129.228:3000/get/categories"];
         NSURLRequest *request = [NSURLRequest requestWithURL:categoryURL];
         [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
             NSDictionary *results = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:nil];
@@ -160,12 +159,15 @@
             if ([subOrCat isKindOfClass:[SubredditCategory class]]) {
                 SubredditCategory *category = subOrCat;
                 for (SelectableSubreddit *subreddit in category.subreddits) {
-                    NSLog(@"SAVINGGG %@",subreddit.name);
-                    [self.selectedSubreddits addObject:subreddit];
+                    if ([self canAddToSelected:subreddit]) {
+                        [self.selectedSubreddits addObject:subreddit];
+                    }
                 }
             }else{
                 SelectableSubreddit *subreddit = subOrCat;
-                [self.selectedSubreddits addObject:subreddit];
+                if ([self canAddToSelected:subreddit]) {
+                    [self.selectedSubreddits addObject:subreddit];
+                }
             }
 
             if (self.selectedSubreddits.count > 0) {
@@ -179,6 +181,15 @@
         }
     }
 
+}
+
+-(BOOL)canAddToSelected:(SelectableSubreddit *)subreddit{
+    NSArray *subs = [self.selectedSubreddits valueForKey:@"name"];
+    if ([subs containsObject:subreddit.name]) {
+        return NO;
+    }else{
+        return YES;
+    }
 }
 
 - (void)configureCell:(SubredditListCollectionViewCell *)cell forIndexPath:(NSIndexPath *)indexPath
@@ -429,17 +440,6 @@
 - (IBAction)finishSelectingSubreddits:(id)sender
 {
 
-    NSMutableArray *temp1 = [NSMutableArray arrayWithArray:self.subreddits];
-    NSMutableArray *temp2 = [NSMutableArray arrayWithArray:self.subreddits];
-
-    for (SelectableSubreddit *sub in temp1) {
-        for(SelectableSubreddit *subCheck in temp2){
-            if ([sub.name isEqualToString:subCheck.name]) {
-                [self.selectedSubreddits removeObject:sub];
-            }
-        }
-    }
-
     NSDictionary *dataDictionary = [[NSDictionary alloc] initWithObjectsAndKeys:self.selectedSubreddits, @"subreddits", nil];
     [Subreddit addSubredditsToCoreData:self.selectedSubreddits withManagedObject:self.managedObject];
 
@@ -454,7 +454,6 @@
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
     DigestViewController *digestViewController = segue.destinationViewController;
-    digestViewController.subredditsForFirstDigest = self.selectedSubreddits;
     digestViewController.isComingFromSubredditSelectionView = YES;
 }
 
