@@ -39,7 +39,6 @@
     //self.navigationController.hidesBarsOnSwipe = YES;
     //self.navigationController.hidesBarsOnTap = YES;
     //self.hidesBottomBarWhenPushed = YES;
-    self.navigationItem.title = @"wooo";
     
 }
 - (BOOL)prefersStatusBarHidden {
@@ -101,10 +100,10 @@
 
 - (PageWrapperViewController *)viewControllerAtIndex:(NSInteger)index
 {
-    if (index >= self.allPosts.count) {
-        index = 0;
+    if (index<0) {
+        return nil;
     }
-    if (index < 0) {
+    if (index >= self.allPosts.count) {
         return nil;
     }
 
