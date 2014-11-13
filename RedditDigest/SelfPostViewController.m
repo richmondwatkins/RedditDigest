@@ -16,7 +16,9 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
+
+    // This makes sure each self post is scrolled to the top when it loads
+    [self.textView scrollRangeToVisible:NSMakeRange(0, 1)];
 }
 
 -(void)viewWillAppear:(BOOL)animated
