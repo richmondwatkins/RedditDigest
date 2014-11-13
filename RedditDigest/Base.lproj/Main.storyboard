@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6250" systemVersion="14B23" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="9zg-4H-k34">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6250" systemVersion="14A389" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="9zg-4H-k34">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6244"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
@@ -608,11 +608,11 @@
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="eg1-5b-zUs" id="TIW-74-Ifz">
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ouz-k5-Hlx">
+                                                <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Ouz-k5-Hlx">
                                                     <rect key="frame" x="66" y="28" width="475" height="20"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="subreddit" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="u9V-3r-XgS">
-                                                            <rect key="frame" x="0.0" y="0.0" width="42.5" height="20"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="43" height="20"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="height" constant="20" id="ibZ-fT-rYH"/>
                                                             </constraints>
@@ -620,15 +620,15 @@
                                                             <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
-                                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="snoo_square_gray" translatesAutoresizingMaskIntoConstraints="NO" id="4vQ-S3-CqE">
+                                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="snoo_square_gray" translatesAutoresizingMaskIntoConstraints="NO" id="4vQ-S3-CqE">
                                                             <rect key="frame" x="45" y="2" width="15" height="15"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="height" constant="15" id="TAK-CV-xZt"/>
                                                                 <constraint firstAttribute="width" constant="15" id="kq9-Z5-NDt"/>
                                                             </constraints>
                                                         </imageView>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="hankthedog" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Qch-SH-AKQ">
-                                                            <rect key="frame" x="65" y="0.0" width="49.5" height="20"/>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="hankthedog" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Qch-SH-AKQ">
+                                                            <rect key="frame" x="65" y="0.0" width="50" height="20"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="height" constant="20" id="PzX-YJ-GrQ"/>
                                                             </constraints>
@@ -648,7 +648,7 @@
                                                         <constraint firstItem="Qch-SH-AKQ" firstAttribute="leading" secondItem="4vQ-S3-CqE" secondAttribute="trailing" constant="5" id="u1v-3e-2cQ"/>
                                                     </constraints>
                                                 </view>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Pack my box with five dozen liquor jugs" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="COR-ut-o5n">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Pack my box with five dozen liquor jugs" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="COR-ut-o5n">
                                                     <rect key="frame" x="66" y="6" width="475" height="24"/>
                                                     <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="17"/>
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
@@ -869,34 +869,25 @@
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="CommentCell" rowHeight="90" id="1Su-cK-jcw" customClass="CommentTableViewCell">
                                         <rect key="frame" x="0.0" y="0.0" width="600" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="1Su-cK-jcw" id="Lkf-eD-zbL">
+                                        <tableViewCellContentView key="contentView" autoresizesSubviews="NO" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="1Su-cK-jcw" id="Lkf-eD-zbL">
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <textView hidden="YES" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="TYq-Ju-WbR">
-                                                    <rect key="frame" x="0.0" y="0.0" width="600" height="90"/>
+                                                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3dT-ld-xSG">
+                                                    <rect key="frame" x="0.0" y="0.0" width="600" height="89"/>
                                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                     <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                                 </textView>
-                                                <webView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hv1-36-sKE">
-                                                    <rect key="frame" x="0.0" y="0.0" width="600" height="90"/>
-                                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                </webView>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstItem="TYq-Ju-WbR" firstAttribute="leading" secondItem="Lkf-eD-zbL" secondAttribute="leading" id="KwY-Kg-REU"/>
-                                                <constraint firstAttribute="trailing" secondItem="TYq-Ju-WbR" secondAttribute="trailing" id="NJG-an-agc"/>
-                                                <constraint firstAttribute="bottom" secondItem="TYq-Ju-WbR" secondAttribute="bottom" id="ZcP-tg-wML"/>
-                                                <constraint firstAttribute="trailing" secondItem="hv1-36-sKE" secondAttribute="trailing" id="lqp-8c-WyX"/>
-                                                <constraint firstItem="hv1-36-sKE" firstAttribute="leading" secondItem="Lkf-eD-zbL" secondAttribute="leading" id="nqX-Rr-VH9"/>
-                                                <constraint firstItem="TYq-Ju-WbR" firstAttribute="top" secondItem="Lkf-eD-zbL" secondAttribute="top" id="r70-eI-HPc"/>
-                                                <constraint firstItem="hv1-36-sKE" firstAttribute="top" secondItem="Lkf-eD-zbL" secondAttribute="top" id="tHO-3L-Vlk"/>
-                                                <constraint firstAttribute="bottom" secondItem="hv1-36-sKE" secondAttribute="bottom" id="tep-uY-fHa"/>
+                                                <constraint firstItem="3dT-ld-xSG" firstAttribute="leading" secondItem="Lkf-eD-zbL" secondAttribute="leading" id="3wx-MM-Xw9"/>
+                                                <constraint firstAttribute="trailing" secondItem="3dT-ld-xSG" secondAttribute="trailing" id="HUu-YB-aq6"/>
+                                                <constraint firstAttribute="bottom" secondItem="3dT-ld-xSG" secondAttribute="bottom" id="bES-sy-lQO"/>
+                                                <constraint firstItem="3dT-ld-xSG" firstAttribute="top" secondItem="Lkf-eD-zbL" secondAttribute="top" id="ntw-f0-rmf"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <connections>
-                                            <outlet property="commentWebView" destination="hv1-36-sKE" id="2mL-8C-Us0"/>
-                                            <outlet property="textView" destination="TYq-Ju-WbR" id="xBH-of-iqH"/>
+                                            <outlet property="commentTextView" destination="3dT-ld-xSG" id="lcE-yu-Oxd"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>

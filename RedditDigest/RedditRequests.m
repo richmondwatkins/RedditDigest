@@ -18,7 +18,6 @@
     if ([subreddits.firstObject isKindOfClass:[SelectableSubreddit class]]) {
         subreddits = [self formatSelectedSubredditsArray:subreddits];
     }
-    NSLog(@"SUBS %@",subreddits);
     __block int j = 0;
     for (NSDictionary *subredditDict in subreddits) {
         NSDictionary *setUpForRKKitObject = [[NSDictionary alloc] initWithObjectsAndKeys:subredditDict[@"subreddit"], @"name", subredditDict[@"url"], @"URL", nil];

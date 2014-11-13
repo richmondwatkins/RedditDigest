@@ -64,7 +64,7 @@
 {
     [super viewWillAppear:animated];
 
-    if ([[NSUserDefaults standardUserDefaults] boolForKey:@"HasLaunchedOnce"])
+    if ([[NSUserDefaults standardUserDefaults] boolForKey:@"HasSubscriptions"])
     {
         // If user is coming from selecting subreddits for their digest then show the loading snoo
 //        if (self.isComingFromSubredditSelectionView) {
@@ -90,9 +90,6 @@
         WelcomViewController *welcomeViewController = [storyboard instantiateViewControllerWithIdentifier:@"WelcomeViewController"];
         welcomeViewController.managedObject = self.managedObjectContext;
         [self.parentViewController presentViewController:welcomeViewController animated:YES completion:nil];
-
-        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"HasLaunchedOnce"];
-        [[NSUserDefaults standardUserDefaults] synchronize];
     }
 }
 
@@ -452,9 +449,7 @@
 {
     [Post removeAllPostsFromCoreData:self.managedObjectContext];
 
-    NSUUID *deviceID = [UIDevice currentDevice].identifierForVendor;
-    NSString *deviceString = [NSString stringWithFormat:@"%@", deviceID];
-    [UserRequests retrieveUsersSubreddits:deviceString withCompletion:^(NSDictionary *results) {
+    [UserRequests retrieveUsersSubredditswithCompletion:^(NSDictionary *results) {
         [RedditRequests retrieveLatestPostFromArray:results[@"subreddits"] withManagedObject:self.managedObjectContext withCompletion:^(BOOL completed) {
             [self performNewFetchedDataActions];
             completionHandler(UIBackgroundFetchResultNewData);
@@ -467,18 +462,40 @@
 -(void)fireLocalNotificationAndMarkComplete
 {
     UILocalNotification* localNotification = [[UILocalNotification alloc] init];
-    localNotification.fireDate = [NSDate date];
+    localNotification.fireDate = [NSDate dateWithTimeIntervalSinceNow:1];
     localNotification.timeZone = [NSTimeZone defaultTimeZone];
     localNotification.alertBody = @"Your reddit digest is ready for viewing";
     localNotification.applicationIconBadgeNumber = [[UIApplication sharedApplication] applicationIconBadgeNumber] + 1;
     [[UIApplication sharedApplication] scheduleLocalNotification:localNotification];
 
-
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-    NSDate *lastUpdateDate = [NSDate date];
-    [userDefaults setObject:lastUpdateDate forKey:@"LastDigest"];
-    [userDefaults synchronize];
+    NSTimeInterval timeInMiliseconds = [[NSDate date] timeIntervalSince1970];
+    NSNumber *timeObject = [NSNumber numberWithDouble:timeInMiliseconds];
+    [userDefaults setObject:timeObject forKey:@"LastDigest"];
 
+    NSNumber *currentDigest = [userDefaults objectForKey:@"NextDigest"];
+    [userDefaults setObject:currentDigest forKey:@"LastScheduled"];
+
+    NSCalendar *calendar = [NSCalendar currentCalendar];
+    NSDateComponents *eveningComponents = [calendar components:NSCalendarUnitDay|NSCalendarUnitMonth|NSCalendarUnitYear fromDate:[NSDate date]];
+    eveningComponents.hour = 20;
+    eveningComponents.timeZone = [NSTimeZone localTimeZone];
+    NSDate *eveningDate = [calendar dateFromComponents:eveningComponents];
+    NSTimeInterval eveningDigest = [eveningDate timeIntervalSince1970];
+
+    NSDateComponents *morningComponents = [calendar components:NSCalendarUnitDay|NSCalendarUnitMonth|NSCalendarUnitYear fromDate:[NSDate date]];
+    morningComponents.hour = 8;
+    morningComponents.timeZone = [NSTimeZone localTimeZone];
+    NSDate *morningDate = [calendar dateFromComponents:morningComponents];
+    NSTimeInterval morningDigest = [morningDate timeIntervalSince1970];
+
+    NSTimeInterval now = [[NSDate date] timeIntervalSince1970];
+    if (now < eveningDigest) {
+        [userDefaults setObject:[NSNumber numberWithDouble:eveningDigest] forKey:@"NextDigest"];
+    }else{
+        [userDefaults setObject:[NSNumber numberWithDouble:morningDigest] forKey:@"NextDigest"];
+    [userDefaults synchronize];
+    }
 }
 
 -(void)retrievePostsFromCoreData:(void (^)(BOOL))completionHandler
@@ -495,6 +512,7 @@
     self.digestPosts = [NSMutableArray arrayWithArray:posts];
     if (self.digestPosts.count) {
         completionHandler(YES);
+        [self.digestTableView reloadData];
     }
 }
 
@@ -546,42 +564,56 @@
 {
     [Post removeAllPostsFromCoreData:self.managedObjectContext];
     [self.digestPosts removeAllObjects];
-    NSLog(@"SUB FOR FIRST DIG %@",self.subredditsForFirstDigest);
-    [RedditRequests retrieveLatestPostFromArray:self.subredditsForFirstDigest withManagedObject:self.managedObjectContext withCompletion:^(BOOL completed) {
-        if (completed) {
-            [self performNewFetchedDataActions];
-        }
-    }];
+
+    [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"HasSubscriptions"];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+
+    if (self.isComingFromSubredditSelectionView) {
+        [self requestNewLinks];
+    }
 }
 
 #pragma mark - Buttons & Gestures
 
 -(void)upVoteButtonPressed:(DigestCellWithImageTableViewCell*)cell{
-    NSIndexPath *indexPath = [self.digestTableView indexPathForCell:cell];
-    Post *selectedPost = [self.digestPosts objectAtIndex:indexPath.row];
 
-    selectedPost.upvoted = [NSNumber numberWithBool:YES];
-    selectedPost.downvoted = [NSNumber numberWithBool:NO];
-    [self.managedObjectContext save:nil];
+    if ([[NSUserDefaults standardUserDefaults] boolForKey:@"HasRedditAccount"]){
 
-    [cell.upVoteButton setBackgroundImage:[UIImage imageNamed:@"upvote_arrow_selected"] forState:UIControlStateNormal];
-    [cell.downVoteButton setBackgroundImage:[UIImage imageNamed:@"downvote_arrow"] forState:UIControlStateNormal];
+        NSIndexPath *indexPath = [self.digestTableView indexPathForCell:cell];
+        Post *selectedPost = [self.digestPosts objectAtIndex:indexPath.row];
+
+        selectedPost.upvoted = [NSNumber numberWithBool:YES];
+        selectedPost.downvoted = [NSNumber numberWithBool:NO];
+        [self.managedObjectContext save:nil];
+
+        [cell.upVoteButton setBackgroundImage:[UIImage imageNamed:@"upvote_arrow_selected"] forState:UIControlStateNormal];
+        [cell.downVoteButton setBackgroundImage:[UIImage imageNamed:@"downvote_arrow"] forState:UIControlStateNormal];
+
+        [self sendUpVoteToReddit:selectedPost.postID];
+    }
 }
 
 -(void)downVoteButtonPressed:(DigestCellWithImageTableViewCell *)cell{
-    NSIndexPath *indexPath = [self.digestTableView indexPathForCell:cell];
-    Post *selectedPost = [self.digestPosts objectAtIndex:indexPath.row];
 
-    selectedPost.downvoted = [NSNumber numberWithBool:YES];
-    selectedPost.upvoted = [NSNumber numberWithBool:NO];
-    [self.managedObjectContext save:nil];
+    if ([[NSUserDefaults standardUserDefaults] boolForKey:@"HasRedditAccount"]){
+        
+        NSIndexPath *indexPath = [self.digestTableView indexPathForCell:cell];
+        Post *selectedPost = [self.digestPosts objectAtIndex:indexPath.row];
 
-    [cell.downVoteButton setBackgroundImage:[UIImage imageNamed:@"downvote_arrow_selected"] forState:UIControlStateNormal];
-    [cell.upVoteButton setBackgroundImage:[UIImage imageNamed:@"upvote_arrow"] forState:UIControlStateNormal];
+        selectedPost.downvoted = [NSNumber numberWithBool:YES];
+        selectedPost.upvoted = [NSNumber numberWithBool:NO];
+        [self.managedObjectContext save:nil];
+
+        [cell.downVoteButton setBackgroundImage:[UIImage imageNamed:@"downvote_arrow_selected"] forState:UIControlStateNormal];
+        [cell.upVoteButton setBackgroundImage:[UIImage imageNamed:@"upvote_arrow"] forState:UIControlStateNormal];
+
+        [self sendDownVoteToReddit:selectedPost.postID];
+    }
 }
 
 - (IBAction)onRightSwipeGesture:(UISwipeGestureRecognizer *)rightSwipe
 {
+
     CGPoint location = [rightSwipe locationInView:self.digestTableView];
     NSIndexPath *swipedIndexPath = [self.digestTableView indexPathForRowAtPoint:location];
     DigestCellWithImageTableViewCell *swipedCell  = (DigestCellWithImageTableViewCell *)[self.digestTableView cellForRowAtIndexPath:swipedIndexPath];
@@ -599,7 +631,27 @@
     Post *post = [self.digestPosts objectAtIndex:swipedIndexPath.row];
     post.downvoted = [NSNumber numberWithBool:YES];
 
-    [self downVoteButtonPressed:swipedCell];
+        [self downVoteButtonPressed:swipedCell];
+}
+
+-(void)sendUpVoteToReddit:(NSString *)postID{
+
+
+    [[RKClient sharedClient] linkWithFullName:postID completion:^(id object, NSError *error) {
+        [[RKClient sharedClient] upvote:object completion:^(NSError *error) {
+            NSLog(@"UPVate");
+        }];
+    }];
+}
+
+-(void)sendDownVoteToReddit:(NSString *)postID{
+
+
+    [[RKClient sharedClient] linkWithFullName:postID completion:^(id object, NSError *error) {
+        [[RKClient sharedClient] downvote:object completion:^(NSError *error) {
+            NSLog(@"UPVate");
+        }];
+    }];
 }
 
 @end

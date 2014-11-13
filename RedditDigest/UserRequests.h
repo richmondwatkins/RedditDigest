@@ -9,8 +9,8 @@
 #import <Foundation/Foundation.h>
 @interface UserRequests : NSObject
 
-+(void)retrieveUsersSubreddits:(NSString *)deviceID withCompletion:(void (^)(NSDictionary *results))complete;
-+(void)postSelectedSubreddits:(NSString *)deviceID selections:(NSDictionary *)selectionsDictionary withCompletion:(void (^)(BOOL completed))complete;
-+(void)registerDevice;
++(void)retrieveUsersSubredditswithCompletion:(void (^)(NSDictionary *results))complete;
++(void)postSelectedSubreddits:(NSDictionary *)selectionsDictionary withCompletion:(void (^)(BOOL completed))complete;
++(void)registerDevice:(NSString *)deviceID;
 +(void)registerDeviceForPushNotifications:(NSString *)token;
 @end
