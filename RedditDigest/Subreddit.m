@@ -20,8 +20,7 @@
 
 +(void)addSubredditsToCoreData:(NSMutableArray *)selectedSubreddits withManagedObject:(NSManagedObjectContext *)managedObject{
     for (SelectableSubreddit *subreddit in selectedSubreddits) {
-        NSLog(@"THESE ARE THE CHOsEN ONES %@",subreddit.name);
-
+        NSLog(@"NEW SUB NEW SUB %@",subreddit.name);
         if (!subreddit.currentlySubscribed) {
             Subreddit *savedSubreddit = [NSEntityDescription insertNewObjectForEntityForName:@"Subreddit" inManagedObjectContext:managedObject];
             savedSubreddit.subreddit = subreddit.name;
@@ -38,8 +37,8 @@
                     }
                 }];
             }else{
-                NSLog(@"THIS ONE WILL SAVE %@",savedSubreddit.subreddit);
-                NSLog(@"THIS ONE WILL SAVE  URLLL%@",savedSubreddit.url);
+//                NSLog(@"THIS ONE WILL SAVE %@",savedSubreddit.subreddit);
+//                NSLog(@"THIS ONE WILL SAVE  URLLL%@",savedSubreddit.url);
                 NSError *error;
                 [managedObject save:&error];
                 NSLog(@"ERROR ERROR %@",error);

@@ -246,17 +246,22 @@
 
         if ([subOrCat isKindOfClass:[SubredditCategory class]]) {
             SubredditCategory *category = subOrCat;
-            [DigestCategory removeFromCoreData:category.name withManagedObject:self.managedObject];
+            if (category.currentlySubscribed) {
+                [DigestCategory removeFromCoreData:category.name withManagedObject:self.managedObject];
+            }
             for (SelectableSubreddit *subreddit in category.subreddits) {
                 [self.selectedSubreddits removeObject:subreddit];
-                [Subreddit removeFromCoreData:subreddit.name withManagedObject:self.managedObject];
+                if (subreddit.currentlySubscribed) {
+                    [Subreddit removeFromCoreData:subreddit.name withManagedObject:self.managedObject];
+                }
             }
         }else{
             SelectableSubreddit *subreddit = subOrCat;
             [self.selectedSubreddits removeObject:subreddit];
-            [Subreddit removeFromCoreData:subreddit.name withManagedObject:self.managedObject];
+            if (subreddit.currentlySubscribed) {
+                [Subreddit removeFromCoreData:subreddit.name withManagedObject:self.managedObject];
+            }
         }
-        
     }
 
     if (self.selectedSubreddits.count == 0) {
@@ -422,11 +427,20 @@
  ***************************************
  */
 - (IBAction)finishSelectingSubreddits:(id)sender
-{   NSLog(@"BEFOREEEE %lu",(unsigned long)self.selectedSubreddits.count);
-    NSSet *forRemovingDups = [NSSet setWithArray:self.selectedSubreddits];
-    NSArray *uniqueSelections = [forRemovingDups allObjects];
-    NSLog(@"BEFOREEEE %lu",(unsigned long)uniqueSelections.count);
-    NSDictionary *dataDictionary = [[NSDictionary alloc] initWithObjectsAndKeys:uniqueSelections, @"subreddits", nil];
+{
+
+    NSMutableArray *temp1 = [NSMutableArray arrayWithArray:self.subreddits];
+    NSMutableArray *temp2 = [NSMutableArray arrayWithArray:self.subreddits];
+
+    for (SelectableSubreddit *sub in temp1) {
+        for(SelectableSubreddit *subCheck in temp2){
+            if ([sub.name isEqualToString:subCheck.name]) {
+                [self.selectedSubreddits removeObject:sub];
+            }
+        }
+    }
+
+    NSDictionary *dataDictionary = [[NSDictionary alloc] initWithObjectsAndKeys:self.selectedSubreddits, @"subreddits", nil];
     [Subreddit addSubredditsToCoreData:self.selectedSubreddits withManagedObject:self.managedObject];
 
     [UserRequests postSelectedSubreddits:dataDictionary withCompletion:^(BOOL completed) {
