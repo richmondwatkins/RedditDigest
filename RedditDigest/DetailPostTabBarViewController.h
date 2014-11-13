@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface DetailPostTabBarViewController : UITabBarController <UIPageViewControllerDataSource>
+@interface DetailPostTabBarViewController : UITabBarController <UIPageViewControllerDataSource, UIPageViewControllerDelegate>
 
 @property NSMutableArray *allPosts;
 @property NSInteger index;
