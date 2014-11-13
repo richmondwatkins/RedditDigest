@@ -30,7 +30,6 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-  //  self.parentViewController.prefersStatusBarHidden = YES;
 
     self.statusBarBackground.backgroundColor = REDDIT_DARK_BLUE;
     if (!self.navigationController.navigationBarHidden) {
