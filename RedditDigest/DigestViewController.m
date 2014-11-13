@@ -31,6 +31,7 @@
 @property UIRefreshControl *refreshControl;
 @property UILabel *creatingYourDigestLabel;
 @property NSTimer *snooTextTimer;
+@property NSString *dateToday;
 
 @end
 
@@ -41,11 +42,22 @@
     self.refreshControl = [[UIRefreshControl alloc] init];
     [self.refreshControl addTarget:self action:@selector(requestNewLinks) forControlEvents:UIControlEventValueChanged];
     [self.digestTableView addSubview:self.refreshControl];
+    [self getDateString];
+    NSLog(@"Today is %@ ", self.dateToday);
+    self.navigationItem.title = self.dateToday;
 }
 
 - (void)loadView
 {
     [super loadView];
+}
+
+-(void)getDateString
+{
+    NSDateFormatter *dateFormat =[[NSDateFormatter alloc]init];
+    [dateFormat setDateFormat:@"MMMM dd, yyyy"];
+    NSString *todaysDate = [dateFormat stringFromDate:[NSDate date]];
+    self.dateToday = todaysDate;
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -99,6 +111,8 @@
         [self createLoadingSnoo];
     }
 }
+
+#pragma mark - Animation
 
 - (void)createLoadingSnoo
 {
@@ -498,7 +512,6 @@
     }];
 }
 
-
 -(void)performNewFetchedDataActions
 {
     [self retrievePostsFromCoreData:^(BOOL completed) {
@@ -509,9 +522,11 @@
     }];
 }
 
+
+#pragma mark - Segues
+
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-
     if ([segue.identifier isEqualToString:@"PostSegue"])
     {
         DetailPostTabBarViewController *postDetailViewTabBarController = segue.destinationViewController;
@@ -527,7 +542,6 @@
     }
 }
 
-
 -(IBAction)unwindFromSubredditSelectionViewController:(UIStoryboardSegue *)segue
 {
     [Post removeAllPostsFromCoreData:self.managedObjectContext];
@@ -539,6 +553,8 @@
         }
     }];
 }
+
+#pragma mark - Buttons & Gestures
 
 -(void)upVoteButtonPressed:(DigestCellWithImageTableViewCell*)cell{
     NSIndexPath *indexPath = [self.digestTableView indexPathForCell:cell];
