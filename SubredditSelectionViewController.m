@@ -338,7 +338,12 @@
 
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView
 {
-    return self.categoriesAndSubreddits.count;
+    if (!self.hasRedditAccount) {
+        return self.categoriesAndSubreddits.count;
+
+    }else{
+        return 1;
+    }
 }
 
 // Header Height and Width
