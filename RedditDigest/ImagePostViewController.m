@@ -12,6 +12,9 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+  //  self.parentViewController.prefersStatusBarHidden = YES;
+
+    //edgesForExtendedLayout to UIRectEdgeNone
 }
 
 -(void)viewDidAppear:(BOOL)animated

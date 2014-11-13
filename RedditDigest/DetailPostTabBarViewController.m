@@ -36,8 +36,15 @@
     [super viewDidLoad];
 
     [self setUpPageViewController];
+    //self.navigationController.hidesBarsOnSwipe = YES;
+    //self.navigationController.hidesBarsOnTap = YES;
+    //self.hidesBottomBarWhenPushed = YES;
+    self.navigationItem.title = @"wooo";
+    
 }
-
+- (BOOL)prefersStatusBarHidden {
+    return YES;
+}
 -(void)setUpPageViewController
 {
     self.postPageController = [[UIPageViewController alloc] initWithTransitionStyle:UIPageViewControllerTransitionStyleScroll navigationOrientation:UIPageViewControllerNavigationOrientationHorizontal options:nil];
@@ -78,7 +85,6 @@
     if([pendingViewControllers count] > 0)
     {
         NSUInteger index =[(PageWrapperViewController*)[pendingViewControllers objectAtIndex:0] index];
-        NSLog(@"index mother fucker do you speak it? %lu", (unsigned long)index);
         CommentViewController *commentsViewController = self.viewControllers[1];
         commentsViewController.comments = [self getcommentsFromSelectedPost:index];
         [commentsViewController.tableView reloadData];
