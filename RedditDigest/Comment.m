@@ -19,7 +19,7 @@
 @dynamic score;
 @dynamic post;
 @dynamic childcomments;
-
+@dynamic html;
 +(void)addCommentsToPost:(Post *)post  commentsArray:(NSArray *)comments withMangedObject:(NSManagedObjectContext *)managedObjectContext{
 
     NSInteger totalCommentCount = comments.count;
@@ -27,7 +27,8 @@
     for(RKComment *comment in comments){
         Comment *savedComment = [NSEntityDescription insertNewObjectForEntityForName:@"Comment" inManagedObjectContext:managedObjectContext];
         savedComment.author = comment.author;
-        savedComment.body = [NSString stringWithFormat:@"<div id='comment'>%@</div>",comment.bodyHTML];
+        savedComment.html = [NSString stringWithFormat:@"<html><style>p{font-size:10px;}</style>%@</html>",comment.bodyHTML];
+        savedComment.body = comment.body;
         savedComment.score = [NSNumber numberWithInteger:comment.score];
         totalCommentCount += comment.replies.count;
         [post addCommentsObject:savedComment];

@@ -9,6 +9,7 @@
     <entity name="Comment" representedClassName="Comment" syncable="YES">
         <attribute name="author" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="body" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="html" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="score" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
         <relationship name="childcomments" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="ChildComment" inverseName="comment" inverseEntity="ChildComment" syncable="YES"/>
         <relationship name="post" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Post" inverseName="comments" inverseEntity="Post" syncable="YES"/>
@@ -49,7 +50,7 @@
     </entity>
     <elements>
         <element name="ChildComment" positionX="-45" positionY="126" width="128" height="103"/>
-        <element name="Comment" positionX="-63" positionY="99" width="128" height="120"/>
+        <element name="Comment" positionX="-63" positionY="99" width="128" height="135"/>
         <element name="DigestCategory" positionX="-45" positionY="144" width="128" height="75"/>
         <element name="Post" positionX="-63" positionY="-18" width="128" height="360"/>
         <element name="Subreddit" positionX="-54" positionY="117" width="128" height="120"/>

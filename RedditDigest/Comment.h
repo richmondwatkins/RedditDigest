@@ -18,6 +18,7 @@
 @property (nonatomic, retain) NSNumber * score;
 @property (nonatomic, retain) Post *post;
 @property (nonatomic, retain) NSSet *childcomments;
+@property (nonatomic, retain) NSString *html;
 
 @end
 

@@ -10,16 +10,6 @@
 
 @implementation CommentTableViewCell
 
-@synthesize textView = _textView;
-
-//-(instancetype)initWithCoder:(NSCoder *)aDecoder
-//{
-//    if (self = [super initWithCoder:aDecoder]) {
-//        _textView = [[UITextView alloc] initWithFrame:CGRectMake(0, 0, 10, 10)];
-//    }
-//    return self;
-//}
-
 - (void)awakeFromNib {
     // Initialization code
 }
@@ -28,13 +18,5 @@
     [super setSelected:selected animated:animated];
 }
 
-
-//-(void)setTextView:(UITextView *)textView{
-//    _textView = textView;
-//}
-//
-//-(UITextView*)textView{
-//    return _textView;
-//}
 
 @end
