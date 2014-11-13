@@ -44,6 +44,7 @@
 
     self.postPageController.dataSource = self;
     self.postPageController.view.frame = self.view.bounds;
+    self.postPageController.delegate = self;
 
     PageWrapperViewController *detailPostViewController = [self viewControllerAtIndex:self.index];
     NSArray *postViewControllers = [NSArray arrayWithObject:detailPostViewController];
@@ -70,6 +71,18 @@
 {
     PageWrapperViewController *pageWrapperViewController = (PageWrapperViewController *)viewController;
     return [self viewControllerAtIndex:(pageWrapperViewController.index + 1)];
+}
+
+- (void)pageViewController:(UIPageViewController *)pageViewController willTransitionToViewControllers:(NSArray *)pendingViewControllers
+{
+    if([pendingViewControllers count] > 0)
+    {
+        NSUInteger index =[(PageWrapperViewController*)[pendingViewControllers objectAtIndex:0] index];
+        NSLog(@"index mother fucker do you speak it? %lu", (unsigned long)index);
+        CommentViewController *commentsViewController = self.viewControllers[1];
+        commentsViewController.comments = [self getcommentsFromSelectedPost:index];
+        [commentsViewController.tableView reloadData];
+    }
 }
 
 - (NSMutableArray *)getcommentsFromSelectedPost:(NSInteger)selectedPostIndex
@@ -118,13 +131,6 @@
 
     viewController.post = post;
     viewController.index = index;
-
-    if (self.commentsViewLoaded) {
-        // This is where I was thinking this needed to assign the new comments to the commentsVC but it's not working
-        CommentViewController *commentsViewController = self.viewControllers[1];
-        commentsViewController.comments = [self getcommentsFromSelectedPost:self.index];
-        [commentsViewController.tableView reloadData];
-    }
 
     return viewController;
 }
