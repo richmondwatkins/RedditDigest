@@ -23,6 +23,7 @@
         UIImage *image = [UIImage imageWithData:self.imageData];
         dispatch_async(dispatch_get_main_queue(), ^(void){
             self.imageView.image = image;
+            self.imageView.contentMode = UIViewContentModeScaleAspectFit;
         });
     });
 }

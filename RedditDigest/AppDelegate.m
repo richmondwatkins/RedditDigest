@@ -102,7 +102,7 @@
 
     if (lastScheduled.intValue < lastDigest.intValue) {
         [digestController retrievePostsFromCoreData:^(BOOL completed) {
-            NSLog(@"CORRECT");
+            [digestController.digestTableView reloadData];
         }];
     }else{
         [digestController requestNewLinks];

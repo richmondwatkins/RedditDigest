@@ -26,7 +26,6 @@
 
 @interface DigestViewController () <UITableViewDataSource, UITableViewDelegate, DigestCellDelegate>
 
-@property (strong, nonatomic) IBOutlet UITableView *digestTableView;
 @property NSMutableArray *digestPosts;
 @property UIRefreshControl *refreshControl;
 @property UILabel *creatingYourDigestLabel;
@@ -95,6 +94,7 @@
     if (self.isComingFromSubredditSelectionView) {
         [self createLoadingSnoo];
     }
+    [self.digestTableView reloadData];
 }
 
 - (void)createLoadingSnoo
