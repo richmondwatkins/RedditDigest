@@ -813,20 +813,40 @@
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="8tw-of-qFa">
                                 <rect key="frame" x="0.0" y="105" width="600" height="390"/>
                             </imageView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="RWZ-k1-gcB">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="20"/>
+                                <color key="backgroundColor" red="0.20000000000000001" green="0.40000000000000002" blue="0.59999999999999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="20" id="sw9-dh-57Y"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <gestureRecognizers/>
                         <constraints>
+                            <constraint firstAttribute="trailing" secondItem="RWZ-k1-gcB" secondAttribute="trailing" id="5D6-FD-HS3"/>
                             <constraint firstItem="8tw-of-qFa" firstAttribute="leading" secondItem="K6h-7n-mlt" secondAttribute="leading" id="68S-7z-CZa"/>
+                            <constraint firstItem="RWZ-k1-gcB" firstAttribute="top" secondItem="K6h-7n-mlt" secondAttribute="top" id="9Wu-56-KVe"/>
+                            <constraint firstItem="RWZ-k1-gcB" firstAttribute="leading" secondItem="K6h-7n-mlt" secondAttribute="leading" id="BNi-E2-n1d"/>
                             <constraint firstItem="N6S-4A-bhX" firstAttribute="top" secondItem="8tw-of-qFa" secondAttribute="bottom" constant="105" id="BzE-Ab-w1n"/>
                             <constraint firstItem="8tw-of-qFa" firstAttribute="top" secondItem="K6h-7n-mlt" secondAttribute="top" constant="105" id="hPS-1d-rqy"/>
                             <constraint firstAttribute="trailing" secondItem="8tw-of-qFa" secondAttribute="trailing" id="udn-HN-TpX"/>
                         </constraints>
+                        <connections>
+                            <outletCollection property="gestureRecognizers" destination="Nvf-sO-tIY" appends="YES" id="2EK-aE-GEd"/>
+                        </connections>
                     </view>
                     <connections>
                         <outlet property="imageView" destination="8tw-of-qFa" id="QKj-gM-tVW"/>
+                        <outlet property="statusBarBackground" destination="RWZ-k1-gcB" id="F0i-GC-w3m"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="NaH-fd-BDo" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <panGestureRecognizer minimumNumberOfTouches="1" id="Nvf-sO-tIY">
+                    <connections>
+                        <action selector="onPan:" destination="48Y-Y6-Cb0" id="3vS-Uv-FXh"/>
+                    </connections>
+                </panGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="200" y="-815"/>
         </scene>
