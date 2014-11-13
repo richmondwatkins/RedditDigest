@@ -951,6 +951,7 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                 <connections>
+                                    <outlet property="delegate" destination="ifK-Yt-vLY" id="BHI-Yb-KTl"/>
                                     <outletCollection property="gestureRecognizers" destination="AbN-hm-90S" appends="YES" id="pvl-dZ-bZH"/>
                                 </connections>
                             </textView>

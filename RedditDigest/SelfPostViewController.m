@@ -10,7 +10,7 @@
 
 #import "SelfPostViewController.h"
 
-@interface SelfPostViewController () <UIGestureRecognizerDelegate>
+@interface SelfPostViewController () <UIGestureRecognizerDelegate, UIScrollViewDelegate>
 
 @property (weak, nonatomic) IBOutlet UIView *statusBarBackground;
 
@@ -74,17 +74,7 @@
             }
             if (direction == UIPanGestureRecognizerDirectionDown && !self.navigationController.navigationBarHidden)
             {
-                // If visiable hide nav and tab bar when scroll begins.
-                [UIView animateWithDuration:0.3 animations:^{
-                    [self.navigationController setNavigationBarHidden:YES animated:YES];
-                    self.tabBarController.tabBar.hidden = YES;
-                }];
-
-                [UIView animateWithDuration:0.0 delay:0.1 options:UIViewAnimationOptionTransitionNone animations:^{
-                    self.statusBarBackground.alpha = 1.0;
-                } completion:^(BOOL finished) {
-                    // Done
-                }];
+                [self hideNavigationAndTabBars];
             }
 
 
@@ -96,16 +86,7 @@
                 // show nav and and tab bars
                 if (self.navigationController.navigationBarHidden)
                 {
-                    [UIView animateWithDuration:0.3 animations:^{
-                        [self.navigationController setNavigationBarHidden:NO animated:YES];
-                        self.tabBarController.tabBar.hidden = NO;
-                    }];
-                    // Animate after delay or there's a weird blip
-                    [UIView animateWithDuration:0.0 delay:0.1 options:UIViewAnimationOptionTransitionNone animations:^{
-                        self.statusBarBackground.alpha = 0.0;
-                    } completion:^(BOOL finished) {
-                        // Done
-                    }];
+                    [self showNavigationAndTabBars];
                 }
             }
             direction = UIPanGestureRecognizerDirectionUndefined;
@@ -115,6 +96,35 @@
             break;
     }
 
+}
+
+- (void)hideNavigationAndTabBars
+{
+    // If visiable hide nav and tab bar when scroll begins.
+    [UIView animateWithDuration:0.3 animations:^{
+        [self.navigationController setNavigationBarHidden:YES animated:YES];
+        self.tabBarController.tabBar.hidden = YES;
+    }];
+
+    [UIView animateWithDuration:0.0 delay:0.1 options:UIViewAnimationOptionTransitionNone animations:^{
+        self.statusBarBackground.alpha = 1.0;
+    } completion:^(BOOL finished) {
+        // Done
+    }];
+}
+
+- (void)showNavigationAndTabBars
+{
+    [UIView animateWithDuration:0.3 animations:^{
+        [self.navigationController setNavigationBarHidden:NO animated:YES];
+        self.tabBarController.tabBar.hidden = NO;
+    }];
+    // Animate after delay or there's a weird blip
+    [UIView animateWithDuration:0.0 delay:0.1 options:UIViewAnimationOptionTransitionNone animations:^{
+        self.statusBarBackground.alpha = 0.0;
+    } completion:^(BOOL finished) {
+        // Done
+    }];
 }
 
 - (IBAction)handleTap:(id)sender
@@ -141,6 +151,11 @@
 //        }];
 //    }
 
+}
+
+-(void)scrollViewDidScrollToTop:(UIScrollView *)scrollView
+{
+    [self showNavigationAndTabBars];
 }
 
 -(BOOL)prefersStatusBarHidden {
