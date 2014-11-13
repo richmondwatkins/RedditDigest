@@ -505,7 +505,6 @@
 -(void)requestNewLinks
 {
     [Post removeAllPostsFromCoreData:self.managedObjectContext];
-    [self.digestPosts removeAllObjects];
 
     NSFetchRequest * fetch = [[NSFetchRequest alloc] init];
     [fetch setEntity:[NSEntityDescription entityForName:@"Subreddit" inManagedObjectContext:self.managedObjectContext]];
@@ -563,31 +562,44 @@
 }
 
 -(void)upVoteButtonPressed:(DigestCellWithImageTableViewCell*)cell{
-    NSIndexPath *indexPath = [self.digestTableView indexPathForCell:cell];
-    Post *selectedPost = [self.digestPosts objectAtIndex:indexPath.row];
 
-    selectedPost.upvoted = [NSNumber numberWithBool:YES];
-    selectedPost.downvoted = [NSNumber numberWithBool:NO];
-    [self.managedObjectContext save:nil];
+    if ([[NSUserDefaults standardUserDefaults] boolForKey:@"HasRedditAccount"]){
 
-    [cell.upVoteButton setBackgroundImage:[UIImage imageNamed:@"upvote_arrow_selected"] forState:UIControlStateNormal];
-    [cell.downVoteButton setBackgroundImage:[UIImage imageNamed:@"downvote_arrow"] forState:UIControlStateNormal];
+        NSIndexPath *indexPath = [self.digestTableView indexPathForCell:cell];
+        Post *selectedPost = [self.digestPosts objectAtIndex:indexPath.row];
+
+        selectedPost.upvoted = [NSNumber numberWithBool:YES];
+        selectedPost.downvoted = [NSNumber numberWithBool:NO];
+        [self.managedObjectContext save:nil];
+
+        [cell.upVoteButton setBackgroundImage:[UIImage imageNamed:@"upvote_arrow_selected"] forState:UIControlStateNormal];
+        [cell.downVoteButton setBackgroundImage:[UIImage imageNamed:@"downvote_arrow"] forState:UIControlStateNormal];
+
+        [self sendUpVoteToReddit:selectedPost.postID];
+    }
 }
 
 -(void)downVoteButtonPressed:(DigestCellWithImageTableViewCell *)cell{
-    NSIndexPath *indexPath = [self.digestTableView indexPathForCell:cell];
-    Post *selectedPost = [self.digestPosts objectAtIndex:indexPath.row];
 
-    selectedPost.downvoted = [NSNumber numberWithBool:YES];
-    selectedPost.upvoted = [NSNumber numberWithBool:NO];
-    [self.managedObjectContext save:nil];
+    if ([[NSUserDefaults standardUserDefaults] boolForKey:@"HasRedditAccount"]){
+        
+        NSIndexPath *indexPath = [self.digestTableView indexPathForCell:cell];
+        Post *selectedPost = [self.digestPosts objectAtIndex:indexPath.row];
 
-    [cell.downVoteButton setBackgroundImage:[UIImage imageNamed:@"downvote_arrow_selected"] forState:UIControlStateNormal];
-    [cell.upVoteButton setBackgroundImage:[UIImage imageNamed:@"upvote_arrow"] forState:UIControlStateNormal];
+        selectedPost.downvoted = [NSNumber numberWithBool:YES];
+        selectedPost.upvoted = [NSNumber numberWithBool:NO];
+        [self.managedObjectContext save:nil];
+
+        [cell.downVoteButton setBackgroundImage:[UIImage imageNamed:@"downvote_arrow_selected"] forState:UIControlStateNormal];
+        [cell.upVoteButton setBackgroundImage:[UIImage imageNamed:@"upvote_arrow"] forState:UIControlStateNormal];
+
+        [self sendDownVoteToReddit:selectedPost.postID];
+    }
 }
 
 - (IBAction)onRightSwipeGesture:(UISwipeGestureRecognizer *)rightSwipe
 {
+
     CGPoint location = [rightSwipe locationInView:self.digestTableView];
     NSIndexPath *swipedIndexPath = [self.digestTableView indexPathForRowAtPoint:location];
     DigestCellWithImageTableViewCell *swipedCell  = (DigestCellWithImageTableViewCell *)[self.digestTableView cellForRowAtIndexPath:swipedIndexPath];
@@ -605,7 +617,27 @@
     Post *post = [self.digestPosts objectAtIndex:swipedIndexPath.row];
     post.downvoted = [NSNumber numberWithBool:YES];
 
-    [self downVoteButtonPressed:swipedCell];
+        [self downVoteButtonPressed:swipedCell];
+}
+
+-(void)sendUpVoteToReddit:(NSString *)postID{
+
+
+    [[RKClient sharedClient] linkWithFullName:postID completion:^(id object, NSError *error) {
+        [[RKClient sharedClient] upvote:object completion:^(NSError *error) {
+            NSLog(@"UPVate");
+        }];
+    }];
+}
+
+-(void)sendDownVoteToReddit:(NSString *)postID{
+
+
+    [[RKClient sharedClient] linkWithFullName:postID completion:^(id object, NSError *error) {
+        [[RKClient sharedClient] downvote:object completion:^(NSError *error) {
+            NSLog(@"UPVate");
+        }];
+    }];
 }
 
 @end
