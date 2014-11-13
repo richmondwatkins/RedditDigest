@@ -938,10 +938,10 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="xAZ-3t-2Y0" firstAttribute="bottom" secondItem="5J9-XE-PyF" secondAttribute="top" id="F7N-22-RrY"/>
-                            <constraint firstItem="xAZ-3t-2Y0" firstAttribute="leading" secondItem="m9v-QN-1hw" secondAttribute="leading" id="J0F-V9-l4E"/>
-                            <constraint firstAttribute="centerY" secondItem="xAZ-3t-2Y0" secondAttribute="centerY" id="fke-Hz-j8z"/>
-                            <constraint firstAttribute="centerX" secondItem="xAZ-3t-2Y0" secondAttribute="centerX" id="kcH-u3-FrB"/>
+                            <constraint firstAttribute="trailing" secondItem="xAZ-3t-2Y0" secondAttribute="trailing" id="d6e-an-oAd"/>
+                            <constraint firstItem="5J9-XE-PyF" firstAttribute="top" secondItem="xAZ-3t-2Y0" secondAttribute="bottom" id="q1B-0h-T6W"/>
+                            <constraint firstItem="xAZ-3t-2Y0" firstAttribute="top" secondItem="m9v-QN-1hw" secondAttribute="top" id="tHF-r0-uL1"/>
+                            <constraint firstItem="xAZ-3t-2Y0" firstAttribute="leading" secondItem="m9v-QN-1hw" secondAttribute="leading" id="xjg-t3-gll"/>
                         </constraints>
                     </view>
                     <connections>
