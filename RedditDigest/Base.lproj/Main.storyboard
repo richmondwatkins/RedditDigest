@@ -1042,10 +1042,37 @@
                     <view key="view" contentMode="scaleToFill" id="PRd-nZ-FOl">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="S8U-cs-cwC">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="20"/>
+                                <color key="backgroundColor" red="0.20000000000000001" green="0.40000000000000002" blue="0.59999999999999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="20" id="st9-yy-hKi"/>
+                                </constraints>
+                            </view>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <gestureRecognizers/>
+                        <constraints>
+                            <constraint firstItem="S8U-cs-cwC" firstAttribute="top" secondItem="PRd-nZ-FOl" secondAttribute="top" id="EVn-h7-QWx"/>
+                            <constraint firstAttribute="trailing" secondItem="S8U-cs-cwC" secondAttribute="trailing" id="deb-QZ-7b7"/>
+                            <constraint firstItem="S8U-cs-cwC" firstAttribute="leading" secondItem="PRd-nZ-FOl" secondAttribute="leading" id="zFK-yx-d5Q"/>
+                        </constraints>
+                        <connections>
+                            <outletCollection property="gestureRecognizers" destination="XbI-mi-MMU" appends="YES" id="wjO-L3-XkT"/>
+                        </connections>
                     </view>
+                    <connections>
+                        <outlet property="statusBarBackground" destination="S8U-cs-cwC" id="Bf2-9H-UOM"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="j3N-lV-b48" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <panGestureRecognizer minimumNumberOfTouches="1" id="XbI-mi-MMU">
+                    <connections>
+                        <action selector="onPan:" destination="SW4-4c-RCO" id="ZkC-tL-g9I"/>
+                        <outlet property="delegate" destination="SW4-4c-RCO" id="ygA-u0-x6Z"/>
+                    </connections>
+                </panGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="200" y="1163"/>
         </scene>
