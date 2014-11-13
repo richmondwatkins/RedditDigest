@@ -974,9 +974,6 @@
                             <constraint firstItem="fLy-Vc-hJK" firstAttribute="top" secondItem="ot6-YI-PWG" secondAttribute="bottom" id="Y0W-RS-MhA"/>
                             <constraint firstItem="HUr-NA-PG8" firstAttribute="top" secondItem="fLy-Vc-hJK" secondAttribute="bottom" id="j9L-dJ-FJM"/>
                         </constraints>
-                        <connections>
-                            <outletCollection property="gestureRecognizers" destination="snf-0V-xW7" appends="YES" id="ngX-Fv-8uF"/>
-                        </connections>
                     </view>
                     <connections>
                         <outlet property="statusBarBackground" destination="KX6-x1-6iJ" id="WKm-MM-DIG"/>
@@ -984,12 +981,6 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Bnc-d4-jlR" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <tapGestureRecognizer id="snf-0V-xW7">
-                    <connections>
-                        <action selector="handleTap:" destination="ifK-Yt-vLY" id="FRP-8P-Opd"/>
-                        <outlet property="delegate" destination="x1O-IM-3Cu" id="MWX-xO-cfB"/>
-                    </connections>
-                </tapGestureRecognizer>
                 <panGestureRecognizer minimumNumberOfTouches="1" id="AbN-hm-90S">
                     <connections>
                         <action selector="onPan:" destination="ifK-Yt-vLY" id="pbT-mF-Tqg"/>

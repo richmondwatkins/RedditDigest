@@ -21,7 +21,6 @@
 -(void)viewWillAppear:(BOOL)animated
 {
     self.textView.text = self.selfPostText;
-    NSLog(@"TV %@",self.textView.text);
 }
 
 - (void)viewDidLoad {
@@ -35,6 +34,7 @@
         self.statusBarBackground.alpha = 0.0;
     }
 }
+
 - (IBAction)onPan:(UIPanGestureRecognizer *)panGesture
 {
     typedef NS_ENUM(NSUInteger, UIPanGestureRecognizerDirection) {
@@ -72,20 +72,15 @@
                     }
                 }
             }
-            if (direction == UIPanGestureRecognizerDirectionDown && !self.navigationController.navigationBarHidden)
-            {
+            if (direction == UIPanGestureRecognizerDirectionDown && !self.navigationController.navigationBarHidden) {
                 [self hideNavigationAndTabBars];
             }
-
-
             break;
         }
         case UIGestureRecognizerStateEnded:
         {
             if (direction == UIPanGestureRecognizerDirectionUp) {
-                // show nav and and tab bars
-                if (self.navigationController.navigationBarHidden)
-                {
+                if (self.navigationController.navigationBarHidden) {
                     [self showNavigationAndTabBars];
                 }
             }
@@ -125,32 +120,6 @@
     } completion:^(BOOL finished) {
         // Done
     }];
-}
-
-- (IBAction)handleTap:(id)sender
-{
-//    // show nav and and tab bars
-//    if (self.navigationController.navigationBarHidden) {
-//        [self.navigationController setNavigationBarHidden:NO animated:YES];
-//        self.tabBarController.tabBar.hidden = NO;
-//        // Animate after delay or there's a weird blip
-//        [UIView animateWithDuration:0.0 delay:0.1 options:UIViewAnimationOptionTransitionNone animations:^{
-//            self.statusBarBackground.alpha = 0.0;
-//        } completion:^(BOOL finished) {
-//            // Done
-//        }];
-//    }
-//    else {
-//        // hide nav and tab bars
-//        [self.navigationController setNavigationBarHidden:YES animated:YES];
-//        self.tabBarController.tabBar.hidden = YES;
-//        [UIView animateWithDuration:0.0 delay:0.1 options:UIViewAnimationOptionTransitionNone animations:^{
-//            self.statusBarBackground.alpha = 1.0;
-//        } completion:^(BOOL finished) {
-//            // Done
-//        }];
-//    }
-
 }
 
 -(void)scrollViewDidScrollToTop:(UIScrollView *)scrollView
