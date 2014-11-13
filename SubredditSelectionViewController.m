@@ -66,6 +66,7 @@
         self.hasRedditAccount = YES;
         [[RKClient sharedClient] subscribedSubredditsWithCompletion:^(NSArray *collection, RKPagination *pagination, NSError *error) {
             self.subreddits = [[NSMutableArray alloc] initWithArray:[self convertToSelectableSubredditFromRKSubreddit:collection]];
+            [self sortSubredditsAlphabetically];
             if (self.isFromSettings) {[self checkForExistingSubscription];}
 
              [self.subredditCollectionView reloadData];
@@ -94,7 +95,7 @@
         }];
         // If the user has not reddit accounts set the nav title to the following
         // If user has account set the nav title to the following
-        self.navigationItem.title = @"Choose your catagories";
+        self.navigationItem.title = @"Choose your categories";
     }
 
 
@@ -104,6 +105,8 @@
     self.sizingCell = [[cellNib instantiateWithOwner:nil options:nil] objectAtIndex:0];
 }
 
+
+#pragma mark - Collection View
 -(NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
     if (self.hasRedditAccount) {
@@ -446,12 +449,12 @@
     }
 }
 
--(NSMutableArray *)sortSubredditsAlphabetically{
-    NSSortDescriptor*sorter =[[NSSortDescriptor alloc] initWithKey:@"name" ascending:YES selector:@selector(localizedCaseInsensitiveCompare:)];
-    NSArray*sortDescriptors =[NSArray arrayWithObject: sorter];
-    [self.subreddits sortUsingDescriptors:sortDescriptors];
-
-    return [NSMutableArray arrayWithArray:sortDescriptors];
+-(void)sortSubredditsAlphabetically
+{
+    NSLog(@"\n The Subreddits are: %@", self.subreddits);
+    NSSortDescriptor *sortedSubreddits = [[NSSortDescriptor alloc]initWithKey: @"name" ascending:YES selector:@selector(caseInsensitiveCompare:)];
+    [self.subreddits sortUsingDescriptors:[NSArray arrayWithObject:sortedSubreddits]];
+    NSLog(@"\n The Subreddits alphabetized are: %@", self.subreddits);
 }
 
 @end
