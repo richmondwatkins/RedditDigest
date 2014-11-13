@@ -19,5 +19,5 @@
 +(SelectableSubreddit *)createInstanceFromRKSubreddit:(RKSubreddit *)subreddit;
 +(SelectableSubreddit *)createInstanceFromCategoryDictionary:(NSDictionary *)category;
 +(SelectableSubreddit *)createSubredditInstanceFromCategoryDictionary:(NSDictionary *)category withCategoryName:(NSString *)categoryName;
-
++(NSMutableArray *)createArrayFromRKLinks:(NSArray *)links;
 @end

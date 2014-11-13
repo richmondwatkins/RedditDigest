@@ -36,7 +36,7 @@
 @property NSInteger direction;
 @property NSInteger shakes;
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *activityIndicator;
-
+@property NSMutableArray *categoriesAndSubreddits;
 @end
 
 @implementation SubredditSelectionViewController
@@ -82,16 +82,23 @@
     {
         self.hasRedditAccount = NO;
         self.activityIndicator.hidden = YES;
-
-        NSURL *categoryURL = [NSURL URLWithString:@"http://192.168.129.228:3000/get/categories"];
+        self.categoriesAndSubreddits = [NSMutableArray array];
+        NSURL *categoryURL = [NSURL URLWithString:@"http://192.168.1.4:3000/get/categories"];
         NSURLRequest *request = [NSURLRequest requestWithURL:categoryURL];
         [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
             NSDictionary *results = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:nil];
             self.catagories = [SubredditCategory createCategoriesAndSubreddit:results[@"allCategories"]];
-
             [self checkForExistingCategory];
-            [self.subredditCollectionView reloadData];
+            [self.categoriesAndSubreddits addObject:self.catagories];
+
+            [[RKClient sharedClient] frontPageLinksWithCategory:0 pagination:0 completion:^(NSArray *collection, RKPagination *pagination, NSError *error) {
+                self.subreddits = [SelectableSubreddit createArrayFromRKLinks:collection];
+                [self checkForExistingSubscription];
+                [self.categoriesAndSubreddits addObject:self.subreddits];
+                [self.subredditCollectionView reloadData];
+            }];
         }];
+
         // If the user has not reddit accounts set the nav title to the following
         // If user has account set the nav title to the following
         self.navigationItem.title = @"Choose your catagories";
@@ -110,7 +117,8 @@
         return self.subreddits.count;
     }
     else {
-        return self.catagories.count;
+        return [[self.categoriesAndSubreddits objectAtIndex:section] count];
+//        return self.catagories.count;
     }
 }
 
@@ -148,10 +156,15 @@
     else {
         if (self.selectedSubreddits.count < 10)
         {
-
-            SubredditCategory *category = self.catagories[indexPath.row];
-
-            for (SelectableSubreddit *subreddit in category.subreddits) {
+            id subOrCat = [self.categoriesAndSubreddits[indexPath.section] objectAtIndex:indexPath.row];
+            if ([subOrCat isKindOfClass:[SubredditCategory class]]) {
+                SubredditCategory *category = subOrCat;
+                for (SelectableSubreddit *subreddit in category.subreddits) {
+                    NSLog(@"SAVINGGG %@",subreddit.name);
+                    [self.selectedSubreddits addObject:subreddit];
+                }
+            }else{
+                SelectableSubreddit *subreddit = subOrCat;
                 [self.selectedSubreddits addObject:subreddit];
             }
 
@@ -180,13 +193,26 @@
         cell.subredditTitleLabel.text = subreddit.name;
     }
     else {
-        SubredditCategory *category = self.catagories[indexPath.row];
-        if (category.currentlySubscribed) {
-            [self.subreddits addObject:category];
-            cell.selected = YES;
-            [self.subredditCollectionView selectItemAtIndexPath:indexPath animated:NO scrollPosition:NO];
+
+        id subOrCat = [self.categoriesAndSubreddits[indexPath.section] objectAtIndex:indexPath.row];
+        if ([subOrCat isKindOfClass:[SubredditCategory class]]) {
+            SubredditCategory *category = subOrCat;
+            if (category.currentlySubscribed) {
+                [self.subreddits addObject:subOrCat];
+                cell.selected = YES;
+                [self.subredditCollectionView selectItemAtIndexPath:indexPath animated:NO scrollPosition:NO];
+            }
+            cell.subredditTitleLabel.text = category.name;
+        }else{
+            SelectableSubreddit *subreddit = subOrCat;
+            if (subreddit.currentlySubscribed) {
+                [self.subreddits addObject:subreddit];
+                cell.selected = YES;
+                [self.subredditCollectionView selectItemAtIndexPath:indexPath animated:NO scrollPosition:NO];
+            }
+            cell.subredditTitleLabel.text = subreddit.name;
         }
-        cell.subredditTitleLabel.text = category.name;
+
     }
     // SubredditTitleLabel font and color
     cell.subredditTitleLabel.font = [UIFont fontWithName:@"Helvetica" size:16.0];
@@ -215,14 +241,22 @@
         }
     }
     else {
-        SubredditCategory *category = self.catagories[indexPath.row];
 
-        for (SelectableSubreddit *sub in category.subreddits) {
-            [Subreddit removeFromCoreData:sub.name withManagedObject:self.managedObject];
-            [self.selectedSubreddits removeObject:sub];
+        id subOrCat = [self.categoriesAndSubreddits[indexPath.section] objectAtIndex:indexPath.row];
+
+        if ([subOrCat isKindOfClass:[SubredditCategory class]]) {
+            SubredditCategory *category = subOrCat;
+            [DigestCategory removeFromCoreData:category.name withManagedObject:self.managedObject];
+            for (SelectableSubreddit *subreddit in category.subreddits) {
+                [self.selectedSubreddits removeObject:subreddit];
+                [Subreddit removeFromCoreData:subreddit.name withManagedObject:self.managedObject];
+            }
+        }else{
+            SelectableSubreddit *subreddit = subOrCat;
+            [self.selectedSubreddits removeObject:subreddit];
+            [Subreddit removeFromCoreData:subreddit.name withManagedObject:self.managedObject];
         }
-
-        [DigestCategory removeFromCoreData:category.name withManagedObject:self.managedObject];
+        
     }
 
     if (self.selectedSubreddits.count == 0) {
@@ -281,6 +315,11 @@
 
 
     return reusableview;
+}
+
+- (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView
+{
+    return self.categoriesAndSubreddits.count;
 }
 
 // Header Height and Width
@@ -383,9 +422,11 @@
  ***************************************
  */
 - (IBAction)finishSelectingSubreddits:(id)sender
-{
-
-    NSDictionary *dataDictionary = [[NSDictionary alloc] initWithObjectsAndKeys:self.selectedSubreddits, @"subreddits", nil];
+{   NSLog(@"BEFOREEEE %lu",(unsigned long)self.selectedSubreddits.count);
+    NSSet *forRemovingDups = [NSSet setWithArray:self.selectedSubreddits];
+    NSArray *uniqueSelections = [forRemovingDups allObjects];
+    NSLog(@"BEFOREEEE %lu",(unsigned long)uniqueSelections.count);
+    NSDictionary *dataDictionary = [[NSDictionary alloc] initWithObjectsAndKeys:uniqueSelections, @"subreddits", nil];
     [Subreddit addSubredditsToCoreData:self.selectedSubreddits withManagedObject:self.managedObject];
 
     [UserRequests postSelectedSubreddits:dataDictionary withCompletion:^(BOOL completed) {

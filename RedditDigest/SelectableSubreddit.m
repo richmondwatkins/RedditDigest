@@ -36,7 +36,23 @@
     selectableSubreddit.name = subreddit[@"name"];
     selectableSubreddit.categoryName = categoryName;
     selectableSubreddit.url = subreddit[@"url"];
+    selectableSubreddit.currentlySubscribed = NO;
     return selectableSubreddit;
+}
+
++(NSMutableArray *)createArrayFromRKLinks:(NSArray *)links{
+    NSMutableArray *arrayToReturn = [NSMutableArray array];
+    for (RKLink *link in links) {
+        SelectableSubreddit *selectableSubreddit = [SelectableSubreddit new];
+        selectableSubreddit.name = link.subreddit;
+        selectableSubreddit.url = [NSString stringWithFormat:@"/r/%@/", link.subreddit];
+        selectableSubreddit.currentlySubscribed = NO;
+        if (![arrayToReturn containsObject:selectableSubreddit]) {
+            [arrayToReturn addObject:selectableSubreddit];
+        }
+    }
+
+    return arrayToReturn;
 }
 
 @end
