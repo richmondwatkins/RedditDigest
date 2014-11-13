@@ -1091,22 +1091,46 @@
                             <webView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="54x-dI-T8y">
                                 <rect key="frame" x="0.0" y="140" width="600" height="319"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="319" id="doJ-KB-Ljm"/>
+                                </constraints>
                             </webView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="61a-5h-oKC">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="20"/>
+                                <color key="backgroundColor" red="0.20000000000000001" green="0.40000000000000002" blue="0.59999999999999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <gestureRecognizers/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="20" id="FRk-eN-DX2"/>
+                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="20" id="NZK-QR-Eg0"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstAttribute="centerX" secondItem="54x-dI-T8y" secondAttribute="centerX" id="6lX-mn-RRH"/>
-                            <constraint firstItem="54x-dI-T8y" firstAttribute="top" secondItem="5xM-jd-KS8" secondAttribute="top" constant="140" id="F1O-hb-PCR"/>
-                            <constraint firstItem="C6W-Kx-3Rr" firstAttribute="top" secondItem="54x-dI-T8y" secondAttribute="bottom" constant="141" id="Tjg-ry-qIx"/>
-                            <constraint firstItem="54x-dI-T8y" firstAttribute="leading" secondItem="5xM-jd-KS8" secondAttribute="leading" id="csu-Im-cMi"/>
-                            <constraint firstAttribute="trailing" secondItem="54x-dI-T8y" secondAttribute="trailing" id="s3J-Wg-nlY"/>
+                            <constraint firstItem="54x-dI-T8y" firstAttribute="top" secondItem="fW6-WQ-Bk6" secondAttribute="bottom" constant="120" id="2sc-h3-9oU"/>
+                            <constraint firstAttribute="trailing" secondItem="54x-dI-T8y" secondAttribute="trailing" id="Jw1-cU-tGG"/>
+                            <constraint firstItem="54x-dI-T8y" firstAttribute="leading" secondItem="5xM-jd-KS8" secondAttribute="leading" id="LIF-IV-Z5E"/>
+                            <constraint firstItem="61a-5h-oKC" firstAttribute="top" secondItem="5xM-jd-KS8" secondAttribute="top" id="Niq-4I-T15"/>
+                            <constraint firstAttribute="centerX" secondItem="54x-dI-T8y" secondAttribute="centerX" id="QDV-a5-pXJ"/>
+                            <constraint firstAttribute="trailing" secondItem="61a-5h-oKC" secondAttribute="trailing" id="hCn-Gz-nYJ"/>
+                            <constraint firstItem="61a-5h-oKC" firstAttribute="leading" secondItem="5xM-jd-KS8" secondAttribute="leading" id="tWH-Zf-tVM"/>
                         </constraints>
+                        <connections>
+                            <outletCollection property="gestureRecognizers" destination="ths-p9-84o" appends="YES" id="zfF-8i-FXe"/>
+                        </connections>
                     </view>
                     <connections>
+                        <outlet property="statusBarBackground" destination="61a-5h-oKC" id="SAx-4f-Zas"/>
                         <outlet property="videoView" destination="54x-dI-T8y" id="jOm-u4-hDs"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="0s7-F9-JpU" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <panGestureRecognizer minimumNumberOfTouches="1" id="ths-p9-84o">
+                    <connections>
+                        <action selector="onPan:" destination="8af-0V-Opd" id="oBN-YZ-0bi"/>
+                        <outlet property="delegate" destination="8af-0V-Opd" id="3Zw-DG-mt7"/>
+                    </connections>
+                </panGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="200" y="1820"/>
         </scene>

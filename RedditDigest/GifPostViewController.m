@@ -42,6 +42,13 @@
             [self.view addSubview:imageView];
         });
     });
+
+    if (self.navigationController.navigationBarHidden) {
+        self.statusBarBackground.alpha = 1.0;
+    }
+    else {
+        self.statusBarBackground.alpha = 0.0;
+    }
 }
 
 - (IBAction)onPan:(UIPanGestureRecognizer *)panGesture
