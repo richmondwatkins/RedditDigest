@@ -9,7 +9,7 @@
 #import "CommentViewController.h"
 #import "CommentTableViewCell.h"
 
-@interface CommentViewController () <UITableViewDelegate, UITableViewDataSource, UIWebViewDelegate, UITextViewDelegate>
+@interface CommentViewController () <UITableViewDelegate, UITableViewDataSource, UIWebViewDelegate, UITextViewDelegate, UITabBarControllerDelegate>
 
 @property Comment *selectedComment;
 @property CGFloat cellHeight;
@@ -25,6 +25,11 @@
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+}
+
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
 }
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath

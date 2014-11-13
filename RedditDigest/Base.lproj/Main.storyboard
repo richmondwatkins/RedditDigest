@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6250" systemVersion="14B17" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="9zg-4H-k34">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6250" systemVersion="14B23" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="9zg-4H-k34">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6244"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
@@ -798,25 +798,6 @@
             </objects>
             <point key="canvasLocation" x="-1199" y="-1261"/>
         </scene>
-        <!--Post View Controller-->
-        <scene sceneID="6cM-va-gTw">
-            <objects>
-                <viewController id="5uv-Oq-P6m" customClass="PostViewController" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="lDg-jd-6lO"/>
-                        <viewControllerLayoutGuide type="bottom" id="ZAd-C1-XKX"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="UbX-54-uAT">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                    </view>
-                    <tabBarItem key="tabBarItem" systemItem="favorites" id="iqI-bJ-aFb"/>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="Jq0-Os-qzQ" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="210" y="-815"/>
-        </scene>
         <!--Image Post View Controller-->
         <scene sceneID="hbc-8v-vBY">
             <objects>
@@ -832,27 +813,47 @@
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="8tw-of-qFa">
                                 <rect key="frame" x="0.0" y="105" width="600" height="390"/>
                             </imageView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="RWZ-k1-gcB">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="20"/>
+                                <color key="backgroundColor" red="0.20000000000000001" green="0.40000000000000002" blue="0.59999999999999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="20" id="sw9-dh-57Y"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <gestureRecognizers/>
                         <constraints>
-                            <constraint firstItem="8tw-of-qFa" firstAttribute="leading" secondItem="K6h-7n-mlt" secondAttribute="leading" id="68S-7z-CZa"/>
-                            <constraint firstItem="N6S-4A-bhX" firstAttribute="top" secondItem="8tw-of-qFa" secondAttribute="bottom" constant="105" id="BzE-Ab-w1n"/>
-                            <constraint firstItem="8tw-of-qFa" firstAttribute="top" secondItem="K6h-7n-mlt" secondAttribute="top" constant="105" id="hPS-1d-rqy"/>
-                            <constraint firstAttribute="trailing" secondItem="8tw-of-qFa" secondAttribute="trailing" id="udn-HN-TpX"/>
+                            <constraint firstAttribute="trailing" secondItem="RWZ-k1-gcB" secondAttribute="trailing" id="5D6-FD-HS3"/>
+                            <constraint firstItem="RWZ-k1-gcB" firstAttribute="top" secondItem="K6h-7n-mlt" secondAttribute="top" id="9Wu-56-KVe"/>
+                            <constraint firstItem="N6S-4A-bhX" firstAttribute="top" secondItem="8tw-of-qFa" secondAttribute="bottom" constant="105" id="ACQ-gx-WyI"/>
+                            <constraint firstItem="RWZ-k1-gcB" firstAttribute="leading" secondItem="K6h-7n-mlt" secondAttribute="leading" id="BNi-E2-n1d"/>
+                            <constraint firstItem="8tw-of-qFa" firstAttribute="top" secondItem="cTF-hn-D2J" secondAttribute="bottom" constant="85" id="QKE-Sc-drI"/>
+                            <constraint firstAttribute="trailing" secondItem="8tw-of-qFa" secondAttribute="trailing" id="fmJ-Zf-FAY"/>
+                            <constraint firstItem="8tw-of-qFa" firstAttribute="leading" secondItem="K6h-7n-mlt" secondAttribute="leading" id="rgX-aH-Am2"/>
                         </constraints>
+                        <connections>
+                            <outletCollection property="gestureRecognizers" destination="Nvf-sO-tIY" appends="YES" id="2EK-aE-GEd"/>
+                        </connections>
                     </view>
                     <connections>
                         <outlet property="imageView" destination="8tw-of-qFa" id="QKj-gM-tVW"/>
+                        <outlet property="statusBarBackground" destination="RWZ-k1-gcB" id="F0i-GC-w3m"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="NaH-fd-BDo" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <panGestureRecognizer minimumNumberOfTouches="1" id="Nvf-sO-tIY">
+                    <connections>
+                        <action selector="onPan:" destination="48Y-Y6-Cb0" id="3vS-Uv-FXh"/>
+                    </connections>
+                </panGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="880" y="-815"/>
+            <point key="canvasLocation" x="200" y="-815"/>
         </scene>
         <!--Comment View Controller-->
         <scene sceneID="6dd-yo-DqN">
             <objects>
-                <viewController id="lJS-Le-QsK" customClass="CommentViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="CommentView" id="lJS-Le-QsK" customClass="CommentViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="ZLR-aP-wex"/>
                         <viewControllerLayoutGuide type="bottom" id="hfO-Cs-Dw7"/>
@@ -916,7 +917,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="VAy-o2-vYu" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-485" y="-109"/>
+            <point key="canvasLocation" x="-485" y="-161"/>
         </scene>
         <!--Web Post View Controller-->
         <scene sceneID="pKa-98-ybb">
@@ -930,26 +931,47 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <webView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xAZ-3t-2Y0">
-                                <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                            <webView contentMode="scaleToFill" scalesPageToFit="YES" translatesAutoresizingMaskIntoConstraints="NO" id="xAZ-3t-2Y0">
+                                <rect key="frame" x="0.0" y="20" width="600" height="580"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </webView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Uqa-q4-8tx">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="20"/>
+                                <color key="backgroundColor" red="0.20000000000000001" green="0.40000000000000002" blue="0.59999999999999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="20" id="dKZ-6Q-7Ys"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <gestureRecognizers/>
                         <constraints>
-                            <constraint firstItem="xAZ-3t-2Y0" firstAttribute="bottom" secondItem="5J9-XE-PyF" secondAttribute="top" id="F7N-22-RrY"/>
-                            <constraint firstItem="xAZ-3t-2Y0" firstAttribute="leading" secondItem="m9v-QN-1hw" secondAttribute="leading" id="J0F-V9-l4E"/>
-                            <constraint firstAttribute="centerY" secondItem="xAZ-3t-2Y0" secondAttribute="centerY" id="fke-Hz-j8z"/>
-                            <constraint firstAttribute="centerX" secondItem="xAZ-3t-2Y0" secondAttribute="centerX" id="kcH-u3-FrB"/>
+                            <constraint firstItem="Uqa-q4-8tx" firstAttribute="leading" secondItem="m9v-QN-1hw" secondAttribute="leading" id="0Sc-hG-ifj"/>
+                            <constraint firstAttribute="trailing" secondItem="Uqa-q4-8tx" secondAttribute="trailing" id="4v8-7b-Yqa"/>
+                            <constraint firstAttribute="trailing" secondItem="xAZ-3t-2Y0" secondAttribute="trailing" id="d6e-an-oAd"/>
+                            <constraint firstItem="5J9-XE-PyF" firstAttribute="top" secondItem="xAZ-3t-2Y0" secondAttribute="bottom" id="dvR-s8-kDl"/>
+                            <constraint firstItem="Uqa-q4-8tx" firstAttribute="top" secondItem="m9v-QN-1hw" secondAttribute="top" id="gIN-ai-eti"/>
+                            <constraint firstItem="xAZ-3t-2Y0" firstAttribute="top" secondItem="m9v-QN-1hw" secondAttribute="top" constant="20" id="tHF-r0-uL1"/>
+                            <constraint firstItem="xAZ-3t-2Y0" firstAttribute="leading" secondItem="m9v-QN-1hw" secondAttribute="leading" id="xjg-t3-gll"/>
                         </constraints>
+                        <connections>
+                            <outletCollection property="gestureRecognizers" destination="0jp-xW-TXj" appends="YES" id="kSY-YQ-IKb"/>
+                        </connections>
                     </view>
                     <connections>
+                        <outlet property="statusBarBackground" destination="Uqa-q4-8tx" id="EvC-JA-dgx"/>
                         <outlet property="webView" destination="xAZ-3t-2Y0" id="hA7-ke-RVd"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Nbf-Mv-9qo" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <panGestureRecognizer minimumNumberOfTouches="1" id="0jp-xW-TXj">
+                    <connections>
+                        <action selector="onPan:" destination="VdO-7b-mon" id="psF-ll-vZU"/>
+                        <outlet property="delegate" destination="VdO-7b-mon" id="T3i-kK-wJf"/>
+                    </connections>
+                </panGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="880" y="-161"/>
+            <point key="canvasLocation" x="200" y="-161"/>
         </scene>
         <!--Self Post View Controller-->
         <scene sceneID="cLa-ju-UEN">
@@ -963,28 +985,51 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fLy-Vc-hJK">
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleAspectFit" editable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fLy-Vc-hJK">
                                 <rect key="frame" x="0.0" y="20" width="600" height="580"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <gestureRecognizers/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                <connections>
+                                    <outlet property="delegate" destination="ifK-Yt-vLY" id="BHI-Yb-KTl"/>
+                                    <outletCollection property="gestureRecognizers" destination="AbN-hm-90S" appends="YES" id="pvl-dZ-bZH"/>
+                                </connections>
                             </textView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="KX6-x1-6iJ">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="20"/>
+                                <color key="backgroundColor" red="0.20000000000000001" green="0.40000000000000002" blue="0.59999999999999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="20" id="tVZ-Zq-qsy"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <gestureRecognizers/>
                         <constraints>
                             <constraint firstItem="fLy-Vc-hJK" firstAttribute="leading" secondItem="x1O-IM-3Cu" secondAttribute="leading" id="1R7-LG-txJ"/>
+                            <constraint firstItem="KX6-x1-6iJ" firstAttribute="leading" secondItem="x1O-IM-3Cu" secondAttribute="leading" id="4J4-by-2tf"/>
+                            <constraint firstAttribute="trailing" secondItem="KX6-x1-6iJ" secondAttribute="trailing" id="4Un-il-JAi"/>
                             <constraint firstAttribute="trailing" secondItem="fLy-Vc-hJK" secondAttribute="trailing" id="Mbc-sq-Zbr"/>
+                            <constraint firstItem="KX6-x1-6iJ" firstAttribute="top" secondItem="x1O-IM-3Cu" secondAttribute="top" id="PRN-Az-5xZ"/>
                             <constraint firstItem="fLy-Vc-hJK" firstAttribute="top" secondItem="ot6-YI-PWG" secondAttribute="bottom" id="Y0W-RS-MhA"/>
                             <constraint firstItem="HUr-NA-PG8" firstAttribute="top" secondItem="fLy-Vc-hJK" secondAttribute="bottom" id="j9L-dJ-FJM"/>
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="statusBarBackground" destination="KX6-x1-6iJ" id="WKm-MM-DIG"/>
                         <outlet property="textView" destination="fLy-Vc-hJK" id="cPc-ca-QAf"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Bnc-d4-jlR" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <panGestureRecognizer minimumNumberOfTouches="1" id="AbN-hm-90S">
+                    <connections>
+                        <action selector="onPan:" destination="ifK-Yt-vLY" id="pbT-mF-Tqg"/>
+                        <outlet property="delegate" destination="ifK-Yt-vLY" id="9Q5-ca-jSA"/>
+                    </connections>
+                </panGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="880" y="499"/>
+            <point key="canvasLocation" x="200" y="499"/>
         </scene>
         <!--Gif Post View Controller-->
         <scene sceneID="021-Dd-lv4">
@@ -997,12 +1042,39 @@
                     <view key="view" contentMode="scaleToFill" id="PRd-nZ-FOl">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="S8U-cs-cwC">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="20"/>
+                                <color key="backgroundColor" red="0.20000000000000001" green="0.40000000000000002" blue="0.59999999999999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="20" id="st9-yy-hKi"/>
+                                </constraints>
+                            </view>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <gestureRecognizers/>
+                        <constraints>
+                            <constraint firstItem="S8U-cs-cwC" firstAttribute="top" secondItem="PRd-nZ-FOl" secondAttribute="top" id="EVn-h7-QWx"/>
+                            <constraint firstAttribute="trailing" secondItem="S8U-cs-cwC" secondAttribute="trailing" id="deb-QZ-7b7"/>
+                            <constraint firstItem="S8U-cs-cwC" firstAttribute="leading" secondItem="PRd-nZ-FOl" secondAttribute="leading" id="zFK-yx-d5Q"/>
+                        </constraints>
+                        <connections>
+                            <outletCollection property="gestureRecognizers" destination="XbI-mi-MMU" appends="YES" id="wjO-L3-XkT"/>
+                        </connections>
                     </view>
+                    <connections>
+                        <outlet property="statusBarBackground" destination="S8U-cs-cwC" id="Bf2-9H-UOM"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="j3N-lV-b48" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <panGestureRecognizer minimumNumberOfTouches="1" id="XbI-mi-MMU">
+                    <connections>
+                        <action selector="onPan:" destination="SW4-4c-RCO" id="ZkC-tL-g9I"/>
+                        <outlet property="delegate" destination="SW4-4c-RCO" id="ygA-u0-x6Z"/>
+                    </connections>
+                </panGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="880" y="1163"/>
+            <point key="canvasLocation" x="200" y="1163"/>
         </scene>
         <!--Video Post View Controller-->
         <scene sceneID="4FI-Sp-DX2">
@@ -1019,24 +1091,48 @@
                             <webView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="54x-dI-T8y">
                                 <rect key="frame" x="0.0" y="140" width="600" height="319"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="319" id="doJ-KB-Ljm"/>
+                                </constraints>
                             </webView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="61a-5h-oKC">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="20"/>
+                                <color key="backgroundColor" red="0.20000000000000001" green="0.40000000000000002" blue="0.59999999999999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <gestureRecognizers/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="20" id="FRk-eN-DX2"/>
+                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="20" id="NZK-QR-Eg0"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstAttribute="centerX" secondItem="54x-dI-T8y" secondAttribute="centerX" id="6lX-mn-RRH"/>
-                            <constraint firstItem="54x-dI-T8y" firstAttribute="top" secondItem="5xM-jd-KS8" secondAttribute="top" constant="140" id="F1O-hb-PCR"/>
-                            <constraint firstItem="C6W-Kx-3Rr" firstAttribute="top" secondItem="54x-dI-T8y" secondAttribute="bottom" constant="141" id="Tjg-ry-qIx"/>
-                            <constraint firstItem="54x-dI-T8y" firstAttribute="leading" secondItem="5xM-jd-KS8" secondAttribute="leading" id="csu-Im-cMi"/>
-                            <constraint firstAttribute="trailing" secondItem="54x-dI-T8y" secondAttribute="trailing" id="s3J-Wg-nlY"/>
+                            <constraint firstItem="54x-dI-T8y" firstAttribute="top" secondItem="fW6-WQ-Bk6" secondAttribute="bottom" constant="120" id="2sc-h3-9oU"/>
+                            <constraint firstAttribute="trailing" secondItem="54x-dI-T8y" secondAttribute="trailing" id="Jw1-cU-tGG"/>
+                            <constraint firstItem="54x-dI-T8y" firstAttribute="leading" secondItem="5xM-jd-KS8" secondAttribute="leading" id="LIF-IV-Z5E"/>
+                            <constraint firstItem="61a-5h-oKC" firstAttribute="top" secondItem="5xM-jd-KS8" secondAttribute="top" id="Niq-4I-T15"/>
+                            <constraint firstAttribute="centerX" secondItem="54x-dI-T8y" secondAttribute="centerX" id="QDV-a5-pXJ"/>
+                            <constraint firstAttribute="trailing" secondItem="61a-5h-oKC" secondAttribute="trailing" id="hCn-Gz-nYJ"/>
+                            <constraint firstItem="61a-5h-oKC" firstAttribute="leading" secondItem="5xM-jd-KS8" secondAttribute="leading" id="tWH-Zf-tVM"/>
                         </constraints>
+                        <connections>
+                            <outletCollection property="gestureRecognizers" destination="ths-p9-84o" appends="YES" id="zfF-8i-FXe"/>
+                        </connections>
                     </view>
                     <connections>
+                        <outlet property="statusBarBackground" destination="61a-5h-oKC" id="SAx-4f-Zas"/>
                         <outlet property="videoView" destination="54x-dI-T8y" id="jOm-u4-hDs"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="0s7-F9-JpU" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <panGestureRecognizer minimumNumberOfTouches="1" id="ths-p9-84o">
+                    <connections>
+                        <action selector="onPan:" destination="8af-0V-Opd" id="oBN-YZ-0bi"/>
+                        <outlet property="delegate" destination="8af-0V-Opd" id="3Zw-DG-mt7"/>
+                    </connections>
+                </panGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="880" y="1820"/>
+            <point key="canvasLocation" x="200" y="1820"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="xjk-nU-YvO">
@@ -1074,10 +1170,10 @@
             </objects>
             <point key="canvasLocation" x="233" y="-1644"/>
         </scene>
-        <!--Tab Bar Controller-->
+        <!--Detail Post Tab Bar View Controller-->
         <scene sceneID="x9e-bg-dhX">
             <objects>
-                <tabBarController automaticallyAdjustsScrollViewInsets="NO" id="tAR-qU-Fq9" sceneMemberID="viewController">
+                <tabBarController automaticallyAdjustsScrollViewInsets="NO" id="tAR-qU-Fq9" customClass="DetailPostTabBarViewController" sceneMemberID="viewController">
                     <toolbarItems/>
                     <nil key="simulatedBottomBarMetrics"/>
                     <tabBar key="tabBar" contentMode="scaleToFill" id="blz-RW-d6k">
@@ -1085,8 +1181,7 @@
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     </tabBar>
                     <connections>
-                        <segue destination="5uv-Oq-P6m" kind="relationship" relationship="viewControllers" id="78Y-Iv-Ibt"/>
-                        <segue destination="lJS-Le-QsK" kind="relationship" relationship="viewControllers" id="uM5-r3-5eg"/>
+                        <outlet property="tabBar" destination="blz-RW-d6k" id="qam-WF-MLk"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="6jE-Mr-pR5" userLabel="First Responder" sceneMemberID="firstResponder"/>
