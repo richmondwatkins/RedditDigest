@@ -35,7 +35,6 @@
     [super viewDidLoad];
 
     [self setUpPageViewController];
-
 }
 
 - (BOOL)prefersStatusBarHidden {
@@ -184,10 +183,14 @@
         case UIGestureRecognizerStateChanged:
         {
             CGPoint translation = [panGesture locationInView:panGesture.view];
-            // Make sure user can't pull down when comments view is already all the way at the bottom
-            if (translation.y > 44) {
+            if (direction != UIPanGestureRecognizerDirectionLeft && direction != UIPanGestureRecognizerDirectionRight)
+            {
+                // View begins as size of iphone screen
+
+            //if (self.commentsViewController.view.frame.size.height > 479 || self.commentsViewController.view.frame.size.height > 43) {
                 self.commentsHeightConstraint.constant -= translation.y;
                 [panGesture setTranslation:CGPointMake(0, 0) inView:panGesture.view];
+                //}
             }
             break;
         }
@@ -201,33 +204,38 @@
                 }
                 self.commentsHeightConstraint.constant = 44.0;
 
-                // Snap shut
-                [UIView animateWithDuration:0.3
-                                      delay:0
-                     usingSpringWithDamping:0.8
-                      initialSpringVelocity:1.0
-                                    options:0
-                                 animations:^{
-                                     [self.view layoutIfNeeded];
-                                 }
-                                 completion:^(BOOL finished) {
-                                 }];
+                if (direction != UIPanGestureRecognizerDirectionLeft || direction != UIPanGestureRecognizerDirectionRight)
+                {   // Snap shut
+                    [UIView animateWithDuration:0.3
+                                          delay:0
+                         usingSpringWithDamping:0.8
+                          initialSpringVelocity:1.0
+                                        options:0
+                                     animations:^{
+                                         [self.view layoutIfNeeded];
+                                     }
+                                     completion:^(BOOL finished) {
+                                     }];
+                }
             }
 
             else if (direction == UIPanGestureRecognizerDirectionDown) {
                 // Pulling Up
                 self.commentsHeightConstraint.constant = self.view.frame.size.height;
-                // Snap shut
-                [UIView animateWithDuration:0.3
-                                      delay:0
-                     usingSpringWithDamping:0.8
-                      initialSpringVelocity:1.0
-                                    options:0
-                                 animations:^{
-                                     [self.view layoutIfNeeded];
-                                 }
-                                 completion:^(BOOL finished) {
-                                 }];
+
+                if (direction != UIPanGestureRecognizerDirectionLeft || direction != UIPanGestureRecognizerDirectionRight)
+                {   // Snap open
+                    [UIView animateWithDuration:0.3
+                                          delay:0
+                         usingSpringWithDamping:0.8
+                          initialSpringVelocity:1.0
+                                        options:0
+                                     animations:^{
+                                         [self.view layoutIfNeeded];
+                                     }
+                                     completion:^(BOOL finished) {
+                                     }];
+                }
             }
             direction = UIPanGestureRecognizerDirectionUndefined;
             break;
@@ -239,6 +247,7 @@
             [UIView animateWithDuration:0.2 animations:^{
                 [self.view layoutIfNeeded];
             } completion:^(BOOL finished) {
+                NSLog(@"Gesture cancelled");
             }];
             break;
         }

@@ -83,6 +83,7 @@
         case UIGestureRecognizerStateEnded:
         {
             if (direction == UIPanGestureRecognizerDirectionUp) {
+
                 if (self.navigationController.navigationBarHidden) {
                     [self showNavigationAndTabBars];
                 }
