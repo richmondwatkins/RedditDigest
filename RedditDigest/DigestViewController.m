@@ -144,8 +144,9 @@
         if ((placemarks != nil) && (placemarks.count > 0)) {
             CLPlacemark *placeMark = placemarks.firstObject;
             NSDictionary *placeMarkDict = placeMark.addressDictionary;
-
+            [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
             [RedditRequests localSubredditRequest:placeMarkDict[@"City"] andStateAbbreviation:placeMarkDict[@"State"] withManagedObject:self.managedObjectContext withCompletion:^(NSMutableArray *posts) {
+                [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
                 if (posts.count) {
                     for(Post *post in posts) {
                         [self.digestPosts insertObject:post atIndex:0];
@@ -690,21 +691,17 @@
 }
 
 -(void)sendUpVoteToReddit:(NSString *)postID{
-
-
     [[RKClient sharedClient] linkWithFullName:postID completion:^(id object, NSError *error) {
         [[RKClient sharedClient] upvote:object completion:^(NSError *error) {
-            NSLog(@"UPVate");
+            NSLog(@"Upvote");
         }];
     }];
 }
 
 -(void)sendDownVoteToReddit:(NSString *)postID{
-
-
     [[RKClient sharedClient] linkWithFullName:postID completion:^(id object, NSError *error) {
         [[RKClient sharedClient] downvote:object completion:^(NSError *error) {
-            NSLog(@"UPVate");
+            NSLog(@"Downvote");
         }];
     }];
 }

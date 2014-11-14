@@ -92,7 +92,7 @@
                 }];
             }];
         }else{
-            complete([NSNull null]);
+            complete(nil);
         }
     }];
 }
