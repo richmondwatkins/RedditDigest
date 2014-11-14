@@ -12,7 +12,7 @@
 
 @interface WebPostViewController () //<UIGestureRecognizerDelegate, UIScrollViewDelegate>
 
-//@property (weak, nonatomic) IBOutlet UIView *statusBarBackground;
+@property (weak, nonatomic) IBOutlet UIView *statusBarBackground;
 
 @end
 @implementation WebPostViewController
@@ -39,6 +39,13 @@
     }
 
     [self.webView loadRequest:request];
+
+    if (!self.navController.navigationBarHidden) {
+        self.statusBarBackground.alpha = 0.0;
+    }
+    else {
+        self.statusBarBackground.alpha = 1.0;
+    }
 }
 
 //- (IBAction)onPan:(UIPanGestureRecognizer *)panGesture

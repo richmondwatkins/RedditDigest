@@ -112,10 +112,15 @@
     [UIView animateWithDuration:0.2 animations:^{
         self.statusBarBackground.alpha = 1.0;
     }];
-
+    NSLog(@"%f", self.verticalSpaceConstraint.constant);
     [UIView animateWithDuration:UINavigationControllerHideShowBarDuration animations:^{
         [self.navController setNavigationBarHidden:YES animated:YES];
-        self.verticalSpaceConstraint.constant += self.navController.navigationBar.frame.size.height;
+//        if (self.verticalSpaceConstraint.constant < 0) {
+//            self.verticalSpaceConstraint.constant = 0;
+//        }
+//        else {
+            self.verticalSpaceConstraint.constant += self.navController.navigationBar.frame.size.height;
+        //}
         [self.view layoutIfNeeded];
     }];
 }
