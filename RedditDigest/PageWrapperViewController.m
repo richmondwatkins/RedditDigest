@@ -20,16 +20,16 @@
 
 @implementation PageWrapperViewController
 
-- (void)viewWillAppear:(BOOL)animated
-{
-    [super viewWillAppear:animated];
-    if (!self.navController.navigationBarHidden) {
-        self.statusBarBackground.alpha = 0.0;
-    }
-    else {
-        self.statusBarBackground.alpha = 1.0;
-    }
-}
+//- (void)viewWillAppear:(BOOL)animated
+//{
+//    [super viewWillAppear:animated];
+//    if (!self.navController.navigationBarHidden) {
+//        self.statusBarBackground.alpha = 0.0;
+//    }
+//    else {
+//        self.statusBarBackground.alpha = 1.0;
+//    }
+//}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
