@@ -8,16 +8,13 @@
 
 #import "RedditRequests.h"
 #import "Subreddit.h"
-#import "SelectableSubreddit.h"
 @implementation RedditRequests
 
 +(void)retrieveLatestPostFromArray:(NSArray *)subreddits withManagedObject:(NSManagedObjectContext *)managedObjectContext withCompletion:(void (^)(BOOL completed))complete{
     if ([subreddits.firstObject isKindOfClass:[Subreddit class]]) {
         subreddits = [self formatSubredditsArray:subreddits];
     }
-    if ([subreddits.firstObject isKindOfClass:[SelectableSubreddit class]]) {
-        subreddits = [self formatSelectedSubredditsArray:subreddits];
-    }
+
     __block int j = 0;
     for (NSDictionary *subredditDict in subreddits) {
         NSDictionary *setUpForRKKitObject = [[NSDictionary alloc] initWithObjectsAndKeys:subredditDict[@"subreddit"], @"name", subredditDict[@"url"], @"URL", nil];
@@ -52,13 +49,5 @@
     return [NSArray arrayWithArray:allSubreddits];
 }
 
-+(NSArray *)formatSelectedSubredditsArray:(NSArray *)selectedSubreddits{
-    NSMutableArray *allSubreddits = [NSMutableArray array];
-    for (SelectableSubreddit *subreddit in selectedSubreddits) {
-        NSDictionary *tempSubDict = [[NSDictionary alloc] initWithObjectsAndKeys:subreddit.name, @"subreddit", subreddit.url, @"url", nil];
-        [allSubreddits addObject:tempSubDict];
-    }
-    return [NSArray arrayWithArray:allSubreddits];
-}
 
 @end

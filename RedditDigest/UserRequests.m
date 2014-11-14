@@ -7,7 +7,7 @@
 //
 
 #import "UserRequests.h"
-#import "SelectableSubreddit.h"
+#import <RedditKit.h>
 @implementation UserRequests
 
 +(void)retrieveUsersSubredditswithCompletion:(void (^)(NSDictionary *results))complete{
@@ -32,8 +32,8 @@
     NSError *error;
     NSString *urlString = [NSString stringWithFormat:@"http://192.168.129.228:3000/subreddits/%@",  deviceString];
     NSMutableArray *subsArray = [NSMutableArray array];
-    for (SelectableSubreddit *selectableSubbreddit in selectionsDictionary[@"subreddits"]) {
-        NSDictionary *subredditDict = [[NSDictionary alloc] initWithObjectsAndKeys:selectableSubbreddit.name, @"subreddit", selectableSubbreddit.url, @"url", nil];
+    for (RKSubreddit *selectableSubbreddit in selectionsDictionary[@"subreddits"]) {
+        NSDictionary *subredditDict = [[NSDictionary alloc] initWithObjectsAndKeys:selectableSubbreddit.name, @"subreddit", selectableSubbreddit.URL, @"url", nil];
         [subsArray addObject:subredditDict];
     }
     
