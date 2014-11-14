@@ -355,6 +355,7 @@
     else {
         cell.thumbnailImage.image = [self squareCropImageToSideLength:[UIImage imageWithData:post.thumbnailImage] sideLength:50];
     }
+    cell.thumbnailImage.contentMode = UIViewContentModeScaleAspectFit;
 
     (post.viewed) ? cell.thumbnailImage.alpha = 0.2 : (cell.thumbnailImage.alpha = 1);
 
@@ -558,7 +559,7 @@
 
     NSFetchRequest * fetch = [[NSFetchRequest alloc] init];
     [fetch setEntity:[NSEntityDescription entityForName:@"Post" inManagedObjectContext:self.managedObjectContext]];
-    NSSortDescriptor *sorter = [[NSSortDescriptor alloc] initWithKey:@"subreddit" ascending:YES selector:@selector(caseInsensitiveCompare:)];
+    NSSortDescriptor *sorter = [[NSSortDescriptor alloc] initWithKey:@"title" ascending:YES selector:@selector(localizedCaseInsensitiveCompare:)];
 
     [fetch setSortDescriptors:@[sorter]];
 
@@ -644,6 +645,7 @@
 
         [cell.upVoteButton setBackgroundImage:[UIImage imageNamed:@"upvote_arrow_selected"] forState:UIControlStateNormal];
         [cell.downVoteButton setBackgroundImage:[UIImage imageNamed:@"downvote_arrow"] forState:UIControlStateNormal];
+        cell.backgroundColor = [UIColor orangeColor];
 
         [self sendUpVoteToReddit:selectedPost.postID];
     }
@@ -663,6 +665,27 @@
         [cell.downVoteButton setBackgroundImage:[UIImage imageNamed:@"downvote_arrow_selected"] forState:UIControlStateNormal];
         [cell.upVoteButton setBackgroundImage:[UIImage imageNamed:@"upvote_arrow"] forState:UIControlStateNormal];
 
+        UIView *view = [[UIView alloc] init];
+        view.frame = cell.frame;
+        view.center = cell.center;
+        [cell addSubview:view];
+        view.backgroundColor = [UIColor blueColor];
+        view.alpha = 1.0;
+//        cell.backgroundColor = [UIColor blueColor];
+//        cell.titleLabel.backgroundColor = [UIColor blueColor];
+//        cell.subredditLabel.backgroundColor = [UIColor blueColor];
+//        cell.authorLabel.backgroundColor = [UIColor blueColor];
+        [UIView animateWithDuration:0.3 animations:^{
+            view.alpha = 0;
+            view.backgroundColor = [UIColor whiteColor];
+//            cell.backgroundColor = [UIColor whiteColor];
+//            cell.titleLabel.backgroundColor = [UIColor whiteColor];
+//            cell.subredditLabel.backgroundColor = [UIColor whiteColor];
+//            cell.authorLabel.backgroundColor = [UIColor whiteColor];
+        }];
+
+
+
         [self sendDownVoteToReddit:selectedPost.postID];
     }
 }
@@ -675,6 +698,7 @@
     DigestCellWithImageTableViewCell *swipedCell  = (DigestCellWithImageTableViewCell *)[self.digestTableView cellForRowAtIndexPath:swipedIndexPath];
     Post *post = [self.digestPosts objectAtIndex:swipedIndexPath.row];
     post.upvoted = [NSNumber numberWithBool:YES];
+    
 
     [self upVoteButtonPressed:swipedCell];
 }
