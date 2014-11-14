@@ -13,7 +13,7 @@
 @interface CommentTableViewCell : UITableViewCell
 
 @property Comment *comment;
-
 @property (strong, nonatomic) IBOutlet UITextView *commentTextView;
+
 @end
 
