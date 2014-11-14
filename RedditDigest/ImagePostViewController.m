@@ -8,6 +8,13 @@
 
 #import "ImagePostViewController.h"
 
+@interface ImagePostViewController () <UIGestureRecognizerDelegate, UIScrollViewDelegate>
+
+@property (weak, nonatomic) IBOutlet UIView *statusBarBackground;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *verticalSpaceConstraint;
+
+@end
+
 @implementation ImagePostViewController
 
 -(void)viewDidAppear:(BOOL)animated
@@ -21,6 +28,17 @@
             self.imageView.contentMode = UIViewContentModeScaleAspectFit;
         });
     });
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    if (!self.navController.navigationBarHidden) {
+        self.statusBarBackground.alpha = 0.0;
+    }
+    else {
+        self.statusBarBackground.alpha = 1.0;
+    }
 }
 
 - (void)viewDidLoad
