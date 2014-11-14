@@ -12,7 +12,7 @@
 
 @interface VideoPostViewController () //<UIGestureRecognizerDelegate, UIScrollViewDelegate>
 
-//@property (weak, nonatomic) IBOutlet UIView *statusBarBackground;
+@property (weak, nonatomic) IBOutlet UIView *statusBarBackground;
 
 @end
 
@@ -42,6 +42,13 @@
                            </body>\
                            </html>", screenWidth, screenHeight/2, self.url];
     [self.videoView loadHTMLString:embedHTML baseURL:[[NSBundle mainBundle] resourceURL]];
+
+    if (!self.navController.navigationBarHidden) {
+        self.statusBarBackground.alpha = 0.0;
+    }
+    else {
+        self.statusBarBackground.alpha = 1.0;
+    }
 }
 
 //- (IBAction)onPan:(UIPanGestureRecognizer *)panGesture

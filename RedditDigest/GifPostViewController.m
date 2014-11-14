@@ -13,7 +13,7 @@
 
 @interface GifPostViewController ()//<UIGestureRecognizerDelegate, UIScrollViewDelegate>
 
-//@property (weak, nonatomic) IBOutlet UIView *statusBarBackground;
+@property (weak, nonatomic) IBOutlet UIView *statusBarBackground;
 
 @end
 @implementation GifPostViewController
@@ -44,6 +44,13 @@
             [self.view addSubview:imageView];
         });
     });
+
+    if (!self.navController.navigationBarHidden) {
+        self.statusBarBackground.alpha = 0.0;
+    }
+    else {
+        self.statusBarBackground.alpha = 1.0;
+    }
 
 //    if (self.navigationController.navigationBarHidden) {
 //        self.statusBarBackground.alpha = 1.0;
