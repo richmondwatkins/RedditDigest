@@ -14,5 +14,5 @@
 @interface RedditRequests : NSObject
 
 +(void)retrieveLatestPostFromArray:(NSArray *)subbreddits withManagedObject:(NSManagedObjectContext *)managedObjectContext withCompletion:(void (^)(BOOL completed))complete;
-
++(void)localSubredditRequest:(NSString *)cityName andStateAbbreviation:(NSString *)stateAbbreviation;
 @end

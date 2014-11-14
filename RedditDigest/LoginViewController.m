@@ -165,6 +165,9 @@
         UINavigationController *selectionControllerNavigationParentVC = segue.destinationViewController;
         SubredditSelectionViewController *selectionController = selectionControllerNavigationParentVC.childViewControllers.firstObject;
         selectionController.managedObject = self.managedObject;
+        if (self.isFromSettings) {
+            selectionController.isFromSettings = YES;
+        }
     }
 }
 

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6250" systemVersion="14B23" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="9zg-4H-k34">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6250" systemVersion="14A389" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="9zg-4H-k34">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6244"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
@@ -401,7 +401,7 @@
                                             </subviews>
                                         </tableViewCellContentView>
                                         <connections>
-                                            <segue destination="WOc-nv-58w" kind="show" identifier="" id="LaA-qT-0SF"/>
+                                            <segue destination="WOc-nv-58w" kind="show" identifier="SettingsToLogin" id="LaA-qT-0SF"/>
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="TyP-pz-lcZ">
@@ -422,6 +422,24 @@
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="fdq-fJ-we3" id="5xo-Wb-mdZ">
                                             <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="4EI-mw-U2U">
+                                                    <rect key="frame" x="513" y="6" width="51" height="31"/>
+                                                    <connections>
+                                                        <action selector="switchLocalization:" destination="TR2-7E-2C6" eventType="valueChanged" id="ifn-Hh-9DJ"/>
+                                                    </connections>
+                                                </switch>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Display local subreddits" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zHH-X8-2Qa">
+                                                    <rect key="frame" x="21" y="8" width="231" height="31"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstAttribute="trailingMargin" secondItem="4EI-mw-U2U" secondAttribute="trailing" constant="30" id="0l3-cb-sq5"/>
+                                                <constraint firstItem="4EI-mw-U2U" firstAttribute="centerY" secondItem="5xo-Wb-mdZ" secondAttribute="centerY" id="KcS-YZ-dgh"/>
+                                            </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                 </cells>
@@ -455,13 +473,14 @@
                         </connections>
                     </tableView>
                     <connections>
+                        <outlet property="locationSwitcher" destination="4EI-mw-U2U" id="DpE-FH-NUx"/>
                         <outlet property="loginLogoutLabel" destination="ks2-c6-pnf" id="cOa-C8-Xed"/>
                         <outlet property="tableView" destination="Ije-ZS-zQI" id="ZdU-7z-ice"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="prp-Qo-4Mm" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1674" y="-1257"/>
+            <point key="canvasLocation" x="1674" y="-1261"/>
         </scene>
         <!--Settings About Reddit View Controller-->
         <scene sceneID="NUo-nm-YjV">
@@ -611,7 +630,7 @@
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="eg1-5b-zUs" id="TIW-74-Ifz">
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ouz-k5-Hlx">
+                                                <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Ouz-k5-Hlx">
                                                     <rect key="frame" x="66" y="28" width="475" height="20"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="subreddit" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="u9V-3r-XgS">
@@ -623,14 +642,14 @@
                                                             <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
-                                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="snoo_square_gray" translatesAutoresizingMaskIntoConstraints="NO" id="4vQ-S3-CqE">
+                                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="snoo_square_gray" translatesAutoresizingMaskIntoConstraints="NO" id="4vQ-S3-CqE">
                                                             <rect key="frame" x="45" y="2" width="15" height="15"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="height" constant="15" id="TAK-CV-xZt"/>
                                                                 <constraint firstAttribute="width" constant="15" id="kq9-Z5-NDt"/>
                                                             </constraints>
                                                         </imageView>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="hankthedog" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Qch-SH-AKQ">
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="hankthedog" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Qch-SH-AKQ">
                                                             <rect key="frame" x="65" y="0.0" width="50" height="20"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="height" constant="20" id="PzX-YJ-GrQ"/>
@@ -651,7 +670,7 @@
                                                         <constraint firstItem="Qch-SH-AKQ" firstAttribute="leading" secondItem="4vQ-S3-CqE" secondAttribute="trailing" constant="5" id="u1v-3e-2cQ"/>
                                                     </constraints>
                                                 </view>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Pack my box with five dozen liquor jugs" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="COR-ut-o5n">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Pack my box with five dozen liquor jugs" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="COR-ut-o5n">
                                                     <rect key="frame" x="66" y="6" width="475" height="24"/>
                                                     <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="17"/>
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
@@ -1271,7 +1290,7 @@
         <image name="welcome_snoo" width="400" height="537"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="IWx-eg-FxF"/>
         <segue reference="LaA-qT-0SF"/>
+        <segue reference="PcQ-bC-EQa"/>
     </inferredMetricsTieBreakers>
 </document>

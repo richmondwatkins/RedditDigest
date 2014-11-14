@@ -49,5 +49,14 @@
     return [NSArray arrayWithArray:allSubreddits];
 }
 
++(void)localSubredditRequest:(NSString *)cityName andStateAbbreviation:(NSString *)stateAbbreviation{
+    [[RKClient sharedClient] subredditWithName:cityName completion:^(RKSubreddit *object, NSError *error) {
+        if (!error) {
+//            [RKClient sharedClient] pop
+//            NSLog(@"CITY SUBBB %@",object.name);
+        }
+    }];
+}
+
 
 @end

@@ -23,15 +23,18 @@
 #import "LoginViewController.h"
 #import "Subreddit.h"
 #import "DetailPostViewController.h"
+#import <CoreLocation/CoreLocation.h>
 
-@interface DigestViewController () <UITableViewDataSource, UITableViewDelegate, DigestCellDelegate>
+@interface DigestViewController () <UITableViewDataSource, UITableViewDelegate, DigestCellDelegate, CLLocationManagerDelegate>
 
 @property NSMutableArray *digestPosts;
 @property UIRefreshControl *refreshControl;
 @property UILabel *creatingYourDigestLabel;
 @property NSTimer *snooTextTimer;
 @property NSString *dateToday;
-
+@property CLLocationManager *locationManger;
+@property CLLocation *userLocation;
+@property BOOL didUpdateLocation;
 @end
 
 @implementation DigestViewController
@@ -42,8 +45,8 @@
     [self.refreshControl addTarget:self action:@selector(requestNewLinks) forControlEvents:UIControlEventValueChanged];
     [self.digestTableView addSubview:self.refreshControl];
     [self getDateString];
-    NSLog(@"Today is %@ ", self.dateToday);
     self.navigationItem.title = self.dateToday;
+
 }
 
 - (void)loadView
@@ -61,6 +64,7 @@
 
 - (void)viewWillAppear:(BOOL)animated
 {
+    self.didUpdateLocation = NO;
     [super viewWillAppear:animated];
 
     if ([[NSUserDefaults standardUserDefaults] boolForKey:@"HasSubscriptions"])
@@ -90,6 +94,8 @@
         welcomeViewController.managedObject = self.managedObjectContext;
         [self.parentViewController presentViewController:welcomeViewController animated:YES completion:nil];
     }
+
+    [self checkForLocationServices];
 }
 
 - (void)viewDidLayoutSubviews
@@ -108,6 +114,44 @@
     }
     [self.digestTableView reloadData];
 }
+
+#pragma mark - Location Services
+-(void)checkForLocationServices{
+    if ([[NSUserDefaults standardUserDefaults] boolForKey:@"Location"] && [CLLocationManager locationServicesEnabled]) {
+        self.locationManger = [[CLLocationManager alloc] init];
+        self.locationManger.delegate = self;
+        [self.locationManger startUpdatingLocation];
+    }
+}
+
+
+-(void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations{
+    if (self.didUpdateLocation == NO) {
+        for(CLLocation *location in locations){
+            if (location.verticalAccuracy < 1000 && location.horizontalAccuracy < 1000) {
+                self.userLocation = location;
+                [self findUsersLocationByCityName];
+                [self.locationManger stopUpdatingLocation];
+                self.didUpdateLocation = YES;
+                break;
+            }
+        }
+    }
+}
+
+-(void)findUsersLocationByCityName{
+    [[[CLGeocoder alloc] init] reverseGeocodeLocation:self.userLocation completionHandler:^(NSArray *placemarks, NSError *error) {
+        if ((placemarks != nil) && (placemarks.count > 0)) {
+            CLPlacemark *placeMark = placemarks.firstObject;
+           NSDictionary *placeMarkDict = placeMark.addressDictionary;
+            [RedditRequests localSubredditRequest:placeMarkDict[@"City"] andStateAbbreviation:placeMarkDict[@"State"]];
+        }
+        else {
+            // Handle the nil case if necessary.
+        }
+    }];
+}
+
 
 #pragma mark - Animation
 
