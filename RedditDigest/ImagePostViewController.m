@@ -13,9 +13,18 @@
 @interface ImagePostViewController () <UIGestureRecognizerDelegate, UIScrollViewDelegate>
 
 @property (weak, nonatomic) IBOutlet UIView *statusBarBackground;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *verticalSpaceConstraint;
 
 @end
 @implementation ImagePostViewController
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    if (!self.navController.navigationBarHidden) {
+        self.statusBarBackground.alpha = 0.0;
+    }
+}
 
 -(void)viewDidAppear:(BOOL)animated
 {
@@ -33,9 +42,6 @@
     [super viewDidLoad];
 
     self.statusBarBackground.backgroundColor = REDDIT_DARK_BLUE;
-    if (!self.navigationController.navigationBarHidden) {
-        self.statusBarBackground.alpha = 0.0;
-    }
 }
 
 - (IBAction)onPan:(UIPanGestureRecognizer *)panGesture
@@ -75,7 +81,7 @@
                     }
                 }
             }
-            if (direction == UIPanGestureRecognizerDirectionDown && !self.navigationController.navigationBarHidden) {
+            if (direction == UIPanGestureRecognizerDirectionDown && !self.navController.navigationBarHidden) {
                 [self hideNavigationAndTabBars];
             }
             break;
@@ -84,7 +90,7 @@
         {
             if (direction == UIPanGestureRecognizerDirectionUp) {
 
-                if (self.navigationController.navigationBarHidden) {
+                if (self.navController.navigationBarHidden) {
                     [self showNavigationAndTabBars];
                 }
             }
@@ -98,30 +104,26 @@
 
 - (void)hideNavigationAndTabBars
 {
-    // If visiable hide nav and tab bar when scroll begins.
-    [UIView animateWithDuration:0.3 animations:^{
-        [self.navigationController setNavigationBarHidden:YES animated:YES];
-        self.tabBarController.tabBar.hidden = YES;
+    [UIView animateWithDuration:0.2 animations:^{
+        self.statusBarBackground.alpha = 1.0;
     }];
 
-    [UIView animateWithDuration:0.0 delay:0.1 options:UIViewAnimationOptionTransitionNone animations:^{
-        self.statusBarBackground.alpha = 1.0;
-    } completion:^(BOOL finished) {
-        // Done
+    [UIView animateWithDuration:UINavigationControllerHideShowBarDuration animations:^{
+        [self.navController setNavigationBarHidden:YES animated:YES];
+        self.verticalSpaceConstraint.constant += self.navController.navigationBar.frame.size.height;
+        [self.view layoutIfNeeded];
     }];
 }
 
 - (void)showNavigationAndTabBars
 {
-    [UIView animateWithDuration:0.3 animations:^{
-        [self.navigationController setNavigationBarHidden:NO animated:YES];
-        self.tabBarController.tabBar.hidden = NO;
-    }];
-    // Animate after delay or there's a weird blip
-    [UIView animateWithDuration:0.0 delay:0.1 options:UIViewAnimationOptionTransitionNone animations:^{
+    [UIView animateWithDuration:0.2 animations:^{
         self.statusBarBackground.alpha = 0.0;
-    } completion:^(BOOL finished) {
-        // Done
+    }];
+    [UIView animateWithDuration:UINavigationControllerHideShowBarDuration animations:^{
+        [self.navController setNavigationBarHidden:NO animated:YES];
+        self.verticalSpaceConstraint.constant -= self.navController.navigationBar.frame.size.height;
+        [self.view layoutIfNeeded];
     }];
 }
 

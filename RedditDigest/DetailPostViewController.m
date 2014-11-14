@@ -134,6 +134,7 @@
 
     viewController.post = post;
     viewController.index = index;
+    viewController.navController = self.navigationController;
 
     return viewController;
 }

@@ -540,18 +540,16 @@
     }];
 }
 
-
 #pragma mark - Segues
 
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
     if ([segue.identifier isEqualToString:@"PostSegue"])
     {
-        DetailPostViewController *postDetailViewController = segue.destinationViewController;
-        //PostViewController *postViewController = postDetailViewTabBarController.childViewControllers[0];
+        DetailPostViewController *detailPostViewController = segue.destinationViewController;
         NSIndexPath *indexPath = [self.digestTableView indexPathForSelectedRow];
-        postDetailViewController.allPosts = self.digestPosts;
-        postDetailViewController.index = indexPath.row;
+        detailPostViewController.allPosts = self.digestPosts;
+        detailPostViewController.index = indexPath.row;
     }
     else if ([segue.identifier isEqualToString:@"SettingsSegue"])
     {

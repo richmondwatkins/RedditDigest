@@ -876,6 +876,7 @@
                     <connections>
                         <outlet property="imageView" destination="8tw-of-qFa" id="QKj-gM-tVW"/>
                         <outlet property="statusBarBackground" destination="RWZ-k1-gcB" id="F0i-GC-w3m"/>
+                        <outlet property="verticalSpaceConstraint" destination="QKE-Sc-drI" id="L0Z-xB-FOP"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="NaH-fd-BDo" userLabel="First Responder" sceneMemberID="firstResponder"/>
