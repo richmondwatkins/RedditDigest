@@ -69,7 +69,7 @@
     {
         self.hasRedditAccount = NO;
 
-        [[RKClient sharedClient] frontPageLinksWithCategory:0 pagination:0 completion:^(NSArray *collection, RKPagination *pagination, NSError *error) {
+        [[RKClient sharedClient] frontPageLinksWithCategory:RKSubredditCategoryHot pagination:0 completion:^(NSArray *collection, RKPagination *pagination, NSError *error) {
             for (RKLink *link in collection) {
                 [[RKClient sharedClient] subredditWithName:link.subreddit completion:^(id object, NSError *error) {
                     [self.subreddits addObject:object];
@@ -104,7 +104,6 @@
     self.activityIndicator.hidden = YES;
     [self sortSubredditsAlphabetically];
     [self.subredditCollectionView reloadData];
-    NSLog(@"DONE");
 }
 
 
@@ -395,10 +394,8 @@
 
 -(void)sortSubredditsAlphabetically
 {
-    NSLog(@"\n The Subreddits are: %@", self.subreddits);
     NSSortDescriptor *sortedSubreddits = [[NSSortDescriptor alloc]initWithKey: @"name" ascending:YES selector:@selector(caseInsensitiveCompare:)];
     [self.subreddits sortUsingDescriptors:[NSArray arrayWithObject:sortedSubreddits]];
-    NSLog(@"\n The Subreddits alphabetized are: %@", self.subreddits);
 }
 
 @end
