@@ -49,11 +49,18 @@
     return [NSArray arrayWithArray:allSubreddits];
 }
 
-+(void)localSubredditRequest:(NSString *)cityName andStateAbbreviation:(NSString *)stateAbbreviation withManagedObject:(NSManagedObjectContext *)managedObject withCompletion:(void (^)(Post *))complete{
++(void)localSubredditRequest:(NSString *)cityName andStateAbbreviation:(NSString *)stateAbbreviation withManagedObject:(NSManagedObjectContext *)managedObject withCompletion:(void (^)(NSMutableArray *))complete{
     [[RKClient sharedClient] subredditWithName:cityName completion:^(RKSubreddit *object, NSError *error) {
         if (!error) {
-            [self handleLocalSubredditResponse:object withManagedObject:managedObject withCompletion:^(Post *post) {
-                complete(post);
+            NSMutableArray *localSubs = [NSMutableArray array];
+            [self handleLocalSubredditResponse:object withManagedObject:managedObject withCompletion:^(Post *cityPost) {
+                if (cityPost) {[localSubs addObject:cityPost];}
+                [[RKClient sharedClient] subredditWithName:[self returnStateFromAbbreviation:stateAbbreviation] completion:^(RKSubreddit *object, NSError *error) {
+                    [self handleLocalSubredditResponse:object withManagedObject:managedObject withCompletion:^(Post *statePost) {
+                        if (statePost) {[localSubs addObject:statePost];}
+                        complete(localSubs);
+                    }];
+                }];
             }];
         }
     }];
@@ -85,7 +92,7 @@
                 }];
             }];
         }else{
-            complete(nil);
+            complete([NSNull null]);
         }
     }];
 }
@@ -102,6 +109,64 @@
     }else{
         return NO;
     }
+}
+
++(NSString *)returnStateFromAbbreviation:(NSString *)abbreviation{
+    NSDictionary *nameAbbreviations = [NSDictionary dictionaryWithObjectsAndKeys:
+                         @"alabama", @"AL",
+                         @"alaska", @"AK",
+                         @"arizona", @"AZ",
+                         @"arkansas", @"AR",
+                         @"california", @"CA",
+                         @"colorado", @"CO",
+                         @"connecticut", @"CT",
+                         @"delaware", @"DE",
+                         @"district of columbia", @"DC",
+                         @"florida", @"FL",
+                         @"georgia", @"GA",
+                         @"hawaii", @"HI",
+                         @"idaho", @"ID",
+                         @"illinois", @"IL",
+                         @"indiana", @"IN",
+                         @"iowa", @"IA",
+                         @"kansas", @"KS",
+                         @"kentucky", @"KY",
+                         @"louisiana", @"LA",
+                         @"maine", @"ME",
+                         @"maryland", @"MD",
+                         @"massachusetts", @"MA",
+                         @"michigan", @"MI",
+                         @"minnesota", @"MN",
+                         @"mississippi",  @"MS",
+                         @"missouri", @"MO",
+                         @"montana", @"MT",
+                         @"nebraska", @"NE",
+                         @"nevada", @"NV",
+                         @"new hampshire", @"NH",
+                         @"new jersey", @"NJ",
+                         @"new mexico", @"NM",
+                         @"new york", @"NY",
+                         @"north carolina", @"NC",
+                         @"north dakota", @"ND",
+                         @"ohio", @"OH",
+                         @"oklahoma", @"OK",
+                         @"oregon", @"OR",
+                         @"pennsylvania", @"PA",
+                         @"rhode island", @"RI",
+                         @"south carolina", @"SC",
+                         @"south dakota", @"SD",
+                         @"tennessee", @"TN",
+                         @"texas", @"TX",
+                         @"utah", @"UT",
+                         @"vermont", @"VT",
+                         @"virginia", @"VA",
+                         @"washington", @"WA",
+                         @"west virginia", @"WV",
+                         @"wisconsin", @"WI",
+                         @"wyoming", @"WY",
+                         nil];
+
+    return [nameAbbreviations objectForKey:abbreviation];
 }
 
 
