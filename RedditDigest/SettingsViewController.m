@@ -12,6 +12,7 @@
 #import "LoginViewController.h"
 #import "SubredditSelectionViewController.h"
 #import <CoreLocation/CoreLocation.h>
+#import "Subreddit.h"
 @interface SettingsViewController () <UITableViewDataSource, UITableViewDelegate, CLLocationManagerDelegate>
 
 @property (strong, nonatomic) IBOutlet UITableView *tableView;
@@ -69,14 +70,13 @@
 - (IBAction)switchLocalization:(UISwitch *)sender {
     if (sender.on) {
         [self.locationManger requestWhenInUseAuthorization];
-        self.locationManger.delegate = self;
-        [self.locationManger startUpdatingLocation];
 
         [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"Location"];
         [[NSUserDefaults standardUserDefaults] synchronize];
     }else{
        [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"Location"];
         [[NSUserDefaults standardUserDefaults] synchronize];
+        [Subreddit removeLocalPostsAndSubreddits:self.managedObject];
     }
 }
 

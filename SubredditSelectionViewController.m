@@ -69,7 +69,6 @@
     {
         self.hasRedditAccount = NO;
 
-
             [[RKClient sharedClient] frontPageLinksWithCategory:RKSubredditCategoryHot pagination:0 completion:^(NSArray *collection, RKPagination *pagination, NSError *error) {
                 for (RKLink *link in collection) {
                     [[RKClient sharedClient] subredditWithName:link.subreddit completion:^(id object, NSError *error) {
@@ -393,8 +392,10 @@
         for (Subreddit *subscribedSub in subscribedSubreddits) {
             for (RKSubreddit *rkSubreddit in self.subreddits) {
                 if ([subscribedSub.subreddit isEqualToString:rkSubreddit.name]) {
-                    rkSubreddit.isCurrentlySubscribed = YES;
-                    [self.selectedSubreddits addObject:rkSubreddit];
+                    if (!subscribedSub.isLocalSubreddit) {
+                        rkSubreddit.isCurrentlySubscribed = YES;
+                        [self.selectedSubreddits addObject:rkSubreddit];
+                    }
                 }
             }
         }

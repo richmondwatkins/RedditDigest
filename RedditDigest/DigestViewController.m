@@ -85,7 +85,6 @@
 //            //[self presentViewController:loadingViewController animated:YES completion:nil];
 //        }
 
-        [self performNewFetchedDataActions];
     }
     else
     {
@@ -95,6 +94,7 @@
         [self.parentViewController presentViewController:welcomeViewController animated:YES completion:nil];
     }
 
+    [self performNewFetchedDataActions];
     [self checkForLocationServices];
 }
 
@@ -555,33 +555,20 @@
 
     NSFetchRequest * fetch = [[NSFetchRequest alloc] init];
     [fetch setEntity:[NSEntityDescription entityForName:@"Post" inManagedObjectContext:self.managedObjectContext]];
-    NSSortDescriptor *sorter = [[NSSortDescriptor alloc] initWithKey:@"subreddit" ascending:YES selector:@selector(localizedCaseInsensitiveCompare:)];
+    NSSortDescriptor *sorter = [[NSSortDescriptor alloc] initWithKey:@"subreddit" ascending:YES selector:@selector(caseInsensitiveCompare:)];
 
     [fetch setSortDescriptors:@[sorter]];
 
     NSArray * posts = [self.managedObjectContext executeFetchRequest:fetch error:nil];
+
     self.digestPosts = [NSMutableArray arrayWithArray:posts];
+
     if (self.digestPosts.count) {
-        [self moveLocalPostToTop];
         completionHandler(YES);
         [self.digestTableView reloadData];
     }
 }
 
--(void)moveLocalPostToTop{
-    NSMutableArray *localPostArray = [NSMutableArray array];
-    for (Post *post in self.digestPosts) {
-        if (post.isLocalPost) {
-            [localPostArray addObject:post];
-        }
-    }
-
-    if (localPostArray.count) {
-        for (Post *localPost in localPostArray) {
-            [self.digestPosts insertObject:localPost atIndex:0];
-        }
-    }
-}
 
 -(void)requestNewLinks
 {
@@ -601,7 +588,6 @@
 {
     [self retrievePostsFromCoreData:^(BOOL completed) {
         if (completed) {
-            [self.digestTableView reloadData];
             [self.refreshControl endRefreshing];
         }
     }];

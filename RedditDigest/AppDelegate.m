@@ -101,9 +101,7 @@
     NSNumber *lastScheduled = [[NSUserDefaults standardUserDefaults] valueForKey:@"LastScheduledDigest"];
 
     if (lastScheduled.intValue < lastDigest.intValue) {
-        [digestController retrievePostsFromCoreData:^(BOOL completed) {
-            [digestController.digestTableView reloadData];
-        }];
+        [digestController performNewFetchedDataActions]; //retrieves from core data and reloads table
     }else{
         [digestController requestNewLinks];
     }

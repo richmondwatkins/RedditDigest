@@ -52,33 +52,40 @@
 +(void)localSubredditRequest:(NSString *)cityName andStateAbbreviation:(NSString *)stateAbbreviation withManagedObject:(NSManagedObjectContext *)managedObject withCompletion:(void (^)(Post *))complete{
     [[RKClient sharedClient] subredditWithName:cityName completion:^(RKSubreddit *object, NSError *error) {
         if (!error) {
-            [Subreddit addSingleSubredditToCoreData:object withManagedObject:managedObject];
-
-            [[RKClient sharedClient] linksInSubreddit:object pagination:nil completion:^(NSArray *collection, RKPagination *pagination, NSError *error) {
-                RKLink *topPost = collection.firstObject;
-                topPost.isLocalPost = YES;
-                if (topPost.stickied) {
-                    topPost = collection[1];
-                }
-
-                if (![RedditRequests existsInCoreData:topPost.fullName withManagedObject:managedObject]) {
-                    [[RKClient sharedClient] commentsForLink:topPost completion:^(NSArray *collection, RKPagination *pagination, NSError *error) {
-                        [Post savePost:topPost withManagedObject:managedObject withComments:collection andCompletion:^(BOOL completedFromCoreData) {
-                            if (completedFromCoreData) {
-                                NSFetchRequest * subredditFetch = [[NSFetchRequest alloc] init];
-                                [subredditFetch setEntity:[NSEntityDescription entityForName:@"Post" inManagedObjectContext:managedObject]];
-                                subredditFetch.predicate = [NSPredicate predicateWithFormat:@"postID == %@", topPost.fullName];
-                                NSArray *results = [managedObject executeFetchRequest:subredditFetch error:nil];
-                                if (results) {
-                                    complete(results.firstObject);
-                                }
-                            }
-                        }];
-                    }];
-                }else{
-                    complete(nil);
-                }
+            [self handleLocalSubredditResponse:object withManagedObject:managedObject withCompletion:^(Post *post) {
+                complete(post);
             }];
+        }
+    }];
+}
+
++(void)handleLocalSubredditResponse:(RKSubreddit *)subreddit withManagedObject:(NSManagedObjectContext *)managedObject withCompletion:(void (^)(Post *))complete{
+    subreddit.isLocalSubreddit = YES;
+    [Subreddit addSingleSubredditToCoreData:subreddit withManagedObject:managedObject];
+
+    [[RKClient sharedClient] linksInSubreddit:subreddit pagination:nil completion:^(NSArray *collection, RKPagination *pagination, NSError *error) {
+        RKLink *topPost = collection.firstObject;
+        topPost.isLocalPost = YES;
+        if (topPost.stickied) {
+            topPost = collection[1];
+        }
+
+        if (![RedditRequests existsInCoreData:topPost.fullName withManagedObject:managedObject]) {
+            [[RKClient sharedClient] commentsForLink:topPost completion:^(NSArray *collection, RKPagination *pagination, NSError *error) {
+                [Post savePost:topPost withManagedObject:managedObject withComments:collection andCompletion:^(BOOL completedFromCoreData) {
+                    if (completedFromCoreData) {
+                        NSFetchRequest * subredditFetch = [[NSFetchRequest alloc] init];
+                        [subredditFetch setEntity:[NSEntityDescription entityForName:@"Post" inManagedObjectContext:managedObject]];
+                        subredditFetch.predicate = [NSPredicate predicateWithFormat:@"postID == %@", topPost.fullName];
+                        NSArray *results = [managedObject executeFetchRequest:subredditFetch error:nil];
+                        if (results) {
+                            complete(results.firstObject);
+                        }
+                    }
+                }];
+            }];
+        }else{
+            complete(nil);
         }
     }];
 }

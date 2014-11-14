@@ -15,7 +15,7 @@
 @dynamic subreddit;
 @dynamic url;
 @dynamic post;
-
+@dynamic isLocalSubreddit;
 +(void)addSubredditsToCoreData:(NSMutableArray *)selectedSubreddits withManagedObject:(NSManagedObjectContext *)managedObject{
     for (RKSubreddit *subreddit in selectedSubreddits) {
         NSFetchRequest * subredditFetch = [[NSFetchRequest alloc] init];
@@ -111,7 +111,7 @@
             Subreddit *savedSubreddit = [NSEntityDescription insertNewObjectForEntityForName:@"Subreddit" inManagedObjectContext:managedObject];
             savedSubreddit.subreddit = selectedSubreddit.name;
             savedSubreddit.url = selectedSubreddit.URL;
-
+            savedSubreddit.isLocalSubreddit = [NSNumber numberWithBool:YES];
             if (selectedSubreddit.headerImageURL != nil) {
                 [NSURLConnection sendAsynchronousRequest:[NSURLRequest requestWithURL:selectedSubreddit.headerImageURL] queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
                     if (data) {
@@ -124,6 +124,19 @@
                 NSError *error;
                 [managedObject save:&error];
             }
+        }
+    }
+}
+
++(void)removeLocalPostsAndSubreddits:(NSManagedObjectContext *)managedObject{
+    NSFetchRequest *localSubFetch = [[NSFetchRequest alloc] initWithEntityName:@"Subreddit"];
+    localSubFetch.predicate = [NSPredicate predicateWithFormat:@"isLocalSubreddit == YES"];
+    NSArray *results = [managedObject executeFetchRequest:localSubFetch error:nil];
+    if (results.count) {
+        for (Subreddit *subreddit in results) {
+            NSLog(@"POST FROM DATA %@",subreddit);
+            [managedObject deleteObject:subreddit];
+            [managedObject save:nil];
         }
     }
 }

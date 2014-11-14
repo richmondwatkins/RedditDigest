@@ -162,6 +162,9 @@
     NSString *imgurID = [urlString substringWithRange:iDRange];
     return [NSURL URLWithString:[NSString stringWithFormat:@"http://imgur.com/%@.png", imgurID]];
 }
+
+
+
 //SAVE IF WE WANT TO INCORPORATE IMGUR REGEX
 //    if ([[post.URL absoluteString] containsString:@"imgur"] && ![[post.URL absoluteString] containsString:@"/a/"] && ![[post.URL absoluteString] containsString:@"gallery"]) {
 //        post.customURL = [self performRegexOnImgur:post.URL];
