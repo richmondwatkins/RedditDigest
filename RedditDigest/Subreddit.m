@@ -16,7 +16,6 @@
 @dynamic url;
 @dynamic post;
 
-
 +(void)addSubredditsToCoreData:(NSMutableArray *)selectedSubreddits withManagedObject:(NSManagedObjectContext *)managedObject{
     for (RKSubreddit *subreddit in selectedSubreddits) {
         NSFetchRequest * subredditFetch = [[NSFetchRequest alloc] init];

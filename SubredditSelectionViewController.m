@@ -69,16 +69,25 @@
     {
         self.hasRedditAccount = NO;
 
-        [[RKClient sharedClient] frontPageLinksWithCategory:RKSubredditCategoryHot pagination:0 completion:^(NSArray *collection, RKPagination *pagination, NSError *error) {
-            for (RKLink *link in collection) {
-                [[RKClient sharedClient] subredditWithName:link.subreddit completion:^(id object, NSError *error) {
-                    [self.subreddits addObject:object];
-                    if (self.subreddits.count == collection.count) {
-                        [self doneLoadingActivities];
-                    }
-                }];
-            }
-        }];
+
+            [[RKClient sharedClient] frontPageLinksWithCategory:RKSubredditCategoryHot pagination:0 completion:^(NSArray *collection, RKPagination *pagination, NSError *error) {
+                for (RKLink *link in collection) {
+                    [[RKClient sharedClient] subredditWithName:link.subreddit completion:^(id object, NSError *error) {
+                        [self.subreddits addObject:object];
+                        if (self.subreddits.count == collection.count) {
+                            [[RKClient sharedClient] popularSubredditsWithPagination:nil completion:^(NSArray *collection, RKPagination *pagination, NSError *error) {
+                                for (RKSubreddit *sub in collection) {
+                                    if (![self.subreddits containsObject:sub]) {
+                                        [self.subreddits addObject:sub];
+                                    }
+                                }
+                                [self doneLoadingActivities];
+                            }];
+                        }
+                    }];
+                }
+            }];
+
     }
     
     [self setUpView];

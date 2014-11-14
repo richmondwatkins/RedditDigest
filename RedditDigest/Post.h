@@ -50,6 +50,4 @@
 
 +(void)removeAllPostsFromCoreData:(NSManagedObjectContext *)managedObjectContext;
 
-
-
 @end

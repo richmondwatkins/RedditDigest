@@ -49,11 +49,29 @@
     return [NSArray arrayWithArray:allSubreddits];
 }
 
-+(void)localSubredditRequest:(NSString *)cityName andStateAbbreviation:(NSString *)stateAbbreviation{
++(void)localSubredditRequest:(NSString *)cityName andStateAbbreviation:(NSString *)stateAbbreviation withManagedObject:(NSManagedObjectContext *)managedObject withCompletion:(void (^)(Post *))complete{
     [[RKClient sharedClient] subredditWithName:cityName completion:^(RKSubreddit *object, NSError *error) {
         if (!error) {
-//            [RKClient sharedClient] pop
-//            NSLog(@"CITY SUBBB %@",object.name);
+            [[RKClient sharedClient] linksInSubreddit:object pagination:nil completion:^(NSArray *collection, RKPagination *pagination, NSError *error) {
+                RKLink *topPost = collection.firstObject;
+                if (topPost.stickied) {
+                    topPost = collection[1];
+                }
+
+                [[RKClient sharedClient] commentsForLink:topPost completion:^(NSArray *collection, RKPagination *pagination, NSError *error) {
+                    [Post savePost:topPost withManagedObject:managedObject withComments:collection andCompletion:^(BOOL completedFromCoreData) {
+                        if (completedFromCoreData) {
+                            NSFetchRequest * subredditFetch = [[NSFetchRequest alloc] init];
+                            [subredditFetch setEntity:[NSEntityDescription entityForName:@"Post" inManagedObjectContext:managedObject]];
+                            subredditFetch.predicate = [NSPredicate predicateWithFormat:@"postID == %@", topPost.fullName];
+                            NSArray *results = [managedObject executeFetchRequest:subredditFetch error:nil];
+                            if (results) {
+                                complete(results.firstObject);
+                            }
+                        }
+                    }];
+                }];
+            }];
         }
     }];
 }

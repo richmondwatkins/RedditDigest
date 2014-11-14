@@ -143,8 +143,13 @@
     [[[CLGeocoder alloc] init] reverseGeocodeLocation:self.userLocation completionHandler:^(NSArray *placemarks, NSError *error) {
         if ((placemarks != nil) && (placemarks.count > 0)) {
             CLPlacemark *placeMark = placemarks.firstObject;
-           NSDictionary *placeMarkDict = placeMark.addressDictionary;
-            [RedditRequests localSubredditRequest:placeMarkDict[@"City"] andStateAbbreviation:placeMarkDict[@"State"]];
+            NSDictionary *placeMarkDict = placeMark.addressDictionary;
+
+            [RedditRequests localSubredditRequest:placeMarkDict[@"City"] andStateAbbreviation:placeMarkDict[@"State"] withManagedObject:self.managedObjectContext withCompletion:^(Post *post) {
+                [self.digestPosts insertObject:post atIndex:0];
+                NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:0];
+                [self.digestTableView insertRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+            }];
         }
         else {
             // Handle the nil case if necessary.
