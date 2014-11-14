@@ -15,6 +15,7 @@
 @property Comment *selectedComment;
 @property CGFloat cellHeight;
 @property NSMutableArray *tableCells;
+
 @end
 
 @implementation CommentViewController

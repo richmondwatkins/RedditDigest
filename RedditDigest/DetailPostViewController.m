@@ -35,6 +35,7 @@
     [super viewDidLoad];
 
     [self setUpPageViewController];
+
 }
 
 - (BOOL)prefersStatusBarHidden {
@@ -183,29 +184,50 @@
         case UIGestureRecognizerStateChanged:
         {
             CGPoint translation = [panGesture locationInView:panGesture.view];
-            self.commentsHeightConstraint.constant -= translation.y;
-            [panGesture setTranslation:CGPointMake(0, 0) inView:panGesture.view];
+            // Make sure user can't pull down when comments view is already all the way at the bottom
+            if (translation.y > 44) {
+                self.commentsHeightConstraint.constant -= translation.y;
+                [panGesture setTranslation:CGPointMake(0, 0) inView:panGesture.view];
+            }
             break;
         }
 
         case UIGestureRecognizerStateEnded:
         {
             if (direction == UIPanGestureRecognizerDirectionUp) {
+                // Pulling down
                 if (self.navigationController.navigationBarHidden) {
                     //[self showNavigationAndTabBars];
                 }
                 self.commentsHeightConstraint.constant = 44.0;
-                [UIView animateWithDuration:0.2 animations:^{
-                    [self.view layoutIfNeeded];
-                } completion:^(BOOL finished) {
-                }];
+
+                // Snap shut
+                [UIView animateWithDuration:0.3
+                                      delay:0
+                     usingSpringWithDamping:0.8
+                      initialSpringVelocity:1.0
+                                    options:0
+                                 animations:^{
+                                     [self.view layoutIfNeeded];
+                                 }
+                                 completion:^(BOOL finished) {
+                                 }];
             }
 
             else if (direction == UIPanGestureRecognizerDirectionDown) {
+                // Pulling Up
                 self.commentsHeightConstraint.constant = self.view.frame.size.height;
-                [UIView animateWithDuration:0.2 animations:^{
-                    [self.view layoutIfNeeded];
-                }];
+                // Snap shut
+                [UIView animateWithDuration:0.3
+                                      delay:0
+                     usingSpringWithDamping:0.8
+                      initialSpringVelocity:1.0
+                                    options:0
+                                 animations:^{
+                                     [self.view layoutIfNeeded];
+                                 }
+                                 completion:^(BOOL finished) {
+                                 }];
             }
             direction = UIPanGestureRecognizerDirectionUndefined;
             break;
