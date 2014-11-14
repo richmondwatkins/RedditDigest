@@ -101,7 +101,7 @@
             }
             if (direction == UIPanGestureRecognizerDirectionDown && !self.navController.navigationBarHidden) {
                 [self hideNavigationAndTabBars];
-                self.verticalSpaceConstraint.constant += 20;
+                //self.verticalSpaceConstraint.constant += 20;
             }
             break;
         }
@@ -133,7 +133,7 @@
         //            self.verticalSpaceConstraint.constant = 0;
         //        }
         //        else {
-        self.verticalSpaceConstraint.constant -= 20;
+        //self.verticalSpaceConstraint.constant -= 20;
         //self.verticalSpaceConstraint.constant += self.navController.navigationBar.frame.size.height;
         //}
         [self.view layoutIfNeeded];
@@ -147,7 +147,7 @@
     }];
     [UIView animateWithDuration:UINavigationControllerHideShowBarDuration animations:^{
         [self.navController setNavigationBarHidden:NO animated:YES];
-        self.verticalSpaceConstraint.constant += 20; //self.navController.navigationBar.frame.size.height;
+        self.verticalSpaceConstraint.constant = 0; //self.navController.navigationBar.frame.size.height;
         [self.view layoutIfNeeded];
     }];
 }
