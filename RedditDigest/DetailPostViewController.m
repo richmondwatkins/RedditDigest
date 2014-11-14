@@ -222,7 +222,13 @@
 
             else if (direction == UIPanGestureRecognizerDirectionDown) {
                 // Pulling Up
-                self.commentsHeightConstraint.constant = self.view.frame.size.height;
+                if (self.navigationController.navigationBarHidden) {
+                    self.commentsHeightConstraint.constant = self.view.frame.size.height - 20;
+                }
+                else {
+                    self.commentsHeightConstraint.constant = self.view.frame.size.height;
+
+                }
 
                 if (direction != UIPanGestureRecognizerDirectionLeft || direction != UIPanGestureRecognizerDirectionRight)
                 {   // Snap open

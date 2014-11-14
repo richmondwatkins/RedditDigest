@@ -24,6 +24,9 @@
     if (!self.navController.navigationBarHidden) {
         self.statusBarBackground.alpha = 0.0;
     }
+    else {
+        self.statusBarBackground.alpha = 1.0;
+    }
 }
 
 -(void)viewDidAppear:(BOOL)animated
