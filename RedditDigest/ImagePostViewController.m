@@ -12,6 +12,8 @@
 
 -(void)viewDidAppear:(BOOL)animated
 {
+    [super viewDidAppear:animated];
+
     dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(void){
         UIImage *image = [UIImage imageWithData:self.imageData];
         dispatch_async(dispatch_get_main_queue(), ^(void){

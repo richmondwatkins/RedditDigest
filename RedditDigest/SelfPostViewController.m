@@ -20,6 +20,7 @@
 
 -(void)viewWillAppear:(BOOL)animated
 {
+    [super viewWillAppear:animated];
     self.textView.text = self.selfPostText;
 }
 

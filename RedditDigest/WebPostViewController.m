@@ -29,7 +29,8 @@
 
 -(void)viewWillAppear:(BOOL)animated
 {
-    NSLog(@"COMMENTS %@",self.url);
+    //NSLog(@"COMMENTS %@",self.url);
+    [super viewWillAppear:animated];
 
     NSURLRequest *request;
     if (![self.url containsString:@"imgur"]) {
