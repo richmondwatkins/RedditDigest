@@ -99,7 +99,33 @@
             //[self getter]; //THIS IS FOR TESTING THE SUBREDDIT GETTER METHOD
         }
     }];
+}
 
++(void)addSingleSubredditToCoreData:(RKSubreddit *)selectedSubreddit withManagedObject:(NSManagedObjectContext *)managedObject{
+    NSFetchRequest * subredditFetch = [[NSFetchRequest alloc] init];
+    [subredditFetch setEntity:[NSEntityDescription entityForName:@"Subreddit" inManagedObjectContext:managedObject]];
+    subredditFetch.predicate = [NSPredicate predicateWithFormat:@"subreddit == %@", selectedSubreddit.name];
+    NSArray *results = [managedObject executeFetchRequest:subredditFetch error:nil];
+    if (!results.count) {
+        if (!selectedSubreddit.isCurrentlySubscribed) {
+            Subreddit *savedSubreddit = [NSEntityDescription insertNewObjectForEntityForName:@"Subreddit" inManagedObjectContext:managedObject];
+            savedSubreddit.subreddit = selectedSubreddit.name;
+            savedSubreddit.url = selectedSubreddit.URL;
+
+            if (selectedSubreddit.headerImageURL != nil) {
+                [NSURLConnection sendAsynchronousRequest:[NSURLRequest requestWithURL:selectedSubreddit.headerImageURL] queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
+                    if (data) {
+                        NSLog(@"data %@",data);
+                        savedSubreddit.image = data;
+                        [managedObject save:nil];
+                    }
+                }];
+            }else{
+                NSError *error;
+                [managedObject save:&error];
+            }
+        }
+    }
 }
 
 
