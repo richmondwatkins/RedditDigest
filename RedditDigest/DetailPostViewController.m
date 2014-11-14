@@ -27,6 +27,7 @@
 //@property (strong, nonatomic) UIPageViewController *commentsPageController;
 @property NSMutableArray *comments;
 //@property BOOL commentsViewLoaded;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *commentsHeightConstraint;
 
 @end
 
@@ -59,19 +60,31 @@
     NSArray *postViewControllers = [NSArray arrayWithObject:detailPostViewController];
     [self.postPageController setViewControllers:postViewControllers direction:UIPageViewControllerNavigationDirectionForward animated:NO completion:nil];
 
-    self.commentsViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"CommentView"];
-    self.commentsViewController.view.frame = self.view.bounds;
-    self.delegate = self.commentsViewController;
-    [self loadCommentsFromSelectedPost:self.index];
+    //self.commentsViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"CommentView"];
+    //self.commentsViewController.view.frame = self.view.bounds;
+
+
     //commentsViewController.comments = [self getcommentsFromSelectedPost:self.index];
     //self.commentsViewLoaded = YES;
 
 
-    [self.view addSubview:self.postPageController.view];
+    //[self.view addSubview:self.postPageController.view];
+    [self.view insertSubview:self.postPageController.view atIndex:0];
 
-
+    //[self.view bringSubviewToFront:self.commentsViewController.view];
     //self.viewControllers = @[self.postPageController, commentsViewController];
 }
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    if ([segue.identifier isEqualToString:@"CommentsSegue"])
+    {
+        self.commentsViewController = segue.destinationViewController;
+        self.delegate = self.commentsViewController;
+        [self loadCommentsFromSelectedPost:self.index];
+    }
+}
+
 
 - (UIViewController *)pageViewController:(UIPageViewController *)pageViewController viewControllerBeforeViewController:(UIViewController *)viewController
 {
