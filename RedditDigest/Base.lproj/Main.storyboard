@@ -1078,13 +1078,12 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleAspectFit" editable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fLy-Vc-hJK">
-                                <rect key="frame" x="0.0" y="20" width="600" height="580"/>
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <gestureRecognizers/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                 <connections>
-                                    <outlet property="delegate" destination="ifK-Yt-vLY" id="BHI-Yb-KTl"/>
                                     <outletCollection property="gestureRecognizers" destination="AbN-hm-90S" appends="YES" id="pvl-dZ-bZH"/>
                                 </connections>
                             </textView>
@@ -1104,13 +1103,14 @@
                             <constraint firstAttribute="trailing" secondItem="KX6-x1-6iJ" secondAttribute="trailing" id="4Un-il-JAi"/>
                             <constraint firstAttribute="trailing" secondItem="fLy-Vc-hJK" secondAttribute="trailing" id="Mbc-sq-Zbr"/>
                             <constraint firstItem="KX6-x1-6iJ" firstAttribute="top" secondItem="x1O-IM-3Cu" secondAttribute="top" id="PRN-Az-5xZ"/>
-                            <constraint firstItem="fLy-Vc-hJK" firstAttribute="top" secondItem="ot6-YI-PWG" secondAttribute="bottom" id="Y0W-RS-MhA"/>
+                            <constraint firstItem="fLy-Vc-hJK" firstAttribute="top" secondItem="ot6-YI-PWG" secondAttribute="bottom" constant="-20" id="Y0W-RS-MhA"/>
                             <constraint firstItem="HUr-NA-PG8" firstAttribute="top" secondItem="fLy-Vc-hJK" secondAttribute="bottom" id="j9L-dJ-FJM"/>
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="statusBarBackground" destination="KX6-x1-6iJ" id="WKm-MM-DIG"/>
+                        <outlet property="statusBarBackground" destination="KX6-x1-6iJ" id="waq-TY-5Wa"/>
                         <outlet property="textView" destination="fLy-Vc-hJK" id="cPc-ca-QAf"/>
+                        <outlet property="verticalSpaceConstraint" destination="Y0W-RS-MhA" id="QKR-Op-RlJ"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Bnc-d4-jlR" userLabel="First Responder" sceneMemberID="firstResponder"/>
