@@ -18,6 +18,7 @@
 -(void)fetchNewDataWithCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler;
 -(void)retrievePostsFromCoreData:(void (^)(BOOL))completionHandler;
 -(void)requestNewLinks;
+-(void)performNewFetchedDataActions;
 
 @end
 

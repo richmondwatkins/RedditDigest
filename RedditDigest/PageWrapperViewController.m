@@ -33,7 +33,6 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-
     if (![self.post.viewed boolValue]) {
         self.post.viewed = [NSNumber numberWithBool:YES];
         [self.post.managedObjectContext save:nil];

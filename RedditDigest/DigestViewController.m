@@ -23,15 +23,18 @@
 #import "LoginViewController.h"
 #import "Subreddit.h"
 #import "DetailPostViewController.h"
+#import <CoreLocation/CoreLocation.h>
 
-@interface DigestViewController () <UITableViewDataSource, UITableViewDelegate, DigestCellDelegate>
+@interface DigestViewController () <UITableViewDataSource, UITableViewDelegate, DigestCellDelegate, CLLocationManagerDelegate>
 
 @property NSMutableArray *digestPosts;
 @property UIRefreshControl *refreshControl;
 @property UILabel *creatingYourDigestLabel;
 @property NSTimer *snooTextTimer;
 @property NSString *dateToday;
-
+@property CLLocationManager *locationManger;
+@property CLLocation *userLocation;
+@property BOOL didUpdateLocation;
 @end
 
 @implementation DigestViewController
@@ -42,8 +45,8 @@
     [self.refreshControl addTarget:self action:@selector(requestNewLinks) forControlEvents:UIControlEventValueChanged];
     [self.digestTableView addSubview:self.refreshControl];
     [self getDateString];
-    NSLog(@"Today is %@ ", self.dateToday);
     self.navigationItem.title = self.dateToday;
+
 }
 
 - (void)loadView
@@ -61,6 +64,7 @@
 
 - (void)viewWillAppear:(BOOL)animated
 {
+    self.didUpdateLocation = NO;
     [super viewWillAppear:animated];
 
     if ([[NSUserDefaults standardUserDefaults] boolForKey:@"HasSubscriptions"])
@@ -81,7 +85,6 @@
 //            //[self presentViewController:loadingViewController animated:YES completion:nil];
 //        }
 
-        [self performNewFetchedDataActions];
     }
     else
     {
@@ -90,6 +93,9 @@
         welcomeViewController.managedObject = self.managedObjectContext;
         [self.parentViewController presentViewController:welcomeViewController animated:YES completion:nil];
     }
+
+    [self performNewFetchedDataActions];
+    [self checkForLocationServices];
 }
 
 - (void)viewDidLayoutSubviews
@@ -108,6 +114,54 @@
     }
     [self.digestTableView reloadData];
 }
+
+#pragma mark - Location Services
+-(void)checkForLocationServices{
+    if ([[NSUserDefaults standardUserDefaults] boolForKey:@"Location"] && [CLLocationManager locationServicesEnabled]) {
+        self.locationManger = [[CLLocationManager alloc] init];
+        self.locationManger.delegate = self;
+        [self.locationManger startUpdatingLocation];
+    }
+}
+
+
+-(void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations{
+    if (self.didUpdateLocation == NO) {
+        for(CLLocation *location in locations){
+            if (location.verticalAccuracy < 1000 && location.horizontalAccuracy < 1000) {
+                self.userLocation = location;
+                [self findUsersLocationByCityName];
+                [self.locationManger stopUpdatingLocation];
+                self.didUpdateLocation = YES;
+                break;
+            }
+        }
+    }
+}
+
+-(void)findUsersLocationByCityName{
+    [[[CLGeocoder alloc] init] reverseGeocodeLocation:self.userLocation completionHandler:^(NSArray *placemarks, NSError *error) {
+        if ((placemarks != nil) && (placemarks.count > 0)) {
+            CLPlacemark *placeMark = placemarks.firstObject;
+            NSDictionary *placeMarkDict = placeMark.addressDictionary;
+            [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
+            [RedditRequests localSubredditRequest:placeMarkDict[@"City"] andStateAbbreviation:placeMarkDict[@"State"] withManagedObject:self.managedObjectContext withCompletion:^(NSMutableArray *posts) {
+                [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
+                if (posts.count) {
+                    for(Post *post in posts) {
+                        [self.digestPosts insertObject:post atIndex:0];
+                        NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:0];
+                        [self.digestTableView insertRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+                    }
+                }
+            }];
+        }
+        else {
+            // Handle the nil case if necessary.
+        }
+    }];
+}
+
 
 #pragma mark - Animation
 
@@ -504,17 +558,20 @@
 
     NSFetchRequest * fetch = [[NSFetchRequest alloc] init];
     [fetch setEntity:[NSEntityDescription entityForName:@"Post" inManagedObjectContext:self.managedObjectContext]];
-    NSSortDescriptor *sorter = [[NSSortDescriptor alloc] initWithKey:@"subreddit" ascending:YES selector:@selector(localizedCaseInsensitiveCompare:)];
+    NSSortDescriptor *sorter = [[NSSortDescriptor alloc] initWithKey:@"subreddit" ascending:YES selector:@selector(caseInsensitiveCompare:)];
 
     [fetch setSortDescriptors:@[sorter]];
 
     NSArray * posts = [self.managedObjectContext executeFetchRequest:fetch error:nil];
+
     self.digestPosts = [NSMutableArray arrayWithArray:posts];
+
     if (self.digestPosts.count) {
         completionHandler(YES);
         [self.digestTableView reloadData];
     }
 }
+
 
 -(void)requestNewLinks
 {
@@ -534,7 +591,6 @@
 {
     [self retrievePostsFromCoreData:^(BOOL completed) {
         if (completed) {
-            [self.digestTableView reloadData];
             [self.refreshControl endRefreshing];
         }
     }];
@@ -633,21 +689,17 @@
 }
 
 -(void)sendUpVoteToReddit:(NSString *)postID{
-
-
     [[RKClient sharedClient] linkWithFullName:postID completion:^(id object, NSError *error) {
         [[RKClient sharedClient] upvote:object completion:^(NSError *error) {
-            NSLog(@"UPVate");
+            NSLog(@"Upvote");
         }];
     }];
 }
 
 -(void)sendDownVoteToReddit:(NSString *)postID{
-
-
     [[RKClient sharedClient] linkWithFullName:postID completion:^(id object, NSError *error) {
         [[RKClient sharedClient] downvote:object completion:^(NSError *error) {
-            NSLog(@"UPVate");
+            NSLog(@"Downvote");
         }];
     }];
 }

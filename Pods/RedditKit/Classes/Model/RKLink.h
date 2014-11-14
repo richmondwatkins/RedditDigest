@@ -203,4 +203,5 @@
 
 @property BOOL customIsImage;
 @property NSURL *customURL;
+@property BOOL isLocalPost;
 @end

@@ -185,5 +185,5 @@ typedef NS_ENUM(NSUInteger, RKSpamFilterStrength) {
 
 //custom for RedditDigest..tells if the user is already subscribed when selecting new subreddits
 @property BOOL isCurrentlySubscribed;
-
+@property BOOL isLocalSubreddit;
 @end

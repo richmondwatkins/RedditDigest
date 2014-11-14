@@ -11,8 +11,9 @@
 #import <RKLink.h>
 #import <RKSubreddit.h>
 #import "Post.h"
+
 @interface RedditRequests : NSObject
 
 +(void)retrieveLatestPostFromArray:(NSArray *)subbreddits withManagedObject:(NSManagedObjectContext *)managedObjectContext withCompletion:(void (^)(BOOL completed))complete;
-
++(void)localSubredditRequest:(NSString *)cityName andStateAbbreviation:(NSString *)stateAbbreviation withManagedObject:(NSManagedObjectContext *)managedObject withCompletion:(void (^)(NSMutableArray *posts))complete;
 @end

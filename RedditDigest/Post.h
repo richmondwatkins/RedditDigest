@@ -37,6 +37,8 @@
 @property (nonatomic, retain) NSNumber * voteRatio;
 @property (nonatomic, retain) NSSet *comments;
 @property (nonatomic, retain) Subreddit *subreddit;
+@property (nonatomic, retain) NSNumber *isLocalPost;
+
 @end
 
 @interface Post (CoreDataGeneratedAccessors)
@@ -49,7 +51,5 @@
 +(void)savePost:(RKLink *)post withManagedObject:(NSManagedObjectContext *)managedObjectContext withComments:(NSArray *)comment andCompletion:(void (^)(BOOL completed))complete;
 
 +(void)removeAllPostsFromCoreData:(NSManagedObjectContext *)managedObjectContext;
-
-
 
 @end
