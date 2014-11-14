@@ -16,5 +16,6 @@
 @property (strong, nonatomic) IBOutlet UITableView *tableView;
 @property NSInteger index;
 @property NSMutableArray *comments;
+@property NSInteger constant;
 
 @end
