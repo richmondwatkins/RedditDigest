@@ -15,7 +15,7 @@
 		3417AC0F1A092EBA0026961C /* SubredditSelectionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3417AC0E1A092EBA0026961C /* SubredditSelectionCell.xib */; };
 		3417AC131A0945B40026961C /* KTCenterFlowLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 3417AC121A0945B40026961C /* KTCenterFlowLayout.m */; };
 		343257411A0A96CF003A3115 /* HeaderCollectionReusableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 343257401A0A96CF003A3115 /* HeaderCollectionReusableView.m */; };
-		345700D41A13B91B00FA6FC8 /* DetailPostTabBarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 345700D31A13B91B00FA6FC8 /* DetailPostTabBarViewController.m */; };
+		345700D41A13B91B00FA6FC8 /* DetailPostViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 345700D31A13B91B00FA6FC8 /* DetailPostViewController.m */; };
 		34D1B9371A081B4D00C0C15F /* WelcomViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 34D1B9361A081B4D00C0C15F /* WelcomViewController.m */; };
 		34D1B93A1A081D0C00C0C15F /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 34D1B9391A081D0C00C0C15F /* LoginViewController.m */; };
 		34D1B93C1A08463500C0C15F /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 34D1B93B1A08463500C0C15F /* Security.framework */; };
@@ -76,8 +76,8 @@
 		3417AC121A0945B40026961C /* KTCenterFlowLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTCenterFlowLayout.m; sourceTree = "<group>"; };
 		3432573F1A0A96CF003A3115 /* HeaderCollectionReusableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HeaderCollectionReusableView.h; path = RedditDigest/HeaderCollectionReusableView.h; sourceTree = "<group>"; };
 		343257401A0A96CF003A3115 /* HeaderCollectionReusableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HeaderCollectionReusableView.m; path = RedditDigest/HeaderCollectionReusableView.m; sourceTree = "<group>"; };
-		345700D21A13B91B00FA6FC8 /* DetailPostTabBarViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DetailPostTabBarViewController.h; sourceTree = "<group>"; };
-		345700D31A13B91B00FA6FC8 /* DetailPostTabBarViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DetailPostTabBarViewController.m; sourceTree = "<group>"; };
+		345700D21A13B91B00FA6FC8 /* DetailPostViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DetailPostViewController.h; sourceTree = "<group>"; };
+		345700D31A13B91B00FA6FC8 /* DetailPostViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DetailPostViewController.m; sourceTree = "<group>"; };
 		34D1B9351A081B4D00C0C15F /* WelcomViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WelcomViewController.h; sourceTree = "<group>"; };
 		34D1B9361A081B4D00C0C15F /* WelcomViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WelcomViewController.m; sourceTree = "<group>"; };
 		34D1B9381A081D0C00C0C15F /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
@@ -243,8 +243,8 @@
 				5DE75CA41A0D98B30031F0F7 /* PaginatedViewControllers */,
 				5DE75CA31A0D98930031F0F7 /* HttpRequestHelpers */,
 				5DE75CA21A0D98740031F0F7 /* CoreDataModels */,
-				345700D21A13B91B00FA6FC8 /* DetailPostTabBarViewController.h */,
-				345700D31A13B91B00FA6FC8 /* DetailPostTabBarViewController.m */,
+				345700D21A13B91B00FA6FC8 /* DetailPostViewController.h */,
+				345700D31A13B91B00FA6FC8 /* DetailPostViewController.m */,
 				5DB47A5B1A0ABA5B0034EA84 /* PostViewController.h */,
 				5DB47A5C1A0ABA5B0034EA84 /* PostViewController.m */,
 				340531EB1A1312AE000CF33C /* CommentViewController.h */,
@@ -535,7 +535,7 @@
 				5DA1F14B1A0EEE480017DE39 /* Comment.m in Sources */,
 				5DAADDD21A0D4CD200BB91AB /* ImagePostViewController.m in Sources */,
 				815EED181A097E36006286FF /* EditSubredditViewController.m in Sources */,
-				345700D41A13B91B00FA6FC8 /* DetailPostTabBarViewController.m in Sources */,
+				345700D41A13B91B00FA6FC8 /* DetailPostViewController.m in Sources */,
 				343257411A0A96CF003A3115 /* HeaderCollectionReusableView.m in Sources */,
 				5DE75CA11A0D941D0031F0F7 /* VideoPostViewController.m in Sources */,
 				5D5C12CC1A05716E002902A8 /* DigestViewController.m in Sources */,
