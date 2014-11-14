@@ -60,19 +60,8 @@
     NSArray *postViewControllers = [NSArray arrayWithObject:detailPostViewController];
     [self.postPageController setViewControllers:postViewControllers direction:UIPageViewControllerNavigationDirectionForward animated:NO completion:nil];
 
-    //self.commentsViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"CommentView"];
-    //self.commentsViewController.view.frame = self.view.bounds;
-
-
-    //commentsViewController.comments = [self getcommentsFromSelectedPost:self.index];
-    //self.commentsViewLoaded = YES;
-
-
-    //[self.view addSubview:self.postPageController.view];
+    // Add postPageController just below the commentsViewController
     [self.view insertSubview:self.postPageController.view atIndex:0];
-
-    //[self.view bringSubviewToFront:self.commentsViewController.view];
-    //self.viewControllers = @[self.postPageController, commentsViewController];
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
