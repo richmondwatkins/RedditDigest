@@ -1155,7 +1155,8 @@
                         </connections>
                     </view>
                     <connections>
-                        <outlet property="statusBarBackground" destination="S8U-cs-cwC" id="Bf2-9H-UOM"/>
+                        <outlet property="statusBarBackground" destination="S8U-cs-cwC" id="zFU-AZ-Auh"/>
+                        <outlet property="verticalSpaceConstraint" destination="EVn-h7-QWx" id="gxh-V5-4JS"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="j3N-lV-b48" userLabel="First Responder" sceneMemberID="firstResponder"/>
