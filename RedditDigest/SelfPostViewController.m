@@ -32,7 +32,9 @@
     }
 
     NSLog(@"%f", self.verticalSpaceConstraint.constant);
-    self.verticalSpaceConstraint.constant += 20;
+    if (!self.navController.navigationBarHidden && self.verticalSpaceConstraint.constant < 0) {
+        self.verticalSpaceConstraint.constant += 20;
+    }
 }
 
 //- (void)viewDidLayoutSubviews
