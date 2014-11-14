@@ -13,6 +13,7 @@
 @interface SelfPostViewController () <UIGestureRecognizerDelegate, UIScrollViewDelegate>
 
 @property (weak, nonatomic) IBOutlet UIView *statusBarBackground;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *verticalSpaceConstraint;
 
 @end
 
@@ -20,8 +21,33 @@
 
 -(void)viewWillAppear:(BOOL)animated
 {
+    [super viewWillAppear:animated];
     self.textView.text = self.selfPostText;
+
+    if (!self.navController.navigationBarHidden) {
+        self.statusBarBackground.alpha = 0.0;
+    }
+    else {
+        self.statusBarBackground.alpha = 1.0;
+    }
+
+    NSLog(@"%f", self.verticalSpaceConstraint.constant);
+    self.verticalSpaceConstraint.constant += 20;
 }
+
+//- (void)viewDidLayoutSubviews
+//{
+//    [super viewDidLayoutSubviews];
+//    CGRect viewBounds = self.view.bounds;
+//    CGFloat topBarOffset = self.topLayoutGuide.length;
+//
+//    // snaps the view under the status bar (iOS 6 style)
+//    viewBounds.origin.y = topBarOffset * -1;
+//
+//    // shrink the bounds of your view to compensate for the offset
+//    viewBounds.size.height = viewBounds.size.height + (topBarOffset * -1);
+//    self.view.bounds = viewBounds;
+//}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -29,12 +55,13 @@
     // This makes sure each self post is scrolled to the top when it loads
     [self.textView scrollRangeToVisible:NSMakeRange(0, 1)];
 
-    self.statusBarBackground.backgroundColor = REDDIT_DARK_BLUE;
-    if (!self.navigationController.navigationBarHidden) {
-        self.statusBarBackground.alpha = 0.0;
-    }
+//    self.statusBarBackground.backgroundColor = REDDIT_DARK_BLUE;
+//    if (!self.navController.navigationBarHidden) {
+//        self.statusBarBackground.alpha = 0.0;
+//    }
 }
 
+#pragma mark - Pan
 - (IBAction)onPan:(UIPanGestureRecognizer *)panGesture
 {
     typedef NS_ENUM(NSUInteger, UIPanGestureRecognizerDirection) {
@@ -72,15 +99,17 @@
                     }
                 }
             }
-            if (direction == UIPanGestureRecognizerDirectionDown && !self.navigationController.navigationBarHidden) {
+            if (direction == UIPanGestureRecognizerDirectionDown && !self.navController.navigationBarHidden) {
                 [self hideNavigationAndTabBars];
+                //self.verticalSpaceConstraint.constant += 20;
             }
             break;
         }
         case UIGestureRecognizerStateEnded:
         {
             if (direction == UIPanGestureRecognizerDirectionUp) {
-                if (self.navigationController.navigationBarHidden) {
+
+                if (self.navController.navigationBarHidden) {
                     [self showNavigationAndTabBars];
                 }
             }
@@ -94,36 +123,33 @@
 
 - (void)hideNavigationAndTabBars
 {
-    // If visiable hide nav and tab bar when scroll begins.
-    [UIView animateWithDuration:0.3 animations:^{
-        [self.navigationController setNavigationBarHidden:YES animated:YES];
-        self.tabBarController.tabBar.hidden = YES;
-    }];
-
-    [UIView animateWithDuration:0.0 delay:0.1 options:UIViewAnimationOptionTransitionNone animations:^{
+    [UIView animateWithDuration:0.2 animations:^{
         self.statusBarBackground.alpha = 1.0;
-    } completion:^(BOOL finished) {
-        // Done
+    }];
+    NSLog(@"%f", self.verticalSpaceConstraint.constant);
+    [UIView animateWithDuration:UINavigationControllerHideShowBarDuration animations:^{
+        [self.navController setNavigationBarHidden:YES animated:YES];
+        //        if (self.verticalSpaceConstraint.constant < 0) {
+        //            self.verticalSpaceConstraint.constant = 0;
+        //        }
+        //        else {
+        //self.verticalSpaceConstraint.constant -= 20;
+        //self.verticalSpaceConstraint.constant += self.navController.navigationBar.frame.size.height;
+        //}
+        [self.view layoutIfNeeded];
     }];
 }
 
 - (void)showNavigationAndTabBars
 {
-    [UIView animateWithDuration:0.3 animations:^{
-        [self.navigationController setNavigationBarHidden:NO animated:YES];
-        self.tabBarController.tabBar.hidden = NO;
-    }];
-    // Animate after delay or there's a weird blip
-    [UIView animateWithDuration:0.0 delay:0.1 options:UIViewAnimationOptionTransitionNone animations:^{
+    [UIView animateWithDuration:0.2 animations:^{
         self.statusBarBackground.alpha = 0.0;
-    } completion:^(BOOL finished) {
-        // Done
     }];
-}
-
--(void)scrollViewDidScrollToTop:(UIScrollView *)scrollView
-{
-    [self showNavigationAndTabBars];
+    [UIView animateWithDuration:UINavigationControllerHideShowBarDuration animations:^{
+        [self.navController setNavigationBarHidden:NO animated:YES];
+        self.verticalSpaceConstraint.constant = 0; //self.navController.navigationBar.frame.size.height;
+        [self.view layoutIfNeeded];
+    }];
 }
 
 -(BOOL)prefersStatusBarHidden {
@@ -134,6 +160,11 @@
 - (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer
 {
     return YES;
+}
+
+-(void)scrollViewDidScrollToTop:(UIScrollView *)scrollView
+{
+    [self showNavigationAndTabBars];
 }
 
 @end

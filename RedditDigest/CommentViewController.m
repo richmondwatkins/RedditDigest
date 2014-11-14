@@ -15,6 +15,7 @@
 @property Comment *selectedComment;
 @property CGFloat cellHeight;
 @property NSMutableArray *tableCells;
+
 @end
 
 @implementation CommentViewController
@@ -25,6 +26,7 @@
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    self.constant = 44.0;
 }
 
 - (void)viewDidAppear:(BOOL)animated

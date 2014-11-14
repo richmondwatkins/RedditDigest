@@ -218,7 +218,6 @@
 			children = (
 				5D5C12BF1A05716E002902A8 /* RedditDigest */,
 				5D5C12DC1A05716E002902A8 /* RedditDigestTests */,
-				5D5C12BE1A05716E002902A8 /* Products */,
 				6BC050BB4AA0264B66F9BADA /* Pods */,
 				711551BEEA23829AEA4B6967 /* Frameworks */,
 			);
@@ -231,6 +230,7 @@
 				5D5C12D91A05716E002902A8 /* RedditDigestTests.xctest */,
 			);
 			name = Products;
+			path = ..;
 			sourceTree = "<group>";
 		};
 		5D5C12BF1A05716E002902A8 /* RedditDigest */ = {
@@ -262,6 +262,7 @@
 				5D5C12D21A05716E002902A8 /* LaunchScreen.xib */,
 				5D5C12C71A05716E002902A8 /* RedditDigest.xcdatamodeld */,
 				5D5C12E91A05758E002902A8 /* RedditDigest_Push_Development.mobileprovision */,
+				5D5C12BE1A05716E002902A8 /* Products */,
 				5D5C12C01A05716E002902A8 /* Supporting Files */,
 			);
 			path = RedditDigest;

@@ -14,7 +14,6 @@
 #import "GifPostViewController.h"
 #import "SelfPostViewController.h"
 #import "VideoPostViewController.h"
-
 #import "PageWrapperViewController.h"
 #import "CommentViewController.h"
 #import "Comment.h"
@@ -24,9 +23,7 @@
 
 @property (strong, nonatomic) UIPageViewController *postPageController;
 @property CommentViewController *commentsViewController;
-//@property (strong, nonatomic) UIPageViewController *commentsPageController;
 @property NSMutableArray *comments;
-//@property BOOL commentsViewLoaded;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *commentsHeightConstraint;
 
 @end
@@ -37,10 +34,6 @@
 {
     [super viewDidLoad];
     [self setUpPageViewController];
-    //self.navigationController.hidesBarsOnSwipe = YES;
-    //self.navigationController.hidesBarsOnTap = YES;
-    //self.hidesBottomBarWhenPushed = YES;
-    
 }
 
 - (BOOL)prefersStatusBarHidden {
@@ -76,7 +69,6 @@
         [self loadCommentsFromSelectedPost:self.index];
     }
 }
-
 
 - (UIViewController *)pageViewController:(UIPageViewController *)pageViewController viewControllerBeforeViewController:(UIViewController *)viewController
 {
@@ -141,6 +133,7 @@
 
     viewController.post = post;
     viewController.index = index;
+    viewController.navController = self.navigationController;
 
     return viewController;
 }
@@ -189,36 +182,66 @@
         }
         case UIGestureRecognizerStateChanged:
         {
-            CGPoint translation = [panGesture translationInView:panGesture.view];
-            self.commentsViewController.constant -= translation.y;
-            [panGesture setTranslation:CGPointMake(0, 0) inView:panGesture.view];
-            //self.lastYTranslation = translation.y;
+            CGPoint translation = [panGesture locationInView:panGesture.view];
+            if (direction != UIPanGestureRecognizerDirectionLeft && direction != UIPanGestureRecognizerDirectionRight)
+            {
+                // View begins as size of iphone screen
+
+            //if (self.commentsViewController.view.frame.size.height > 479 || self.commentsViewController.view.frame.size.height > 43) {
+                self.commentsHeightConstraint.constant -= translation.y;
+                [panGesture setTranslation:CGPointMake(0, 0) inView:panGesture.view];
+                //}
+            }
             break;
         }
 
         case UIGestureRecognizerStateEnded:
         {
             if (direction == UIPanGestureRecognizerDirectionUp) {
+                // Pulling down
                 if (self.navigationController.navigationBarHidden) {
                     //[self showNavigationAndTabBars];
                 }
                 self.commentsHeightConstraint.constant = 44.0;
-                [UIView animateWithDuration:0.2 animations:^{
-                    [self.view layoutIfNeeded];
-                    // self.blurView.alpha = 0.0;
-                } completion:^(BOOL finished) {
-                    //[self.blurView removeFromSuperview];
-                }];
+
+                if (direction != UIPanGestureRecognizerDirectionLeft || direction != UIPanGestureRecognizerDirectionRight)
+                {   // Snap shut
+                    [UIView animateWithDuration:0.3
+                                          delay:0
+                         usingSpringWithDamping:0.8
+                          initialSpringVelocity:1.0
+                                        options:0
+                                     animations:^{
+                                         [self.view layoutIfNeeded];
+                                     }
+                                     completion:^(BOOL finished) {
+                                     }];
+                }
             }
 
             else if (direction == UIPanGestureRecognizerDirectionDown) {
-                self.commentsHeightConstraint.constant = self.view.frame.size.height;
-                [UIView animateWithDuration:0.2 animations:^{
-                    [self.view layoutIfNeeded];
-                    //self.blurView.alpha = 1.0;
-                }];
+                // Pulling Up
+                if (self.navigationController.navigationBarHidden) {
+                    self.commentsHeightConstraint.constant = self.view.frame.size.height - 20;
+                }
+                else {
+                    self.commentsHeightConstraint.constant = self.view.frame.size.height;
 
+                }
 
+                if (direction != UIPanGestureRecognizerDirectionLeft || direction != UIPanGestureRecognizerDirectionRight)
+                {   // Snap open
+                    [UIView animateWithDuration:0.3
+                                          delay:0
+                         usingSpringWithDamping:0.8
+                          initialSpringVelocity:1.0
+                                        options:0
+                                     animations:^{
+                                         [self.view layoutIfNeeded];
+                                     }
+                                     completion:^(BOOL finished) {
+                                     }];
+                }
             }
             direction = UIPanGestureRecognizerDirectionUndefined;
             break;
@@ -229,69 +252,14 @@
             self.commentsHeightConstraint.constant = 44;
             [UIView animateWithDuration:0.2 animations:^{
                 [self.view layoutIfNeeded];
-                //                self.blurView.alpha = 0.0;
             } completion:^(BOOL finished) {
-                //                [self.blurView removeFromSuperview];
+                NSLog(@"Gesture cancelled");
             }];
             break;
         }
         default:
             break;
     }
-
-    //    if (UIGestureRecognizerStateBegan == gesture.state)
-    //    {
-    ////        if (self.containerViewHeightConstraint.constant == INITIAL_CONTAINER_LOC) // Container is being moved up
-    ////        {
-    //            // Create blur view to animate
-    ////            self.blurView = [[LFGlassView alloc] initWithFrame:self.view.frame];;
-    ////            self.blurView.alpha = 0.0;
-    ////            self.blurView.frame = self.view.frame;
-    ////            [self.view insertSubview:self.blurView belowSubview:self.containerView];
-    ////        }
-    //    }
-    //    else if (UIGestureRecognizerStateChanged == gesture.state)
-    //    {
-    //        CGPoint translation = [gesture translationInView:gesture.view];
-    //        self.commentsViewController.constant -= translation.y;
-    //        [gesture setTranslation:CGPointMake(0, 0) inView:gesture.view];
-    //        self.lastYTranslation = translation.y;
-    //
-    //        // Set blurView alpha
-    //        //CGPoint location = [gesture locationInView:self.view];
-    //        //self.blurView.alpha = 1.06 - (location.y/self.view.frame.size.height);
-    //    }
-    //    else if (UIGestureRecognizerStateEnded == gesture.state)
-    //    {
-    //        if (self.lastYTranslation > 0) // User was panning down so finish closing
-    //        {
-    //            self.containerViewHeightConstraint.constant = INITIAL_CONTAINER_LOC;
-    //            [UIView animateWithDuration:0.2 animations:^{
-    //                [self.view layoutIfNeeded];
-    //                self.blurView.alpha = 0.0;
-    //            } completion:^(BOOL finished) {
-    //                [self.blurView removeFromSuperview];
-    //            }];
-    //        }
-    //        else // User was panning up so finish opening
-    //        {
-    //            self.containerViewHeightConstraint.constant = self.view.frame.size.height;
-    //            [UIView animateWithDuration:0.2 animations:^{
-    //                [self.view layoutIfNeeded];
-    //                self.blurView.alpha = 1.0;
-    //            }];
-    //        }
-    //    }
-    //    else // Gesture was cancelled or failed so animate back to original location
-    //    {
-    //        self.containerViewHeightConstraint.constant = INITIAL_CONTAINER_LOC;
-    //        [UIView animateWithDuration:0.2 animations:^{
-    //            [self.view layoutIfNeeded];
-    //            self.blurView.alpha = 0.0;
-    //        } completion:^(BOOL finished) {
-    //            [self.blurView removeFromSuperview];
-    //        }];
-    //    }
 }
 
 

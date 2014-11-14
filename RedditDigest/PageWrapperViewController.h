@@ -20,4 +20,6 @@
 @property int sourceViewIdentifier;
 @property NSMutableArray *comments;
 
+@property UINavigationController *navController;
+
 @end
