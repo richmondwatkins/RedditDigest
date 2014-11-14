@@ -562,8 +562,24 @@
     NSArray * posts = [self.managedObjectContext executeFetchRequest:fetch error:nil];
     self.digestPosts = [NSMutableArray arrayWithArray:posts];
     if (self.digestPosts.count) {
+        [self moveLocalPostToTop];
         completionHandler(YES);
         [self.digestTableView reloadData];
+    }
+}
+
+-(void)moveLocalPostToTop{
+    NSMutableArray *localPostArray = [NSMutableArray array];
+    for (Post *post in self.digestPosts) {
+        if (post.isLocalPost) {
+            [localPostArray addObject:post];
+        }
+    }
+
+    if (localPostArray.count) {
+        for (Post *localPost in localPostArray) {
+            [self.digestPosts insertObject:localPost atIndex:0];
+        }
     }
 }
 

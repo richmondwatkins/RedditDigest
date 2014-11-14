@@ -34,7 +34,7 @@
 @dynamic voteRatio;
 @dynamic comments;
 @dynamic subreddit;
-
+@dynamic isLocalPost;
 +(void)savePost:(RKLink *)post withManagedObject:(NSManagedObjectContext *)managedObjectContext withComments:(NSArray *)comments andCompletion:(void (^)(BOOL))complete{
     NSFetchRequest * postFetch = [[NSFetchRequest alloc] initWithEntityName:@"Post"];
     postFetch.predicate = [NSPredicate predicateWithFormat:@"postID == %@", post.fullName];
@@ -50,7 +50,7 @@
         savedPost.author = post.author;
         savedPost.voteRatio = [NSNumber numberWithFloat:post.score];
         savedPost.postID = post.fullName;
-
+        savedPost.isLocalPost = [NSNumber numberWithBool:post.isLocalPost];
         if (comments) {
             [Comment addCommentsToPost:savedPost commentsArray:comments withMangedObject:managedObjectContext];
         }

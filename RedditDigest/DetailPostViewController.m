@@ -36,7 +36,6 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-
     [self setUpPageViewController];
     //self.navigationController.hidesBarsOnSwipe = YES;
     //self.navigationController.hidesBarsOnTap = YES;

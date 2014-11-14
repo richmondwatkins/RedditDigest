@@ -56,6 +56,7 @@
 
             [[RKClient sharedClient] linksInSubreddit:object pagination:nil completion:^(NSArray *collection, RKPagination *pagination, NSError *error) {
                 RKLink *topPost = collection.firstObject;
+                topPost.isLocalPost = YES;
                 if (topPost.stickied) {
                     topPost = collection[1];
                 }
@@ -81,6 +82,7 @@
         }
     }];
 }
+
 
 +(BOOL)existsInCoreData:(NSString *)postID withManagedObject:(NSManagedObjectContext *)managedObject{
     NSFetchRequest * subredditFetch = [[NSFetchRequest alloc] init];
