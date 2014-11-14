@@ -875,8 +875,8 @@
                     </view>
                     <connections>
                         <outlet property="imageView" destination="8tw-of-qFa" id="QKj-gM-tVW"/>
-                        <outlet property="statusBarBackground" destination="RWZ-k1-gcB" id="F0i-GC-w3m"/>
-                        <outlet property="verticalSpaceConstraint" destination="QKE-Sc-drI" id="L0Z-xB-FOP"/>
+                        <outlet property="statusBarBackground" destination="RWZ-k1-gcB" id="oA3-gb-IUq"/>
+                        <outlet property="verticalSpaceConstraint" destination="QKE-Sc-drI" id="jze-z2-R8r"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="NaH-fd-BDo" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1051,14 +1051,15 @@
                         </connections>
                     </view>
                     <connections>
-                        <outlet property="statusBarBackground" destination="Uqa-q4-8tx" id="EvC-JA-dgx"/>
+                        <outlet property="statusBarBackground" destination="Uqa-q4-8tx" id="kDK-u5-Ade"/>
+                        <outlet property="verticalSpaceConstraint" destination="tHF-r0-uL1" id="MFN-u6-an9"/>
                         <outlet property="webView" destination="xAZ-3t-2Y0" id="hA7-ke-RVd"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Nbf-Mv-9qo" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <panGestureRecognizer minimumNumberOfTouches="1" id="0jp-xW-TXj">
                     <connections>
-                        <action selector="onPan:" destination="VdO-7b-mon" id="psF-ll-vZU"/>
+                        <action selector="onPan:" destination="VdO-7b-mon" id="TDB-jg-lvR"/>
                         <outlet property="delegate" destination="VdO-7b-mon" id="T3i-kK-wJf"/>
                     </connections>
                 </panGestureRecognizer>
