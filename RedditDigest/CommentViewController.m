@@ -8,6 +8,7 @@
 
 #import "CommentViewController.h"
 #import "CommentTableViewCell.h"
+#import "Post.h"
 
 @interface CommentViewController () <UITableViewDelegate, UITableViewDataSource, UITextViewDelegate, UITabBarControllerDelegate>
 
@@ -68,10 +69,41 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-
     return self.cellHeight;
 }
 
+- (void)reloadTableWithCommentsFromCurrentPost:(Post *)selectedPost
+{
+    self.comments = [self getcommentsFromSelectedPost:selectedPost];
+    [self.tableView reloadData];
+}
 
+- (NSMutableArray *)getcommentsFromSelectedPost:(Post *)selectedPost
+{
+    NSArray *allComments = [self commentSorter:[selectedPost.comments allObjects]];
+    NSMutableArray *comments = [self matchChildCommentsToParent:allComments];
+    return comments;
+}
+
+-(NSArray *)commentSorter:(NSArray *)comments
+{
+    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"score" ascending:NO];
+    NSArray *sortDescriptors = [NSArray arrayWithObject:sortDescriptor];
+
+    return [comments sortedArrayUsingDescriptors:sortDescriptors];
+}
+
+-(NSMutableArray *)matchChildCommentsToParent:(NSArray *)parentComments
+{
+    NSMutableArray *matchedComments = [NSMutableArray array];
+
+    for(Comment *comment in parentComments) {
+        NSArray *childComments = [self commentSorter:[comment.childcomments allObjects]];
+        NSDictionary *parentChildComment = [[NSDictionary alloc] initWithObjectsAndKeys:comment, @"parent", childComments, @"children", nil];
+        [matchedComments addObject:parentChildComment];
+    }
+
+    return matchedComments;
+}
 
 @end

@@ -6,7 +6,7 @@
 //  Copyright (c) 2014 Richmond. All rights reserved.
 //
 
-#import "DetailPostTabBarViewController.h"
+#import "DetailPostViewController.h"
 
 #import "PostViewController.h"
 #import "ImagePostViewController.h"
@@ -20,16 +20,17 @@
 #import "Comment.h"
 #import "ChildComment.h"
 
-@interface DetailPostTabBarViewController ()
+@interface DetailPostViewController ()
 
 @property (strong, nonatomic) UIPageViewController *postPageController;
-@property (strong, nonatomic) UIPageViewController *commentsPageController;
+@property CommentViewController *commentsViewController;
+//@property (strong, nonatomic) UIPageViewController *commentsPageController;
 @property NSMutableArray *comments;
-@property BOOL commentsViewLoaded;
+//@property BOOL commentsViewLoaded;
 
 @end
 
-@implementation DetailPostTabBarViewController
+@implementation DetailPostViewController
 
 - (void)viewDidLoad
 {
@@ -41,9 +42,11 @@
     //self.hidesBottomBarWhenPushed = YES;
     
 }
+
 - (BOOL)prefersStatusBarHidden {
     return YES;
 }
+
 -(void)setUpPageViewController
 {
     self.postPageController = [[UIPageViewController alloc] initWithTransitionStyle:UIPageViewControllerTransitionStyleScroll navigationOrientation:UIPageViewControllerNavigationOrientationHorizontal options:nil];
@@ -56,15 +59,18 @@
     NSArray *postViewControllers = [NSArray arrayWithObject:detailPostViewController];
     [self.postPageController setViewControllers:postViewControllers direction:UIPageViewControllerNavigationDirectionForward animated:NO completion:nil];
 
-    CommentViewController *commentsViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"CommentView"];
-    commentsViewController.view.frame = self.view.bounds;
-    commentsViewController.comments = [self getcommentsFromSelectedPost:self.index];
-    self.commentsViewLoaded = YES;
+    self.commentsViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"CommentView"];
+    self.commentsViewController.view.frame = self.view.bounds;
+    self.delegate = self.commentsViewController;
+    [self loadCommentsFromSelectedPost:self.index];
+    //commentsViewController.comments = [self getcommentsFromSelectedPost:self.index];
+    //self.commentsViewLoaded = YES;
 
-    self.postPageController.tabBarItem = [[UITabBarItem alloc] initWithTabBarSystemItem:UITabBarSystemItemBookmarks tag:1];
-    commentsViewController.tabBarItem = [[UITabBarItem alloc] initWithTabBarSystemItem:UITabBarSystemItemDownloads tag:2];
 
-    self.viewControllers = @[self.postPageController, commentsViewController];
+    [self.view addSubview:self.postPageController.view];
+
+
+    //self.viewControllers = @[self.postPageController, commentsViewController];
 }
 
 - (UIViewController *)pageViewController:(UIPageViewController *)pageViewController viewControllerBeforeViewController:(UIViewController *)viewController
@@ -84,18 +90,14 @@
     if([pendingViewControllers count] > 0)
     {
         NSUInteger index =[(PageWrapperViewController*)[pendingViewControllers objectAtIndex:0] index];
-        CommentViewController *commentsViewController = self.viewControllers[1];
-        commentsViewController.comments = [self getcommentsFromSelectedPost:index];
-        [commentsViewController.tableView reloadData];
+        [self loadCommentsFromSelectedPost:index];
     }
 }
 
-- (NSMutableArray *)getcommentsFromSelectedPost:(NSInteger)selectedPostIndex
+- (void)loadCommentsFromSelectedPost:(NSUInteger)indexOfPostToGetCommentsFor
 {
-    Post *post = self.allPosts[selectedPostIndex];
-    NSArray *allComments = [self commentSorter:[post.comments allObjects]];
-    NSMutableArray *comments = [self matchChildCommentsToParent:allComments];
-    return comments;
+    Post *post = self.allPosts[indexOfPostToGetCommentsFor];
+    [self.commentsViewController reloadTableWithCommentsFromCurrentPost:post];
 }
 
 - (PageWrapperViewController *)viewControllerAtIndex:(NSInteger)index
@@ -108,8 +110,6 @@
     }
 
     Post *post = self.allPosts[index];
-    NSArray *allComments = [self commentSorter:[post.comments allObjects]];
-    self.comments = [self matchChildCommentsToParent:allComments];
 
     PageWrapperViewController *viewController;
     if (post.isImageLink.intValue == 1) {
@@ -139,28 +139,5 @@
 
     return viewController;
 }
-
--(NSArray *)commentSorter:(NSArray *)comments
-{
-    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"score" ascending:NO];
-    NSArray *sortDescriptors = [NSArray arrayWithObject:sortDescriptor];
-
-    return [comments sortedArrayUsingDescriptors:sortDescriptors];
-}
-
--(NSMutableArray *)matchChildCommentsToParent:(NSArray *)parentComments
-{
-    NSMutableArray *matchedComments = [NSMutableArray array];
-
-    for(Comment *comment in parentComments) {
-        NSArray *childComments = [self commentSorter:[comment.childcomments allObjects]];
-        NSDictionary *parentChildComment = [[NSDictionary alloc] initWithObjectsAndKeys:comment, @"parent", childComments, @"children", nil];
-        [matchedComments addObject:parentChildComment];
-    }
-    
-    return matchedComments;
-}
-
-
 
 @end

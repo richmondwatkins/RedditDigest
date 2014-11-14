@@ -8,8 +8,10 @@
 
 #import <UIKit/UIKit.h>
 #import "Comment.h"
+#import "DetailPostViewController.h"
 
-@interface CommentViewController : UIViewController
+
+@interface CommentViewController : UIViewController <DetailPostViewControllerDelegate>
 
 @property (strong, nonatomic) IBOutlet UITableView *tableView;
 @property NSInteger index;
