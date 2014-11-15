@@ -65,7 +65,7 @@
 
 - (void)viewWillAppear:(BOOL)animated
 {
-
+    self.imageCache = [[NSCache alloc] init];
     self.didUpdateLocation = NO;
     [super viewWillAppear:animated];
 
@@ -354,40 +354,14 @@
     cell.commentsLabel.text = [self abbreviateNumber:post.totalComments.integerValue];
 
     if (post.image) {
-        dispatch_queue_t downloadQueue = dispatch_queue_create("image downloader", NULL);
-            UIImage *image = [UIImage imageWithData:post.image];
-            dispatch_async(downloadQueue, ^{
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    cell.thumbnailImage.image = image;
-            });
-        });
+        cell.thumbnailImage.image = [self returnImageForCellFromData:post.image withSubredditNameForKey:post.subreddit.subreddit];
     }else if(post.thumbnailImage){
-        dispatch_queue_t downloadQueue = dispatch_queue_create("image downloader", NULL);
-            UIImage *image = [UIImage imageWithData:post.thumbnailImage];
-        dispatch_async(downloadQueue, ^{
-            dispatch_async(dispatch_get_main_queue(), ^{
-                cell.thumbnailImage.image = image;
-            });
-        });
+        cell.thumbnailImage.image = [self returnImageForCellFromData:post.thumbnailImage withSubredditNameForKey:post.subreddit.subreddit];
     }else if(post.subreddit.image){
-        dispatch_queue_t downloadQueue = dispatch_queue_create("image downloader", NULL);
-            UIImage *image = [UIImage imageWithData:post.subreddit.image];
-        dispatch_async(downloadQueue, ^{
-            dispatch_async(dispatch_get_main_queue(), ^{
-                cell.thumbnailImage.image = image;
-            });
-        });
+        cell.thumbnailImage.image = [self returnImageForCellFromData:post.subreddit.image withSubredditNameForKey:post.subreddit.subreddit];
     }else{
-        dispatch_queue_t downloadQueue = dispatch_queue_create("image downloader", NULL);
-            UIImage *image = [UIImage imageNamed:@"snoo_camera_placeholder"];
-        dispatch_async(downloadQueue, ^{
-            dispatch_async(dispatch_get_main_queue(), ^{
-                cell.thumbnailImage.image = image;
-            });
-        });
+        cell.thumbnailImage.image = [UIImage imageNamed:@"snoo_camera_placeholder"];
     }
-
-
 
     cell.thumbnailImage.contentMode = UIViewContentModeScaleAspectFill;
     cell.thumbnailImage.alpha = 0.4;
@@ -408,6 +382,15 @@
     cell.thumbnailImage.layer.masksToBounds = YES;
 
     return cell;
+}
+
+-(UIImage *)returnImageForCellFromData:(NSData *)imageData withSubredditNameForKey:(NSString *)subreddit{
+    UIImage *image = [self.imageCache objectForKey:subreddit];
+    if (image == nil) {
+        image = [UIImage imageWithData:imageData];
+        [self.imageCache setObject:image forKey:subreddit];
+    }
+    return image;
 }
 
 -(void) tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
