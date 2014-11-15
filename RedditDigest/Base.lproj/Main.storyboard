@@ -1071,13 +1071,14 @@
                     </view>
                     <connections>
                         <outlet property="statusBarBackground" destination="Uqa-q4-8tx" id="kDK-u5-Ade"/>
+                        <outlet property="verticalSpaceConstraint" destination="PmM-kL-r5X" id="oyi-SU-OSb"/>
                         <outlet property="webView" destination="xAZ-3t-2Y0" id="hA7-ke-RVd"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Nbf-Mv-9qo" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <panGestureRecognizer minimumNumberOfTouches="1" id="0jp-xW-TXj">
                     <connections>
-                        <action selector="onPan:" destination="VdO-7b-mon" id="TDB-jg-lvR"/>
+                        <action selector="onPan:" destination="VdO-7b-mon" id="GPx-ar-3BY"/>
                         <outlet property="delegate" destination="VdO-7b-mon" id="T3i-kK-wJf"/>
                     </connections>
                 </panGestureRecognizer>
