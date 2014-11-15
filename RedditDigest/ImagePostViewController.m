@@ -12,6 +12,7 @@
 
 @property (weak, nonatomic) IBOutlet UIView *statusBarBackground;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *verticalSpaceConstraint;
+@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *activityIndicator;
 
 @end
 
@@ -20,12 +21,15 @@
 -(void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
-
+    [self.activityIndicator startAnimating];
+    self.activityIndicator.hidden = NO;
     dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(void){
         UIImage *image = [UIImage imageWithData:self.imageData];
         dispatch_async(dispatch_get_main_queue(), ^(void){
             self.imageView.image = image;
             self.imageView.contentMode = UIViewContentModeScaleAspectFit;
+            [self.activityIndicator stopAnimating];
+            self.activityIndicator.hidden = YES;
         });
     });
 }

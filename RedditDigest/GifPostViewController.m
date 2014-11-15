@@ -15,6 +15,7 @@
 
 @property (weak, nonatomic) IBOutlet UIView *statusBarBackground;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *verticalSpaceConstraint;
+@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *activityIndicator;
 
 @end
 @implementation GifPostViewController
@@ -32,7 +33,10 @@
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    
+
+    self.activityIndicator.hidden = NO;
+    [self.activityIndicator startAnimating];
+
     dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(void){
         FLAnimatedImage *image = [FLAnimatedImage animatedImageWithGIFData:[NSData dataWithContentsOfURL:[NSURL URLWithString:self.url]]];
         dispatch_async(dispatch_get_main_queue(), ^(void){
@@ -43,6 +47,9 @@
             CGFloat screenHeight = screenRect.size.height;
             imageView.frame = CGRectMake(0.0, self.view.center.y/2, screenWidth, screenHeight/2);
             [self.view addSubview:imageView];
+
+            [self.activityIndicator stopAnimating];
+            self.activityIndicator.hidden = YES;
         });
     });
 

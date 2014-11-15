@@ -10,9 +10,10 @@
 
 #import "VideoPostViewController.h"
 
-@interface VideoPostViewController () //<UIGestureRecognizerDelegate, UIScrollViewDelegate>
+@interface VideoPostViewController () <UIWebViewDelegate>  //<UIGestureRecognizerDelegate, UIScrollViewDelegate>
 
 @property (weak, nonatomic) IBOutlet UIView *statusBarBackground;
+@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *activityIndicator;
 
 @end
 
@@ -30,7 +31,7 @@
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    
+
     CGRect screenRect =[[UIScreen mainScreen] bounds];
     CGFloat screenWidth = screenRect.size.width;
     CGFloat screenHeight = screenRect.size.height;
@@ -49,6 +50,20 @@
     else {
         self.statusBarBackground.alpha = 1.0;
     }
+}
+
+- (void)webViewDidStartLoad:(UIWebView *)webView
+{
+    [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
+    self.activityIndicator.hidden = NO;
+    [self.activityIndicator startAnimating];
+}
+
+- (void)webViewDidFinishLoad:(UIWebView *)webView
+{
+    [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
+    [self.activityIndicator stopAnimating];
+    self.activityIndicator.hidden = YES;
 }
 
 //- (IBAction)onPan:(UIPanGestureRecognizer *)panGesture

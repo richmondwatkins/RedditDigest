@@ -10,10 +10,11 @@
 
 #import "WebPostViewController.h"
 
-@interface WebPostViewController () <UIGestureRecognizerDelegate, UIScrollViewDelegate>
+@interface WebPostViewController () <UIGestureRecognizerDelegate, UIScrollViewDelegate, UIWebViewDelegate>
 
 @property (weak, nonatomic) IBOutlet UIView *statusBarBackground;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *verticalSpaceConstraint;
+@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *activityIndicator;
 
 @end
 @implementation WebPostViewController
@@ -30,7 +31,6 @@
 
 -(void)viewWillAppear:(BOOL)animated
 {
-    //NSLog(@"COMMENTS %@",self.url);
     [super viewWillAppear:animated];
 
     NSURLRequest *request;
@@ -41,13 +41,26 @@
     }
 
     [self.webView loadRequest:request];
-
     if (!self.navController.navigationBarHidden) {
         self.statusBarBackground.alpha = 0.0;
     }
     else {
         self.statusBarBackground.alpha = 1.0;
     }
+}
+
+- (void)webViewDidStartLoad:(UIWebView *)webView
+{
+    [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
+    self.activityIndicator.hidden = NO;
+    [self.activityIndicator startAnimating];
+}
+
+- (void)webViewDidFinishLoad:(UIWebView *)webView
+{
+    [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
+    [self.activityIndicator stopAnimating];
+    self.activityIndicator.hidden = YES;
 }
 
 #pragma mark - Pan

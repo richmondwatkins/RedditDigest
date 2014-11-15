@@ -14,6 +14,7 @@
 
 @property (weak, nonatomic) IBOutlet UIView *statusBarBackground;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *verticalSpaceConstraint;
+@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *activityIndicator;
 
 @end
 
@@ -22,6 +23,9 @@
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+    self.activityIndicator.hidden = NO;
+    [self.activityIndicator startAnimating];
+
     self.textView.text = self.selfPostText;
 
     if (!self.navController.navigationBarHidden) {
@@ -31,25 +35,13 @@
         self.statusBarBackground.alpha = 1.0;
     }
 
-    NSLog(@"%f", self.verticalSpaceConstraint.constant);
     if (!self.navController.navigationBarHidden && self.verticalSpaceConstraint.constant < 0) {
         self.verticalSpaceConstraint.constant += 20;
     }
-}
 
-//- (void)viewDidLayoutSubviews
-//{
-//    [super viewDidLayoutSubviews];
-//    CGRect viewBounds = self.view.bounds;
-//    CGFloat topBarOffset = self.topLayoutGuide.length;
-//
-//    // snaps the view under the status bar (iOS 6 style)
-//    viewBounds.origin.y = topBarOffset * -1;
-//
-//    // shrink the bounds of your view to compensate for the offset
-//    viewBounds.size.height = viewBounds.size.height + (topBarOffset * -1);
-//    self.view.bounds = viewBounds;
-//}
+    self.activityIndicator.hidden = YES;
+    [self.activityIndicator stopAnimating];
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
