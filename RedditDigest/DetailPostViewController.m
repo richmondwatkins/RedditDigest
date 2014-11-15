@@ -25,6 +25,7 @@
 @property CommentViewController *commentsViewController;
 @property NSMutableArray *comments;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *commentsHeightConstraint;
+@property (weak, nonatomic) IBOutlet UILabel *currentPostIndexLabel;
 
 @end
 
@@ -34,6 +35,8 @@
 {
     [super viewDidLoad];
     [self setUpPageViewController];
+
+    [self showCounterLabelAtIndex:self.index];
 }
 
 - (BOOL)prefersStatusBarHidden {
@@ -84,11 +87,13 @@
 
 - (void)pageViewController:(UIPageViewController *)pageViewController willTransitionToViewControllers:(NSArray *)pendingViewControllers
 {
+    NSUInteger index;
     if([pendingViewControllers count] > 0)
     {
-        NSUInteger index =[(PageWrapperViewController*)[pendingViewControllers objectAtIndex:0] index];
+        index =[(PageWrapperViewController*)[pendingViewControllers objectAtIndex:0] index];
         [self loadCommentsFromSelectedPost:index];
     }
+    [self showCounterLabelAtIndex:index];
 }
 
 - (void)loadCommentsFromSelectedPost:(NSUInteger)indexOfPostToGetCommentsFor
@@ -138,7 +143,7 @@
     return viewController;
 }
 
-// Pan gesture to show comments 
+// Pan gesture to show comments
 - (void)onPanGesture:(UIPanGestureRecognizer *)panGesture
 {
     typedef NS_ENUM(NSUInteger, UIPanGestureRecognizerDirection) {
@@ -263,5 +268,19 @@
     }
 }
 
+
+#pragma mark - Counter Label
+
+- (void)showCounterLabelAtIndex:(NSInteger)startingIndex
+{
+    self.currentPostIndexLabel.text = [NSString stringWithFormat:@"%lu/%lu", (unsigned long)startingIndex + 1, (unsigned long)self.allPosts.count];
+    self.currentPostIndexLabel.alpha = 0.8;
+    self.currentPostIndexLabel.layer.cornerRadius = 10;
+    self.currentPostIndexLabel.clipsToBounds = YES;
+
+    [UIView animateWithDuration:1.0 delay:0.5 options:UIViewAnimationOptionCurveEaseInOut animations:^{
+        self.currentPostIndexLabel.alpha = 0.0;
+    } completion:nil];
+}
 
 @end

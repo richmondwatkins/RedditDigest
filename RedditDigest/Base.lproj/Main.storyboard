@@ -838,9 +838,22 @@
                                     <segue destination="lJS-Le-QsK" kind="embed" identifier="CommentsSegue" id="ggy-cR-Oa5"/>
                                 </connections>
                             </containerView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="2/5" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Elx-1D-EpB">
+                                <rect key="frame" x="273.5" y="527" width="53" height="21"/>
+                                <color key="backgroundColor" red="0.20000000000000001" green="0.40000000000000002" blue="0.59999999999999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="21" id="7Ap-Vk-8lU"/>
+                                    <constraint firstAttribute="width" constant="53" id="xpR-eQ-N5r"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="HelveticaNeue-UltraLight" family="Helvetica Neue" pointSize="17"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="ttP-q4-W8m" firstAttribute="top" secondItem="Elx-1D-EpB" secondAttribute="bottom" constant="8" id="2vl-oT-hG9"/>
+                            <constraint firstAttribute="centerX" secondItem="Elx-1D-EpB" secondAttribute="centerX" id="Nlx-wu-nwo"/>
                             <constraint firstItem="lfi-BX-pTq" firstAttribute="top" secondItem="ttP-q4-W8m" secondAttribute="bottom" id="O7q-wW-aDs"/>
                             <constraint firstAttribute="trailing" secondItem="ttP-q4-W8m" secondAttribute="trailing" id="pfo-dP-OPR"/>
                             <constraint firstItem="ttP-q4-W8m" firstAttribute="leading" secondItem="6GF-uw-mqy" secondAttribute="leading" id="tdV-hq-x8t"/>
@@ -848,6 +861,7 @@
                     </view>
                     <connections>
                         <outlet property="commentsHeightConstraint" destination="xrS-Vr-8bo" id="fq3-Uw-MnB"/>
+                        <outlet property="currentPostIndexLabel" destination="Elx-1D-EpB" id="LAz-8F-ZBj"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dhS-kO-V9M" userLabel="First Responder" sceneMemberID="firstResponder"/>
