@@ -30,6 +30,10 @@
 		5D5C12D41A05716E002902A8 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5D5C12D21A05716E002902A8 /* LaunchScreen.xib */; };
 		5D5C12E01A05716E002902A8 /* RedditDigestTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D5C12DF1A05716E002902A8 /* RedditDigestTests.m */; };
 		5D614E4F1A15D70600A199A2 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5D614E4E1A15D70600A199A2 /* CoreLocation.framework */; };
+		5D614E571A16F77A00A199A2 /* TFHpple.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D614E541A16F77A00A199A2 /* TFHpple.m */; };
+		5D614E581A16F77A00A199A2 /* TFHppleElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D614E551A16F77A00A199A2 /* TFHppleElement.m */; };
+		5D614E591A16F77A00A199A2 /* XPathQuery.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D614E561A16F77A00A199A2 /* XPathQuery.m */; };
+		5D614E5B1A16F96100A199A2 /* libxml2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 5D614E5A1A16F96100A199A2 /* libxml2.dylib */; };
 		5DA1F14A1A0EEE480017DE39 /* ChildComment.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DA1F1461A0EEE480017DE39 /* ChildComment.m */; };
 		5DA1F14B1A0EEE480017DE39 /* Comment.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DA1F1481A0EEE480017DE39 /* Comment.m */; };
 		5DAADDD21A0D4CD200BB91AB /* ImagePostViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DAADDD11A0D4CD200BB91AB /* ImagePostViewController.m */; };
@@ -104,6 +108,13 @@
 		5D5C12DF1A05716E002902A8 /* RedditDigestTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RedditDigestTests.m; sourceTree = "<group>"; };
 		5D5C12E91A05758E002902A8 /* RedditDigest_Push_Development.mobileprovision */ = {isa = PBXFileReference; lastKnownFileType = file; path = RedditDigest_Push_Development.mobileprovision; sourceTree = "<group>"; };
 		5D614E4E1A15D70600A199A2 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		5D614E511A16F75600A199A2 /* TFHpple.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TFHpple.h; sourceTree = "<group>"; };
+		5D614E521A16F77A00A199A2 /* TFHppleElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TFHppleElement.h; sourceTree = "<group>"; };
+		5D614E531A16F77A00A199A2 /* XPathQuery.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XPathQuery.h; sourceTree = "<group>"; };
+		5D614E541A16F77A00A199A2 /* TFHpple.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TFHpple.m; sourceTree = "<group>"; };
+		5D614E551A16F77A00A199A2 /* TFHppleElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TFHppleElement.m; sourceTree = "<group>"; };
+		5D614E561A16F77A00A199A2 /* XPathQuery.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XPathQuery.m; sourceTree = "<group>"; };
+		5D614E5A1A16F96100A199A2 /* libxml2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.dylib; path = usr/lib/libxml2.dylib; sourceTree = SDKROOT; };
 		5DA1F1451A0EEE480017DE39 /* ChildComment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChildComment.h; sourceTree = "<group>"; };
 		5DA1F1461A0EEE480017DE39 /* ChildComment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChildComment.m; sourceTree = "<group>"; };
 		5DA1F1471A0EEE480017DE39 /* Comment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Comment.h; sourceTree = "<group>"; };
@@ -147,6 +158,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5D614E5B1A16F96100A199A2 /* libxml2.dylib in Frameworks */,
 				5D614E4F1A15D70600A199A2 /* CoreLocation.framework in Frameworks */,
 				34D1B93C1A08463500C0C15F /* Security.framework in Frameworks */,
 				AFECB7D3E1AFD77137EC9E75 /* libPods-RedditDigest.a in Frameworks */,
@@ -216,6 +228,7 @@
 		5D5C12B41A05716E002902A8 = {
 			isa = PBXGroup;
 			children = (
+				5D614E501A16F73500A199A2 /* HTMLParser */,
 				5D5C12BF1A05716E002902A8 /* RedditDigest */,
 				5D5C12DC1A05716E002902A8 /* RedditDigestTests */,
 				6BC050BB4AA0264B66F9BADA /* Pods */,
@@ -292,6 +305,19 @@
 				5D5C12DE1A05716E002902A8 /* Info.plist */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		5D614E501A16F73500A199A2 /* HTMLParser */ = {
+			isa = PBXGroup;
+			children = (
+				5D614E521A16F77A00A199A2 /* TFHppleElement.h */,
+				5D614E531A16F77A00A199A2 /* XPathQuery.h */,
+				5D614E541A16F77A00A199A2 /* TFHpple.m */,
+				5D614E551A16F77A00A199A2 /* TFHppleElement.m */,
+				5D614E561A16F77A00A199A2 /* XPathQuery.m */,
+				5D614E511A16F75600A199A2 /* TFHpple.h */,
+			);
+			name = HTMLParser;
 			sourceTree = "<group>";
 		};
 		5DE75CA21A0D98740031F0F7 /* CoreDataModels */ = {
@@ -371,6 +397,7 @@
 		711551BEEA23829AEA4B6967 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				5D614E5A1A16F96100A199A2 /* libxml2.dylib */,
 				5D614E4E1A15D70600A199A2 /* CoreLocation.framework */,
 				3417AC101A0945B40026961C /* CenterFlowLayout */,
 				34D1B93B1A08463500C0C15F /* Security.framework */,
@@ -527,6 +554,7 @@
 				3413FC361A1117490018A172 /* LoadingViewController.m in Sources */,
 				5DDA80BF1A11DED900527AF9 /* Subreddit.m in Sources */,
 				5D3AC6331A12BCCC0093E79E /* DigestCategory.m in Sources */,
+				5D614E571A16F77A00A199A2 /* TFHpple.m in Sources */,
 				5DB47A5D1A0ABA5B0034EA84 /* PostViewController.m in Sources */,
 				5D5C12C91A05716E002902A8 /* RedditDigest.xcdatamodeld in Sources */,
 				3417AC0D1A092D970026961C /* SettingsViewController.m in Sources */,
@@ -537,6 +565,7 @@
 				34D1B93A1A081D0C00C0C15F /* LoginViewController.m in Sources */,
 				5DA1F14A1A0EEE480017DE39 /* ChildComment.m in Sources */,
 				5DAADDD51A0D502600BB91AB /* WebPostViewController.m in Sources */,
+				5D614E591A16F77A00A199A2 /* XPathQuery.m in Sources */,
 				5DA1F14B1A0EEE480017DE39 /* Comment.m in Sources */,
 				5DAADDD21A0D4CD200BB91AB /* ImagePostViewController.m in Sources */,
 				815EED181A097E36006286FF /* EditSubredditViewController.m in Sources */,
@@ -544,6 +573,7 @@
 				343257411A0A96CF003A3115 /* HeaderCollectionReusableView.m in Sources */,
 				5DE75CA11A0D941D0031F0F7 /* VideoPostViewController.m in Sources */,
 				5D5C12CC1A05716E002902A8 /* DigestViewController.m in Sources */,
+				5D614E581A16F77A00A199A2 /* TFHppleElement.m in Sources */,
 				5D5C12C31A05716E002902A8 /* main.m in Sources */,
 				5DDA80C01A11DED900527AF9 /* Post.m in Sources */,
 				34D1B9371A081B4D00C0C15F /* WelcomViewController.m in Sources */,
@@ -679,6 +709,19 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/RedditDigest",
 				);
+				HEADER_SEARCH_PATHS = (
+					"\"${PODS_ROOT}/Headers/Public\"",
+					"\"${PODS_ROOT}/Headers/Public/AFNetworking\"",
+					"\"${PODS_ROOT}/Headers/Public/FLAnimatedImage\"",
+					"\"${PODS_ROOT}/Headers/Public/Mantle\"",
+					"\"${PODS_ROOT}/Headers/Public/RedditKit\"",
+					"\"${PODS_ROOT}/Headers/Public/RedditKit/Categories\"",
+					"\"${PODS_ROOT}/Headers/Public/RedditKit/Model\"",
+					"\"${PODS_ROOT}/Headers/Public/RedditKit/Networking\"",
+					"\"${PODS_ROOT}/Headers/Public/SSKeychain\"",
+					"\"${PODS_ROOT}/Headers/Public/ZeroPush\"",
+					"$(SDKROOT)/usr/include/libxml2",
+				);
 				INFOPLIST_FILE = RedditDigest/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -697,6 +740,19 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/RedditDigest",
+				);
+				HEADER_SEARCH_PATHS = (
+					"\"${PODS_ROOT}/Headers/Public\"",
+					"\"${PODS_ROOT}/Headers/Public/AFNetworking\"",
+					"\"${PODS_ROOT}/Headers/Public/FLAnimatedImage\"",
+					"\"${PODS_ROOT}/Headers/Public/Mantle\"",
+					"\"${PODS_ROOT}/Headers/Public/RedditKit\"",
+					"\"${PODS_ROOT}/Headers/Public/RedditKit/Categories\"",
+					"\"${PODS_ROOT}/Headers/Public/RedditKit/Model\"",
+					"\"${PODS_ROOT}/Headers/Public/RedditKit/Networking\"",
+					"\"${PODS_ROOT}/Headers/Public/SSKeychain\"",
+					"\"${PODS_ROOT}/Headers/Public/ZeroPush\"",
+					"$(SDKROOT)/usr/include/libxml2",
 				);
 				INFOPLIST_FILE = RedditDigest/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.1;

@@ -26,7 +26,6 @@
 
 @property (strong, nonatomic) IBOutlet UICollectionView *subredditCollectionView;
 @property NSMutableArray *subreddits;
-@property NSMutableArray *posts;
 @property SubredditListCollectionViewCell *sizingCell;
 @property (weak, nonatomic) IBOutlet UIButton *doneSelectingSubredditsButton;
 @property BOOL hasRedditAccount;
@@ -40,6 +39,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+
 
     KTCenterFlowLayout *layout = [KTCenterFlowLayout new];
     layout.minimumInteritemSpacing = 10.f;
@@ -136,9 +136,8 @@
 
     if (self.selectedSubreddits.count < 10)
     {
-
-        [self.selectedSubreddits addObject:subreddit];
-
+         [self.selectedSubreddits addObject:subreddit];
+        [self lookUpRelatedSubreddits:subreddit.name];
         if (self.selectedSubreddits.count > 0) {
             [UIView animateWithDuration:0.3 animations:^{
                 self.doneSelectingSubredditsButton.alpha = 1.0;
@@ -149,6 +148,14 @@
     {
         [self.subredditCollectionView deselectItemAtIndexPath:indexPath animated: YES];
     }
+}
+
+-(void)lookUpRelatedSubreddits:(NSString *)subredditName{
+    [[RKClient sharedClient] recommendedSubredditsForSubreddits:@[subredditName] completion:^(NSArray *collection, NSError *error) {
+        for (RKSubreddit *sub in collection) {
+            NSLog(@"RECOMENNDED SUBSSSS %@",sub);
+        }
+    }];
 }
 
 

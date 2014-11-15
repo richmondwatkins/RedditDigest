@@ -35,6 +35,7 @@
 @property CLLocationManager *locationManger;
 @property CLLocation *userLocation;
 @property BOOL didUpdateLocation;
+@property NSCache *imageCache;
 @end
 
 @implementation DigestViewController
@@ -64,6 +65,7 @@
 
 - (void)viewWillAppear:(BOOL)animated
 {
+    self.imageCache = [[NSCache alloc] init];
     self.didUpdateLocation = NO;
     [super viewWillAppear:animated];
 
@@ -102,6 +104,7 @@
 {
     [super viewDidLayoutSubviews];
 }
+
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
@@ -339,27 +342,32 @@
     Post *post = self.digestPosts[indexPath.row];
     cell.delegate = self;
     cell.titleLabel.text = post.title;
+    cell.titleLabel.lineBreakMode = NSLineBreakByWordWrapping;
+    cell.titleLabel.numberOfLines = 0;
+
+    cell.titleLabel.shadowColor = [UIColor whiteColor];
+    cell.titleLabel.shadowOffset = CGSizeMake(0, -1.0);
+
     cell.subredditLabel.text = post.subreddit.subreddit;
     cell.authorLabel.text = post.author;
     cell.upVoteDownVoteLabel.text = [self abbreviateNumber:post.voteRatio.integerValue];
     cell.commentsLabel.text = [self abbreviateNumber:post.totalComments.integerValue];
 
-    if (!post.thumbnailImage) {
-        if (post.subreddit.image) {
-            cell.thumbnailImage.image = [UIImage imageWithData:post.subreddit.image];
-        }else{
-            cell.thumbnailImage.image = [self squareCropImageToSideLength:[UIImage imageNamed:@"snoo_camera_placeholder"] sideLength:50];
-            cell.thumbnailImage.alpha = 0.5;
-        }
-    }
-    else {
-        cell.thumbnailImage.image = [self squareCropImageToSideLength:[UIImage imageWithData:post.thumbnailImage] sideLength:50];
+    if (post.image) {
+        cell.thumbnailImage.image = [self returnImageForCellFromData:post.image withSubredditNameForKey:post.subreddit.subreddit];
+    }else if(post.thumbnailImage){
+        cell.thumbnailImage.image = [self returnImageForCellFromData:post.thumbnailImage withSubredditNameForKey:post.subreddit.subreddit];
+    }else if(post.subreddit.image){
+        cell.thumbnailImage.image = [self returnImageForCellFromData:post.subreddit.image withSubredditNameForKey:post.subreddit.subreddit];
+    }else{
+        cell.thumbnailImage.image = [UIImage imageNamed:@"snoo_camera_placeholder"];
     }
 
-    (post.viewed) ? cell.thumbnailImage.alpha = 0.2 : (cell.thumbnailImage.alpha = 1);
+    cell.thumbnailImage.contentMode = UIViewContentModeScaleAspectFill;
+    cell.thumbnailImage.alpha = 0.4;
+    //    (post.viewed) ? cell.thumbnailImage.alpha = 0.2 : (cell.thumbnailImage.alpha = 1);
 
     if ([post.upvoted boolValue] == YES) {
-        NSLog(@"POST %@",post);
         [cell.upVoteButton setBackgroundImage:[UIImage imageNamed:@"upvote_arrow_selected"] forState:UIControlStateNormal];
     }else{
         [cell.upVoteButton setBackgroundImage:[UIImage imageNamed:@"upvote_arrow"] forState:UIControlStateNormal];
@@ -374,6 +382,15 @@
     cell.thumbnailImage.layer.masksToBounds = YES;
 
     return cell;
+}
+
+-(UIImage *)returnImageForCellFromData:(NSData *)imageData withSubredditNameForKey:(NSString *)subreddit{
+    UIImage *image = [self.imageCache objectForKey:subreddit];
+    if (image == nil) {
+        image = [UIImage imageWithData:imageData];
+        [self.imageCache setObject:image forKey:subreddit];
+    }
+    return image;
 }
 
 -(void) tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
@@ -398,6 +415,10 @@
             self.isComingFromSubredditSelectionView = NO;
         }
     }
+}
+
+-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
+    return  200;
 }
 
 -(NSString *)abbreviateNumber:(int)num
@@ -558,7 +579,7 @@
 
     NSFetchRequest * fetch = [[NSFetchRequest alloc] init];
     [fetch setEntity:[NSEntityDescription entityForName:@"Post" inManagedObjectContext:self.managedObjectContext]];
-    NSSortDescriptor *sorter = [[NSSortDescriptor alloc] initWithKey:@"subreddit" ascending:YES selector:@selector(caseInsensitiveCompare:)];
+    NSSortDescriptor *sorter = [[NSSortDescriptor alloc] initWithKey:@"voteRatio" ascending:NO];
 
     [fetch setSortDescriptors:@[sorter]];
 
@@ -622,6 +643,7 @@
     [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"HasSubscriptions"];
     [[NSUserDefaults standardUserDefaults] synchronize];
 
+
     if (self.isComingFromSubredditSelectionView) {
         [self requestNewLinks];
     }
@@ -661,6 +683,27 @@
         [cell.downVoteButton setBackgroundImage:[UIImage imageNamed:@"downvote_arrow_selected"] forState:UIControlStateNormal];
         [cell.upVoteButton setBackgroundImage:[UIImage imageNamed:@"upvote_arrow"] forState:UIControlStateNormal];
 
+        UIView *view = [[UIView alloc] init];
+        view.frame = cell.frame;
+        view.center = cell.center;
+//        [cell addSubview:view];
+//        view.backgroundColor = [UIColor blueColor];
+//        view.alpha = 1.0;
+////        cell.backgroundColor = [UIColor blueColor];
+////        cell.titleLabel.backgroundColor = [UIColor blueColor];
+////        cell.subredditLabel.backgroundColor = [UIColor blueColor];
+////        cell.authorLabel.backgroundColor = [UIColor blueColor];
+//        [UIView animateWithDuration:0.3 animations:^{
+//            view.alpha = 0;
+//            view.backgroundColor = [UIColor whiteColor];
+////            cell.backgroundColor = [UIColor whiteColor];
+////            cell.titleLabel.backgroundColor = [UIColor whiteColor];
+////            cell.subredditLabel.backgroundColor = [UIColor whiteColor];
+////            cell.authorLabel.backgroundColor = [UIColor whiteColor];
+//        }];
+
+
+
         [self sendDownVoteToReddit:selectedPost.postID];
     }
 }
@@ -673,6 +716,7 @@
     DigestCellWithImageTableViewCell *swipedCell  = (DigestCellWithImageTableViewCell *)[self.digestTableView cellForRowAtIndexPath:swipedIndexPath];
     Post *post = [self.digestPosts objectAtIndex:swipedIndexPath.row];
     post.upvoted = [NSNumber numberWithBool:YES];
+    
 
     [self upVoteButtonPressed:swipedCell];
 }
