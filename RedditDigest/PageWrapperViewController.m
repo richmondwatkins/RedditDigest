@@ -114,12 +114,12 @@
     NSLog(@"%f", self.verticalSpaceConstraint.constant);
     [UIView animateWithDuration:UINavigationControllerHideShowBarDuration animations:^{
         [self.navController setNavigationBarHidden:YES animated:YES];
-//        if (self.verticalSpaceConstraint.constant < 0) {
-//            self.verticalSpaceConstraint.constant = 0;
-//        }
+        if (self.verticalSpaceConstraint.constant < 0) {
+            self.verticalSpaceConstraint.constant = 0;
+        }
 //        else {
-            self.verticalSpaceConstraint.constant += self.navController.navigationBar.frame.size.height;
-        //}
+//            self.verticalSpaceConstraint.constant += self.navController.navigationBar.frame.size.height;
+//        }
         [self.view layoutIfNeeded];
     }];
 }
