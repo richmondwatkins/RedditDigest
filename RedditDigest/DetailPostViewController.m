@@ -138,6 +138,7 @@
     return viewController;
 }
 
+// Pan gesture to show comments 
 - (void)onPanGesture:(UIPanGestureRecognizer *)panGesture
 {
     typedef NS_ENUM(NSUInteger, UIPanGestureRecognizerDirection) {
