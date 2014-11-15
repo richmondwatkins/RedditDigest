@@ -339,6 +339,8 @@
     Post *post = self.digestPosts[indexPath.row];
     cell.delegate = self;
     cell.titleLabel.text = post.title;
+    cell.titleLabel.layer.borderColor = [[UIColor whiteColor] CGColor];
+    cell.titleLabel.lineBreakMode = UILineBreakModeWordWrap;
     cell.subredditLabel.text = post.subreddit.subreddit;
     cell.authorLabel.text = post.author;
     cell.upVoteDownVoteLabel.text = [self abbreviateNumber:post.voteRatio.integerValue];
@@ -348,16 +350,16 @@
         if (post.subreddit.image) {
             cell.thumbnailImage.image = [UIImage imageWithData:post.subreddit.image];
         }else{
-            cell.thumbnailImage.image = [self squareCropImageToSideLength:[UIImage imageNamed:@"snoo_camera_placeholder"] sideLength:50];
+            cell.thumbnailImage.image = [UIImage imageNamed:@"snoo_camera_placeholder"];
             cell.thumbnailImage.alpha = 0.5;
         }
     }
     else {
-        cell.thumbnailImage.image = [self squareCropImageToSideLength:[UIImage imageWithData:post.thumbnailImage] sideLength:50];
+        cell.thumbnailImage.image = [UIImage imageWithData:post.image];
     }
-    cell.thumbnailImage.contentMode = UIViewContentModeScaleAspectFit;
-
-    (post.viewed) ? cell.thumbnailImage.alpha = 0.2 : (cell.thumbnailImage.alpha = 1);
+    cell.thumbnailImage.contentMode = UIViewContentModeScaleAspectFill;
+    cell.thumbnailImage.alpha = 0.4;
+    //    (post.viewed) ? cell.thumbnailImage.alpha = 0.2 : (cell.thumbnailImage.alpha = 1);
 
     if ([post.upvoted boolValue] == YES) {
         NSLog(@"POST %@",post);
@@ -399,6 +401,10 @@
             self.isComingFromSubredditSelectionView = NO;
         }
     }
+}
+
+-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
+    return  200;
 }
 
 -(NSString *)abbreviateNumber:(int)num

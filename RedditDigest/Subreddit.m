@@ -9,6 +9,7 @@
 #import "Subreddit.h"
 #import "Post.h"
 #import "DigestCategory.h"
+#import "TFHpple.h"
 @implementation Subreddit
 
 @dynamic image;
@@ -22,24 +23,39 @@
         [subredditFetch setEntity:[NSEntityDescription entityForName:@"Subreddit" inManagedObjectContext:managedObject]];
         subredditFetch.predicate = [NSPredicate predicateWithFormat:@"subreddit == %@", subreddit.name];
         NSArray *results = [managedObject executeFetchRequest:subredditFetch error:nil];
+
         if (!results.count) {
             if (!subreddit.isCurrentlySubscribed) {
                 Subreddit *savedSubreddit = [NSEntityDescription insertNewObjectForEntityForName:@"Subreddit" inManagedObjectContext:managedObject];
                 savedSubreddit.subreddit = subreddit.name;
                 savedSubreddit.url = subreddit.URL;
 
-                if (subreddit.headerImageURL != nil) {
-                    [NSURLConnection sendAsynchronousRequest:[NSURLRequest requestWithURL:subreddit.headerImageURL] queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
-                        if (data) {
-                            NSLog(@"data %@",data);
-                            savedSubreddit.image = data;
+                NSString *urlString = [NSString stringWithFormat:@"http://www.reddit.com%@", subreddit.URL];
+                NSURL *url = [NSURL URLWithString:urlString];
+                [NSURLConnection sendAsynchronousRequest:[NSURLRequest requestWithURL:url] queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
+                    if (data) {
+                        TFHpple *tutorialsParser = [TFHpple hppleWithHTMLData:data];
+
+                        NSArray *elements = [tutorialsParser searchWithXPathQuery:@"//img"];
+                        NSString *thumnailSrc;
+                        for (TFHppleElement *element in elements) {
+                            NSString *idString = [element objectForKey:@"id"];
+                            if ([idString isEqualToString:@"header-img"]) {
+                                NSDictionary *nodeDict = [element attributes];
+                                thumnailSrc = [nodeDict objectForKey:@"src"];
+                            }
+                        }
+
+                        if (thumnailSrc.length > 10) {
+                            [NSURLConnection sendAsynchronousRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:thumnailSrc]] queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
+                                savedSubreddit.image = data;
+                                [managedObject save:nil];
+                            }];
+                        }else{
                             [managedObject save:nil];
                         }
-                    }];
-                }else{
-                    NSError *error;
-                    [managedObject save:&error];
-                }
+                    }
+                }];
             }
         }
     }
