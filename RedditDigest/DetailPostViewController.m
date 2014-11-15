@@ -73,6 +73,9 @@
 - (UIViewController *)pageViewController:(UIPageViewController *)pageViewController viewControllerBeforeViewController:(UIViewController *)viewController
 {
     PageWrapperViewController *pageWrapperViewController = (PageWrapperViewController *)viewController;
+    if ((pageWrapperViewController.index == 0) || (pageWrapperViewController.index == NSNotFound)) {
+        pageWrapperViewController.index = self.allPosts.count ;
+    }
     return [self viewControllerAtIndex:(pageWrapperViewController.index - 1)];
 }
 
@@ -99,11 +102,12 @@
 
 - (PageWrapperViewController *)viewControllerAtIndex:(NSInteger)index
 {
-    if (index<0) {
-        return nil;
+    if ((index == 0) || (index == NSNotFound)) {
+       index = self.allPosts.count ;
     }
-    if (index >= self.allPosts.count) {
-        return nil;
+
+    if (index == self.allPosts.count) {
+       index = 0;
     }
 
     Post *post = self.allPosts[index];
