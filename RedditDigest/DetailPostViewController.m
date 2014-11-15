@@ -79,12 +79,17 @@
     if ((pageWrapperViewController.index == 0) || (pageWrapperViewController.index == NSNotFound)) {
         pageWrapperViewController.index = self.allPosts.count ;
     }
+
     return [self viewControllerAtIndex:(pageWrapperViewController.index - 1)];
 }
 
 - (UIViewController *)pageViewController:(UIPageViewController *)pageViewController viewControllerAfterViewController:(UIViewController *)viewController
 {
     PageWrapperViewController *pageWrapperViewController = (PageWrapperViewController *)viewController;
+    if ((pageWrapperViewController.index == self.allPosts.count) || (pageWrapperViewController.index == NSNotFound)) {
+        pageWrapperViewController.index = 0;
+    }
+
     return [self viewControllerAtIndex:(pageWrapperViewController.index + 1)];
 }
 
@@ -107,11 +112,11 @@
 
 - (PageWrapperViewController *)viewControllerAtIndex:(NSInteger)index
 {
-    if ((index == 0) || (index == NSNotFound)) {
+    if ((index <= 0) || (index == NSNotFound)) {
        index = self.allPosts.count ;
     }
 
-    if (index == self.allPosts.count) {
+    if (index >= self.allPosts.count) {
        index = 0;
     }
 
