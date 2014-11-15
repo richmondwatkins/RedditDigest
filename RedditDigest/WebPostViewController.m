@@ -34,7 +34,7 @@
 
     NSURLRequest *request;
     if (![self.url containsString:@"imgur"]) {
-        request = [NSURLRequest requestWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://www.readability.com/m?url=%@",self.url]]];
+        request = [NSURLRequest requestWithURL:[NSURL URLWithString:self.url]];
     }else{
         request = [NSURLRequest requestWithURL:[NSURL URLWithString:self.url]];
     }
