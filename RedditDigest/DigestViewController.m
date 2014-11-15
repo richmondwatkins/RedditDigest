@@ -35,7 +35,7 @@
 @property CLLocationManager *locationManger;
 @property CLLocation *userLocation;
 @property BOOL didUpdateLocation;
-
+@property NSCache *imageCache;
 @end
 
 @implementation DigestViewController
@@ -342,9 +342,11 @@
     Post *post = self.digestPosts[indexPath.row];
     cell.delegate = self;
     cell.titleLabel.text = post.title;
-    cell.titleLabel.layer.borderColor = [[UIColor whiteColor] CGColor];
     cell.titleLabel.lineBreakMode = NSLineBreakByWordWrapping;
     cell.titleLabel.numberOfLines = 0;
+
+    cell.titleLabel.shadowColor = [UIColor whiteColor];
+    cell.titleLabel.shadowOffset = CGSizeMake(0, -1.0);
 
     cell.subredditLabel.text = post.subreddit.subreddit;
     cell.authorLabel.text = post.author;
@@ -352,14 +354,40 @@
     cell.commentsLabel.text = [self abbreviateNumber:post.totalComments.integerValue];
 
     if (post.image) {
-        cell.thumbnailImage.image = [UIImage imageWithData:post.image];
+        dispatch_queue_t downloadQueue = dispatch_queue_create("image downloader", NULL);
+            UIImage *image = [UIImage imageWithData:post.image];
+            dispatch_async(downloadQueue, ^{
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    cell.thumbnailImage.image = image;
+            });
+        });
     }else if(post.thumbnailImage){
-        cell.thumbnailImage.image = [UIImage imageWithData:post.thumbnailImage];
+        dispatch_queue_t downloadQueue = dispatch_queue_create("image downloader", NULL);
+            UIImage *image = [UIImage imageWithData:post.thumbnailImage];
+        dispatch_async(downloadQueue, ^{
+            dispatch_async(dispatch_get_main_queue(), ^{
+                cell.thumbnailImage.image = image;
+            });
+        });
     }else if(post.subreddit.image){
-        cell.thumbnailImage.image = [UIImage imageWithData:post.subreddit.image];
+        dispatch_queue_t downloadQueue = dispatch_queue_create("image downloader", NULL);
+            UIImage *image = [UIImage imageWithData:post.subreddit.image];
+        dispatch_async(downloadQueue, ^{
+            dispatch_async(dispatch_get_main_queue(), ^{
+                cell.thumbnailImage.image = image;
+            });
+        });
     }else{
-        cell.thumbnailImage.image = [UIImage imageNamed:@"snoo_camera_placeholder"];
+        dispatch_queue_t downloadQueue = dispatch_queue_create("image downloader", NULL);
+            UIImage *image = [UIImage imageNamed:@"snoo_camera_placeholder"];
+        dispatch_async(downloadQueue, ^{
+            dispatch_async(dispatch_get_main_queue(), ^{
+                cell.thumbnailImage.image = image;
+            });
+        });
     }
+
+
 
     cell.thumbnailImage.contentMode = UIViewContentModeScaleAspectFill;
     cell.thumbnailImage.alpha = 0.4;
