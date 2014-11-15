@@ -35,6 +35,7 @@
 @property CLLocationManager *locationManger;
 @property CLLocation *userLocation;
 @property BOOL didUpdateLocation;
+
 @end
 
 @implementation DigestViewController
@@ -64,6 +65,7 @@
 
 - (void)viewWillAppear:(BOOL)animated
 {
+
     self.didUpdateLocation = NO;
     [super viewWillAppear:animated];
 
@@ -102,6 +104,7 @@
 {
     [super viewDidLayoutSubviews];
 }
+
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
@@ -340,29 +343,29 @@
     cell.delegate = self;
     cell.titleLabel.text = post.title;
     cell.titleLabel.layer.borderColor = [[UIColor whiteColor] CGColor];
-    cell.titleLabel.lineBreakMode = UILineBreakModeWordWrap;
+    cell.titleLabel.lineBreakMode = NSLineBreakByWordWrapping;
+    cell.titleLabel.numberOfLines = 0;
+
     cell.subredditLabel.text = post.subreddit.subreddit;
     cell.authorLabel.text = post.author;
     cell.upVoteDownVoteLabel.text = [self abbreviateNumber:post.voteRatio.integerValue];
     cell.commentsLabel.text = [self abbreviateNumber:post.totalComments.integerValue];
 
-    if (!post.thumbnailImage) {
-        if (post.subreddit.image) {
-            cell.thumbnailImage.image = [UIImage imageWithData:post.subreddit.image];
-        }else{
-            cell.thumbnailImage.image = [UIImage imageNamed:@"snoo_camera_placeholder"];
-            cell.thumbnailImage.alpha = 0.5;
-        }
-    }
-    else {
+    if (post.image) {
         cell.thumbnailImage.image = [UIImage imageWithData:post.image];
+    }else if(post.thumbnailImage){
+        cell.thumbnailImage.image = [UIImage imageWithData:post.thumbnailImage];
+    }else if(post.subreddit.image){
+        cell.thumbnailImage.image = [UIImage imageWithData:post.subreddit.image];
+    }else{
+        cell.thumbnailImage.image = [UIImage imageNamed:@"snoo_camera_placeholder"];
     }
+
     cell.thumbnailImage.contentMode = UIViewContentModeScaleAspectFill;
     cell.thumbnailImage.alpha = 0.4;
     //    (post.viewed) ? cell.thumbnailImage.alpha = 0.2 : (cell.thumbnailImage.alpha = 1);
 
     if ([post.upvoted boolValue] == YES) {
-        NSLog(@"POST %@",post);
         [cell.upVoteButton setBackgroundImage:[UIImage imageNamed:@"upvote_arrow_selected"] forState:UIControlStateNormal];
     }else{
         [cell.upVoteButton setBackgroundImage:[UIImage imageNamed:@"upvote_arrow"] forState:UIControlStateNormal];
@@ -565,7 +568,7 @@
 
     NSFetchRequest * fetch = [[NSFetchRequest alloc] init];
     [fetch setEntity:[NSEntityDescription entityForName:@"Post" inManagedObjectContext:self.managedObjectContext]];
-    NSSortDescriptor *sorter = [[NSSortDescriptor alloc] initWithKey:@"title" ascending:YES selector:@selector(localizedCaseInsensitiveCompare:)];
+    NSSortDescriptor *sorter = [[NSSortDescriptor alloc] initWithKey:@"voteRatio" ascending:NO];
 
     [fetch setSortDescriptors:@[sorter]];
 
@@ -628,6 +631,7 @@
 
     [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"HasSubscriptions"];
     [[NSUserDefaults standardUserDefaults] synchronize];
+
 
     if (self.isComingFromSubredditSelectionView) {
         [self requestNewLinks];
