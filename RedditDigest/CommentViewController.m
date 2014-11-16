@@ -9,13 +9,13 @@
 #import "CommentViewController.h"
 #import "CommentTableViewCell.h"
 #import "Post.h"
-
-@interface CommentViewController () <UITableViewDelegate, UITableViewDataSource, UITextViewDelegate, UITabBarControllerDelegate>
+#import "TextViewWebViewController.h"
+@interface CommentViewController () <UITableViewDelegate, UITableViewDataSource, UITextViewDelegate, UITabBarControllerDelegate, UITextViewDelegate>
 
 @property Comment *selectedComment;
 @property CGFloat cellHeight;
 @property NSMutableArray *tableCells;
-
+@property NSURL *urlToSend;
 @end
 
 @implementation CommentViewController
@@ -46,7 +46,7 @@
     [cell.commentTextView sizeToFit];
     self.cellHeight = cell.commentTextView.frame.size.height;
     cell.commentTextView.scrollEnabled = NO;
-
+    cell.commentTextView.delegate = self;
     cell.commentTextView.text = partialComment;
     cell.backgroundColor = [UIColor whiteColor];
     cell.comment = comment;
@@ -57,6 +57,21 @@
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     return self.comments.count;
+}
+
+-(BOOL)textView:(UITextView *)textView shouldInteractWithURL:(NSURL *)URL inRange:(NSRange)characterRange{
+
+    self.urlToSend = URL;
+    [self performSegueWithIdentifier:@"TextViewWebSegue" sender:self];
+
+    return NO;
+}
+
+-(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
+    if ([segue.identifier isEqualToString:@"TextViewWebSegue"]) {
+        TextViewWebViewController *commentWebCtrl = segue.destinationViewController;
+        commentWebCtrl.urlToLoad = self.urlToSend;
+    }
 }
 
 - (NSString*)textToHtml:(NSString*)string withCell:(CommentTableViewCell *)cell andComment:(Comment *)comment

@@ -9,13 +9,13 @@
 #define REDDIT_DARK_BLUE [UIColor colorWithRed:0.2 green:0.4 blue:0.6 alpha:1];
 
 #import "SelfPostViewController.h"
-
-@interface SelfPostViewController () <UIGestureRecognizerDelegate, UIScrollViewDelegate>
+#import "TextViewWebViewController.h"
+@interface SelfPostViewController () <UIGestureRecognizerDelegate, UIScrollViewDelegate, UITextViewDelegate>
 
 @property (weak, nonatomic) IBOutlet UIView *statusBarBackground;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *verticalSpaceConstraint;
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *activityIndicator;
-
+@property NSURL *urlToSend;
 @end
 
 @implementation SelfPostViewController
@@ -27,7 +27,7 @@
     [self.activityIndicator startAnimating];
 
     self.textView.text = self.selfPostText;
-
+    self.textView.delegate = self;
     if (!self.navController.navigationBarHidden) {
         self.statusBarBackground.alpha = 0.0;
     }
@@ -159,6 +159,22 @@
 -(void)scrollViewDidScrollToTop:(UIScrollView *)scrollView
 {
     [self showNavigationAndTabBars];
+}
+
+-(BOOL)textView:(UITextView *)textView shouldInteractWithURL:(NSURL *)URL inRange:(NSRange)characterRange{
+
+    self.urlToSend = URL;
+    [self performSegueWithIdentifier:@"TextViewWebSegue" sender:self];
+
+    return NO;
+}
+
+
+-(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
+    if ([segue.identifier isEqualToString:@"TextViewWebSegue"]) {
+        TextViewWebViewController *commentWebCtrl = segue.destinationViewController;
+        commentWebCtrl.urlToLoad = self.urlToSend;
+    }
 }
 
 @end

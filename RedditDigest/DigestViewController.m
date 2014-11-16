@@ -326,7 +326,7 @@
     cell.titleLabel.lineBreakMode = NSLineBreakByWordWrapping;
     cell.titleLabel.numberOfLines = 0;
 
-    cell.titleLabel.shadowColor = [UIColor whiteColor];
+    cell.titleLabel.shadowColor = [UIColor grayColor];
     cell.titleLabel.shadowOffset = CGSizeMake(0, -1.0);
 
     cell.subredditLabel.text = post.subreddit.subreddit;
@@ -343,6 +343,7 @@
     }else{
         cell.thumbnailImage.image = [UIImage imageNamed:@"snoo_camera_placeholder"];
     }
+
 
     cell.thumbnailImage.contentMode = UIViewContentModeScaleAspectFill;
     cell.thumbnailImage.alpha = 0.4;
