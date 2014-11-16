@@ -108,7 +108,19 @@
             NSLog(@"Push Notification Error: %@",error);
         }
     }];
-
 }
+
++(void)retrieveRecommendedSubredditsWithCompletion:(void (^)(NSArray *results))complete{
+
+    NSString *deviceString = [[NSUserDefaults standardUserDefaults] valueForKey:@"DeviceID"];
+    NSString *urlString = [NSString stringWithFormat:@"http://192.168.1.4:3000/recommendations/%@", deviceString];
+    NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:urlString]];
+    [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
+        if (!connectionError) {
+
+        }
+    }];
+}
+
 
 @end

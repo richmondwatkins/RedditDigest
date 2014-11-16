@@ -9,6 +9,7 @@
 #import "RecommendedSubredditsViewController.h"
 #import <RedditKit.h>
 #import "Subreddit.h"
+#import "UserRequests.h"
 @interface RecommendedSubredditsViewController ()
 
 @end
@@ -26,6 +27,8 @@
             NSLog(@"RECOMENNDED SUBSSSS %@",sub);
         }
     }];
+
+  
 }
 
 

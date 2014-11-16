@@ -13,4 +13,5 @@
 +(void)postSelectedSubreddits:(NSDictionary *)selectionsDictionary withCompletion:(void (^)(BOOL completed))complete;
 +(void)registerDevice:(NSString *)deviceID;
 +(void)registerDeviceForPushNotifications:(NSString *)token;
++(void)retrieveRecommendedSubredditsWithCompletion:(void (^)(NSArray *results))complete;
 @end
