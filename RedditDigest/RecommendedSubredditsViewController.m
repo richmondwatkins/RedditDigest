@@ -9,6 +9,7 @@
 #import "RecommendedSubredditsViewController.h"
 #import <RedditKit.h>
 #import "Subreddit.h"
+#import "UserRequests.h"
 @interface RecommendedSubredditsViewController ()
 @property NSMutableArray *recommendedFromSubscriptions;
 @end
@@ -19,6 +20,11 @@
     [super viewDidLoad];
     self.recommendedFromSubscriptions = [NSMutableArray array];
     [self lookUpRelatedSubreddit:[Subreddit retrieveAllSubreddits:self.mangedObject]];
+    [UserRequests retrieveRecommendedSubredditsWithCompletion:^(NSArray *results) {
+        if (results) {
+            NSLog(@"RESULTS IN REC CONTRLLER %@",results);
+        }
+    }];
 
 }
 
@@ -55,9 +61,16 @@
         }];
 
     }
-
 }
 
+-(void)lookUpRelatedSubreddits:(NSString *)subredditName{
+    [[RKClient sharedClient] recommendedSubredditsForSubreddits:@[subredditName] completion:^(NSArray *collection, NSError *error) {
+        for (RKSubreddit *sub in collection) {
+            NSLog(@"RECOMENNDED SUBSSSS %@",sub);
+        }
+    }];
+
+  }
 
 
 

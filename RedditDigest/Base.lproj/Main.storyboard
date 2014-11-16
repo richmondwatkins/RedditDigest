@@ -726,7 +726,7 @@
                                                 <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WlU-Jy-9SC">
                                                     <rect key="frame" x="549" y="109" width="20" height="33"/>
                                                     <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="15"/>
-                                                    <state key="normal" backgroundImage="FF1ECF2B-4E59-4B2F-8E71-66D99EBA003F">
+                                                    <state key="normal" backgroundImage="70C0DDEE-782B-442B-A8E0-71B900A57F61">
                                                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                                     </state>
                                                     <connections>
@@ -740,7 +740,7 @@
                                                         <constraint firstAttribute="width" constant="20" id="prU-Rg-t2D"/>
                                                     </constraints>
                                                     <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="15"/>
-                                                    <state key="normal" backgroundImage="7272EC82-211D-4CF5-AB57-47193FDC7EC5">
+                                                    <state key="normal" backgroundImage="551FA567-9FA4-42FC-8A4E-B04E8891462E">
                                                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                                     </state>
                                                     <connections>
@@ -756,7 +756,7 @@
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="ACA6349A-6E5E-4AAE-988C-EC6F9E7458BB" translatesAutoresizingMaskIntoConstraints="NO" id="4vQ-S3-CqE">
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="6C83C11E-DC74-4D52-9153-FB171355EAAC" translatesAutoresizingMaskIntoConstraints="NO" id="4vQ-S3-CqE">
                                                     <rect key="frame" x="178" y="145" width="26" height="25"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="26" id="T0w-Fz-lao"/>
@@ -1365,7 +1365,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="7272EC82-211D-4CF5-AB57-47193FDC7EC5" width="25" height="41">
+        <image name="551FA567-9FA4-42FC-8A4E-B04E8891462E" width="25" height="41">
             <mutableData key="keyedArchiveRepresentation">
 YnBsaXN0MDDUAQIDBAUGPj9YJHZlcnNpb25YJG9iamVjdHNZJGFyY2hpdmVyVCR0b3ASAAGGoK4HCBMU
 GR4fIyQsLzI4O1UkbnVsbNUJCgsMDQ4PEBESVk5TU2l6ZVYkY2xhc3NcTlNJbWFnZUZsYWdzVk5TUmVw
@@ -1484,7 +1484,7 @@ UxlYGWMZbBl/GYMZlhmhGaoZrxm3GboZvxnOGdIZ2RnhGe4Z8xn1GfcZ/BoEGgcaDBoUGhcaKRosGjEA
 AAAAAAACAQAAAAAAAABCAAAAAAAAAAAAAAAAAAAaMw
 </mutableData>
         </image>
-        <image name="ACA6349A-6E5E-4AAE-988C-EC6F9E7458BB" width="60" height="60">
+        <image name="6C83C11E-DC74-4D52-9153-FB171355EAAC" width="60" height="60">
             <mutableData key="keyedArchiveRepresentation">
 YnBsaXN0MDDUAQIDBAUGPj9YJHZlcnNpb25YJG9iamVjdHNZJGFyY2hpdmVyVCR0b3ASAAGGoK4HCBMU
 GR4fIyQsLzI4O1UkbnVsbNUJCgsMDQ4PEBESVk5TU2l6ZVYkY2xhc3NcTlNJbWFnZUZsYWdzVk5TUmVw
@@ -1775,7 +1775,7 @@ hQCKAIwAjgCXAJwApwCpAKsArQCyALUAtwC5ALsAvQDCANkA2wDdQY9BlEGfQahBu0G/QdJB3UHmQetB
 AAAAAAAAAAAAQm8
 </mutableData>
         </image>
-        <image name="FF1ECF2B-4E59-4B2F-8E71-66D99EBA003F" width="25" height="41">
+        <image name="70C0DDEE-782B-442B-A8E0-71B900A57F61" width="25" height="41">
             <mutableData key="keyedArchiveRepresentation">
 YnBsaXN0MDDUAQIDBAUGPj9YJHZlcnNpb25YJG9iamVjdHNZJGFyY2hpdmVyVCR0b3ASAAGGoK4HCBMU
 GR4fIyQsLzI4O1UkbnVsbNUJCgsMDQ4PEBESVk5TU2l6ZVYkY2xhc3NcTlNJbWFnZUZsYWdzVk5TUmVw
