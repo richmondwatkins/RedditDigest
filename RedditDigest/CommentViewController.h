@@ -17,5 +17,6 @@
 @property NSInteger index;
 @property NSMutableArray *comments;
 @property NSInteger constant;
+@property (weak, nonatomic) IBOutlet UIButton *showHideCommentsViewButton;
 
 @end
