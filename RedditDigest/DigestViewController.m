@@ -90,7 +90,7 @@
 {
     [super viewDidAppear:animated];
     // These two lines enable automatic cell resizing thanks to iOS 8 🐋
-    self.digestTableView.estimatedRowHeight = 68.0;
+    self.digestTableView.estimatedRowHeight = 227.0;
     self.digestTableView.rowHeight = UITableViewAutomaticDimension;
 
     if (self.isComingFromSubredditSelectionView) {
@@ -397,10 +397,6 @@
             self.isComingFromSubredditSelectionView = NO;
         }
     }
-}
-
--(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    return  200;
 }
 
 -(NSString *)abbreviateNumber:(int)num
