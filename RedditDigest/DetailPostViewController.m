@@ -285,11 +285,13 @@
                     self.commentsHeightConstraint.constant = 603.0;
                 }
                 [self animateViewIntoPlace];
+                [self.commentsViewController.showHideCommentsViewButton setImage:[UIImage imageNamed:@"comment_down"] forState:UIControlStateNormal];
             }
             else
             {
                 self.commentsHeightConstraint.constant = 44.0;
                 [self animateViewIntoPlace];
+                [self.commentsViewController.showHideCommentsViewButton setImage:[UIImage imageNamed:@"comment_up"] forState:UIControlStateNormal];
             }
             break;
         }
