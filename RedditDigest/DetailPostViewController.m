@@ -233,6 +233,7 @@
                 if (direction != UIPanGestureRecognizerDirectionLeft || direction != UIPanGestureRecognizerDirectionRight)
                 {   // Snap shut
                     [self animateViewIntoPlace];
+                    [self.commentsViewController.showHideCommentsViewButton setImage:[UIImage imageNamed:@"comment_up"] forState:UIControlStateNormal];
                 }
             }
 
@@ -249,6 +250,7 @@
                 if (direction != UIPanGestureRecognizerDirectionLeft || direction != UIPanGestureRecognizerDirectionRight)
                 {   // Snap open
                     [self animateViewIntoPlace];
+                    [self.commentsViewController.showHideCommentsViewButton setImage:[UIImage imageNamed:@"comment_down"] forState:UIControlStateNormal];
                 }
             }
             direction = UIPanGestureRecognizerDirectionUndefined;
