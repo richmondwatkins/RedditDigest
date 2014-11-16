@@ -27,6 +27,8 @@
     self.tableView.dataSource = self;
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     self.constant = 44.0;
+    self.view.backgroundColor = [UIColor colorWithRed:0.2 green:0.4 blue:0.6 alpha:1];
+
 }
 
 - (void)viewDidAppear:(BOOL)animated

@@ -65,7 +65,6 @@
     UITapGestureRecognizer *tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(onTapGesture:)];
     tapGestureRecognizer.delegate = self;
     [self.commentsViewController.showHideCommentsViewButton addGestureRecognizer:tapGestureRecognizer];
-    //[self.commentsViewController.view addGestureRecognizer:tapGestureRecognizer];
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
@@ -74,7 +73,6 @@
     {
         self.commentsViewController = segue.destinationViewController;
         self.delegate = self.commentsViewController;
-        [self.commentsViewController.navigationController.navigationBar setBarTintColor:[UIColor colorWithRed:0.2 green:0.4 blue:0.6 alpha:1]];
         [self loadCommentsFromSelectedPost:self.index];
     }
 }
