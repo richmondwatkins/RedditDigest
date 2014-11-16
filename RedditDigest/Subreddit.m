@@ -17,6 +17,7 @@
 @dynamic url;
 @dynamic post;
 @dynamic isLocalSubreddit;
+
 +(void)addSubredditsToCoreData:(NSMutableArray *)selectedSubreddits withManagedObject:(NSManagedObjectContext *)managedObject{
     for (RKSubreddit *subreddit in selectedSubreddits) {
         NSFetchRequest * subredditFetch = [[NSFetchRequest alloc] init];
@@ -154,6 +155,17 @@
             [managedObject deleteObject:subreddit];
             [managedObject save:nil];
         }
+    }
+}
+
++(NSArray *)retrieveAllSubreddits:(NSManagedObjectContext *)managedObject{
+    NSFetchRequest *subredditFetch = [[NSFetchRequest alloc] initWithEntityName:@"Subreddit"];
+    NSArray *results = [managedObject executeFetchRequest:subredditFetch error:nil];
+
+    if (results) {
+        return results;
+    }else{
+        return nil;
     }
 }
 

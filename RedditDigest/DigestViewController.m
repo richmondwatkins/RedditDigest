@@ -47,6 +47,7 @@
     [self.digestTableView addSubview:self.refreshControl];
     [self getDateString];
     self.navigationItem.title = self.dateToday;
+    [self checkForLocationServices];
 
 }
 
@@ -65,30 +66,11 @@
 
 - (void)viewWillAppear:(BOOL)animated
 {
+    [super viewWillAppear:animated];
     self.imageCache = [[NSCache alloc] init];
     self.didUpdateLocation = NO;
-    [super viewWillAppear:animated];
 
-    if ([[NSUserDefaults standardUserDefaults] boolForKey:@"HasSubscriptions"])
-    {
-        // If user is coming from selecting subreddits for their digest then show the loading snoo
-//        if (self.isComingFromSubredditSelectionView) {
-//            LoadingViewController *loadingViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"LoadingView"];
-//            loadingViewController.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
-//            loadingViewController.view.tag = 1;
-//
-////            CGRect fixedFrame = loadingViewController.view.frame;
-////            fixedFrame.origin.y = self.view.frame.origin.y/2;
-////            NSLog(@"%f", self.view.frame.origin.y);
-////            loadingViewController.view.frame = fixedFrame;
-//
-//            loadingViewController.view.center = self.view.center;
-//            [self.view addSubview:loadingViewController.view];
-//            //[self presentViewController:loadingViewController animated:YES completion:nil];
-//        }
-
-    }
-    else
+    if (![[NSUserDefaults standardUserDefaults] boolForKey:@"HasSubscriptions"])
     {
         UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
         WelcomViewController *welcomeViewController = [storyboard instantiateViewControllerWithIdentifier:@"WelcomeViewController"];
@@ -96,8 +78,7 @@
         [self.parentViewController presentViewController:welcomeViewController animated:YES completion:nil];
     }
 
-    [self performNewFetchedDataActions];
-    [self checkForLocationServices];
+//    [self performNewFetchedDataActions];
 }
 
 - (void)viewDidLayoutSubviews
@@ -115,7 +96,7 @@
     if (self.isComingFromSubredditSelectionView) {
         [self createLoadingSnoo];
     }
-    [self.digestTableView reloadData];
+//    [self.digestTableView reloadData];
 }
 
 #pragma mark - Location Services
@@ -524,12 +505,11 @@
 {
     [Post removeAllPostsFromCoreData:self.managedObjectContext];
 
-    [UserRequests retrieveUsersSubredditswithCompletion:^(NSDictionary *results) {
-        [RedditRequests retrieveLatestPostFromArray:results[@"subreddits"] withManagedObject:self.managedObjectContext withCompletion:^(BOOL completed) {
-            [self performNewFetchedDataActions];
-            completionHandler(UIBackgroundFetchResultNewData);
-            [self fireLocalNotificationAndMarkComplete];
-        }];
+    NSArray *subreddits = [Subreddit retrieveAllSubreddits:self.managedObjectContext];
+    [RedditRequests retrieveLatestPostFromArray:subreddits withManagedObject:self.managedObjectContext withCompletion:^(BOOL completed) {
+        [self performNewFetchedDataActions];
+        completionHandler(UIBackgroundFetchResultNewData);
+        [self fireLocalNotificationAndMarkComplete];
     }];
 
 }

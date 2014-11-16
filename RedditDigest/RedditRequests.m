@@ -11,6 +11,7 @@
 @implementation RedditRequests
 
 +(void)retrieveLatestPostFromArray:(NSArray *)subreddits withManagedObject:(NSManagedObjectContext *)managedObjectContext withCompletion:(void (^)(BOOL completed))complete{
+    
     if ([subreddits.firstObject isKindOfClass:[Subreddit class]]) {
         subreddits = [self formatSubredditsArray:subreddits];
     }
