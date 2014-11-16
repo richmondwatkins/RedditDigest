@@ -57,13 +57,16 @@
 - (void)applicationDidBecomeActive:(UIApplication *)application
 {
 
-    [ZeroPush engageWithAPIKey:@"PM4ouAj1rzxmQysu5ej6" delegate:self];
-    [[UIApplication sharedApplication] registerUserNotificationSettings:[UIUserNotificationSettings settingsForTypes:(UIUserNotificationTypeSound | UIUserNotificationTypeAlert | UIUserNotificationTypeBadge) categories:nil]];
-         [[ZeroPush shared] registerForRemoteNotifications];
+    if(![[NSUserDefaults standardUserDefaults] boolForKey:@"HasSubscriptions"]){
+        
+        [ZeroPush engageWithAPIKey:@"PM4ouAj1rzxmQysu5ej6" delegate:self];
+        [[UIApplication sharedApplication] registerUserNotificationSettings:[UIUserNotificationSettings settingsForTypes:(UIUserNotificationTypeSound | UIUserNotificationTypeAlert | UIUserNotificationTypeBadge) categories:nil]];
+        [[ZeroPush shared] registerForRemoteNotifications];
 
-    [application registerUserNotificationSettings:[UIUserNotificationSettings settingsForTypes:(UIUserNotificationTypeSound | UIUserNotificationTypeAlert | UIUserNotificationTypeBadge) categories:nil]];
+        [application registerUserNotificationSettings:[UIUserNotificationSettings settingsForTypes:(UIUserNotificationTypeSound | UIUserNotificationTypeAlert | UIUserNotificationTypeBadge) categories:nil]];
 
-    [application registerForRemoteNotifications];
+        [application registerForRemoteNotifications];
+    }
 }
 
 - (void)setUpUI
@@ -99,6 +102,8 @@
 
     NSNumber *lastDigest = [[NSUserDefaults standardUserDefaults] valueForKey:@"LastDigest"];
     NSNumber *lastScheduled = [[NSUserDefaults standardUserDefaults] valueForKey:@"LastScheduledDigest"];
+    NSLog(@"LAST DIGEST %i",lastDigest.intValue);
+    NSLog(@"LAST SCHEDULED %i",lastScheduled.intValue);
 
     if (lastScheduled.intValue < lastDigest.intValue) {
         [digestController performNewFetchedDataActions]; //retrieves from core data and reloads table
@@ -208,11 +213,15 @@
 
 
 -(void) application:(UIApplication *)application performFetchWithCompletionHandler: (void (^)(UIBackgroundFetchResult))completionHandler {
-    DigestViewController *digestViewController = [(id)self.window.rootViewController viewControllers][0];
-    [digestViewController fetchNewDataWithCompletionHandler:^(UIBackgroundFetchResult result) {
-        completionHandler(result);
-    }];
-
+    if (![[NSUserDefaults standardUserDefaults] boolForKey:@"BackgroundFetch"]) {
+        completionHandler(UIBackgroundFetchResultNoData);
+    }else{
+        DigestViewController *digestViewController = [(id)self.window.rootViewController viewControllers][0];
+        digestViewController.managedObjectContext = self.managedObjectContext;
+        [digestViewController fetchNewDataWithCompletionHandler:^(UIBackgroundFetchResult result) {
+            completionHandler(result);
+        }];
+    }
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application {

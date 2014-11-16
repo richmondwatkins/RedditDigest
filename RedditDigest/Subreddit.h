@@ -23,5 +23,5 @@
 +(void)removeFromCoreData:(NSString *)subreddit withManagedObject:(NSManagedObjectContext *)managedObject;
 +(void)addSingleSubredditToCoreData:(RKSubreddit *)selectedSubreddit withManagedObject:(NSManagedObjectContext *)managedObject;
 +(void)removeLocalPostsAndSubreddits:(NSManagedObjectContext *)managedObject;
-
++(NSArray *)retrieveAllSubreddits:(NSManagedObjectContext *)managedObject;
 @end
