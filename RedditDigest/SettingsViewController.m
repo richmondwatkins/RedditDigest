@@ -73,15 +73,20 @@
         [self.locationManger requestWhenInUseAuthorization];
 
         [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"Location"];
-        [[NSUserDefaults standardUserDefaults] synchronize];
     }else{
        [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"Location"];
-        [[NSUserDefaults standardUserDefaults] synchronize];
         [Subreddit removeLocalPostsAndSubreddits:self.managedObject];
     }
+    [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
-- (IBAction)switchAutoUpdating:(id)sender {
+- (IBAction)switchAutoUpdating:(UISwitch *)sender {
+    if (sender.on) {
+        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"BackgroundFetch"];
+    }else{
+        [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"BackgroundFetch"];
+    }
+    [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
 // In a storyboard-based application, you will often want to do a little preparation before navigation
