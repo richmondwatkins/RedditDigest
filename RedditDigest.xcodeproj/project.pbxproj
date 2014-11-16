@@ -34,6 +34,7 @@
 		5D614E581A16F77A00A199A2 /* TFHppleElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D614E551A16F77A00A199A2 /* TFHppleElement.m */; };
 		5D614E591A16F77A00A199A2 /* XPathQuery.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D614E561A16F77A00A199A2 /* XPathQuery.m */; };
 		5D614E5B1A16F96100A199A2 /* libxml2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 5D614E5A1A16F96100A199A2 /* libxml2.dylib */; };
+		5D614E611A1838A200A199A2 /* RecommendedSubredditsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D614E601A1838A200A199A2 /* RecommendedSubredditsViewController.m */; };
 		5DA1F14A1A0EEE480017DE39 /* ChildComment.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DA1F1461A0EEE480017DE39 /* ChildComment.m */; };
 		5DA1F14B1A0EEE480017DE39 /* Comment.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DA1F1481A0EEE480017DE39 /* Comment.m */; };
 		5DAADDD21A0D4CD200BB91AB /* ImagePostViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DAADDD11A0D4CD200BB91AB /* ImagePostViewController.m */; };
@@ -115,6 +116,8 @@
 		5D614E551A16F77A00A199A2 /* TFHppleElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TFHppleElement.m; sourceTree = "<group>"; };
 		5D614E561A16F77A00A199A2 /* XPathQuery.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XPathQuery.m; sourceTree = "<group>"; };
 		5D614E5A1A16F96100A199A2 /* libxml2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.dylib; path = usr/lib/libxml2.dylib; sourceTree = SDKROOT; };
+		5D614E5F1A1838A200A199A2 /* RecommendedSubredditsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RecommendedSubredditsViewController.h; sourceTree = "<group>"; };
+		5D614E601A1838A200A199A2 /* RecommendedSubredditsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RecommendedSubredditsViewController.m; sourceTree = "<group>"; };
 		5DA1F1451A0EEE480017DE39 /* ChildComment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChildComment.h; sourceTree = "<group>"; };
 		5DA1F1461A0EEE480017DE39 /* ChildComment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChildComment.m; sourceTree = "<group>"; };
 		5DA1F1471A0EEE480017DE39 /* Comment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Comment.h; sourceTree = "<group>"; };
@@ -271,6 +274,8 @@
 				81D523801A0C0E710059C9B3 /* SettingsAboutRedditViewController.m */,
 				815EED161A097E36006286FF /* EditSubredditViewController.h */,
 				815EED171A097E36006286FF /* EditSubredditViewController.m */,
+				5D614E5F1A1838A200A199A2 /* RecommendedSubredditsViewController.h */,
+				5D614E601A1838A200A199A2 /* RecommendedSubredditsViewController.m */,
 				5D5C12D01A05716E002902A8 /* Images.xcassets */,
 				5D5C12D21A05716E002902A8 /* LaunchScreen.xib */,
 				5D5C12C71A05716E002902A8 /* RedditDigest.xcdatamodeld */,
@@ -574,6 +579,7 @@
 				5DE75CA11A0D941D0031F0F7 /* VideoPostViewController.m in Sources */,
 				5D5C12CC1A05716E002902A8 /* DigestViewController.m in Sources */,
 				5D614E581A16F77A00A199A2 /* TFHppleElement.m in Sources */,
+				5D614E611A1838A200A199A2 /* RecommendedSubredditsViewController.m in Sources */,
 				5D5C12C31A05716E002902A8 /* main.m in Sources */,
 				5DDA80C01A11DED900527AF9 /* Post.m in Sources */,
 				34D1B9371A081B4D00C0C15F /* WelcomViewController.m in Sources */,
