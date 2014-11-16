@@ -27,7 +27,20 @@
     self.tableView.dataSource = self;
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     self.constant = 44.0;
-    self.view.backgroundColor = [UIColor colorWithRed:0.2 green:0.4 blue:0.6 alpha:1];
+    //self.view.backgroundColor = [UIColor colorWithRed:0.2 green:0.4 blue:0.6 alpha:1];
+
+    UIVisualEffect *blurEffect = [UIBlurEffect effectWithStyle:UIBlurEffectStyleLight];
+    UIVisualEffectView *visualEffectView = [[UIVisualEffectView alloc] initWithEffect:blurEffect];
+    CGRect blurView = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height);
+    [visualEffectView setFrame:blurView];
+    [self.view insertSubview:visualEffectView belowSubview:self.tableView];
+//    [self.view addSubview:visualEffectView];
+//
+//    UIVisualEffectView *visualEffectViewForTableViewBackground = [[UIVisualEffectView alloc] initWithEffect:blurEffect];
+//    [visualEffectViewForTableViewBackground setFrame:self.tableView.frame];
+//    [self.tableView.backgroundView addSubview:visualEffectViewForTableViewBackground];
+
+    //self.view.backgroundColor = [UIColor greenColor];
 }
 
 - (void)viewDidAppear:(BOOL)animated

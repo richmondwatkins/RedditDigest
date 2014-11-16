@@ -246,7 +246,6 @@
                     self.commentsHeightConstraint.constant = self.view.frame.size.height;
 
                 }
-
                 if (direction != UIPanGestureRecognizerDirectionLeft || direction != UIPanGestureRecognizerDirectionRight)
                 {   // Snap open
                     [self animateViewIntoPlace];
