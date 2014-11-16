@@ -61,6 +61,10 @@
     UIPanGestureRecognizer *panGestureRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(onPanGesture:)];
     panGestureRecognizer.delegate = self;
     [self.commentsViewController.view addGestureRecognizer:panGestureRecognizer];
+
+    UIPanGestureRecognizer *tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(onTapGesture:)];
+    tapGestureRecognizer.delegate = self;
+    [self.commentsViewController.view addGestureRecognizer:tapGestureRecognizer];
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
@@ -113,11 +117,11 @@
 - (PageWrapperViewController *)viewControllerAtIndex:(NSInteger)index
 {
     if ((index <= 0) || (index == NSNotFound)) {
-       index = self.allPosts.count ;
+        index = self.allPosts.count ;
     }
 
     if (index >= self.allPosts.count) {
-       index = 0;
+        index = 0;
     }
 
     Post *post = self.allPosts[index];
@@ -202,7 +206,7 @@
             {
                 // View begins as size of iphone screen
 
-            //if (self.commentsViewController.view.frame.size.height > 479 || self.commentsViewController.view.frame.size.height > 43) {
+                //if (self.commentsViewController.view.frame.size.height > 479 || self.commentsViewController.view.frame.size.height > 43) {
                 self.commentsHeightConstraint.constant -= translation.y;
                 [panGesture setTranslation:CGPointMake(0, 0) inView:panGesture.view];
                 //}
@@ -221,16 +225,7 @@
 
                 if (direction != UIPanGestureRecognizerDirectionLeft || direction != UIPanGestureRecognizerDirectionRight)
                 {   // Snap shut
-                    [UIView animateWithDuration:0.3
-                                          delay:0
-                         usingSpringWithDamping:0.8
-                          initialSpringVelocity:1.0
-                                        options:0
-                                     animations:^{
-                                         [self.view layoutIfNeeded];
-                                     }
-                                     completion:^(BOOL finished) {
-                                     }];
+                    [self animateViewIntoPlace];
                 }
             }
 
@@ -246,16 +241,7 @@
 
                 if (direction != UIPanGestureRecognizerDirectionLeft || direction != UIPanGestureRecognizerDirectionRight)
                 {   // Snap open
-                    [UIView animateWithDuration:0.3
-                                          delay:0
-                         usingSpringWithDamping:0.8
-                          initialSpringVelocity:1.0
-                                        options:0
-                                     animations:^{
-                                         [self.view layoutIfNeeded];
-                                     }
-                                     completion:^(BOOL finished) {
-                                     }];
+                    [self animateViewIntoPlace];
                 }
             }
             direction = UIPanGestureRecognizerDirectionUndefined;
@@ -277,6 +263,47 @@
     }
 }
 
+// Tap gesture to show/hide comments
+- (void)onTapGesture:(UITapGestureRecognizer *)tapGesture
+{
+    switch (tapGesture.state)
+    {
+        case UIGestureRecognizerStateEnded:
+        {
+            if (self.commentsHeightConstraint.constant < 45) {
+                if (self.navigationController.navigationBarHidden) {
+                    self.commentsHeightConstraint.constant = 647.0;
+                }
+                else {
+                    self.commentsHeightConstraint.constant = 603.0;
+                }
+                [self animateViewIntoPlace];
+            }
+            else
+            {
+                self.commentsHeightConstraint.constant = 44.0;
+                [self animateViewIntoPlace];
+            }
+            break;
+        }
+        default:
+            break;
+    }
+}
+
+- (void)animateViewIntoPlace
+{
+    [UIView animateWithDuration:0.3
+                          delay:0
+         usingSpringWithDamping:0.8
+          initialSpringVelocity:1.0
+                        options:0
+                     animations:^{
+                         [self.view layoutIfNeeded];
+                     }
+                     completion:^(BOOL finished) {
+                     }];
+}
 
 #pragma mark - Counter Label
 
@@ -286,7 +313,7 @@
     self.currentPostIndexLabel.alpha = 0.8;
     self.currentPostIndexLabel.layer.cornerRadius = 10;
     self.currentPostIndexLabel.clipsToBounds = YES;
-
+    
     [UIView animateWithDuration:1.0 delay:0.5 options:UIViewAnimationOptionCurveEaseInOut animations:^{
         self.currentPostIndexLabel.alpha = 0.0;
     } completion:nil];
