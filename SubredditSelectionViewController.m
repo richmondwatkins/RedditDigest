@@ -137,7 +137,6 @@
     if (self.selectedSubreddits.count < 10)
     {
          [self.selectedSubreddits addObject:subreddit];
-        [self lookUpRelatedSubreddits:subreddit.name];
         if (self.selectedSubreddits.count > 0) {
             [UIView animateWithDuration:0.3 animations:^{
                 self.doneSelectingSubredditsButton.alpha = 1.0;
@@ -148,14 +147,6 @@
     {
         [self.subredditCollectionView deselectItemAtIndexPath:indexPath animated: YES];
     }
-}
-
--(void)lookUpRelatedSubreddits:(NSString *)subredditName{
-    [[RKClient sharedClient] recommendedSubredditsForSubreddits:@[subredditName] completion:^(NSArray *collection, NSError *error) {
-        for (RKSubreddit *sub in collection) {
-            NSLog(@"RECOMENNDED SUBSSSS %@",sub);
-        }
-    }];
 }
 
 
