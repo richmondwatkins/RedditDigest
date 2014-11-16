@@ -504,7 +504,7 @@
 -(void)fetchNewDataWithCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
 {
     [Post removeAllPostsFromCoreData:self.managedObjectContext];
-
+    [self.digestPosts removeAllObjects];
     NSArray *subreddits = [Subreddit retrieveAllSubreddits:self.managedObjectContext];
     [RedditRequests retrieveLatestPostFromArray:subreddits withManagedObject:self.managedObjectContext withCompletion:^(BOOL completed) {
         [self performNewFetchedDataActions];
