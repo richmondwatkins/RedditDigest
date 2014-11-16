@@ -15,6 +15,7 @@
 
 @property (nonatomic, retain) NSString * name;
 @property (nonatomic, retain) NSSet *subreddits;
+
 @end
 
 @interface DigestCategory (CoreDataGeneratedAccessors)

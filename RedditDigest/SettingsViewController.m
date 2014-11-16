@@ -13,6 +13,7 @@
 #import "SubredditSelectionViewController.h"
 #import <CoreLocation/CoreLocation.h>
 #import "Subreddit.h"
+#import "RecommendedSubredditsViewController.h"
 @interface SettingsViewController () <UITableViewDataSource, UITableViewDelegate, CLLocationManagerDelegate>
 
 @property (strong, nonatomic) IBOutlet UITableView *tableView;
@@ -101,6 +102,9 @@
         LoginViewController *loginController = segue.destinationViewController;
         loginController.managedObject = self.managedObject;
         loginController.isFromSettings = YES;
+    } else if([segue.identifier isEqualToString:@"RecommendedSegue"]){
+        RecommendedSubredditsViewController *recController = segue.destinationViewController;
+        recController.mangedObject = self.managedObject;
     }
 }
 
