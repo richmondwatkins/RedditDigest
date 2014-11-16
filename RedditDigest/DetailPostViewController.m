@@ -104,16 +104,23 @@
     [self showCounterLabelAtIndex:index];
 }
 
-- (void)loadCommentsFromSelectedPost:(NSUInteger)indexOfPostToGetCommentsFor
+- (void)loadCommentsFromSelectedPost:(NSUInteger)index
 {
-    Post *post = self.allPosts[indexOfPostToGetCommentsFor];
+    if ((index <= 0) || (index == NSNotFound)) {
+        index = self.allPosts.count;
+    }
+
+    if (index >= self.allPosts.count) {
+        index = 0;
+    }
+    Post *post = self.allPosts[index];
     [self.commentsViewController reloadTableWithCommentsFromCurrentPost:post];
 }
 
 - (PageWrapperViewController *)viewControllerAtIndex:(NSInteger)index
 {
     if ((index <= 0) || (index == NSNotFound)) {
-       index = self.allPosts.count ;
+       index = self.allPosts.count;
     }
 
     if (index >= self.allPosts.count) {

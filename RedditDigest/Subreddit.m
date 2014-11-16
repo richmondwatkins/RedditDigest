@@ -96,8 +96,7 @@
 
     NSMutableDictionary *tempDict = [[NSMutableDictionary alloc] initWithObjectsAndKeys:subredditName, @"name", nil];
 
-    NSUUID *deviceID = [UIDevice currentDevice].identifierForVendor;
-    NSString *deviceString = [NSString stringWithFormat:@"%@", deviceID];
+    NSString *deviceString = [[NSUserDefaults standardUserDefaults] valueForKey:@"DeviceID"];
     NSString *urlString = [NSString stringWithFormat:@"http://192.168.1.4:3000/subreddits/delete/%@",  deviceString];
 
     NSDictionary *objectToDelete = [[NSDictionary alloc] initWithObjectsAndKeys:tempDict, @"subreddit", nil];
@@ -151,7 +150,6 @@
     NSArray *results = [managedObject executeFetchRequest:localSubFetch error:nil];
     if (results.count) {
         for (Subreddit *subreddit in results) {
-            NSLog(@"POST FROM DATA %@",subreddit);
             [managedObject deleteObject:subreddit];
             [managedObject save:nil];
         }
