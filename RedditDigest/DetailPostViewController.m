@@ -37,6 +37,8 @@
     [self setUpPageViewController];
 
     [self showCounterLabelAtIndex:self.index];
+    Post *post = self.allPosts[self.index];
+    self.navigationItem.title = post.title;
 }
 
 - (BOOL)prefersStatusBarHidden {

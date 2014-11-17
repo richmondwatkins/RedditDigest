@@ -46,11 +46,13 @@
     }
 
     [self.webView loadRequest:request];
-    if (!self.navController.navigationBarHidden) {
-        self.statusBarBackground.alpha = 0.0;
+    if (self.navController.navigationBarHidden) {
+        self.statusBarBackground.alpha = 1.0;
+        self.verticalSpaceConstraint.constant = 20;
     }
     else {
-        self.statusBarBackground.alpha = 1.0;
+        self.statusBarBackground.alpha = 0.0;
+        self.verticalSpaceConstraint.constant = 0;
     }
 }
 
