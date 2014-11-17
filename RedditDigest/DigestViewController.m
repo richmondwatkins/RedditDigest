@@ -334,8 +334,10 @@
     cell.titleLabel.lineBreakMode = NSLineBreakByWordWrapping;
     cell.titleLabel.numberOfLines = 0;
 
-    //cell.titleLabel.shadowColor = [UIColor grayColor];
-    //cell.titleLabel.shadowOffset = CGSizeMake(0, -1.0);
+    // Selected Cell color
+    UIImageView *selectedBackgroundView = [[UIImageView alloc]initWithFrame:cell.frame];
+    selectedBackgroundView.backgroundColor = [UIColor colorWithRed:0.937 green:0.969 blue:1 alpha:1];
+    cell.selectedBackgroundView = selectedBackgroundView;
 
     cell.subredditLabel.text = post.subreddit.subreddit;
     cell.authorLabel.text = post.author;
@@ -352,10 +354,8 @@
         cell.thumbnailImage.image = [UIImage imageNamed:@"snoo_camera_placeholder"];
     }
 
-
     cell.thumbnailImage.contentMode = UIViewContentModeScaleAspectFill;
     cell.thumbnailImage.alpha = 0.75;
-    //    (post.viewed) ? cell.thumbnailImage.alpha = 0.2 : (cell.thumbnailImage.alpha = 1);
 
     if ([post.upvoted boolValue] == YES) {
         //[cell.upVoteButton setBackgroundImage:[UIImage imageNamed:@"upvote_arrow_selected"] forState:UIControlStateNormal];
@@ -372,6 +372,11 @@
     cell.thumbnailImage.layer.masksToBounds = YES;
 
     return cell;
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 
 -(UIImage *)returnImageForCellFromData:(NSData *)imageData withSubredditNameForKey:(NSString *)subreddit{
