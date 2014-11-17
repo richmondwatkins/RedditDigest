@@ -74,7 +74,11 @@
 
         NSURLRequest *thumbnailRequest = [NSURLRequest requestWithURL:post.thumbnailURL];
         [NSURLConnection sendAsynchronousRequest:thumbnailRequest queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
-            savedPost.thumbnailImage = data;
+            if (data) {
+                savedPost.thumbnailImage = [NSNumber numberWithBool:YES];
+            }
+
+            [self saveDataToDocumentsDirectory:data withFileNamePrefix:@"thumbnail" andPostfix:savedPost.postID];
 
             if (post.isImageLink) {
                 savedPost.isImageLink = [NSNumber numberWithBool:YES];
@@ -88,7 +92,8 @@
                         savedPost.isImageLink = [NSNumber numberWithBool:NO];
                         savedPost.isGif = [NSNumber numberWithBool:YES];
                     }
-                    savedPost.image = data;
+
+                    [self saveDataToDocumentsDirectory:data withFileNamePrefix:@"image" andPostfix:savedPost.postID];
 
                     [managedObjectContext save:nil];
                     complete(YES);
@@ -114,6 +119,13 @@
             }
         }];
     }
+}
+
++(void)saveDataToDocumentsDirectory:(NSData *)data withFileNamePrefix:(NSString *)prefix andPostfix:(NSString *)postfix{
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *documentsPath = [paths objectAtIndex:0];
+    NSString *filePath = [documentsPath stringByAppendingPathComponent:[NSString stringWithFormat:@"%@-%@",prefix, postfix]];
+    [data writeToFile:filePath atomically:YES];
 }
 
 +(void)removeAllPostsFromCoreData:(NSManagedObjectContext *)managedObjectContext{

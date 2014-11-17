@@ -19,7 +19,7 @@
 @property (nonatomic, retain) NSString * author;
 @property (nonatomic, retain) NSNumber * downvoted;
 @property (nonatomic, retain) NSString * html;
-@property (nonatomic, retain) NSData * image;
+@property (nonatomic, retain) NSString * image;
 @property (nonatomic, retain) NSNumber * isGif;
 @property (nonatomic, retain) NSNumber * isImageLink;
 @property (nonatomic, retain) NSNumber * isSelfPost;
@@ -28,7 +28,7 @@
 @property (nonatomic, retain) NSNumber * nsfw;
 @property (nonatomic, retain) NSString * postID;
 @property (nonatomic, retain) NSString * selfText;
-@property (nonatomic, retain) NSData * thumbnailImage;
+@property (nonatomic, retain) NSNumber * thumbnailImage;
 @property (nonatomic, retain) NSString * title;
 @property (nonatomic, retain) NSNumber * totalComments;
 @property (nonatomic, retain) NSNumber * upvoted;

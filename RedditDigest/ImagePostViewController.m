@@ -24,7 +24,7 @@
     [self.activityIndicator startAnimating];
     self.activityIndicator.hidden = NO;
     dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(void){
-        UIImage *image = [UIImage imageWithData:self.imageData];
+        UIImage *image = [UIImage imageWithData:[self documentsPathForFileName:self.post.postID]];
         dispatch_async(dispatch_get_main_queue(), ^(void){
             self.imageView.image = image;
             self.imageView.contentMode = UIViewContentModeScaleAspectFit;
@@ -48,6 +48,18 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+}
+
+- (NSData *)documentsPathForFileName:(NSString *)name
+{
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask, YES);
+    NSString *documentsPath = [paths objectAtIndex:0];
+
+    NSString *pathCompenent = [NSString stringWithFormat:@"image-%@", name];
+
+    NSString *filePath = [documentsPath stringByAppendingPathComponent:pathCompenent];
+
+    return [NSData dataWithContentsOfFile:filePath];
 }
 
 #pragma mark - Pan

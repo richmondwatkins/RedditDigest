@@ -48,7 +48,7 @@
         <attribute name="domain" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="downvoted" optional="YES" attributeType="Boolean" syncable="YES"/>
         <attribute name="html" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="image" optional="YES" attributeType="Binary" syncable="YES"/>
+        <attribute name="image" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="isGif" optional="YES" attributeType="Boolean" syncable="YES"/>
         <attribute name="isImageLink" optional="YES" attributeType="Boolean" defaultValueString="0" syncable="YES"/>
         <attribute name="isLocalPost" optional="YES" attributeType="Boolean" syncable="YES"/>
@@ -58,7 +58,7 @@
         <attribute name="nsfw" optional="YES" attributeType="Boolean" syncable="YES"/>
         <attribute name="postID" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="selfText" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="thumbnailImage" optional="YES" attributeType="Binary" syncable="YES"/>
+        <attribute name="thumbnailImage" optional="YES" attributeType="Boolean" syncable="YES"/>
         <attribute name="title" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="totalComments" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
         <attribute name="upvoted" optional="YES" attributeType="Boolean" syncable="YES"/>
@@ -69,7 +69,7 @@
         <relationship name="subreddit" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Subreddit" inverseName="post" inverseEntity="Subreddit" syncable="YES"/>
     </entity>
     <entity name="Subreddit" representedClassName="Subreddit" syncable="YES">
-        <attribute name="image" optional="YES" attributeType="Binary" syncable="YES"/>
+        <attribute name="image" optional="YES" attributeType="Boolean" syncable="YES"/>
         <attribute name="isLocalSubreddit" optional="YES" attributeType="Boolean" syncable="YES"/>
         <attribute name="subreddit" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="url" optional="YES" attributeType="String" syncable="YES"/>
@@ -82,7 +82,7 @@
         <element name="Digest" positionX="-54" positionY="135" width="128" height="88"/>
         <element name="DigestCategory" positionX="-45" positionY="144" width="128" height="75"/>
         <element name="Post" positionX="-63" positionY="-18" width="128" height="388"/>
-        <element name="Subreddit" positionX="-54" positionY="117" width="128" height="135"/>
+        <element name="Subreddit" positionX="-54" positionY="117" width="128" height="133"/>
         <element name="DigestPost" positionX="-54" positionY="135" width="128" height="313"/>
     </elements>
 </model>

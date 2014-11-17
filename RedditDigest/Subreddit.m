@@ -49,7 +49,8 @@
 
                         if (thumnailSrc.length > 10) {
                             [NSURLConnection sendAsynchronousRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:thumnailSrc]] queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
-                                savedSubreddit.image = data;
+                                savedSubreddit.image = [NSNumber numberWithBool:YES];
+                                [self saveDataToDocumentsDirectory:data withFileNamePrefix:@"subreddit" andPostfix:savedSubreddit.subreddit];
                                 [managedObject save:nil];
                             }];
                         }else{
@@ -131,7 +132,7 @@
             if (selectedSubreddit.headerImageURL != nil) {
                 [NSURLConnection sendAsynchronousRequest:[NSURLRequest requestWithURL:selectedSubreddit.headerImageURL] queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
                     if (data) {
-                        NSLog(@"data %@",data);
+                        [self saveDataToDocumentsDirectory:data withFileNamePrefix:@"subreddit" andPostfix:savedSubreddit.subreddit];
                         savedSubreddit.image = data;
                         [managedObject save:nil];
                     }
@@ -142,6 +143,13 @@
             }
         }
     }
+}
+
++(void)saveDataToDocumentsDirectory:(NSData *)data withFileNamePrefix:(NSString *)prefix andPostfix:(NSString *)postfix{
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *documentsPath = [paths objectAtIndex:0];
+    NSString *filePath = [documentsPath stringByAppendingPathComponent:[NSString stringWithFormat:@"%@-%@",prefix, postfix]];
+    [data writeToFile:filePath atomically:YES];
 }
 
 +(void)removeLocalPostsAndSubreddits:(NSManagedObjectContext *)managedObject{

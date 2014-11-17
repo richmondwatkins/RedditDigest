@@ -25,6 +25,7 @@
         post.digest = savedDigest;
         [savedDigest addDigestPostObject:post];
         [managedObject save:nil];
+        
     }
 
 }

@@ -344,11 +344,12 @@
     cell.commentsLabel.text = [self abbreviateNumber:post.totalComments.integerValue];
 
     if (post.image) {
-        cell.thumbnailImage.image = [self returnImageForCellFromData:post.image withSubredditNameForKey:post.subreddit.subreddit];
+        cell.thumbnailImage.image = [self returnImageForCellFromData:post.postID withSubredditNameForKey:post.subreddit.subreddit andFilePathPrefix:@"image"];
+//        cell.thumbnailImage.image = [self returnImageForCellFromData: withSubredditNameForKey:post.subreddit.subreddit];
     }else if(post.thumbnailImage){
-        cell.thumbnailImage.image = [self returnImageForCellFromData:post.thumbnailImage withSubredditNameForKey:post.subreddit.subreddit];
+        cell.thumbnailImage.image = [self returnImageForCellFromData:post.postID withSubredditNameForKey:post.subreddit.subreddit andFilePathPrefix:@"thumbnail"];
     }else if(post.subreddit.image){
-        cell.thumbnailImage.image = [self returnImageForCellFromData:post.subreddit.image withSubredditNameForKey:post.subreddit.subreddit];
+        cell.thumbnailImage.image = [self returnImageForCellFromData:post.subreddit.subreddit withSubredditNameForKey:post.subreddit.subreddit andFilePathPrefix:@"subreddit"];
     }else{
         cell.thumbnailImage.image = [UIImage imageNamed:@"snoo_camera_placeholder"];
     }
@@ -375,13 +376,26 @@
     return cell;
 }
 
--(UIImage *)returnImageForCellFromData:(NSData *)imageData withSubredditNameForKey:(NSString *)subreddit{
+-(UIImage *)returnImageForCellFromData:(NSString *)filePath withSubredditNameForKey:(NSString *)subreddit andFilePathPrefix:(NSString *)prefix{
+
+    NSData *imageData = [NSData dataWithContentsOfFile:[self documentsPathForFileName:filePath withPrefix:prefix]];
+    NSLog(@"IMAGE DATAAAAAA %@",imageData);
+
     UIImage *image = [self.imageCache objectForKey:subreddit];
     if (image == nil) {
         image = [UIImage imageWithData:imageData];
         [self.imageCache setObject:image forKey:subreddit];
     }
     return image;
+}
+
+- (NSString *)documentsPathForFileName:(NSString *)name withPrefix:(NSString *)prefix
+{
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask, YES);
+    NSString *documentsPath = [paths objectAtIndex:0];
+
+    NSString *pathCompenent = [NSString stringWithFormat:@"%@-%@",prefix, name];
+    return [documentsPath stringByAppendingPathComponent:pathCompenent];
 }
 
 -(void) tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
