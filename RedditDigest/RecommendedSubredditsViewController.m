@@ -5,19 +5,46 @@
 //  Created by Richmond on 11/15/14.
 //
 //
+#define REDDIT_DARK_BLUE [UIColor colorWithRed:0.2 green:0.4 blue:0.6 alpha:1];
 
 #import "RecommendedSubredditsViewController.h"
 #import <RedditKit.h>
 #import "Subreddit.h"
 #import "UserRequests.h"
-@interface RecommendedSubredditsViewController ()
+#import "KTCenterFlowLayout.h"
+#import "HeaderCollectionReusableView.h"
+#import "SubredditListCollectionViewCell.h"
+
+@interface RecommendedSubredditsViewController () <UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout>
 @property NSMutableArray *recommendedFromSubscriptions;
+@property NSMutableArray *selectedSubreddits;
+@property NSMutableArray *subreddits;
+@property (strong, nonatomic) IBOutlet UICollectionView *subredditCollectionView;
+@property (strong, nonatomic) IBOutlet UIButton *doneSelectingSubredditsButton;
+@property SubredditListCollectionViewCell *sizingCell;
+
 @end
 
 @implementation RecommendedSubredditsViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+
+    KTCenterFlowLayout *layout = [KTCenterFlowLayout new];
+    layout.minimumInteritemSpacing = 10.f;
+    layout.minimumLineSpacing = 10.f;
+    self.subredditCollectionView = [self.subredditCollectionView initWithFrame:self.view.frame collectionViewLayout:layout];
+    self.subredditCollectionView.allowsMultipleSelection = YES;
+
+    self.doneSelectingSubredditsButton.alpha = 0.0;
+    self.doneSelectingSubredditsButton.layer.borderWidth = 0.5;
+    self.doneSelectingSubredditsButton.layer.borderColor = [UIColor colorWithRed:0.2 green:0.4 blue:0.6 alpha:1].CGColor;
+
+    self.selectedSubreddits = [[NSMutableArray alloc] init];
+    self.subreddits = [NSMutableArray array];
+//    [self.activityIndicator startAnimating];
+
+
     self.recommendedFromSubscriptions = [NSMutableArray array];
     [self lookUpRelatedSubreddit:[Subreddit retrieveAllSubreddits:self.mangedObject]];
     [UserRequests retrieveRecommendedSubredditsWithCompletion:^(NSArray *results) {
@@ -26,7 +53,82 @@
         }
     }];
 
+    [self setUpView];
 }
+
+-(void)setUpView{
+    self.subredditCollectionView.contentOffset = CGPointMake(0, 44);
+    self.navigationItem.title = @"Choose your subreddits";
+    //for resizing template
+    UINib *cellNib = [UINib nibWithNibName:@"SubredditSelectionCell" bundle:nil];
+    [self.subredditCollectionView registerNib:cellNib forCellWithReuseIdentifier:@"Cell"];
+    self.sizingCell = [[cellNib instantiateWithOwner:nil options:nil] objectAtIndex:0];
+}
+
+- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    [self configureCell:self.sizingCell forIndexPath:indexPath];
+    return [self.sizingCell systemLayoutSizeFittingSize:UILayoutFittingCompressedSize];
+}
+
+//-(NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView{
+//    return self.subreddits.count;
+//}
+
+
+-(UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    SubredditListCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"Cell" forIndexPath:indexPath];
+
+    [self configureCell:cell forIndexPath:indexPath];
+
+    return cell;
+}
+
+- (void)configureCell:(SubredditListCollectionViewCell *)cell forIndexPath:(NSIndexPath *)indexPath
+{
+
+    RKSubreddit *subreddit = self.recommendedFromSubscriptions[indexPath.row];
+    if (subreddit.isCurrentlySubscribed) {
+        cell.selected = YES;
+        [self.subredditCollectionView selectItemAtIndexPath:indexPath animated:NO scrollPosition:NO];
+    }
+    cell.subredditTitleLabel.text = subreddit.name;
+
+    // SubredditTitleLabel font and color
+    cell.subredditTitleLabel.font = [UIFont fontWithName:@"Helvetica" size:16.0];
+    cell.subredditTitleLabel.textColor = REDDIT_DARK_BLUE;
+}
+
+-(NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
+{
+    return self.recommendedFromSubscriptions.count;
+}
+
+- (UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout insetForSectionAtIndex:(NSInteger)section
+{
+    return UIEdgeInsetsMake(20, 15, 10, 15);
+}
+
+- (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout minimumInteritemSpacingForSectionAtIndex:(NSInteger)section
+{
+    return 5.0;
+}
+
+// Header Height and Width
+- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout referenceSizeForHeaderInSection:(NSInteger)section
+{
+    return CGSizeMake(self.view.frame.size.width, 44.0);
+}
+
+// Footer Height and Width
+- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout referenceSizeForFooterInSection:(NSInteger)section
+{
+    return CGSizeMake(self.view.frame.size.width, 44.0);
+}
+
+
+
 
 -(void)lookUpRelatedSubreddit:(NSArray *)subsFromCoreData{
     NSMutableArray *recSubredditNames = [NSMutableArray array];
@@ -57,6 +159,7 @@
 
             if (i == flattenedSubNames.count) {
                 NSLog(@"ALL RECS %@",self.recommendedFromSubscriptions);
+                [self.subredditCollectionView reloadData];
             }
         }];
 

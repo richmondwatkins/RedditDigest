@@ -346,7 +346,7 @@
 
 
     cell.thumbnailImage.contentMode = UIViewContentModeScaleAspectFill;
-    cell.thumbnailImage.alpha = 0.4;
+    cell.thumbnailImage.alpha = 0.6;
     //    (post.viewed) ? cell.thumbnailImage.alpha = 0.2 : (cell.thumbnailImage.alpha = 1);
 
     if ([post.upvoted boolValue] == YES) {
