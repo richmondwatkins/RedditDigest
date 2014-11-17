@@ -18,5 +18,8 @@
     [super setSelected:selected animated:animated];
 }
 
-
+-(void)prepareForReuse{
+    self.commentTextView.editable = YES;
+    self.commentTextView.editable = NO;
+}
 @end
