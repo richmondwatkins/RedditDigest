@@ -9,5 +9,5 @@
 #import <UIKit/UIKit.h>
 
 @interface RecommendedSubredditsViewController : UIViewController
-@property NSManagedObjectContext *mangedObject;
+@property NSManagedObjectContext *managedObject;
 @end

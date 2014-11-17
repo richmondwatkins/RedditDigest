@@ -16,7 +16,6 @@
 @property CGFloat cellHeight;
 @property NSMutableArray *tableCells;
 @property NSURL *urlToSend;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *heightConstraint;
 @end
 
 @implementation CommentViewController
@@ -28,7 +27,6 @@
     self.tableView.dataSource = self;
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     self.constant = 44.0;
-    //self.view.backgroundColor = [UIColor colorWithRed:0.2 green:0.4 blue:0.6 alpha:1];
 
     UIVisualEffect *blurEffect = [UIBlurEffect effectWithStyle:UIBlurEffectStyleLight];
     UIVisualEffectView *visualEffectView = [[UIVisualEffectView alloc] initWithEffect:blurEffect];
@@ -40,15 +38,9 @@
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
-//    UITableView *table = self.tableView;
-//    for (CommentTableViewCell *cell in table.visibleCells) {
-//        float height = cell.commentTextView.contentSize.height;
-//        cell.heightConstraint.constant = height;
-//        [cell.commentTextView sizeToFit];
-//    }
+
     self.tableView.estimatedRowHeight = 45.0;
     self.tableView.rowHeight = UITableViewAutomaticDimension;
-
 }
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -64,12 +56,13 @@
     cell.commentTextView.scrollEnabled = NO;
     cell.commentTextView.delegate = self;
     cell.commentTextView.text = partialComment;
-    //cell.commentTextView.hidden = YES;
+    // This label is used to make the cell apear the correct size. Then it is hidden. The content is
+    // shown in the textView
     cell.hiddenLabelForCellSize.text = partialComment;
     cell.comment = comment;
 
     if (indexPath.row % 2) {
-        cell.commentTextView.backgroundColor = [UIColor colorWithRed:0.914 green:0.914 blue:0.914 alpha:1];
+        cell.commentTextView.backgroundColor = [UIColor colorWithRed:0.957 green:0.957 blue:0.957 alpha:1];
     } else {
         cell.commentTextView.backgroundColor = [UIColor whiteColor];
     }
