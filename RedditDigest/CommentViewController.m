@@ -16,6 +16,7 @@
 @property CGFloat cellHeight;
 @property NSMutableArray *tableCells;
 @property NSURL *urlToSend;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *heightConstraint;
 @end
 
 @implementation CommentViewController
@@ -39,6 +40,15 @@
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
+//    UITableView *table = self.tableView;
+//    for (CommentTableViewCell *cell in table.visibleCells) {
+//        float height = cell.commentTextView.contentSize.height;
+//        cell.heightConstraint.constant = height;
+//        [cell.commentTextView sizeToFit];
+//    }
+    self.tableView.estimatedRowHeight = 45.0;
+    self.tableView.rowHeight = UITableViewAutomaticDimension;
+
 }
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -49,11 +59,13 @@
 
     NSString *partialComment = [self textToHtml:comment.body withCell:cell andComment:comment];
     cell.commentTextView.text = comment.html;
-    [cell.commentTextView sizeToFit];
-    self.cellHeight = cell.commentTextView.frame.size.height;
+   // [cell.commentTextView sizeToFit];
+    //self.cellHeight = cell.commentTextView.frame.size.height;
     cell.commentTextView.scrollEnabled = NO;
     cell.commentTextView.delegate = self;
     cell.commentTextView.text = partialComment;
+    //cell.commentTextView.hidden = YES;
+    cell.hiddenLabelForCellSize.text = partialComment;
     cell.comment = comment;
 
     if (indexPath.row % 2) {
@@ -64,14 +76,6 @@
 
     return cell;
 }
-
-//- (void)tableView: (UITableView*)tableView willDisplayCell: (UITableViewCell*)cell forRowAtIndexPath: (NSIndexPath*)indexPath
-//{
-//    if(indexPath.row % 2 == 0)
-//        cell.backgroundColor = [UIColor redColor];
-//    else
-//        cell.backgroundColor = [UIColor whiteColor];
-//}
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
@@ -104,10 +108,10 @@
     return string;
 }
 
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    return self.cellHeight;
-}
+//- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+//{
+//    return self.cellHeight;
+//}
 
 - (void)reloadTableWithCommentsFromCurrentPost:(Post *)selectedPost
 {
