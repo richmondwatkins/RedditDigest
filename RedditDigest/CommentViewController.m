@@ -32,6 +32,7 @@
     UIVisualEffectView *visualEffectView = [[UIVisualEffectView alloc] initWithEffect:blurEffect];
     CGRect blurView = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height);
     [visualEffectView setFrame:blurView];
+    visualEffectView.tag = 2;
     [self.view insertSubview:visualEffectView belowSubview:self.tableView];
 }
 
@@ -43,6 +44,7 @@
     self.tableView.rowHeight = UITableViewAutomaticDimension;
 }
 
+#pragma mark - Table View Delegate Methods
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     CommentTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"CommentCell"];
@@ -83,6 +85,8 @@
 
     return NO;
 }
+
+#pragma mark - Segue
 
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
     if ([segue.identifier isEqualToString:@"TextViewWebSegue"]) {
@@ -139,6 +143,28 @@
     }
 
     return matchedComments;
+}
+
+#pragma mark - Device Rotating 
+
+- (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
+{
+    // TODO: Fix rotate issue with comments bar...
+//    UIView *viewToRemove = [self.view viewWithTag:2];
+//    [viewToRemove removeFromSuperview];
+//    UIVisualEffect *blurEffect = [UIBlurEffect effectWithStyle:UIBlurEffectStyleLight];
+//    UIVisualEffectView *visualEffectView = [[UIVisualEffectView alloc] initWithEffect:blurEffect];
+//    CGRect blurView;
+//    NSLog(@"%f", self.navigationController.navigationBar.frame.size.height);
+//    if (!self.navigationController.navigationBarHidden) {
+//        blurView = CGRectMake(0, self.navigationController.navigationBar.frame.size.height + 20, self.view.frame.size.width, self.view.frame.size.height);
+//    }
+//    else {
+//        blurView = CGRectMake(0, 20, self.view.frame.size.width, self.view.frame.size.height);
+//    }
+//    [visualEffectView setFrame:blurView];
+//    visualEffectView.tag = 2;
+//    [self.view insertSubview:visualEffectView belowSubview:self.tableView];
 }
 
 @end

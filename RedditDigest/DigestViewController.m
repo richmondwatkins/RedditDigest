@@ -354,18 +354,18 @@
 
 
     cell.thumbnailImage.contentMode = UIViewContentModeScaleAspectFill;
-    cell.thumbnailImage.alpha = 0.6;
+    cell.thumbnailImage.alpha = 0.75;
     //    (post.viewed) ? cell.thumbnailImage.alpha = 0.2 : (cell.thumbnailImage.alpha = 1);
 
     if ([post.upvoted boolValue] == YES) {
         [cell.upVoteButton setBackgroundImage:[UIImage imageNamed:@"upvote_arrow_selected"] forState:UIControlStateNormal];
     }else{
-        [cell.upVoteButton setBackgroundImage:[UIImage imageNamed:@"upvote_arrow"] forState:UIControlStateNormal];
+        [cell.upVoteButton setBackgroundImage:[UIImage imageNamed:@"up_arrow"] forState:UIControlStateNormal];
     }
     if ([post.downvoted boolValue] == YES) {
         [cell.downVoteButton setBackgroundImage:[UIImage imageNamed:@"downvote_arrow_selected"] forState:UIControlStateNormal];
     }else{
-        [cell.downVoteButton setBackgroundImage:[UIImage imageNamed:@"downvote_arrow"] forState:UIControlStateNormal];
+        [cell.downVoteButton setBackgroundImage:[UIImage imageNamed:@"down_arrow"] forState:UIControlStateNormal];
     }
 
     cell.thumbnailImage.layer.cornerRadius = 2.0;
