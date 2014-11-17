@@ -20,6 +20,7 @@
     </entity>
     <entity name="Post" representedClassName="Post" syncable="YES">
         <attribute name="author" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="domain" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="downvoted" optional="YES" attributeType="Boolean" syncable="YES"/>
         <attribute name="html" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="image" optional="YES" attributeType="Binary" syncable="YES"/>
@@ -54,7 +55,7 @@
         <element name="ChildComment" positionX="-45" positionY="126" width="128" height="103"/>
         <element name="Comment" positionX="-63" positionY="99" width="128" height="135"/>
         <element name="DigestCategory" positionX="-45" positionY="144" width="128" height="75"/>
-        <element name="Post" positionX="-63" positionY="-18" width="128" height="375"/>
+        <element name="Post" positionX="-63" positionY="-18" width="128" height="390"/>
         <element name="Subreddit" positionX="-54" positionY="117" width="128" height="135"/>
     </elements>
 </model>

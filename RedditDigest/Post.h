@@ -38,6 +38,8 @@
 @property (nonatomic, retain) NSSet *comments;
 @property (nonatomic, retain) Subreddit *subreddit;
 @property (nonatomic, retain) NSNumber *isLocalPost;
+@property (nonatomic, retain) NSString *domain;
+
 
 @end
 

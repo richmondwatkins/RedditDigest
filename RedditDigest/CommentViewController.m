@@ -55,12 +55,13 @@
     //self.cellHeight = cell.commentTextView.frame.size.height;
     cell.commentTextView.scrollEnabled = NO;
     cell.commentTextView.delegate = self;
+    cell.commentTextView.text = nil;
     cell.commentTextView.text = partialComment;
     // This label is used to make the cell apear the correct size. Then it is hidden. The content is
     // shown in the textView
     cell.hiddenLabelForCellSize.text = partialComment;
     cell.comment = comment;
-
+    NSLog(@"COMMENT TEXT %@",partialComment);
     if (indexPath.row % 2) {
         cell.commentTextView.backgroundColor = [UIColor whiteColor];
     } else {
