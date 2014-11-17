@@ -24,6 +24,8 @@
 #import "Subreddit.h"
 #import "DetailPostViewController.h"
 #import <CoreLocation/CoreLocation.h>
+#import <AudioToolbox/AudioToolbox.h>
+
 
 @interface DigestViewController () <UITableViewDataSource, UITableViewDelegate, DigestCellDelegate, CLLocationManagerDelegate>
 
@@ -42,6 +44,12 @@
 
 -(void)viewDidLoad{
     [super viewDidLoad];
+    NSString *path  = [[NSBundle mainBundle] pathForResource:@"LoadDigest" ofType:@"mp3"];
+    NSURL *pathURL = [NSURL fileURLWithPath : path];
+
+    SystemSoundID audioEffect;
+    AudioServicesCreateSystemSoundID((__bridge CFURLRef) pathURL, &audioEffect);
+    AudioServicesPlaySystemSound(audioEffect);
     self.refreshControl = [[UIRefreshControl alloc] init];
     [self.refreshControl addTarget:self action:@selector(requestNewLinks) forControlEvents:UIControlEventValueChanged];
     [self.digestTableView addSubview:self.refreshControl];
@@ -630,6 +638,14 @@
 
 -(void)upVoteButtonPressed:(DigestCellWithImageTableViewCell*)cell{
 
+    NSString *path  = [[NSBundle mainBundle] pathForResource:@"UpVote" ofType:@"mp3"];
+    NSURL *pathURL = [NSURL fileURLWithPath : path];
+
+    SystemSoundID audioEffect;
+    AudioServicesCreateSystemSoundID((__bridge CFURLRef) pathURL, &audioEffect);
+    AudioServicesPlaySystemSound(audioEffect);
+
+
     if ([[NSUserDefaults standardUserDefaults] boolForKey:@"HasRedditAccount"]){
 
         NSIndexPath *indexPath = [self.digestTableView indexPathForCell:cell];
@@ -647,6 +663,13 @@
 }
 
 -(void)downVoteButtonPressed:(DigestCellWithImageTableViewCell *)cell{
+
+    NSString *path  = [[NSBundle mainBundle] pathForResource:@"DownVoteTest" ofType:@"mp3"];
+    NSURL *pathURL = [NSURL fileURLWithPath : path];
+
+    SystemSoundID audioEffect;
+    AudioServicesCreateSystemSoundID((__bridge CFURLRef) pathURL, &audioEffect);
+    AudioServicesPlaySystemSound(audioEffect);
 
     if ([[NSUserDefaults standardUserDefaults] boolForKey:@"HasRedditAccount"]){
         
