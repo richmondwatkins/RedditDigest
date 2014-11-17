@@ -21,6 +21,8 @@
 #import "Subreddit.h"
 #import "LoginViewController.h"
 #import "DigestCategory.h"
+#import <AudioToolbox/AudioToolbox.h>
+
 
 @interface SubredditSelectionViewController () <UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, UIAlertViewDelegate, UITextFieldDelegate>
 
@@ -140,12 +142,25 @@
         if (self.selectedSubreddits.count > 0) {
             [UIView animateWithDuration:0.3 animations:^{
                 self.doneSelectingSubredditsButton.alpha = 1.0;
+                NSString *path  = [[NSBundle mainBundle] pathForResource:@"SelectSubreddit" ofType:@"mp3"];
+                NSURL *pathURL = [NSURL fileURLWithPath : path];
+
+                SystemSoundID audioEffect;
+                AudioServicesCreateSystemSoundID((__bridge CFURLRef) pathURL, &audioEffect);
+                AudioServicesPlaySystemSound(audioEffect);
             }];
         }
     }
     else
     {
         [self.subredditCollectionView deselectItemAtIndexPath:indexPath animated: YES];
+        
+        NSString *path  = [[NSBundle mainBundle] pathForResource:@"DeselectSubreddit" ofType:@"mp3"];
+        NSURL *pathURL = [NSURL fileURLWithPath : path];
+
+        SystemSoundID audioEffect;
+        AudioServicesCreateSystemSoundID((__bridge CFURLRef) pathURL, &audioEffect);
+        AudioServicesPlaySystemSound(audioEffect);
     }
 }
 
@@ -338,6 +353,12 @@
  */
 - (IBAction)finishSelectingSubreddits:(id)sender
 {
+    NSString *path  = [[NSBundle mainBundle] pathForResource:@"LoadDigest" ofType:@"mp3"];
+    NSURL *pathURL = [NSURL fileURLWithPath : path];
+
+    SystemSoundID audioEffect;
+    AudioServicesCreateSystemSoundID((__bridge CFURLRef) pathURL, &audioEffect);
+    AudioServicesPlaySystemSound(audioEffect);
 
     [Subreddit addSubredditsToCoreData:self.selectedSubreddits withManagedObject:self.managedObject];
 
