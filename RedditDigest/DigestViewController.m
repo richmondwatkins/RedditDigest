@@ -334,8 +334,8 @@
     cell.titleLabel.lineBreakMode = NSLineBreakByWordWrapping;
     cell.titleLabel.numberOfLines = 0;
 
-    cell.titleLabel.shadowColor = [UIColor grayColor];
-    cell.titleLabel.shadowOffset = CGSizeMake(0, -1.0);
+    //cell.titleLabel.shadowColor = [UIColor grayColor];
+    //cell.titleLabel.shadowOffset = CGSizeMake(0, -1.0);
 
     cell.subredditLabel.text = post.subreddit.subreddit;
     cell.authorLabel.text = post.author;
@@ -358,14 +358,14 @@
     //    (post.viewed) ? cell.thumbnailImage.alpha = 0.2 : (cell.thumbnailImage.alpha = 1);
 
     if ([post.upvoted boolValue] == YES) {
-        [cell.upVoteButton setBackgroundImage:[UIImage imageNamed:@"upvote_arrow_selected"] forState:UIControlStateNormal];
+        //[cell.upVoteButton setBackgroundImage:[UIImage imageNamed:@"upvote_arrow_selected"] forState:UIControlStateNormal];
     }else{
-        [cell.upVoteButton setBackgroundImage:[UIImage imageNamed:@"up_arrow"] forState:UIControlStateNormal];
+        //[cell.upVoteButton setBackgroundImage:[UIImage imageNamed:@"up_arrow"] forState:UIControlStateNormal];
     }
     if ([post.downvoted boolValue] == YES) {
-        [cell.downVoteButton setBackgroundImage:[UIImage imageNamed:@"downvote_arrow_selected"] forState:UIControlStateNormal];
+        //[cell.downVoteButton setBackgroundImage:[UIImage imageNamed:@"downvote_arrow_selected"] forState:UIControlStateNormal];
     }else{
-        [cell.downVoteButton setBackgroundImage:[UIImage imageNamed:@"down_arrow"] forState:UIControlStateNormal];
+        //[cell.downVoteButton setBackgroundImage:[UIImage imageNamed:@"down_arrow"] forState:UIControlStateNormal];
     }
 
     cell.thumbnailImage.layer.cornerRadius = 2.0;
@@ -655,8 +655,10 @@
         selectedPost.downvoted = [NSNumber numberWithBool:NO];
         [self.managedObjectContext save:nil];
 
-        [cell.upVoteButton setBackgroundImage:[UIImage imageNamed:@"upvote_arrow_selected"] forState:UIControlStateNormal];
-        [cell.downVoteButton setBackgroundImage:[UIImage imageNamed:@"downvote_arrow"] forState:UIControlStateNormal];
+        // TODO:
+        // Show upvote indicator in cell
+        //[cell.upVoteButton setBackgroundImage:[UIImage imageNamed:@"upvote_arrow_selected"] forState:UIControlStateNormal];
+        //[cell.downVoteButton setBackgroundImage:[UIImage imageNamed:@"downvote_arrow"] forState:UIControlStateNormal];
 
         [self sendUpVoteToReddit:selectedPost.postID];
     }
@@ -680,29 +682,10 @@
         selectedPost.upvoted = [NSNumber numberWithBool:NO];
         [self.managedObjectContext save:nil];
 
-        [cell.downVoteButton setBackgroundImage:[UIImage imageNamed:@"downvote_arrow_selected"] forState:UIControlStateNormal];
-        [cell.upVoteButton setBackgroundImage:[UIImage imageNamed:@"upvote_arrow"] forState:UIControlStateNormal];
-
-        UIView *view = [[UIView alloc] init];
-        view.frame = cell.frame;
-        view.center = cell.center;
-//        [cell addSubview:view];
-//        view.backgroundColor = [UIColor blueColor];
-//        view.alpha = 1.0;
-////        cell.backgroundColor = [UIColor blueColor];
-////        cell.titleLabel.backgroundColor = [UIColor blueColor];
-////        cell.subredditLabel.backgroundColor = [UIColor blueColor];
-////        cell.authorLabel.backgroundColor = [UIColor blueColor];
-//        [UIView animateWithDuration:0.3 animations:^{
-//            view.alpha = 0;
-//            view.backgroundColor = [UIColor whiteColor];
-////            cell.backgroundColor = [UIColor whiteColor];
-////            cell.titleLabel.backgroundColor = [UIColor whiteColor];
-////            cell.subredditLabel.backgroundColor = [UIColor whiteColor];
-////            cell.authorLabel.backgroundColor = [UIColor whiteColor];
-//        }];
-
-
+        // TODO:
+        // Show upvote indicator in cell
+        //[cell.downVoteButton setBackgroundImage:[UIImage imageNamed:@"downvote_arrow_selected"] forState:UIControlStateNormal];
+        //[cell.upVoteButton setBackgroundImage:[UIImage imageNamed:@"upvote_arrow"] forState:UIControlStateNormal];
 
         [self sendDownVoteToReddit:selectedPost.postID];
     }
