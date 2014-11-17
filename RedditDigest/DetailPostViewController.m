@@ -228,7 +228,7 @@
                 if (self.navigationController.navigationBarHidden) {
                     //[self showNavigationAndTabBars];
                 }
-                self.commentsHeightConstraint.constant = 44.0;
+                self.commentsHeightConstraint.constant = self.navigationController.navigationBar.frame.size.height;
 
                 if (direction != UIPanGestureRecognizerDirectionLeft || direction != UIPanGestureRecognizerDirectionRight)
                 {   // Snap shut
@@ -258,7 +258,7 @@
 
         case UIGestureRecognizerStateCancelled:
         {
-            self.commentsHeightConstraint.constant = 44;
+            self.commentsHeightConstraint.constant = self.navigationController.navigationBar.frame.size.height;
             [UIView animateWithDuration:0.2 animations:^{
                 [self.view layoutIfNeeded];
             } completion:^(BOOL finished) {
@@ -280,17 +280,17 @@
         {
             if (self.commentsHeightConstraint.constant < 45) {
                 if (self.navigationController.navigationBarHidden) {
-                    self.commentsHeightConstraint.constant = 647.0;
+                    self.commentsHeightConstraint.constant = self.view.frame.size.height - 20;
                 }
                 else {
-                    self.commentsHeightConstraint.constant = 603.0;
+                    self.commentsHeightConstraint.constant = self.view.frame.size.height;
                 }
                 [self animateViewIntoPlace];
                 [self.commentsViewController.showHideCommentsViewButton setImage:[UIImage imageNamed:@"comment_down"] forState:UIControlStateNormal];
             }
             else
             {
-                self.commentsHeightConstraint.constant = 44.0;
+                self.commentsHeightConstraint.constant = self.navigationController.navigationBar.frame.size.height;
                 [self animateViewIntoPlace];
                 [self.commentsViewController.showHideCommentsViewButton setImage:[UIImage imageNamed:@"comment_up"] forState:UIControlStateNormal];
             }
