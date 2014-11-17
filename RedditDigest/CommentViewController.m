@@ -34,13 +34,6 @@
     CGRect blurView = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height);
     [visualEffectView setFrame:blurView];
     [self.view insertSubview:visualEffectView belowSubview:self.tableView];
-//    [self.view addSubview:visualEffectView];
-//
-//    UIVisualEffectView *visualEffectViewForTableViewBackground = [[UIVisualEffectView alloc] initWithEffect:blurEffect];
-//    [visualEffectViewForTableViewBackground setFrame:self.tableView.frame];
-//    [self.tableView.backgroundView addSubview:visualEffectViewForTableViewBackground];
-
-    //self.view.backgroundColor = [UIColor greenColor];
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -61,11 +54,24 @@
     cell.commentTextView.scrollEnabled = NO;
     cell.commentTextView.delegate = self;
     cell.commentTextView.text = partialComment;
-    cell.backgroundColor = [UIColor whiteColor];
     cell.comment = comment;
+
+    if (indexPath.row % 2) {
+        cell.commentTextView.backgroundColor = [UIColor colorWithRed:0.914 green:0.914 blue:0.914 alpha:1];
+    } else {
+        cell.commentTextView.backgroundColor = [UIColor whiteColor];
+    }
 
     return cell;
 }
+
+//- (void)tableView: (UITableView*)tableView willDisplayCell: (UITableViewCell*)cell forRowAtIndexPath: (NSIndexPath*)indexPath
+//{
+//    if(indexPath.row % 2 == 0)
+//        cell.backgroundColor = [UIColor redColor];
+//    else
+//        cell.backgroundColor = [UIColor whiteColor];
+//}
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
