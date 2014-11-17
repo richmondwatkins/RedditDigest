@@ -10,12 +10,16 @@
 #import "CommentTableViewCell.h"
 #import "Post.h"
 #import "TextViewWebViewController.h"
+#import "CommentsNavBarContainerViewController.h"
+
 @interface CommentViewController () <UITableViewDelegate, UITableViewDataSource, UITextViewDelegate, UITabBarControllerDelegate, UITextViewDelegate>
 
 @property Comment *selectedComment;
 @property CGFloat cellHeight;
 @property NSMutableArray *tableCells;
 @property NSURL *urlToSend;
+@property (nonatomic, weak) CommentsNavBarContainerViewController *customNavBarContainerViewController;
+
 @end
 
 @implementation CommentViewController
@@ -92,7 +96,27 @@
         TextViewWebViewController *commentWebCtrl = segue.destinationViewController;
         commentWebCtrl.urlToLoad = self.urlToSend;
     }
+    else if ([segue.identifier isEqualToString:@"CustomNavBarViewControllerSegue"])
+    {
+        self.customNavBarContainerViewController = segue.destinationViewController;
+        if ([RKClient sharedClient]) {
+            NSLog(@"Logged in");
+        }
+        else
+        {
+            NSLog(@"Not logged in");
+        }
+    }
 }
+
+//- (IBAction)swapButtonPressed:(id)sender;
+
+//
+//- (IBAction)swapButtonPressed:(id)sender
+//{
+//    [self.containerViewController swapViewControllers];
+//}
+
 
 - (NSString*)textToHtml:(NSString*)string withCell:(CommentTableViewCell *)cell andComment:(Comment *)comment
 {
