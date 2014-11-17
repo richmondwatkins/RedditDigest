@@ -252,6 +252,33 @@
     return CGSizeMake(self.view.frame.size.width, 44.0);
 }
 
+- (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath
+{
+    UICollectionReusableView *reusableview = nil;
+
+    if (kind == UICollectionElementKindSectionHeader)
+    {
+        UICollectionReusableView *headerView = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"HeaderView" forIndexPath:indexPath];
+
+        // Style textField
+//        headerView.
+        headerView.textField.layer.borderWidth = 0.5;
+        headerView.textField.layer.cornerRadius = 5.0;
+        headerView.textField.layer.borderColor = [UIColor colorWithRed:0.2 green:0.4 blue:0.6 alpha:1].CGColor;
+        headerView.textField.textColor = REDDIT_DARK_BLUE;
+
+        reusableview = headerView;
+    }
+
+    if (kind == UICollectionElementKindSectionFooter) {
+        UICollectionReusableView *footerview = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionFooter withReuseIdentifier:@"FooterView" forIndexPath:indexPath];
+
+        reusableview = footerview;
+    }
+    
+    return reusableview;
+}
+
 
 
 @end
