@@ -137,10 +137,23 @@
     NSError * error = nil;
     NSArray * posts = [managedObjectContext executeFetchRequest:allPosts error:&error];
 
-    for (NSManagedObject * post in posts) {
+    for (Post * post in posts) {
+        [self removePhotoFromDocumentDirectory:post.postID];
         [managedObjectContext deleteObject:post];
     }
     [managedObjectContext save:nil];
+}
+
++(void)removePhotoFromDocumentDirectory:(NSString *)fileName{
+
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    NSString *documentsPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
+
+    NSString *filePath = [documentsPath stringByAppendingPathComponent:[NSString stringWithFormat:@"image-%@", fileName]];
+
+    NSError *error;
+    [fileManager removeItemAtPath:filePath error:&error];
+
 }
 
 
