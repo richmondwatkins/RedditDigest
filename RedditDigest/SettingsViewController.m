@@ -104,7 +104,7 @@
         loginController.isFromSettings = YES;
     } else if([segue.identifier isEqualToString:@"RecommendedSegue"]){
         RecommendedSubredditsViewController *recController = segue.destinationViewController;
-        recController.mangedObject = self.managedObject;
+        recController.managedObject = self.managedObject;
     }
 }
 

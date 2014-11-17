@@ -14,9 +14,10 @@
 #import "KTCenterFlowLayout.h"
 #import "HeaderCollectionReusableView.h"
 #import "SubredditListCollectionViewCell.h"
-
+#import "DigestViewController.h"
 @interface RecommendedSubredditsViewController () <UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout>
 @property NSMutableArray *recommendedFromSubscriptions;
+@property NSMutableArray *recommendedFromUsers;
 @property NSMutableArray *selectedSubreddits;
 @property NSMutableArray *recomendations;
 @property (strong, nonatomic) IBOutlet UICollectionView *subredditCollectionView;
@@ -46,10 +47,28 @@
 
 
     self.recommendedFromSubscriptions = [NSMutableArray array];
-    [self lookUpRelatedSubreddit:[Subreddit retrieveAllSubreddits:self.mangedObject]];
+    self.recommendedFromUsers = [NSMutableArray array];
+
+    [self lookUpRelatedSubreddit:[Subreddit retrieveAllSubreddits:self.managedObject]];
     [UserRequests retrieveRecommendedSubredditsWithCompletion:^(NSArray *results) {
         if (results) {
             NSLog(@"RESULTS IN REC CONTRLLER %@",results);
+            __block int i = 0;
+            for (NSString *subreddit in results) {
+                [[RKClient sharedClient] subredditWithName:subreddit completion:^(RKSubreddit *object, NSError *error) {
+                    i++;
+//                    if (object.totalSubscribers >= 20000) {
+                        if (![self.recommendedFromSubscriptions containsObject:object] && ![self.recommendedFromUsers containsObject:object]) {
+                            [self.recommendedFromUsers addObject:object];
+                        }
+//                    }
+
+                    if (i == results.count) {
+                        [self.recomendations addObject:self.recommendedFromUsers];
+                        [self.subredditCollectionView reloadData];
+                    }
+                }];
+            }
         }
     }];
 
@@ -78,13 +97,14 @@
     for (NSString *subName in flattenedSubNames) {
         [[RKClient sharedClient] subredditWithName:subName completion:^(RKSubreddit *object, NSError *error) {
             i++;
-            if (object.totalSubscribers >= 20000) {
+            if (object.totalSubscribers >= 10000) {
                 if (![self.recommendedFromSubscriptions containsObject:object]) {
                     [self.recommendedFromSubscriptions addObject:object];
                 }
             }
 
             if (i == flattenedSubNames.count) {
+                [self.recomendations addObject:self.recommendedFromSubscriptions];
                 [self.subredditCollectionView reloadData];
             }
         }];
@@ -92,14 +112,63 @@
     }
 }
 
--(void)lookUpRelatedSubreddits:(NSString *)subredditName{
-    [[RKClient sharedClient] recommendedSubredditsForSubreddits:@[subredditName] completion:^(NSArray *collection, NSError *error) {
-        for (RKSubreddit *sub in collection) {
-            NSLog(@"RECOMENNDED SUBSSSS %@",sub);
+-(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    RKSubreddit *subreddit = [[self.recomendations objectAtIndex:indexPath.section] objectAtIndex:indexPath.row];
+
+    if (self.selectedSubreddits.count < 10)
+    {
+        [self.selectedSubreddits addObject:subreddit];
+        if (self.selectedSubreddits.count > 0) {
+            [UIView animateWithDuration:0.3 animations:^{
+                self.doneSelectingSubredditsButton.alpha = 1.0;
+            }];
+        }
+    }
+    else
+    {
+        [self.subredditCollectionView deselectItemAtIndexPath:indexPath animated: YES];
+    }
+}
+
+- (void)collectionView:(UICollectionView *)collectionView didDeselectItemAtIndexPath:(NSIndexPath *)indexPath
+{
+
+    RKSubreddit *subreddit =[[self.recomendations objectAtIndex:indexPath.section] objectAtIndex:indexPath.row];
+
+    if ([self.selectedSubreddits containsObject:subreddit]) {
+        [self.selectedSubreddits removeObject:subreddit];
+        if (subreddit.isCurrentlySubscribed) {
+            [Subreddit removeFromCoreData:subreddit.name withManagedObject:self.managedObject];
+        }
+    }
+
+    if (self.selectedSubreddits.count == 0) {
+        [UIView animateWithDuration:0.3 animations:^{
+            self.doneSelectingSubredditsButton.alpha = 0.0;
+        }];
+    }
+    else {
+        [UIView animateWithDuration:0.3 animations:^{
+            self.doneSelectingSubredditsButton.alpha = 1.0;
+        }];
+    }
+}
+
+- (IBAction)finishSelectingSubreddits:(id)sender
+{
+
+    [Subreddit addSubredditsToCoreData:self.selectedSubreddits withManagedObject:self.managedObject];
+
+    NSDictionary *dataDictionary = [[NSDictionary alloc] initWithObjectsAndKeys:self.selectedSubreddits, @"subreddits", nil];
+    [UserRequests postSelectedSubreddits:dataDictionary withCompletion:^(BOOL completed) {
+        if (completed) {
+            //
         }
     }];
     
 }
+
 
 #pragma mark - Collection View Delegate Methods
 
@@ -120,6 +189,13 @@
 -(NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView{
     return self.recomendations.count;
 }
+
+-(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    DigestViewController *digestViewController = segue.destinationViewController;
+    digestViewController.isComingFromSubredditSelectionView = YES;
+}
+
 
 #pragma mark - Collection View Layout Methods
 
