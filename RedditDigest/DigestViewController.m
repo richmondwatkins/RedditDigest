@@ -25,7 +25,7 @@
 #import "DetailPostViewController.h"
 #import <CoreLocation/CoreLocation.h>
 #import <AudioToolbox/AudioToolbox.h>
-#import "Digest.h"
+#import "DigestPost.h"
 
 @interface DigestViewController () <UITableViewDataSource, UITableViewDelegate, DigestCellDelegate, CLLocationManagerDelegate>
 
@@ -572,14 +572,15 @@
 
     NSArray * posts = [self.managedObjectContext executeFetchRequest:fetch error:nil];
 
-    if (isDigest) {
-        [Digest createAndSaveDigestWithPost:posts andManagedObject:self.managedObjectContext];
-    }
     self.digestPosts = [NSMutableArray arrayWithArray:posts];
 
     if (self.digestPosts.count) {
         completionHandler(YES);
         [self.digestTableView reloadData];
+
+        if (isDigest) {
+            [DigestPost createNewDigestPosts:posts withManagedObject:self.managedObjectContext];
+        }
     }
 }
 

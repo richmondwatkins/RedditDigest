@@ -1,30 +1,29 @@
 //
 //  Digest.h
-//  RedditDigest
+//  
 //
 //  Created by Richmond on 11/17/14.
-//  Copyright (c) 2014 Richmond. All rights reserved.
+//
 //
 
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
 
-@class Post;
+@class DigestPost;
 
 @interface Digest : NSManagedObject
 
-@property (nonatomic, retain) NSNumber * time;
 @property (nonatomic, retain) NSNumber * isMorning;
-@property (nonatomic, retain) NSSet *posts;
+@property (nonatomic, retain) NSNumber * time;
+@property (nonatomic, retain) NSSet *digestPost;
 @end
 
 @interface Digest (CoreDataGeneratedAccessors)
 
-- (void)addPostsObject:(Post *)value;
-- (void)removePostsObject:(Post *)value;
-- (void)addPosts:(NSSet *)values;
-- (void)removePosts:(NSSet *)values;
+- (void)addDigestPostObject:(DigestPost *)value;
+- (void)removeDigestPostObject:(DigestPost *)value;
+- (void)addDigestPost:(NSSet *)values;
+- (void)removeDigestPost:(NSSet *)values;
 
-+(void)createAndSaveDigestWithPost:(NSArray *)post andManagedObject:(NSManagedObjectContext *)managedObject;
-
++(void)createDigestFromDigestPosts:(NSMutableArray *)digestPosts withManagedObject:(NSManagedObjectContext *)managedObject;
 @end

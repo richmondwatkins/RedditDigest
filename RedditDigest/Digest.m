@@ -1,32 +1,32 @@
 //
 //  Digest.m
-//  RedditDigest
+//  
 //
 //  Created by Richmond on 11/17/14.
-//  Copyright (c) 2014 Richmond. All rights reserved.
+//
 //
 
 #import "Digest.h"
-#import "Post.h"
+#import "DigestPost.h"
 
 
 @implementation Digest
 
-@dynamic time;
 @dynamic isMorning;
-@dynamic posts;
+@dynamic time;
+@dynamic digestPost;
 
++(void)createDigestFromDigestPosts:(NSMutableArray *)digestPosts withManagedObject:(NSManagedObjectContext *)managedObject{
+    Digest *savedDigest = [NSEntityDescription insertNewObjectForEntityForName:@"Digest" inManagedObjectContext:managedObject];
+    NSTimeInterval time = [[NSDate date] timeIntervalSince1970];
+    savedDigest.time = [NSNumber numberWithDouble:time];
 
+    for (DigestPost *post in digestPosts) {
+        post.digest = savedDigest;
+        [savedDigest addDigestPostObject:post];
+        [managedObject save:nil];
+    }
 
-+(void)createAndSaveDigestWithPost:(NSArray *)postsArray andManagedObject:(NSManagedObjectContext *)managedObject{
-    NSSet *posts = [NSSet setWithArray:postsArray];
-    Digest *saveDigest = [NSEntityDescription insertNewObjectForEntityForName:@"Digest" inManagedObjectContext:managedObject];
-    [saveDigest addPosts:posts];
-
-    NSTimeInterval digestTime = [[NSDate date] timeIntervalSince1970];
-    saveDigest.time = [NSNumber numberWithDouble:digestTime];
-    [managedObject save:nil];
 }
-
 
 @end

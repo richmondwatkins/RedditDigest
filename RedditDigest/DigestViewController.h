@@ -16,7 +16,6 @@
 @property (strong, nonatomic) IBOutlet UITableView *digestTableView;
 
 -(void)fetchNewData:(BOOL)isDigest withCompletion:(void (^)(UIBackgroundFetchResult))completionHandler;
--(void)retrievePostsFromCoreData:(void (^)(BOOL))completionHandler;
 -(void)requestNewLinks:(BOOL)isDigest;
 -(void)performNewFetchedDataActions:(BOOL)isDigest;
 
