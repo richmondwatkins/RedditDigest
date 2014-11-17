@@ -27,25 +27,20 @@
     self.tableView.dataSource = self;
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     self.constant = 44.0;
-    //self.view.backgroundColor = [UIColor colorWithRed:0.2 green:0.4 blue:0.6 alpha:1];
 
     UIVisualEffect *blurEffect = [UIBlurEffect effectWithStyle:UIBlurEffectStyleLight];
     UIVisualEffectView *visualEffectView = [[UIVisualEffectView alloc] initWithEffect:blurEffect];
     CGRect blurView = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height);
     [visualEffectView setFrame:blurView];
     [self.view insertSubview:visualEffectView belowSubview:self.tableView];
-//    [self.view addSubview:visualEffectView];
-//
-//    UIVisualEffectView *visualEffectViewForTableViewBackground = [[UIVisualEffectView alloc] initWithEffect:blurEffect];
-//    [visualEffectViewForTableViewBackground setFrame:self.tableView.frame];
-//    [self.tableView.backgroundView addSubview:visualEffectViewForTableViewBackground];
-
-    //self.view.backgroundColor = [UIColor greenColor];
 }
 
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
+
+    self.tableView.estimatedRowHeight = 45.0;
+    self.tableView.rowHeight = UITableViewAutomaticDimension;
 }
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -56,13 +51,21 @@
 
     NSString *partialComment = [self textToHtml:comment.body withCell:cell andComment:comment];
     cell.commentTextView.text = comment.html;
-    [cell.commentTextView sizeToFit];
-    self.cellHeight = cell.commentTextView.frame.size.height;
+   // [cell.commentTextView sizeToFit];
+    //self.cellHeight = cell.commentTextView.frame.size.height;
     cell.commentTextView.scrollEnabled = NO;
     cell.commentTextView.delegate = self;
     cell.commentTextView.text = partialComment;
-    cell.backgroundColor = [UIColor whiteColor];
+    // This label is used to make the cell apear the correct size. Then it is hidden. The content is
+    // shown in the textView
+    cell.hiddenLabelForCellSize.text = partialComment;
     cell.comment = comment;
+
+    if (indexPath.row % 2) {
+        cell.commentTextView.backgroundColor = [UIColor whiteColor];
+    } else {
+        cell.commentTextView.backgroundColor = [UIColor colorWithRed:0.957 green:0.957 blue:0.957 alpha:1];
+    }
 
     return cell;
 }
@@ -98,10 +101,10 @@
     return string;
 }
 
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    return self.cellHeight;
-}
+//- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+//{
+//    return self.cellHeight;
+//}
 
 - (void)reloadTableWithCommentsFromCurrentPost:(Post *)selectedPost
 {

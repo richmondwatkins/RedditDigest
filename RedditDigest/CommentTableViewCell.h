@@ -14,6 +14,7 @@
 
 @property Comment *comment;
 @property (strong, nonatomic) IBOutlet UITextView *commentTextView;
+@property (weak, nonatomic) IBOutlet UILabel *hiddenLabelForCellSize;
 
 @end
 
