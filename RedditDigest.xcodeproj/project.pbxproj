@@ -22,6 +22,7 @@
 		5D311EDE1A10A359002AFC3C /* CommentTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D311EDD1A10A359002AFC3C /* CommentTableViewCell.m */; };
 		5D366B891A194991006B0684 /* DigestTitleLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D366B881A194991006B0684 /* DigestTitleLabel.m */; };
 		5D366B8C1A194F7E006B0684 /* TextViewWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D366B8B1A194F7E006B0684 /* TextViewWebViewController.m */; };
+		5D366B951A19B873006B0684 /* RecHeaderCollectionReusableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D366B941A19B873006B0684 /* RecHeaderCollectionReusableView.m */; };
 		5D3AC6331A12BCCC0093E79E /* DigestCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D3AC6321A12BCCC0093E79E /* DigestCategory.m */; };
 		5D5C12C31A05716E002902A8 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D5C12C21A05716E002902A8 /* main.m */; };
 		5D5C12C61A05716E002902A8 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D5C12C51A05716E002902A8 /* AppDelegate.m */; };
@@ -102,6 +103,8 @@
 		5D366B881A194991006B0684 /* DigestTitleLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DigestTitleLabel.m; sourceTree = "<group>"; };
 		5D366B8A1A194F7E006B0684 /* TextViewWebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TextViewWebViewController.h; sourceTree = "<group>"; };
 		5D366B8B1A194F7E006B0684 /* TextViewWebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TextViewWebViewController.m; sourceTree = "<group>"; };
+		5D366B931A19B873006B0684 /* RecHeaderCollectionReusableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RecHeaderCollectionReusableView.h; sourceTree = "<group>"; };
+		5D366B941A19B873006B0684 /* RecHeaderCollectionReusableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RecHeaderCollectionReusableView.m; sourceTree = "<group>"; };
 		5D3AC6311A12BCCC0093E79E /* DigestCategory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DigestCategory.h; sourceTree = "<group>"; };
 		5D3AC6321A12BCCC0093E79E /* DigestCategory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DigestCategory.m; sourceTree = "<group>"; };
 		5D5C12BD1A05716E002902A8 /* RedditDigest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RedditDigest.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -301,6 +304,8 @@
 				5D614E601A1838A200A199A2 /* RecommendedSubredditsViewController.m */,
 				5D5C12D01A05716E002902A8 /* Images.xcassets */,
 				5D5C12D21A05716E002902A8 /* LaunchScreen.xib */,
+				5D366B931A19B873006B0684 /* RecHeaderCollectionReusableView.h */,
+				5D366B941A19B873006B0684 /* RecHeaderCollectionReusableView.m */,
 				5D5C12C71A05716E002902A8 /* RedditDigest.xcdatamodeld */,
 				5D5C12E91A05758E002902A8 /* RedditDigest_Push_Development.mobileprovision */,
 				5D5C12BE1A05716E002902A8 /* Products */,
@@ -598,6 +603,7 @@
 				3413FC361A1117490018A172 /* LoadingViewController.m in Sources */,
 				5D366B891A194991006B0684 /* DigestTitleLabel.m in Sources */,
 				5DDA80BF1A11DED900527AF9 /* Subreddit.m in Sources */,
+				5D366B951A19B873006B0684 /* RecHeaderCollectionReusableView.m in Sources */,
 				5D3AC6331A12BCCC0093E79E /* DigestCategory.m in Sources */,
 				5D614E571A16F77A00A199A2 /* TFHpple.m in Sources */,
 				5DB47A5D1A0ABA5B0034EA84 /* PostViewController.m in Sources */,
