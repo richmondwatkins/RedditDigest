@@ -21,12 +21,17 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
 
-//    self.statusBarBackground.backgroundColor = REDDIT_DARK_BLUE;
-//    if (!self.navigationController.navigationBarHidden) {
-//        self.statusBarBackground.alpha = 0.0;
-//    }
+    // To block swipping in web sites. Only do our swipes
+    UISwipeGestureRecognizer *rightSwipeGesture = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(handleSwipeGesture:)];
+    UISwipeGestureRecognizer *leftSwipeGesture = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(handleSwipeGesture:)];
+    rightSwipeGesture.direction = UISwipeGestureRecognizerDirectionRight;
+    leftSwipeGesture.direction = UISwipeGestureRecognizerDirectionLeft;
+    [self.view addGestureRecognizer:rightSwipeGesture];
+    [self.view addGestureRecognizer:leftSwipeGesture];
+
+    [self.webView.scrollView.panGestureRecognizer requireGestureRecognizerToFail:rightSwipeGesture];
+    [self.webView.scrollView.panGestureRecognizer requireGestureRecognizerToFail:leftSwipeGesture];
 }
 
 -(void)viewWillAppear:(BOOL)animated
@@ -145,6 +150,11 @@
         self.verticalSpaceConstraint.constant = 0;
         [self.view layoutIfNeeded];
     }];
+}
+
+- (void)handleSwipeGesture:(id)sender
+{
+    NSLog(@"Swipe Blocked!");
 }
 
 -(BOOL)prefersStatusBarHidden {

@@ -48,11 +48,6 @@
 
     // This makes sure each self post is scrolled to the top when it loads
     [self.textView scrollRangeToVisible:NSMakeRange(0, 1)];
-
-//    self.statusBarBackground.backgroundColor = REDDIT_DARK_BLUE;
-//    if (!self.navController.navigationBarHidden) {
-//        self.statusBarBackground.alpha = 0.0;
-//    }
 }
 
 #pragma mark - Pan
