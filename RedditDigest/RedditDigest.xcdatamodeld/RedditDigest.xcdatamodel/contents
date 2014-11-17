@@ -14,6 +14,11 @@
         <relationship name="childcomments" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="ChildComment" inverseName="comment" inverseEntity="ChildComment" syncable="YES"/>
         <relationship name="post" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Post" inverseName="comments" inverseEntity="Post" syncable="YES"/>
     </entity>
+    <entity name="Digest" representedClassName="Digest" syncable="YES">
+        <attribute name="isMorning" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="time" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <relationship name="posts" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Post" inverseName="digest" inverseEntity="Post" syncable="YES"/>
+    </entity>
     <entity name="DigestCategory" representedClassName="DigestCategory" syncable="YES">
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="subreddits" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Subreddit" inverseName="digestCategory" inverseEntity="Subreddit" syncable="YES"/>
@@ -41,6 +46,7 @@
         <attribute name="viewed" optional="YES" attributeType="Boolean" syncable="YES"/>
         <attribute name="voteRatio" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
         <relationship name="comments" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Comment" inverseName="post" inverseEntity="Comment" syncable="YES"/>
+        <relationship name="digest" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Digest" inverseName="posts" inverseEntity="Digest" syncable="YES"/>
         <relationship name="subreddit" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Subreddit" inverseName="post" inverseEntity="Subreddit" syncable="YES"/>
     </entity>
     <entity name="Subreddit" representedClassName="Subreddit" syncable="YES">
@@ -55,7 +61,8 @@
         <element name="ChildComment" positionX="-45" positionY="126" width="128" height="103"/>
         <element name="Comment" positionX="-63" positionY="99" width="128" height="135"/>
         <element name="DigestCategory" positionX="-45" positionY="144" width="128" height="75"/>
-        <element name="Post" positionX="-63" positionY="-18" width="128" height="390"/>
+        <element name="Post" positionX="-63" positionY="-18" width="128" height="403"/>
         <element name="Subreddit" positionX="-54" positionY="117" width="128" height="135"/>
+        <element name="Digest" positionX="-54" positionY="135" width="128" height="88"/>
     </elements>
 </model>

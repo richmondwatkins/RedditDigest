@@ -49,6 +49,12 @@
     }else{
         self.locationSwitcher.on = NO;
     }
+
+    if ([[NSUserDefaults standardUserDefaults] boolForKey:@"BackgroundFetch"]) {
+        self.autoUpdatingSwitcher.on = YES;
+    }else{
+        self.locationSwitcher.on = NO;
+    }
 }
 
 #pragma mark - Login Credentials and Login or Logout

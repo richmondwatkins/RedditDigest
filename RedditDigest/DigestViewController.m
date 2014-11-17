@@ -25,7 +25,7 @@
 #import "DetailPostViewController.h"
 #import <CoreLocation/CoreLocation.h>
 #import <AudioToolbox/AudioToolbox.h>
-
+#import "Digest.h"
 
 @interface DigestViewController () <UITableViewDataSource, UITableViewDelegate, DigestCellDelegate, CLLocationManagerDelegate>
 
@@ -51,7 +51,8 @@
     AudioServicesCreateSystemSoundID((__bridge CFURLRef) pathURL, &audioEffect);
     AudioServicesPlaySystemSound(audioEffect);
     self.refreshControl = [[UIRefreshControl alloc] init];
-    [self.refreshControl addTarget:self action:@selector(requestNewLinks) forControlEvents:UIControlEventValueChanged];
+
+    [self.refreshControl addTarget:self action:@selector(requestNewLinksFromRefresh) forControlEvents:UIControlEventValueChanged];
     [self.digestTableView addSubview:self.refreshControl];
     [self getDateString];
     self.navigationItem.title = self.dateToday;
@@ -506,17 +507,16 @@
 
 #pragma mark - Fetch from Server
 
--(void)fetchNewDataWithCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
+-(void)fetchNewData:(BOOL)isDigest withCompletion:(void (^)(UIBackgroundFetchResult))completionHandler
 {
     [Post removeAllPostsFromCoreData:self.managedObjectContext];
     [self.digestPosts removeAllObjects];
     NSArray *subreddits = [Subreddit retrieveAllSubreddits:self.managedObjectContext];
-    [RedditRequests retrieveLatestPostFromArray:subreddits withManagedObject:self.managedObjectContext withCompletion:^(BOOL completed) {
-        [self performNewFetchedDataActions];
+    [RedditRequests retrieveLatestPostFromArray:subreddits withManagedObject:self.managedObjectContext  withCompletion:^(BOOL completed) {
+        [self performNewFetchedDataActions:isDigest];
         completionHandler(UIBackgroundFetchResultNewData);
         [self fireLocalNotificationAndMarkComplete];
     }];
-
 }
 
 -(void)fireLocalNotificationAndMarkComplete
@@ -558,8 +558,10 @@
     }
 }
 
--(void)retrievePostsFromCoreData:(void (^)(BOOL))completionHandler
+-(void)retrievePostsFromCoreData:(BOOL)isDigest withCompletion:(void (^)(BOOL))completionHandler
 {
+    //    [Digest createAndSaveDigestWithPost:savedPost andManagedObject:managedObjectContext];
+
     self.digestPosts = [NSMutableArray array];
 
     NSFetchRequest * fetch = [[NSFetchRequest alloc] init];
@@ -570,6 +572,9 @@
 
     NSArray * posts = [self.managedObjectContext executeFetchRequest:fetch error:nil];
 
+    if (isDigest) {
+        [Digest createAndSaveDigestWithPost:posts andManagedObject:self.managedObjectContext];
+    }
     self.digestPosts = [NSMutableArray arrayWithArray:posts];
 
     if (self.digestPosts.count) {
@@ -578,8 +583,11 @@
     }
 }
 
+-(void)requestNewLinksFromRefresh{
+    [self requestNewLinks:NO];
+}
 
--(void)requestNewLinks
+-(void)requestNewLinks:(BOOL)isDigest
 {
     [Post removeAllPostsFromCoreData:self.managedObjectContext];
 
@@ -589,13 +597,13 @@
     NSArray *subreddits = [self.managedObjectContext executeFetchRequest:fetch error:nil];
     
     [RedditRequests retrieveLatestPostFromArray:subreddits withManagedObject:self.managedObjectContext withCompletion:^(BOOL completed) {
-        [self performNewFetchedDataActions];
+        [self performNewFetchedDataActions:isDigest];
     }];
 }
 
--(void)performNewFetchedDataActions
+-(void)performNewFetchedDataActions:(BOOL)isDigest
 {
-    [self retrievePostsFromCoreData:^(BOOL completed) {
+    [self retrievePostsFromCoreData:isDigest withCompletion:^(BOOL completed) {
         if (completed) {
             [self.refreshControl endRefreshing];
         }
@@ -630,7 +638,7 @@
 
 
     if (self.isComingFromSubredditSelectionView) {
-        [self requestNewLinks];
+        [self requestNewLinks:YES];
     }
 }
 

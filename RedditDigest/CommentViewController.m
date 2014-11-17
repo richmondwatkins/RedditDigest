@@ -63,7 +63,7 @@
     // shown in the textView
     cell.hiddenLabelForCellSize.text = partialComment;
     cell.comment = comment;
-    NSLog(@"COMMENT TEXT %@",partialComment);
+
     if (indexPath.row % 2) {
         cell.commentTextView.backgroundColor = [UIColor whiteColor];
     } else {

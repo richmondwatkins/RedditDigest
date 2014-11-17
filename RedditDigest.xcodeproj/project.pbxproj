@@ -23,6 +23,7 @@
 		5D366B891A194991006B0684 /* DigestTitleLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D366B881A194991006B0684 /* DigestTitleLabel.m */; };
 		5D366B8C1A194F7E006B0684 /* TextViewWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D366B8B1A194F7E006B0684 /* TextViewWebViewController.m */; };
 		5D366B951A19B873006B0684 /* RecHeaderCollectionReusableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D366B941A19B873006B0684 /* RecHeaderCollectionReusableView.m */; };
+		5D366B981A1A52C8006B0684 /* Digest.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D366B971A1A52C8006B0684 /* Digest.m */; };
 		5D3AC6331A12BCCC0093E79E /* DigestCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D3AC6321A12BCCC0093E79E /* DigestCategory.m */; };
 		5D5C12C31A05716E002902A8 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D5C12C21A05716E002902A8 /* main.m */; };
 		5D5C12C61A05716E002902A8 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D5C12C51A05716E002902A8 /* AppDelegate.m */; };
@@ -105,6 +106,8 @@
 		5D366B8B1A194F7E006B0684 /* TextViewWebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TextViewWebViewController.m; sourceTree = "<group>"; };
 		5D366B931A19B873006B0684 /* RecHeaderCollectionReusableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RecHeaderCollectionReusableView.h; sourceTree = "<group>"; };
 		5D366B941A19B873006B0684 /* RecHeaderCollectionReusableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RecHeaderCollectionReusableView.m; sourceTree = "<group>"; };
+		5D366B961A1A52C8006B0684 /* Digest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Digest.h; sourceTree = "<group>"; };
+		5D366B971A1A52C8006B0684 /* Digest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Digest.m; sourceTree = "<group>"; };
 		5D3AC6311A12BCCC0093E79E /* DigestCategory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DigestCategory.h; sourceTree = "<group>"; };
 		5D3AC6321A12BCCC0093E79E /* DigestCategory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DigestCategory.m; sourceTree = "<group>"; };
 		5D5C12BD1A05716E002902A8 /* RedditDigest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RedditDigest.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -364,6 +367,8 @@
 				5DA1F1461A0EEE480017DE39 /* ChildComment.m */,
 				5DA1F1471A0EEE480017DE39 /* Comment.h */,
 				5DA1F1481A0EEE480017DE39 /* Comment.m */,
+				5D366B961A1A52C8006B0684 /* Digest.h */,
+				5D366B971A1A52C8006B0684 /* Digest.m */,
 				5D3AC6311A12BCCC0093E79E /* DigestCategory.h */,
 				5D3AC6321A12BCCC0093E79E /* DigestCategory.m */,
 			);
@@ -628,6 +633,7 @@
 				5D614E581A16F77A00A199A2 /* TFHppleElement.m in Sources */,
 				5D614E611A1838A200A199A2 /* RecommendedSubredditsViewController.m in Sources */,
 				5D5C12C31A05716E002902A8 /* main.m in Sources */,
+				5D366B981A1A52C8006B0684 /* Digest.m in Sources */,
 				5DDA80C01A11DED900527AF9 /* Post.m in Sources */,
 				34D1B9371A081B4D00C0C15F /* WelcomViewController.m in Sources */,
 				5DB47AEB1A0C45190034EA84 /* RedditRequests.m in Sources */,

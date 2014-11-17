@@ -9,7 +9,7 @@
 #import "Post.h"
 #import "Comment.h"
 #import "Subreddit.h"
-
+#import "Digest.h"
 
 @implementation Post
 
@@ -38,6 +38,7 @@
 @dynamic domain;
 
 +(void)savePost:(RKLink *)post withManagedObject:(NSManagedObjectContext *)managedObjectContext withComments:(NSArray *)comments andCompletion:(void (^)(BOOL))complete{
+
     NSFetchRequest * postFetch = [[NSFetchRequest alloc] initWithEntityName:@"Post"];
     postFetch.predicate = [NSPredicate predicateWithFormat:@"postID == %@", post.fullName];
     NSArray * posts = [managedObjectContext executeFetchRequest:postFetch error:nil];

@@ -106,9 +106,9 @@
     NSLog(@"LAST SCHEDULED %i",lastScheduled.intValue);
 
     if (lastScheduled.intValue < lastDigest.intValue) {
-        [digestController performNewFetchedDataActions]; //retrieves from core data and reloads table
+        [digestController performNewFetchedDataActions:NO]; //retrieves from core data and reloads table
     }else{
-        [digestController requestNewLinks];
+        [digestController requestNewLinks:YES];
     }
 }
 
@@ -201,7 +201,7 @@
 
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo fetchCompletionHandler:(void (^)(UIBackgroundFetchResult result))handler{
     DigestViewController *digestViewController = [(id)self.window.rootViewController viewControllers][0];
-    [digestViewController fetchNewDataWithCompletionHandler:^(UIBackgroundFetchResult result) {
+    [digestViewController fetchNewData:YES withCompletion:^(UIBackgroundFetchResult result) {
         handler(result);
     }];
 }
@@ -218,8 +218,8 @@
     }else{
         DigestViewController *digestViewController = [(id)self.window.rootViewController viewControllers][0];
         digestViewController.managedObjectContext = self.managedObjectContext;
-        [digestViewController fetchNewDataWithCompletionHandler:^(UIBackgroundFetchResult result) {
-            completionHandler(result);
+        [digestViewController fetchNewData:NO withCompletion:^(UIBackgroundFetchResult result) {
+            completionHandler(YES);
         }];
     }
 }
