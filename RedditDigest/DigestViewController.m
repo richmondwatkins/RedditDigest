@@ -47,7 +47,6 @@
     [self.digestTableView addSubview:self.refreshControl];
     [self getDateString];
     self.navigationItem.title = self.dateToday;
-    [self checkForLocationServices];
 
 }
 
@@ -77,6 +76,7 @@
         welcomeViewController.managedObject = self.managedObjectContext;
         [self.parentViewController presentViewController:welcomeViewController animated:YES completion:nil];
     }
+    [self checkForLocationServices];
 
 //    [self performNewFetchedDataActions];
 }

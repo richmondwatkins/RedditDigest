@@ -18,7 +18,7 @@
 @interface RecommendedSubredditsViewController () <UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout>
 @property NSMutableArray *recommendedFromSubscriptions;
 @property NSMutableArray *selectedSubreddits;
-@property NSMutableArray *subreddits;
+@property NSMutableArray *recomendations;
 @property (strong, nonatomic) IBOutlet UICollectionView *subredditCollectionView;
 @property (strong, nonatomic) IBOutlet UIButton *doneSelectingSubredditsButton;
 @property SubredditListCollectionViewCell *sizingCell;
@@ -41,7 +41,7 @@
     self.doneSelectingSubredditsButton.layer.borderColor = [UIColor colorWithRed:0.2 green:0.4 blue:0.6 alpha:1].CGColor;
 
     self.selectedSubreddits = [[NSMutableArray alloc] init];
-    self.subreddits = [NSMutableArray array];
+    self.recomendations = [NSMutableArray array];
 //    [self.activityIndicator startAnimating];
 
 
@@ -55,79 +55,6 @@
 
     [self setUpView];
 }
-
--(void)setUpView{
-    self.subredditCollectionView.contentOffset = CGPointMake(0, 44);
-    self.navigationItem.title = @"Choose your subreddits";
-    //for resizing template
-    UINib *cellNib = [UINib nibWithNibName:@"SubredditSelectionCell" bundle:nil];
-    [self.subredditCollectionView registerNib:cellNib forCellWithReuseIdentifier:@"Cell"];
-    self.sizingCell = [[cellNib instantiateWithOwner:nil options:nil] objectAtIndex:0];
-}
-
-- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
-{
-    [self configureCell:self.sizingCell forIndexPath:indexPath];
-    return [self.sizingCell systemLayoutSizeFittingSize:UILayoutFittingCompressedSize];
-}
-
-//-(NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView{
-//    return self.subreddits.count;
-//}
-
-
--(UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
-{
-    SubredditListCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"Cell" forIndexPath:indexPath];
-
-    [self configureCell:cell forIndexPath:indexPath];
-
-    return cell;
-}
-
-- (void)configureCell:(SubredditListCollectionViewCell *)cell forIndexPath:(NSIndexPath *)indexPath
-{
-
-    RKSubreddit *subreddit = self.recommendedFromSubscriptions[indexPath.row];
-    if (subreddit.isCurrentlySubscribed) {
-        cell.selected = YES;
-        [self.subredditCollectionView selectItemAtIndexPath:indexPath animated:NO scrollPosition:NO];
-    }
-    cell.subredditTitleLabel.text = subreddit.name;
-
-    // SubredditTitleLabel font and color
-    cell.subredditTitleLabel.font = [UIFont fontWithName:@"Helvetica" size:16.0];
-    cell.subredditTitleLabel.textColor = REDDIT_DARK_BLUE;
-}
-
--(NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
-{
-    return self.recommendedFromSubscriptions.count;
-}
-
-- (UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout insetForSectionAtIndex:(NSInteger)section
-{
-    return UIEdgeInsetsMake(20, 15, 10, 15);
-}
-
-- (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout minimumInteritemSpacingForSectionAtIndex:(NSInteger)section
-{
-    return 5.0;
-}
-
-// Header Height and Width
-- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout referenceSizeForHeaderInSection:(NSInteger)section
-{
-    return CGSizeMake(self.view.frame.size.width, 44.0);
-}
-
-// Footer Height and Width
-- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout referenceSizeForFooterInSection:(NSInteger)section
-{
-    return CGSizeMake(self.view.frame.size.width, 44.0);
-}
-
-
 
 
 -(void)lookUpRelatedSubreddit:(NSArray *)subsFromCoreData{
@@ -158,7 +85,6 @@
             }
 
             if (i == flattenedSubNames.count) {
-                NSLog(@"ALL RECS %@",self.recommendedFromSubscriptions);
                 [self.subredditCollectionView reloadData];
             }
         }];
@@ -172,8 +98,83 @@
             NSLog(@"RECOMENNDED SUBSSSS %@",sub);
         }
     }];
+    
+}
 
-  }
+#pragma mark - Collection View Delegate Methods
+
+-(UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    SubredditListCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"Cell" forIndexPath:indexPath];
+
+    [self configureCell:cell forIndexPath:indexPath];
+
+    return cell;
+}
+
+-(NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
+{
+    return [[self.recomendations objectAtIndex:section] count];
+}
+
+-(NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView{
+    return self.recomendations.count;
+}
+
+#pragma mark - Collection View Layout Methods
+
+-(void)setUpView{
+    self.subredditCollectionView.contentOffset = CGPointMake(0, 44);
+    self.navigationItem.title = @"Choose your subreddits";
+    //for resizing template
+    UINib *cellNib = [UINib nibWithNibName:@"SubredditSelectionCell" bundle:nil];
+    [self.subredditCollectionView registerNib:cellNib forCellWithReuseIdentifier:@"Cell"];
+    self.sizingCell = [[cellNib instantiateWithOwner:nil options:nil] objectAtIndex:0];
+}
+
+- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    [self configureCell:self.sizingCell forIndexPath:indexPath];
+    return [self.sizingCell systemLayoutSizeFittingSize:UILayoutFittingCompressedSize];
+}
+
+- (void)configureCell:(SubredditListCollectionViewCell *)cell forIndexPath:(NSIndexPath *)indexPath
+{
+
+    RKSubreddit *subreddit = [self.recomendations[indexPath.section] objectAtIndex:indexPath.row];
+
+    if (subreddit.isCurrentlySubscribed) {
+        cell.selected = YES;
+        [self.subredditCollectionView selectItemAtIndexPath:indexPath animated:NO scrollPosition:NO];
+    }
+    cell.subredditTitleLabel.text = subreddit.name;
+
+    // SubredditTitleLabel font and color
+    cell.subredditTitleLabel.font = [UIFont fontWithName:@"Helvetica" size:16.0];
+    cell.subredditTitleLabel.textColor = REDDIT_DARK_BLUE;
+}
+
+- (UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout insetForSectionAtIndex:(NSInteger)section
+{
+    return UIEdgeInsetsMake(20, 15, 10, 15);
+}
+
+- (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout minimumInteritemSpacingForSectionAtIndex:(NSInteger)section
+{
+    return 5.0;
+}
+
+// Header Height and Width
+- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout referenceSizeForHeaderInSection:(NSInteger)section
+{
+    return CGSizeMake(self.view.frame.size.width, 44.0);
+}
+
+// Footer Height and Width
+- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout referenceSizeForFooterInSection:(NSInteger)section
+{
+    return CGSizeMake(self.view.frame.size.width, 44.0);
+}
 
 
 
