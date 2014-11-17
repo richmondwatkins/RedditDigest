@@ -91,9 +91,10 @@
                     if ([contentType isEqualToString:@"image/gif"]) {
                         savedPost.isImageLink = [NSNumber numberWithBool:NO];
                         savedPost.isGif = [NSNumber numberWithBool:YES];
+                    }else{
+                        [self saveDataToDocumentsDirectory:data withFileNamePrefix:@"image" andPostfix:savedPost.postID];
+                        savedPost.image = post.fullName;
                     }
-
-                    [self saveDataToDocumentsDirectory:data withFileNamePrefix:@"image" andPostfix:savedPost.postID];
 
                     [managedObjectContext save:nil];
                     complete(YES);

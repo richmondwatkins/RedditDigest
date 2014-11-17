@@ -346,7 +346,7 @@
     if (post.image) {
         cell.thumbnailImage.image = [self returnImageForCellFromData:post.postID withSubredditNameForKey:post.subreddit.subreddit andFilePathPrefix:@"image"];
 //        cell.thumbnailImage.image = [self returnImageForCellFromData: withSubredditNameForKey:post.subreddit.subreddit];
-    }else if(post.thumbnailImage){
+    }else if([post.thumbnailImage boolValue]){
         cell.thumbnailImage.image = [self returnImageForCellFromData:post.postID withSubredditNameForKey:post.subreddit.subreddit andFilePathPrefix:@"thumbnail"];
     }else if(post.subreddit.image){
         cell.thumbnailImage.image = [self returnImageForCellFromData:post.subreddit.subreddit withSubredditNameForKey:post.subreddit.subreddit andFilePathPrefix:@"subreddit"];
@@ -356,7 +356,7 @@
 
 
     cell.thumbnailImage.contentMode = UIViewContentModeScaleAspectFill;
-    cell.thumbnailImage.alpha = 0.75;
+    cell.thumbnailImage.alpha = 1;
     //    (post.viewed) ? cell.thumbnailImage.alpha = 0.2 : (cell.thumbnailImage.alpha = 1);
 
     if ([post.upvoted boolValue] == YES) {
@@ -378,11 +378,9 @@
 
 -(UIImage *)returnImageForCellFromData:(NSString *)filePath withSubredditNameForKey:(NSString *)subreddit andFilePathPrefix:(NSString *)prefix{
 
-    NSData *imageData = [NSData dataWithContentsOfFile:[self documentsPathForFileName:filePath withPrefix:prefix]];
-    NSLog(@"IMAGE DATAAAAAA %@",imageData);
-
     UIImage *image = [self.imageCache objectForKey:subreddit];
     if (image == nil) {
+        NSData *imageData = [NSData dataWithContentsOfFile:[self documentsPathForFileName:filePath withPrefix:prefix]];
         image = [UIImage imageWithData:imageData];
         [self.imageCache setObject:image forKey:subreddit];
     }

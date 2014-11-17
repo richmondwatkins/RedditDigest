@@ -47,12 +47,19 @@
         savedPost.title = post.title;
         savedPost.url = post.url;
 
+        if (post.thumbnailImage) {
+            NSData *imageData = [self documentsPathForFileName:post.postID andPrefix:@"thumbnail"];
+            [self saveDataToDocumentsDirectory:imageData withFileNamePrefix:@"thumbnail-copy" andPostfix:post.postID];
+        }
+
         if (post.isGif) {
             savedPost.isGif = post.isGif;
         }
 
         if (post.isImageLink) {
             savedPost.isImageLink = post.isImageLink;
+            NSData *imageData = [self documentsPathForFileName:post.postID andPrefix:@"image"];
+            [self saveDataToDocumentsDirectory:imageData withFileNamePrefix:@"image-copy" andPostfix:post.postID];
         }
 
         if (post.isWebPage) {
@@ -69,4 +76,22 @@
     [Digest createDigestFromDigestPosts:savedDigestPosts withManagedObject:managedObject];
 }
 
++(NSData *)documentsPathForFileName:(NSString *)name andPrefix:(NSString *)prefix
+{
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask, YES);
+    NSString *documentsPath = [paths objectAtIndex:0];
+
+    NSString *pathCompenent = [NSString stringWithFormat:@"%@-%@",prefix, name];
+
+    NSString *filePath = [documentsPath stringByAppendingPathComponent:pathCompenent];
+
+    return [NSData dataWithContentsOfFile:filePath];
+}
+
++(void)saveDataToDocumentsDirectory:(NSData *)data withFileNamePrefix:(NSString *)prefix andPostfix:(NSString *)postfix{
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *documentsPath = [paths objectAtIndex:0];
+    NSString *filePath = [documentsPath stringByAppendingPathComponent:[NSString stringWithFormat:@"%@-%@",prefix, postfix]];
+    [data writeToFile:filePath atomically:YES];
+}
 @end

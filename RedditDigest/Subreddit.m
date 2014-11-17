@@ -46,6 +46,7 @@
                                 thumnailSrc = [nodeDict objectForKey:@"src"];
                             }
                         }
+                        savedSubreddit.image = [NSNumber numberWithBool:NO];
 
                         if (thumnailSrc.length > 10) {
                             [NSURLConnection sendAsynchronousRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:thumnailSrc]] queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
