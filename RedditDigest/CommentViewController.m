@@ -66,7 +66,7 @@
     if (indexPath.row % 2) {
         cell.commentTextView.backgroundColor = [UIColor whiteColor];
     } else {
-        cell.commentTextView.backgroundColor = [UIColor colorWithRed:0.957 green:0.957 blue:0.957 alpha:1];
+        cell.commentTextView.backgroundColor = [UIColor colorWithRed:0.937 green:0.969 blue:1 alpha:1];
     }
 
     return cell;
