@@ -9,7 +9,7 @@
 #import "Post.h"
 #import "Comment.h"
 #import "Subreddit.h"
-
+#import "Digest.h"
 
 @implementation Post
 
@@ -35,7 +35,10 @@
 @dynamic comments;
 @dynamic subreddit;
 @dynamic isLocalPost;
+@dynamic domain;
+
 +(void)savePost:(RKLink *)post withManagedObject:(NSManagedObjectContext *)managedObjectContext withComments:(NSArray *)comments andCompletion:(void (^)(BOOL))complete{
+
     NSFetchRequest * postFetch = [[NSFetchRequest alloc] initWithEntityName:@"Post"];
     postFetch.predicate = [NSPredicate predicateWithFormat:@"postID == %@", post.fullName];
     NSArray * posts = [managedObjectContext executeFetchRequest:postFetch error:nil];
@@ -51,6 +54,8 @@
         savedPost.voteRatio = [NSNumber numberWithFloat:post.score];
         savedPost.postID = post.fullName;
         savedPost.isLocalPost = [NSNumber numberWithBool:post.isLocalPost];
+        savedPost.domain = post.domain;
+        
         if (comments) {
             [Comment addCommentsToPost:savedPost commentsArray:comments withMangedObject:managedObjectContext];
         }
@@ -69,7 +74,11 @@
 
         NSURLRequest *thumbnailRequest = [NSURLRequest requestWithURL:post.thumbnailURL];
         [NSURLConnection sendAsynchronousRequest:thumbnailRequest queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
-            savedPost.thumbnailImage = data;
+            if (data) {
+                savedPost.thumbnailImage = [NSNumber numberWithBool:YES];
+            }
+
+            [self saveDataToDocumentsDirectory:data withFileNamePrefix:@"thumbnail" andPostfix:savedPost.postID];
 
             if (post.isImageLink) {
                 savedPost.isImageLink = [NSNumber numberWithBool:YES];
@@ -82,8 +91,10 @@
                     if ([contentType isEqualToString:@"image/gif"]) {
                         savedPost.isImageLink = [NSNumber numberWithBool:NO];
                         savedPost.isGif = [NSNumber numberWithBool:YES];
+                    }else{
+                        [self saveDataToDocumentsDirectory:data withFileNamePrefix:@"image" andPostfix:savedPost.postID];
+                        savedPost.image = post.fullName;
                     }
-                    savedPost.image = data;
 
                     [managedObjectContext save:nil];
                     complete(YES);
@@ -111,6 +122,13 @@
     }
 }
 
++(void)saveDataToDocumentsDirectory:(NSData *)data withFileNamePrefix:(NSString *)prefix andPostfix:(NSString *)postfix{
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
+    NSString *documentsPath = [paths objectAtIndex:0];
+    NSString *filePath = [documentsPath stringByAppendingPathComponent:[NSString stringWithFormat:@"%@-%@",prefix, postfix]];
+    [data writeToFile:filePath atomically:YES];
+}
+
 +(void)removeAllPostsFromCoreData:(NSManagedObjectContext *)managedObjectContext{
     NSFetchRequest * allPosts = [[NSFetchRequest alloc] init];
     [allPosts setEntity:[NSEntityDescription entityForName:@"Post" inManagedObjectContext:managedObjectContext]];
@@ -119,10 +137,23 @@
     NSError * error = nil;
     NSArray * posts = [managedObjectContext executeFetchRequest:allPosts error:&error];
 
-    for (NSManagedObject * post in posts) {
+    for (Post * post in posts) {
+        [self removePhotoFromDocumentDirectory:post.postID];
         [managedObjectContext deleteObject:post];
     }
     [managedObjectContext save:nil];
+}
+
++(void)removePhotoFromDocumentDirectory:(NSString *)fileName{
+
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    NSString *documentsPath = [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) objectAtIndex:0];
+
+    NSString *filePath = [documentsPath stringByAppendingPathComponent:[NSString stringWithFormat:@"image-%@", fileName]];
+
+    NSError *error;
+    [fileManager removeItemAtPath:filePath error:&error];
+
 }
 
 

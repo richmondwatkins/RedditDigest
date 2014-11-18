@@ -15,10 +15,9 @@
 @property BOOL isComingFromSubredditSelectionView;
 @property (strong, nonatomic) IBOutlet UITableView *digestTableView;
 
--(void)fetchNewDataWithCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler;
--(void)retrievePostsFromCoreData:(void (^)(BOOL))completionHandler;
--(void)requestNewLinks;
--(void)performNewFetchedDataActions;
+-(void)fetchNewData:(BOOL)isDigest withCompletion:(void (^)(UIBackgroundFetchResult))completionHandler;
+-(void)requestNewLinks:(BOOL)isDigest;
+-(void)performNewFetchedDataActions:(BOOL)isDigest;
 
 @end
 

@@ -10,8 +10,7 @@
 #import "Subreddit.h"
 @implementation RedditRequests
 
-+(void)retrieveLatestPostFromArray:(NSArray *)subreddits withManagedObject:(NSManagedObjectContext *)managedObjectContext withCompletion:(void (^)(BOOL completed))complete{
-    
++(void)retrieveLatestPostFromArray:(NSArray *)subreddits withManagedObject:(NSManagedObjectContext *)managedObjectContext withCompletion:(void (^)(BOOL))complete{
     if ([subreddits.firstObject isKindOfClass:[Subreddit class]]) {
         subreddits = [self formatSubredditsArray:subreddits];
     }

@@ -46,10 +46,12 @@
                                 thumnailSrc = [nodeDict objectForKey:@"src"];
                             }
                         }
+                        savedSubreddit.image = [NSNumber numberWithBool:NO];
 
                         if (thumnailSrc.length > 10) {
                             [NSURLConnection sendAsynchronousRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:thumnailSrc]] queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
-                                savedSubreddit.image = data;
+                                savedSubreddit.image = [NSNumber numberWithBool:YES];
+                                [self saveDataToDocumentsDirectory:data withFileNamePrefix:@"subreddit" andPostfix:savedSubreddit.subreddit];
                                 [managedObject save:nil];
                             }];
                         }else{
@@ -97,7 +99,7 @@
     NSMutableDictionary *tempDict = [[NSMutableDictionary alloc] initWithObjectsAndKeys:subredditName, @"name", nil];
 
     NSString *deviceString = [[NSUserDefaults standardUserDefaults] valueForKey:@"DeviceID"];
-    NSString *urlString = [NSString stringWithFormat:@"http://192.168.1.4:3000/subreddits/delete/%@",  deviceString];
+    NSString *urlString = [NSString stringWithFormat:@"http://192.168.1.2:3000/subreddits/delete/%@",  deviceString];
 
     NSDictionary *objectToDelete = [[NSDictionary alloc] initWithObjectsAndKeys:tempDict, @"subreddit", nil];
     NSError *error;
@@ -127,12 +129,12 @@
             Subreddit *savedSubreddit = [NSEntityDescription insertNewObjectForEntityForName:@"Subreddit" inManagedObjectContext:managedObject];
             savedSubreddit.subreddit = selectedSubreddit.name;
             savedSubreddit.url = selectedSubreddit.URL;
-            savedSubreddit.isLocalSubreddit = [NSNumber numberWithBool:YES];
+//            savedSubreddit.isLocalSubreddit = [NSNumber numberWithBool:YES];
             if (selectedSubreddit.headerImageURL != nil) {
                 [NSURLConnection sendAsynchronousRequest:[NSURLRequest requestWithURL:selectedSubreddit.headerImageURL] queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
                     if (data) {
-                        NSLog(@"data %@",data);
-                        savedSubreddit.image = data;
+                        [self saveDataToDocumentsDirectory:data withFileNamePrefix:@"subreddit" andPostfix:savedSubreddit.subreddit];
+                        savedSubreddit.image = [NSNumber numberWithBool:YES];
                         [managedObject save:nil];
                     }
                 }];
@@ -142,6 +144,13 @@
             }
         }
     }
+}
+
++(void)saveDataToDocumentsDirectory:(NSData *)data withFileNamePrefix:(NSString *)prefix andPostfix:(NSString *)postfix{
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
+    NSString *documentsPath = [paths objectAtIndex:0];
+    NSString *filePath = [documentsPath stringByAppendingPathComponent:[NSString stringWithFormat:@"%@-%@",prefix, postfix]];
+    [data writeToFile:filePath atomically:YES];
 }
 
 +(void)removeLocalPostsAndSubreddits:(NSManagedObjectContext *)managedObject{

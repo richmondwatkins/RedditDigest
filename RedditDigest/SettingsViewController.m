@@ -14,6 +14,7 @@
 #import <CoreLocation/CoreLocation.h>
 #import "Subreddit.h"
 #import "RecommendedSubredditsViewController.h"
+#import "Digest.h"
 @interface SettingsViewController () <UITableViewDataSource, UITableViewDelegate, CLLocationManagerDelegate>
 
 @property (strong, nonatomic) IBOutlet UITableView *tableView;
@@ -49,6 +50,14 @@
     }else{
         self.locationSwitcher.on = NO;
     }
+
+    if ([[NSUserDefaults standardUserDefaults] boolForKey:@"BackgroundFetch"]) {
+        self.autoUpdatingSwitcher.on = YES;
+    }else{
+        self.locationSwitcher.on = NO;
+    }
+
+    [self retrievePastDigestFromCoreData];
 }
 
 #pragma mark - Login Credentials and Login or Logout
@@ -89,6 +98,19 @@
     }
     [[NSUserDefaults standardUserDefaults] synchronize];
 }
+
+
+-(void)retrievePastDigestFromCoreData{
+    NSFetchRequest *fetchDigests = [[NSFetchRequest alloc] initWithEntityName:@"Digest"];
+    NSSortDescriptor *sorter = [[NSSortDescriptor alloc] initWithKey:@"time" ascending:NO];
+    [fetchDigests setSortDescriptors:@[sorter]];
+
+    NSArray *digests = [self.managedObject executeFetchRequest:fetchDigests error:nil];
+    for (Digest *digest in digests) {
+        NSLog(@"DIGESTSSS %@",digest.digestPost);
+    }
+}
+
 
 // In a storyboard-based application, you will often want to do a little preparation before navigation
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {

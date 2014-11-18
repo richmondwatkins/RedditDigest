@@ -25,7 +25,7 @@
 #import "DetailPostViewController.h"
 #import <CoreLocation/CoreLocation.h>
 #import <AudioToolbox/AudioToolbox.h>
-
+#import "DigestPost.h"
 
 @interface DigestViewController () <UITableViewDataSource, UITableViewDelegate, DigestCellDelegate, CLLocationManagerDelegate>
 
@@ -51,7 +51,8 @@
     AudioServicesCreateSystemSoundID((__bridge CFURLRef) pathURL, &audioEffect);
     AudioServicesPlaySystemSound(audioEffect);
     self.refreshControl = [[UIRefreshControl alloc] init];
-    [self.refreshControl addTarget:self action:@selector(requestNewLinks) forControlEvents:UIControlEventValueChanged];
+
+    [self.refreshControl addTarget:self action:@selector(requestNewLinksFromRefresh) forControlEvents:UIControlEventValueChanged];
     [self.digestTableView addSubview:self.refreshControl];
     [self getDateString];
     self.navigationItem.title = self.dateToday;
@@ -345,11 +346,12 @@
     cell.commentsLabel.text = [self abbreviateNumber:post.totalComments.integerValue];
 
     if (post.image) {
-        cell.thumbnailImage.image = [self returnImageForCellFromData:post.image withSubredditNameForKey:post.subreddit.subreddit];
-    }else if(post.thumbnailImage){
-        cell.thumbnailImage.image = [self returnImageForCellFromData:post.thumbnailImage withSubredditNameForKey:post.subreddit.subreddit];
-    }else if(post.subreddit.image){
-        cell.thumbnailImage.image = [self returnImageForCellFromData:post.subreddit.image withSubredditNameForKey:post.subreddit.subreddit];
+        cell.thumbnailImage.image = [self returnImageForCellFromData:post.postID withSubredditNameForKey:post.subreddit.subreddit andFilePathPrefix:@"image"];
+//        cell.thumbnailImage.image = [self returnImageForCellFromData: withSubredditNameForKey:post.subreddit.subreddit];
+    }else if([post.thumbnailImage boolValue]){
+        cell.thumbnailImage.image = [self returnImageForCellFromData:post.postID withSubredditNameForKey:post.subreddit.subreddit andFilePathPrefix:@"thumbnail"];
+    }else if([post.subreddit.image boolValue]){
+        cell.thumbnailImage.image = [self returnImageForCellFromData:post.subreddit.subreddit withSubredditNameForKey:post.subreddit.subreddit andFilePathPrefix:@"subreddit"];
     }else{
         cell.thumbnailImage.image = [UIImage imageNamed:@"snoo_camera_placeholder"];
     }
@@ -382,10 +384,20 @@
 -(UIImage *)returnImageForCellFromData:(NSData *)imageData withSubredditNameForKey:(NSString *)subreddit{
     UIImage *image = [self.imageCache objectForKey:subreddit];
     if (image == nil) {
+        NSData *imageData = [NSData dataWithContentsOfFile:[self documentsPathForFileName:filePath withPrefix:prefix]];
         image = [UIImage imageWithData:imageData];
         [self.imageCache setObject:image forKey:subreddit];
     }
     return image;
+}
+
+- (NSString *)documentsPathForFileName:(NSString *)name withPrefix:(NSString *)prefix
+{
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSCachesDirectory,NSUserDomainMask, YES);
+    NSString *documentsPath = [paths objectAtIndex:0];
+
+    NSString *pathCompenent = [NSString stringWithFormat:@"%@-%@",prefix, name];
+    return [documentsPath stringByAppendingPathComponent:pathCompenent];
 }
 
 -(void) tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
@@ -511,17 +523,16 @@
 
 #pragma mark - Fetch from Server
 
--(void)fetchNewDataWithCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
+-(void)fetchNewData:(BOOL)isDigest withCompletion:(void (^)(UIBackgroundFetchResult))completionHandler
 {
     [Post removeAllPostsFromCoreData:self.managedObjectContext];
     [self.digestPosts removeAllObjects];
     NSArray *subreddits = [Subreddit retrieveAllSubreddits:self.managedObjectContext];
-    [RedditRequests retrieveLatestPostFromArray:subreddits withManagedObject:self.managedObjectContext withCompletion:^(BOOL completed) {
-        [self performNewFetchedDataActions];
+    [RedditRequests retrieveLatestPostFromArray:subreddits withManagedObject:self.managedObjectContext  withCompletion:^(BOOL completed) {
+        [self performNewFetchedDataActions:isDigest];
         completionHandler(UIBackgroundFetchResultNewData);
         [self fireLocalNotificationAndMarkComplete];
     }];
-
 }
 
 -(void)fireLocalNotificationAndMarkComplete
@@ -563,8 +574,10 @@
     }
 }
 
--(void)retrievePostsFromCoreData:(void (^)(BOOL))completionHandler
+-(void)retrievePostsFromCoreData:(BOOL)isDigest withCompletion:(void (^)(BOOL))completionHandler
 {
+    //    [Digest createAndSaveDigestWithPost:savedPost andManagedObject:managedObjectContext];
+
     self.digestPosts = [NSMutableArray array];
 
     NSFetchRequest * fetch = [[NSFetchRequest alloc] init];
@@ -580,11 +593,18 @@
     if (self.digestPosts.count) {
         completionHandler(YES);
         [self.digestTableView reloadData];
+
+        if (isDigest) {
+            [DigestPost createNewDigestPosts:posts withManagedObject:self.managedObjectContext];
+        }
     }
 }
 
+-(void)requestNewLinksFromRefresh{
+    [self requestNewLinks:NO];
+}
 
--(void)requestNewLinks
+-(void)requestNewLinks:(BOOL)isDigest
 {
     [Post removeAllPostsFromCoreData:self.managedObjectContext];
 
@@ -594,13 +614,13 @@
     NSArray *subreddits = [self.managedObjectContext executeFetchRequest:fetch error:nil];
     
     [RedditRequests retrieveLatestPostFromArray:subreddits withManagedObject:self.managedObjectContext withCompletion:^(BOOL completed) {
-        [self performNewFetchedDataActions];
+        [self performNewFetchedDataActions:isDigest];
     }];
 }
 
--(void)performNewFetchedDataActions
+-(void)performNewFetchedDataActions:(BOOL)isDigest
 {
-    [self retrievePostsFromCoreData:^(BOOL completed) {
+    [self retrievePostsFromCoreData:isDigest withCompletion:^(BOOL completed) {
         if (completed) {
             [self.refreshControl endRefreshing];
         }
@@ -635,7 +655,7 @@
 
 
     if (self.isComingFromSubredditSelectionView) {
-        [self requestNewLinks];
+        [self requestNewLinks:YES];
     }
 }
 

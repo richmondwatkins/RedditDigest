@@ -15,6 +15,7 @@
 #import "HeaderCollectionReusableView.h"
 #import "SubredditListCollectionViewCell.h"
 #import "DigestViewController.h"
+#import "RecHeaderCollectionReusableView.h"
 @interface RecommendedSubredditsViewController () <UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout>
 @property NSMutableArray *recommendedFromSubscriptions;
 @property NSMutableArray *recommendedFromUsers;
@@ -64,6 +65,7 @@
 //                    }
 
                     if (i == results.count) {
+                        [self checkForExistingSubscription:self.recommendedFromUsers];
                         [self.recomendations addObject:self.recommendedFromUsers];
                         [self.subredditCollectionView reloadData];
                     }
@@ -104,11 +106,30 @@
             }
 
             if (i == flattenedSubNames.count) {
+                [self checkForExistingSubscription:self.recommendedFromSubscriptions];
                 [self.recomendations addObject:self.recommendedFromSubscriptions];
                 [self.subredditCollectionView reloadData];
             }
         }];
 
+    }
+}
+
+-(void)checkForExistingSubscription:(NSMutableArray *)subredditsArray
+{  // NSLog(@"RK OBJS %@",subredditsArray);
+    NSMutableArray *subredditsArrayCopy = [NSMutableArray arrayWithArray:subredditsArray];
+    NSFetchRequest *subredditFetch = [NSFetchRequest fetchRequestWithEntityName:@"Subreddit"];
+    NSArray *subscribedSubreddits = [self.managedObject executeFetchRequest:subredditFetch error:nil];
+    if (subscribedSubreddits.count) {
+        for (Subreddit *subscribedSub in subscribedSubreddits) {
+            for (RKSubreddit *rkSubreddit in subredditsArrayCopy) {
+                if ([subscribedSub.subreddit isEqualToString:rkSubreddit.name]) {
+                    if (!subscribedSub.isLocalSubreddit) {
+                        [subredditsArray removeObject:rkSubreddit];
+                    }
+                }
+            }
+        }
     }
 }
 
@@ -201,7 +222,7 @@
 
 -(void)setUpView{
     self.subredditCollectionView.contentOffset = CGPointMake(0, 44);
-    self.navigationItem.title = @"Choose your subreddits";
+    self.navigationItem.title = @"Recommended Subreddits";
     //for resizing template
     UINib *cellNib = [UINib nibWithNibName:@"SubredditSelectionCell" bundle:nil];
     [self.subredditCollectionView registerNib:cellNib forCellWithReuseIdentifier:@"Cell"];
@@ -250,6 +271,29 @@
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout referenceSizeForFooterInSection:(NSInteger)section
 {
     return CGSizeMake(self.view.frame.size.width, 44.0);
+}
+
+- (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath
+{
+    UICollectionReusableView *reusableview = nil;
+
+    if (kind == UICollectionElementKindSectionHeader && indexPath.section == 0){
+        RecHeaderCollectionReusableView *headerView = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"HeaderView" forIndexPath:indexPath];
+        headerView.recHeaderView.text = @"Based on Users Like You";
+        reusableview = headerView;
+    }else{
+        RecHeaderCollectionReusableView *headerView = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"HeaderView" forIndexPath:indexPath];
+        headerView.recHeaderView.text = @"Based on Current Subscriptions";
+        reusableview = headerView;
+    }
+
+    if (kind == UICollectionElementKindSectionFooter) {
+        UICollectionReusableView *footerview = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionFooter withReuseIdentifier:@"FooterView" forIndexPath:indexPath];
+
+        reusableview = footerview;
+    }
+    
+    return reusableview;
 }
 
 

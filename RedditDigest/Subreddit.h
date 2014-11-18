@@ -14,7 +14,7 @@
 
 @interface Subreddit : NSManagedObject
 
-@property (nonatomic, retain) NSData * image;
+@property (nonatomic, retain) NSNumber * image;
 @property (nonatomic, retain) NSString * subreddit;
 @property (nonatomic, retain) NSString * url;
 @property (nonatomic, retain) Post *post;
