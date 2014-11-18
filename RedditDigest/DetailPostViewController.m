@@ -75,6 +75,7 @@
     {
         self.commentsViewController = segue.destinationViewController;
         self.delegate = self.commentsViewController;
+        self.commentsViewController.post = [self.allPosts objectAtIndex:self.index];
         [self loadCommentsFromSelectedPost:self.index];
     }
 }

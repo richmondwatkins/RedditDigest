@@ -10,8 +10,9 @@
 #import "CommentTableViewCell.h"
 #import "Post.h"
 #import "TextViewWebViewController.h"
+#import "PocketAPI.h"
 
-@interface CommentViewController () <UITableViewDelegate, UITableViewDataSource, UITextViewDelegate, UITabBarControllerDelegate, UITextViewDelegate>
+@interface CommentViewController () <UITableViewDelegate, UITableViewDataSource, UITextViewDelegate, UITabBarControllerDelegate, UITextViewDelegate, UIActionSheetDelegate>
 
 @property Comment *selectedComment;
 @property CGFloat cellHeight;
@@ -176,9 +177,27 @@
 #pragma mark - Share
 - (IBAction)onShareButtonPressed:(id)sender
 {
-
+    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:nil
+                                                             delegate:self
+                                                    cancelButtonTitle:@"Cancel"
+                                               destructiveButtonTitle:nil
+                                                    otherButtonTitles:@"Save Post Url to Pocket", nil];
+    [actionSheet showInView:self.view];
 }
 
+#pragma mark - UIActionSheet Delegate Methods 
+
+-(void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex{
+    if (buttonIndex == 0) {
+        NSURL *url = [NSURL URLWithString:self.post.url];
+        [[PocketAPI sharedAPI] saveURL:url handler:^(PocketAPI *api, NSURL *url, NSError *error) {
+            if (error) {
+                NSLog(@"Error saving to Pocket %@", error.localizedDescription);
+            }
+            NSLog(@"Saved to Pocket!");
+        }];
+    }
+}
 
 
 @end

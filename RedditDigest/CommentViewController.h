@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "Comment.h"
+#import "Post.h"
 #import "DetailPostViewController.h"
 
 
@@ -16,6 +17,7 @@
 @property (strong, nonatomic) IBOutlet UITableView *tableView;
 @property NSInteger index;
 @property NSMutableArray *comments;
+@property Post *post;
 @property NSInteger constant;
 @property (weak, nonatomic) IBOutlet UIButton *showHideCommentsViewButton;
 

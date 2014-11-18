@@ -8,22 +8,14 @@
 
 #import "AppDelegate.h"
 #import <ZeroPush.h>
-
-//
-//  AppDelegate.m
-//  RedditDigest
-//
-//  Created by Richmond on 11/1/14.
-//  Copyright (c) 2014 Richmond. All rights reserved.
-//
-
-#import "AppDelegate.h"
-#import <ZeroPush.h>
 #import "DigestViewController.h"
 #import <SSKeychain/SSKeychain.h>
 #import <RedditKit/RedditKit.h>
 #import "UserRequests.h"
+#import "PocketAPI.h"
+
 @interface AppDelegate ()
+
 @property (nonatomic, strong) NSString *temperature;
 @property NSString *deviceString;
 @property NSMutableArray *posts;
@@ -44,6 +36,8 @@
         [self reloadFromCoreDataOrFetch:digestController];
     }
 
+    // Regester PocketAPI
+    [[PocketAPI sharedAPI] setConsumerKey:@"34696-ed6afb7268cf07819ef8f0b9"];
 
     [self setUpUI];
 
@@ -52,6 +46,17 @@
     [[UIApplication sharedApplication] setApplicationIconBadgeNumber:0];
 
     return YES;
+}
+
+-(BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url
+{
+    if ([[PocketAPI sharedAPI] handleOpenURL:url]) {
+        return YES;
+    }
+    else
+    {
+        return NO;
+    }
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application
