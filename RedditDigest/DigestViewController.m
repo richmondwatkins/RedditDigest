@@ -348,7 +348,7 @@
 //        cell.thumbnailImage.image = [self returnImageForCellFromData: withSubredditNameForKey:post.subreddit.subreddit];
     }else if([post.thumbnailImage boolValue]){
         cell.thumbnailImage.image = [self returnImageForCellFromData:post.postID withSubredditNameForKey:post.subreddit.subreddit andFilePathPrefix:@"thumbnail"];
-    }else if(post.subreddit.image){
+    }else if([post.subreddit.image boolValue]){
         cell.thumbnailImage.image = [self returnImageForCellFromData:post.subreddit.subreddit withSubredditNameForKey:post.subreddit.subreddit andFilePathPrefix:@"subreddit"];
     }else{
         cell.thumbnailImage.image = [UIImage imageNamed:@"snoo_camera_placeholder"];
@@ -389,7 +389,7 @@
 
 - (NSString *)documentsPathForFileName:(NSString *)name withPrefix:(NSString *)prefix
 {
-    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask, YES);
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSCachesDirectory,NSUserDomainMask, YES);
     NSString *documentsPath = [paths objectAtIndex:0];
 
     NSString *pathCompenent = [NSString stringWithFormat:@"%@-%@",prefix, name];

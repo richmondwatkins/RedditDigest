@@ -52,7 +52,7 @@
 
 - (NSData *)documentsPathForFileName:(NSString *)name
 {
-    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask, YES);
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
     NSString *documentsPath = [paths objectAtIndex:0];
 
     NSString *pathCompenent = [NSString stringWithFormat:@"image-%@", name];
