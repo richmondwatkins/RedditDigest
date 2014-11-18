@@ -741,7 +741,7 @@
                     </tableView>
                     <connections>
                         <outlet property="autoUpdatingSwitcher" destination="MIz-OR-cBX" id="VSo-ju-w6I"/>
-                        <outlet property="linkToPocketLabel" destination="jJT-iY-f3s" id="5Jm-YW-Okr"/>
+                        <outlet property="linkPocketLabel" destination="jJT-iY-f3s" id="Zut-Ih-63w"/>
                         <outlet property="locationSwitcher" destination="4EI-mw-U2U" id="DpE-FH-NUx"/>
                         <outlet property="loginLogoutLabel" destination="ks2-c6-pnf" id="cOa-C8-Xed"/>
                         <outlet property="tableView" destination="Ije-ZS-zQI" id="ZdU-7z-ice"/>

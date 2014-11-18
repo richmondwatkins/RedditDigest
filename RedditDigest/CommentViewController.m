@@ -201,11 +201,13 @@
                                                        type:TSMessageNotificationTypeError
                                                    duration:2.5];
             }
-            [TSMessage showNotificationInViewController:self.parentViewController
-                                                  title:@"Saved to Pocket!"
-                                               subtitle:nil
-                                                   type:TSMessageNotificationTypeSuccess
-                                               duration:1.5];
+            else {
+                [TSMessage showNotificationInViewController:self.parentViewController
+                                                      title:@"Saved to Pocket!"
+                                                   subtitle:nil
+                                                       type:TSMessageNotificationTypeSuccess
+                                                   duration:1.5];
+            }
         }];
     }
 }
