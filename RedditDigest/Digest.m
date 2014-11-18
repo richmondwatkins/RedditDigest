@@ -49,13 +49,13 @@
 
     for (DigestPost *post in digestPosts) {
         if ([post.image boolValue]) {
-            [self documentsPathForFileName:post.postID withPrefix:@"image-clone"];
+            [self documentsPathForFileName:post.postID withPrefix:@"image-copy"];
 
         }else if([post.thumbnailImagePath boolValue]){
-            [self documentsPathForFileName:post.postID withPrefix:@"thumbnail-clone"];
+            [self documentsPathForFileName:post.postID withPrefix:@"thumbnail-copy"];
 
         }else if([post.subredditImage boolValue]){
-            [self documentsPathForFileName:post.postID withPrefix:@"subreddit-clone"];
+            [self documentsPathForFileName:post.postID withPrefix:@"subreddit-copy"];
 
         }
     }
@@ -71,8 +71,8 @@
 
     NSString *pathCompenent = [NSString stringWithFormat:@"%@-%@",prefix, postID];
     NSString *filePath = [documentsPath stringByAppendingPathComponent:pathCompenent];
-
-    [fileManager removeItemAtPath:filePath error:nil];
+    BOOL test = [fileManager removeItemAtPath:filePath error:nil];
+    NSLog(@"DELETEEEEEEEE %@",test ? @"true" : @"false");
 }
 
 //NSFileManager *fileManager = [NSFileManager defaultManager];
