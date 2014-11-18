@@ -100,11 +100,11 @@
     {
         self.customNavBarContainerViewController = segue.destinationViewController;
         if ([RKClient sharedClient]) {
-            NSLog(@"Logged in");
+            self.customNavBarContainerViewController.userIsLoggedIn = YES;
         }
         else
         {
-            NSLog(@"Not logged in");
+            self.customNavBarContainerViewController.userIsLoggedIn = NO;
         }
     }
 }

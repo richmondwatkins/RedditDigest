@@ -18,6 +18,8 @@
 		345700D41A13B91B00FA6FC8 /* DetailPostViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 345700D31A13B91B00FA6FC8 /* DetailPostViewController.m */; };
 		346DB32E1A1A714E00E0C83B /* CommentsNavBarContainerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 346DB32D1A1A714E00E0C83B /* CommentsNavBarContainerViewController.m */; };
 		346DB3311A1A717100E0C83B /* EmptySegue.m in Sources */ = {isa = PBXBuildFile; fileRef = 346DB3301A1A717100E0C83B /* EmptySegue.m */; };
+		346DB3661A1ADD7600E0C83B /* CommentsNavBarLoggedInViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 346DB3651A1ADD7600E0C83B /* CommentsNavBarLoggedInViewController.m */; };
+		346DB3691A1ADD8300E0C83B /* CommentsNavBarLoggedOutViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 346DB3681A1ADD8300E0C83B /* CommentsNavBarLoggedOutViewController.m */; };
 		34D1B9371A081B4D00C0C15F /* WelcomViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 34D1B9361A081B4D00C0C15F /* WelcomViewController.m */; };
 		34D1B93A1A081D0C00C0C15F /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 34D1B9391A081D0C00C0C15F /* LoginViewController.m */; };
 		34D1B93C1A08463500C0C15F /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 34D1B93B1A08463500C0C15F /* Security.framework */; };
@@ -97,6 +99,10 @@
 		346DB32D1A1A714E00E0C83B /* CommentsNavBarContainerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CommentsNavBarContainerViewController.m; sourceTree = "<group>"; };
 		346DB32F1A1A717100E0C83B /* EmptySegue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EmptySegue.h; sourceTree = "<group>"; };
 		346DB3301A1A717100E0C83B /* EmptySegue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EmptySegue.m; sourceTree = "<group>"; };
+		346DB3641A1ADD7600E0C83B /* CommentsNavBarLoggedInViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CommentsNavBarLoggedInViewController.h; sourceTree = "<group>"; };
+		346DB3651A1ADD7600E0C83B /* CommentsNavBarLoggedInViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CommentsNavBarLoggedInViewController.m; sourceTree = "<group>"; };
+		346DB3671A1ADD8300E0C83B /* CommentsNavBarLoggedOutViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CommentsNavBarLoggedOutViewController.h; sourceTree = "<group>"; };
+		346DB3681A1ADD8300E0C83B /* CommentsNavBarLoggedOutViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CommentsNavBarLoggedOutViewController.m; sourceTree = "<group>"; };
 		34D1B9351A081B4D00C0C15F /* WelcomViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WelcomViewController.h; sourceTree = "<group>"; };
 		34D1B9361A081B4D00C0C15F /* WelcomViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WelcomViewController.m; sourceTree = "<group>"; };
 		34D1B9381A081D0C00C0C15F /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
@@ -299,6 +305,10 @@
 				5D311EDD1A10A359002AFC3C /* CommentTableViewCell.m */,
 				346DB32C1A1A714E00E0C83B /* CommentsNavBarContainerViewController.h */,
 				346DB32D1A1A714E00E0C83B /* CommentsNavBarContainerViewController.m */,
+				346DB3641A1ADD7600E0C83B /* CommentsNavBarLoggedInViewController.h */,
+				346DB3651A1ADD7600E0C83B /* CommentsNavBarLoggedInViewController.m */,
+				346DB3671A1ADD8300E0C83B /* CommentsNavBarLoggedOutViewController.h */,
+				346DB3681A1ADD8300E0C83B /* CommentsNavBarLoggedOutViewController.m */,
 				346DB32F1A1A717100E0C83B /* EmptySegue.h */,
 				346DB3301A1A717100E0C83B /* EmptySegue.m */,
 				3417AC0B1A092D970026961C /* SettingsViewController.h */,
@@ -616,6 +626,7 @@
 				5D5C12C61A05716E002902A8 /* AppDelegate.m in Sources */,
 				81D523811A0C0E710059C9B3 /* SettingsAboutRedditViewController.m in Sources */,
 				3413401D1A0C996F004C8C15 /* DigestCellWithImageTableViewCell.m in Sources */,
+				346DB3661A1ADD7600E0C83B /* CommentsNavBarLoggedInViewController.m in Sources */,
 				5DE75C9E1A0D92760031F0F7 /* GifPostViewController.m in Sources */,
 				346DB32E1A1A714E00E0C83B /* CommentsNavBarContainerViewController.m in Sources */,
 				34D1B93A1A081D0C00C0C15F /* LoginViewController.m in Sources */,
@@ -631,6 +642,7 @@
 				5DE75CA11A0D941D0031F0F7 /* VideoPostViewController.m in Sources */,
 				5D5C12CC1A05716E002902A8 /* DigestViewController.m in Sources */,
 				5D614E581A16F77A00A199A2 /* TFHppleElement.m in Sources */,
+				346DB3691A1ADD8300E0C83B /* CommentsNavBarLoggedOutViewController.m in Sources */,
 				5D614E611A1838A200A199A2 /* RecommendedSubredditsViewController.m in Sources */,
 				346DB3311A1A717100E0C83B /* EmptySegue.m in Sources */,
 				5D5C12C31A05716E002902A8 /* main.m in Sources */,

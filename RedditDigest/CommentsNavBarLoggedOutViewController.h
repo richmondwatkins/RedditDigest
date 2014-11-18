@@ -1,5 +1,5 @@
 //
-//  CommentsNavBarContainerViewController.h
+//  CommentsLoggedOutViewController.h
 //  RedditDigest
 //
 //  Created by Taylor Wright-Sanson on 11/17/14.
@@ -8,8 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface CommentsNavBarContainerViewController : UIViewController
-
-@property BOOL userIsLoggedIn;
+@interface CommentsNavBarLoggedOutViewController : UIViewController
 
 @end

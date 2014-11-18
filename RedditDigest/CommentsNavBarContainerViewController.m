@@ -7,12 +7,17 @@
 //
 
 #import "CommentsNavBarContainerViewController.h"
+#import "CommentsNavBarLoggedInViewController.h"
+#import "CommentsNavBarLoggedOutViewController.h"
 
-#define SegueIdentifierFirst @"embedFirst"
-#define SegueIdentifierSecond @"embedSecond"
+#define SegueIdentifierLoggedIn @"LoggedInSegue"
+#define SegueIdentifierLoggedOut @"LoggedOutSegue"
 
 @interface CommentsNavBarContainerViewController ()
 
+@property (strong, nonatomic) CommentsNavBarLoggedInViewController *loggedInViewController;
+@property (strong, nonatomic) CommentsNavBarLoggedOutViewController *loggedOutViewController;
+@property (assign, nonatomic) BOOL transitionInProgress;
 @property (strong, nonatomic) NSString *currentSegueIdentifier;
 
 @end
@@ -22,14 +27,18 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
-    self.currentSegueIdentifier = SegueIdentifierFirst;
+
+    self.currentSegueIdentifier = SegueIdentifierLoggedIn;
     [self performSegueWithIdentifier:self.currentSegueIdentifier sender:nil];
+
+    if (!self.userIsLoggedIn) {
+        [self swapViewControllers];
+    }
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-    if ([segue.identifier isEqualToString:SegueIdentifierFirst])
+    if ([segue.identifier isEqualToString:SegueIdentifierLoggedIn])
     {
         if (self.childViewControllers.count > 0) {
             [self swapFromViewController:[self.childViewControllers objectAtIndex:0] toViewController:segue.destinationViewController];
@@ -41,7 +50,7 @@
             [segue.destinationViewController didMoveToParentViewController:self];
         }
     }
-    else if ([segue.identifier isEqualToString:SegueIdentifierSecond])
+    else if ([segue.identifier isEqualToString:SegueIdentifierLoggedOut])
     {
         [self swapFromViewController:[self.childViewControllers objectAtIndex:0] toViewController:segue.destinationViewController];
     }
@@ -61,7 +70,7 @@
 
 - (void)swapViewControllers
 {
-    self.currentSegueIdentifier = (self.currentSegueIdentifier == SegueIdentifierFirst) ? SegueIdentifierSecond : SegueIdentifierFirst;
+    self.currentSegueIdentifier = ([self.currentSegueIdentifier  isEqual:SegueIdentifierLoggedIn]) ? SegueIdentifierLoggedOut : SegueIdentifierLoggedIn;
     [self performSegueWithIdentifier:self.currentSegueIdentifier sender:nil];
 }
 

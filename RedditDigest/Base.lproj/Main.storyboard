@@ -1746,10 +1746,10 @@
             </objects>
             <point key="canvasLocation" x="-1105" y="-465"/>
         </scene>
-        <!--View Controller-->
+        <!--Comments Nav Bar Logged Out View Controller-->
         <scene sceneID="I61-LX-bZ0">
             <objects>
-                <viewController automaticallyAdjustsScrollViewInsets="NO" id="FF9-J7-ihn" sceneMemberID="viewController">
+                <viewController automaticallyAdjustsScrollViewInsets="NO" id="FF9-J7-ihn" customClass="CommentsNavBarLoggedOutViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="Ldn-a7-F6A"/>
                         <viewControllerLayoutGuide type="bottom" id="4Qa-7B-5js"/>
@@ -1821,10 +1821,10 @@
             </objects>
             <point key="canvasLocation" x="-1105" y="-178"/>
         </scene>
-        <!--View Controller-->
+        <!--Comments Nav Bar Logged In View Controller-->
         <scene sceneID="YKg-j1-rgc">
             <objects>
-                <viewController automaticallyAdjustsScrollViewInsets="NO" id="Wo8-gQ-4sq" sceneMemberID="viewController">
+                <viewController automaticallyAdjustsScrollViewInsets="NO" id="Wo8-gQ-4sq" customClass="CommentsNavBarLoggedInViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="4mp-CX-3H1"/>
                         <viewControllerLayoutGuide type="bottom" id="rzf-0i-etg"/>
@@ -1833,7 +1833,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="44"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="BJK-6v-Qfg">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="BJK-6v-Qfg">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="44"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xfQ-Es-q2V">
