@@ -26,6 +26,7 @@
 #import <CoreLocation/CoreLocation.h>
 #import <AudioToolbox/AudioToolbox.h>
 #import "DigestPost.h"
+#import <ZeroPush.h>
 
 @interface DigestViewController () <UITableViewDataSource, UITableViewDelegate, DigestCellDelegate, CLLocationManagerDelegate>
 
@@ -652,6 +653,18 @@
     if (self.isComingFromSubredditSelectionView) {
         [Post removeAllPostsFromCoreData:self.managedObjectContext];
         [self.digestPosts removeAllObjects];
+
+        if(![[NSUserDefaults standardUserDefaults] boolForKey:@"HasSubscriptions"]){
+            UIApplication *application = [UIApplication sharedApplication];
+            
+            [ZeroPush engageWithAPIKey:@"PM4ouAj1rzxmQysu5ej6" delegate:application];
+            [[UIApplication sharedApplication] registerUserNotificationSettings:[UIUserNotificationSettings settingsForTypes:(UIUserNotificationTypeSound | UIUserNotificationTypeAlert | UIUserNotificationTypeBadge) categories:nil]];
+            [[ZeroPush shared] registerForRemoteNotifications];
+
+            [application registerUserNotificationSettings:[UIUserNotificationSettings settingsForTypes:(UIUserNotificationTypeSound | UIUserNotificationTypeAlert | UIUserNotificationTypeBadge) categories:nil]];
+
+            [application registerForRemoteNotifications];
+        }
 
         [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"HasSubscriptions"];
         [[NSUserDefaults standardUserDefaults] synchronize];
