@@ -129,12 +129,12 @@
             Subreddit *savedSubreddit = [NSEntityDescription insertNewObjectForEntityForName:@"Subreddit" inManagedObjectContext:managedObject];
             savedSubreddit.subreddit = selectedSubreddit.name;
             savedSubreddit.url = selectedSubreddit.URL;
-            savedSubreddit.isLocalSubreddit = [NSNumber numberWithBool:YES];
+//            savedSubreddit.isLocalSubreddit = [NSNumber numberWithBool:YES];
             if (selectedSubreddit.headerImageURL != nil) {
                 [NSURLConnection sendAsynchronousRequest:[NSURLRequest requestWithURL:selectedSubreddit.headerImageURL] queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
                     if (data) {
                         [self saveDataToDocumentsDirectory:data withFileNamePrefix:@"subreddit" andPostfix:savedSubreddit.subreddit];
-                        savedSubreddit.image = data;
+                        savedSubreddit.image = [NSNumber numberWithBool:YES];
                         [managedObject save:nil];
                     }
                 }];
