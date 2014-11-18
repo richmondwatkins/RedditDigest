@@ -375,6 +375,7 @@
 {
     DigestViewController *digestViewController = segue.destinationViewController;
     digestViewController.isComingFromSubredditSelectionView = YES;
+    digestViewController.isFromPastDigest = NO;
 }
 
 

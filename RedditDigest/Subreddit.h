@@ -19,6 +19,7 @@
 @property (nonatomic, retain) NSString * url;
 @property (nonatomic, retain) Post *post;
 @property (nonatomic, retain) NSNumber *isLocalSubreddit;
+
 +(void)addSubredditsToCoreData:(NSMutableArray *)selectedSubreddits withManagedObject:(NSManagedObjectContext *)managedObject;
 +(void)removeFromCoreData:(NSString *)subreddit withManagedObject:(NSManagedObjectContext *)managedObject;
 +(void)addSingleSubredditToCoreData:(RKSubreddit *)selectedSubreddit withManagedObject:(NSManagedObjectContext *)managedObject;

@@ -762,34 +762,37 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="smM-ck-meZ">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="9mV-fk-16F">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="DigestCell" id="rth-2h-3j3">
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="DigestCell" id="gRa-P1-bZx">
                                         <rect key="frame" x="0.0" y="0.0" width="600" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="rth-2h-3j3" id="JOG-Fv-cBX">
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="gRa-P1-bZx" id="sdn-8P-Uih">
                                             <autoresizingMask key="autoresizingMask"/>
                                         </tableViewCellContentView>
                                         <connections>
-                                            <segue destination="nKc-Mn-Ulc" kind="unwind" unwindAction="unwindFromSubredditSelectionViewController:" id="kB3-ef-JC1"/>
+                                            <segue destination="nKc-Mn-Ulc" kind="unwind" unwindAction="unwindFromSubredditSelectionViewController:" id="msU-U3-rcu"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
-                                <variation key="widthClass=compact" fixedFrame="YES">
-                                    <rect key="frame" x="0.0" y="0.0" width="0.0" height="0.0"/>
-                                </variation>
                                 <connections>
-                                    <outlet property="dataSource" destination="5pH-7p-oC6" id="gaI-jQ-6jn"/>
-                                    <outlet property="delegate" destination="5pH-7p-oC6" id="15u-el-euB"/>
+                                    <outlet property="dataSource" destination="5pH-7p-oC6" id="cw3-BG-wp3"/>
+                                    <outlet property="delegate" destination="5pH-7p-oC6" id="4cS-57-7nn"/>
                                 </connections>
                             </tableView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="9mV-fk-16F" firstAttribute="top" secondItem="oRb-Cx-j9t" secondAttribute="top" id="IVU-1p-sv4"/>
+                            <constraint firstItem="9mV-fk-16F" firstAttribute="leading" secondItem="oRb-Cx-j9t" secondAttribute="leading" id="Mh4-r7-GqA"/>
+                            <constraint firstItem="9mV-fk-16F" firstAttribute="bottom" secondItem="PjV-PM-jSq" secondAttribute="top" id="bPZ-j3-6fc"/>
+                            <constraint firstAttribute="trailing" secondItem="9mV-fk-16F" secondAttribute="trailing" id="vcx-sF-qbj"/>
+                        </constraints>
                     </view>
                     <connections>
-                        <outlet property="pastDigestTableView" destination="smM-ck-meZ" id="EVm-17-to7"/>
+                        <outlet property="pastDigestTableView" destination="9mV-fk-16F" id="8Fj-3b-yE6"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="6i8-IX-u2s" userLabel="First Responder" sceneMemberID="firstResponder"/>

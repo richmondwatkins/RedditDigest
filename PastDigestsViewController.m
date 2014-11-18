@@ -31,7 +31,7 @@
     NSArray *digests = [self.managedObject executeFetchRequest:fetchDigests error:nil];
     if (digests) {
         self.digests = digests;
-        NSLog(@"opwaifjwop %lu",(unsigned long)self.digests.count);
+        NSLog(@"Count %lu",(unsigned long)self.digests.count);
         [self.pastDigestTableView reloadData];
     }
 }
@@ -41,6 +41,7 @@
 }
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
+    
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"DigestCell"];
     Digest *digest = [self.digests objectAtIndex:indexPath.row];
 
