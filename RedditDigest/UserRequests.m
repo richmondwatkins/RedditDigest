@@ -13,6 +13,7 @@
 +(void)retrieveUsersSubredditswithCompletion:(void (^)(NSDictionary *results))complete{
     NSString *deviceString = [[NSUserDefaults standardUserDefaults] valueForKey:@"DeviceID"];
     NSString *urlString = [NSString stringWithFormat:@"http://192.168.1.4:3000/subreddits/%@",deviceString];
+
     NSURL *url = [[NSURL alloc] initWithString:[urlString stringByAddingPercentEscapesUsingEncoding:NSASCIIStringEncoding]];
 
     NSURLRequest *request = [NSURLRequest requestWithURL:url];
@@ -31,6 +32,7 @@
     NSString *deviceString = [[NSUserDefaults standardUserDefaults] valueForKey:@"DeviceID"];
     NSError *error;
     NSString *urlString = [NSString stringWithFormat:@"http://192.168.1.4:3000/subreddits/%@",  deviceString];
+
     NSMutableArray *subsArray = [NSMutableArray array];
     for (RKSubreddit *selectableSubbreddit in selectionsDictionary[@"subreddits"]) {
         NSDictionary *subredditDict = [[NSDictionary alloc] initWithObjectsAndKeys:selectableSubbreddit.name, @"subreddit", selectableSubbreddit.URL, @"url", nil];
@@ -60,7 +62,9 @@
 
 +(void)registerDevice:(NSString *)deviceID{
     NSString *deviceString = [NSString stringWithFormat:@"%@", deviceID];
+
     NSString* deviceURLString = @"http://192.168.1.4:3000/register/device";
+
     NSURL *url = [[NSURL alloc] initWithString:[deviceURLString stringByAddingPercentEscapesUsingEncoding:NSASCIIStringEncoding]];
     NSLog(@"INS URS RE %@",deviceID);
     NSError *error;
@@ -113,7 +117,9 @@
 +(void)retrieveRecommendedSubredditsWithCompletion:(void (^)(NSArray *results))complete{
 
     NSString *deviceString = [[NSUserDefaults standardUserDefaults] valueForKey:@"DeviceID"];
+
     NSString *urlString = [NSString stringWithFormat:@"http://192.168.1.4:3000/recommendations/%@", deviceString];
+
     NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:urlString]];
     [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
         if (!connectionError) {
