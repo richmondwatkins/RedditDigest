@@ -15,6 +15,7 @@
 #import "Subreddit.h"
 #import "RecommendedSubredditsViewController.h"
 #import "Digest.h"
+
 @interface SettingsViewController () <UITableViewDataSource, UITableViewDelegate, CLLocationManagerDelegate>
 
 @property (strong, nonatomic) IBOutlet UITableView *tableView;
@@ -24,6 +25,7 @@
 @property CLLocationCoordinate2D userLocation;
 @property (strong, nonatomic) IBOutlet UISwitch *locationSwitcher;
 @property (strong, nonatomic) IBOutlet UISwitch *autoUpdatingSwitcher;
+@property (weak, nonatomic) IBOutlet UILabel *linkToPocketLabel;
 
 @property (strong, nonatomic) IBOutlet UILabel *loginLogoutLabel;
 
@@ -37,29 +39,25 @@
 
     self.title = @"Settings";
 
+    [self setupLoginCell];
+    [self setupLocationCell];
+    [self setupAutoUpdatingCell];
+    [self setupLinkPocketCell];
+
+    [self retrievePastDigestFromCoreData];
+}
+
+#pragma mark - Login Credentials and Login or Logout
+
+- (void)setupLoginCell
+{
     if ([[NSUserDefaults standardUserDefaults] boolForKey:@"UserIsLoggedIn"]) {
         self.loginLogoutLabel.text = [@"Logout - " stringByAppendingString:[self findUserName]];
     }
     else {
         self.loginLogoutLabel.text = @"Login";
     }
-
-    if ([[NSUserDefaults standardUserDefaults] boolForKey:@"Location"]) {
-        self.locationSwitcher.on = YES;
-    }else{
-        self.locationSwitcher.on = NO;
-    }
-
-    if ([[NSUserDefaults standardUserDefaults] boolForKey:@"BackgroundFetch"]) {
-        self.autoUpdatingSwitcher.on = YES;
-    }else{
-        self.locationSwitcher.on = NO;
-    }
-
-    [self retrievePastDigestFromCoreData];
 }
-
-#pragma mark - Login Credentials and Login or Logout
 
 -(NSString *)findUserName
 {
@@ -87,8 +85,19 @@
 
 }
 
+#pragma mark - Location
 
-- (IBAction)switchLocalization:(UISwitch *)sender {
+- (void)setupLocationCell
+{
+    if ([[NSUserDefaults standardUserDefaults] boolForKey:@"Location"]) {
+        self.locationSwitcher.on = YES;
+    } else {
+        self.locationSwitcher.on = NO;
+    }
+}
+
+- (IBAction)switchLocalization:(UISwitch *)sender
+{
     if (sender.on) {
         [self.locationManger requestWhenInUseAuthorization];
 
@@ -100,17 +109,29 @@
     [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
-- (IBAction)switchAutoUpdating:(UISwitch *)sender {
+#pragma mark - Auto Updating
+
+- (void)setupAutoUpdatingCell
+{
+    if ([[NSUserDefaults standardUserDefaults] boolForKey:@"BackgroundFetch"]) {
+        self.autoUpdatingSwitcher.on = YES;
+    } else {
+        self.locationSwitcher.on = NO;
+    }
+}
+
+- (IBAction)switchAutoUpdating:(UISwitch *)sender
+{
     if (sender.on) {
         [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"BackgroundFetch"];
-    }else{
+    } else {
         [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"BackgroundFetch"];
     }
     [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
-
--(void)retrievePastDigestFromCoreData{
+-(void)retrievePastDigestFromCoreData
+{
     NSFetchRequest *fetchDigests = [[NSFetchRequest alloc] initWithEntityName:@"Digest"];
     NSSortDescriptor *sorter = [[NSSortDescriptor alloc] initWithKey:@"time" ascending:NO];
     [fetchDigests setSortDescriptors:@[sorter]];
@@ -120,6 +141,8 @@
         NSLog(@"DIGESTSSS %@",digest.digestPost);
     }
 }
+
+#pragma mark - Table View Delegate Methods
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -132,6 +155,8 @@
         }
     }
 }
+
+#pragma mark -  Segue
 
 - (BOOL)shouldPerformSegueWithIdentifier:(NSString *)identifier sender:(id)sender
 {
@@ -146,7 +171,14 @@
     return YES;
 }
 
-#pragma mark - Segue
+#pragma mark - Link With Pocket
+
+- (void)setupLinkPocketCell
+{
+    self.linkToPocketLabel.text = @"Link Pocket";
+    self.linkToPocketLabel.text = @"Unlink Pocket";
+}
+
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
 
     if ([segue.identifier isEqualToString:@"SubredditCollectionView"]) {
