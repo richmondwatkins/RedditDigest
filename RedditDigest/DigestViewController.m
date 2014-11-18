@@ -424,7 +424,7 @@
     }
 }
 
--(NSString *)abbreviateNumber:(int)num
+-(NSString *)abbreviateNumber:(NSInteger)num
 {
     NSString *abbrevNum;
     float number = (float)num;
@@ -433,7 +433,7 @@
     if (num >= 1000) {
         NSArray *abbrev = @[@"k", @"m", @"b"];
 
-        for (int i = abbrev.count - 1; i >= 0; i--)
+        for (NSInteger i = abbrev.count - 1; i >= 0; i--)
         {
             // Convert array index to "1000", "1000000", etc
             int size = pow(10,(i+1)*3);
