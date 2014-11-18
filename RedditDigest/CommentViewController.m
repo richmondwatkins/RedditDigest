@@ -198,7 +198,7 @@
                 [TSMessage showNotificationInViewController:self.parentViewController
                                                       title:@"Error Saving to Pocket!"
                                                    subtitle:@"Try again later"
-                                                       type:TSMessageNotificationTypeSuccess
+                                                       type:TSMessageNotificationTypeError
                                                    duration:2.5];
             }
             [TSMessage showNotificationInViewController:self.parentViewController
