@@ -674,7 +674,7 @@
     }
 
     [self.imageCache removeAllObjects];
-    self.isFromPastDigest = NO;
+//    self.isFromPastDigest = NO;
 }
 
 -(IBAction)unwindFromSubredditSelectionViewController:(UIStoryboardSegue *)segue

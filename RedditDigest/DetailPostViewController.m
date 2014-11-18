@@ -134,17 +134,17 @@
 - (void)loadCommentsFromSelectedPost:(NSUInteger)index
 {
     if (!self.isFromPastDigest) {
-        if (!self.isFromPastDigest) {
-            if ((index <= 0) || (index == NSNotFound)) {
-                index = self.allPosts.count;
-            }
-
-            if (index >= self.allPosts.count) {
-                index = 0;
-            }
-            Post *post = self.allPosts[index];
-            [self.commentsViewController reloadTableWithCommentsFromCurrentPost:post];
+        if ((index <= 0) || (index == NSNotFound)) {
+            index = self.allPosts.count;
         }
+
+        if (index >= self.allPosts.count) {
+            index = 0;
+        }
+        Post *post = self.allPosts[index];
+        [self.commentsViewController reloadTableWithCommentsFromCurrentPost:post];
+    }else{
+        self.commentsViewController.isFromPastDigest = YES;
     }
 }
 

@@ -52,34 +52,45 @@
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     CommentTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"CommentCell"];
-    NSDictionary *commentDictionary = self.comments[indexPath.row];
-    Comment *comment = commentDictionary[@"parent"];
 
-    NSString *partialComment = [self textToHtml:comment.body withCell:cell andComment:comment];
-    cell.commentTextView.text = comment.html;
-   // [cell.commentTextView sizeToFit];
-    //self.cellHeight = cell.commentTextView.frame.size.height;
+    if (self.isFromPastDigest) {
+        cell.commentTextView.text = @"Comments are not available for archived digests.";
+        cell.hiddenLabelForCellSize.text = @"Comments are not available for archived digests.";
+    }else{
+        NSDictionary *commentDictionary = self.comments[indexPath.row];
+        Comment *comment = commentDictionary[@"parent"];
 
-    cell.commentTextView.delegate = self;
-    cell.commentTextView.scrollEnabled = NO;
-    cell.commentTextView.text = partialComment;
-    // This label is used to make the cell apear the correct size. Then it is hidden. The content is
-    // shown in the textView
-    cell.hiddenLabelForCellSize.text = partialComment;
-    cell.comment = comment;
+        NSString *partialComment = [self textToHtml:comment.body withCell:cell andComment:comment];
+        cell.commentTextView.text = comment.html;
+        // [cell.commentTextView sizeToFit];
+        //self.cellHeight = cell.commentTextView.frame.size.height;
 
-    if (indexPath.row % 2) {
-        cell.commentTextView.backgroundColor = [UIColor whiteColor];
-    } else {
-        cell.commentTextView.backgroundColor = [UIColor colorWithRed:0.937 green:0.969 blue:1 alpha:1];
+        cell.commentTextView.delegate = self;
+        cell.commentTextView.text = partialComment;
+        // This label is used to make the cell apear the correct size. Then it is hidden. The content is
+        // shown in the textView
+        cell.hiddenLabelForCellSize.text = partialComment;
+        cell.comment = comment;
+
+        if (indexPath.row % 2) {
+            cell.commentTextView.backgroundColor = [UIColor whiteColor];
+        } else {
+            cell.commentTextView.backgroundColor = [UIColor colorWithRed:0.937 green:0.969 blue:1 alpha:1];
+        }
     }
+
+    cell.commentTextView.scrollEnabled = NO;
 
     return cell;
 }
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return self.comments.count;
+    if (self.isFromPastDigest) {
+        return 1;
+    }else{
+        return self.comments.count;
+    }
 }
 
 -(BOOL)textView:(UITextView *)textView shouldInteractWithURL:(NSURL *)URL inRange:(NSRange)characterRange{
