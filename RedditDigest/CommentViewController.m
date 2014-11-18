@@ -161,14 +161,16 @@
 }
 
 #pragma mark - Voting
-- (IBAction)onDownVoteButtonPressed:(id)sender
+- (IBAction)onDownVoteButtonPressed:(UIButton *)downVoteButton
 {
-
+    [downVoteButton setImage:[UIImage imageNamed:@"down_arrow_selected"] forState:UIControlStateNormal];
+    [self.upVoteButton setImage:[UIImage imageNamed:@"up_arrow"] forState:UIControlStateNormal];
 }
 
-- (IBAction)onUpVoteButtonPressed:(id)sender
+- (IBAction)onUpVoteButtonPressed:(UIButton *)upVoteButton
 {
-
+    [upVoteButton setImage:[UIImage imageNamed:@"up_arrow_selected"] forState:UIControlStateNormal];
+    [self.downVoteButton setImage:[UIImage imageNamed:@"down_arrow"] forState:UIControlStateNormal];
 }
 
 #pragma mark - Share
