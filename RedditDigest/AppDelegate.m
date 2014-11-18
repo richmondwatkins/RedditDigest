@@ -23,6 +23,7 @@
 #import <SSKeychain/SSKeychain.h>
 #import <RedditKit/RedditKit.h>
 #import "UserRequests.h"
+#import "Digest.h"
 @interface AppDelegate ()
 @property (nonatomic, strong) NSString *temperature;
 @property NSString *deviceString;
@@ -78,7 +79,6 @@
     // White nav bar text color - font Helvetica Neue Regular
     [[UINavigationBar appearance] setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor whiteColor],
                                                                       NSFontAttributeName : [UIFont fontWithName:@"Avenir-Medium" size:18.0]}];
-
     [[UINavigationBar appearance] setTranslucent:NO];
 
     // White status bar
@@ -92,6 +92,42 @@
     [UserRequests registerDeviceForPushNotifications:token];
 }
 
+- (void)application:(UIApplication *)application didRegisterUserNotificationSettings:(UIUserNotificationSettings *)notificationSettings{
+
+    NSCalendar *morningCalendar = [NSCalendar currentCalendar];
+    NSDateComponents *morningComponents = [[NSDateComponents alloc] init];
+    [morningComponents setHour: 8];
+    [morningComponents setMinute: 0];
+    [morningComponents setSecond: 0];
+    [morningComponents setTimeZone: [NSTimeZone defaultTimeZone]];
+    NSDate *morningDigest= [morningCalendar dateFromComponents:morningComponents];
+
+    UILocalNotification* morningNotification = [[UILocalNotification alloc] init];
+    morningNotification.fireDate = morningDigest;
+    morningNotification.timeZone = [NSTimeZone defaultTimeZone];
+    morningNotification.repeatInterval = NSCalendarUnitDay;
+    morningNotification.alertBody = @"Your reddit digest is ready for viewing";
+    morningNotification.applicationIconBadgeNumber = [[UIApplication sharedApplication] applicationIconBadgeNumber] + 1;
+    [[UIApplication sharedApplication] scheduleLocalNotification:morningNotification];
+
+    NSCalendar *afternoonCalendar = [NSCalendar currentCalendar];
+    NSDateComponents *afternoonComponents = [[NSDateComponents alloc] init];
+    [afternoonComponents setHour: 18];
+    [afternoonComponents setMinute: 0];
+    [afternoonComponents setSecond: 0];
+    [afternoonComponents setTimeZone: [NSTimeZone defaultTimeZone]];
+    NSDate *afternoonDigest = [afternoonCalendar dateFromComponents:afternoonComponents];
+
+    UILocalNotification* afternoonNotification = [[UILocalNotification alloc] init];
+    afternoonNotification.fireDate = afternoonDigest;
+    afternoonNotification.timeZone = [NSTimeZone defaultTimeZone];
+    afternoonNotification.repeatInterval = NSCalendarUnitDay;
+    afternoonNotification.alertBody = @"Your reddit digest is ready for viewing";
+    afternoonNotification.applicationIconBadgeNumber = [[UIApplication sharedApplication] applicationIconBadgeNumber] + 1;
+    [[UIApplication sharedApplication] scheduleLocalNotification:afternoonNotification];
+
+}
+
 
 -(void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error {
     NSLog(@"%@", error.localizedDescription);
@@ -100,15 +136,22 @@
 
 -(void)reloadFromCoreDataOrFetch:(DigestViewController *)digestController{
 
-    NSNumber *lastDigest = [[NSUserDefaults standardUserDefaults] valueForKey:@"LastDigest"];
-    NSNumber *lastScheduled = [[NSUserDefaults standardUserDefaults] valueForKey:@"LastScheduledDigest"];
-    NSLog(@"LAST DIGEST %i",lastDigest.intValue);
-    NSLog(@"LAST SCHEDULED %i",lastScheduled.intValue);
+    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:@"Digest"];
+    NSSortDescriptor *sorter = [[NSSortDescriptor alloc] initWithKey:@"time" ascending:NO];
+    [fetchRequest setSortDescriptors:@[sorter]];
 
-    if (lastScheduled.intValue < lastDigest.intValue) {
-        [digestController performNewFetchedDataActions:NO]; //retrieves from core data and reloads table
-    }else{
-        [digestController requestNewLinks:YES];
+    NSArray *results = [self.managedObjectContext executeFetchRequest:fetchRequest error:nil];
+
+    if (results.count) {
+        Digest *lastDigest = results.firstObject;
+
+        NSTimeInterval currentTime = [[NSDate date] timeIntervalSince1970];
+
+        if (currentTime - 3600000 > lastDigest.time.doubleValue) {
+            [digestController requestNewLinks:YES];
+        }else{
+            [digestController performNewFetchedDataActions:YES];
+        }
     }
 }
 
@@ -121,28 +164,6 @@
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
     [userDefaults setObject:uuidStr forKey:@"DeviceID"];
 
-    NSCalendar *calendar = [NSCalendar currentCalendar];
-    NSDateComponents *eveningComponents = [calendar components:NSCalendarUnitDay|NSCalendarUnitMonth|NSCalendarUnitYear fromDate:[NSDate date]];
-    eveningComponents.hour = 20;
-    eveningComponents.timeZone = [NSTimeZone localTimeZone];
-    NSDate *eveningDate = [calendar dateFromComponents:eveningComponents];
-    NSTimeInterval eveningDigest = [eveningDate timeIntervalSince1970];
-
-    NSDateComponents *morningComponents = [calendar components:NSCalendarUnitDay|NSCalendarUnitMonth|NSCalendarUnitYear fromDate:[NSDate date]];
-    morningComponents.hour = 8;
-    morningComponents.timeZone = [NSTimeZone localTimeZone];
-    NSDate *morningDate = [calendar dateFromComponents:morningComponents];
-    NSTimeInterval morningDigest = [morningDate timeIntervalSince1970];
-
-    NSTimeInterval now = [[NSDate date] timeIntervalSince1970];
-    if (now < eveningDigest) {
-        [userDefaults setObject:[NSNumber numberWithDouble:eveningDigest] forKey:@"NextDigest"];
-        [userDefaults setObject:[NSNumber numberWithDouble:morningDigest] forKey:@"LastScheduled"];
-    }else{
-        [userDefaults setObject:[NSNumber numberWithDouble:morningDigest] forKey:@"NextDigest"];
-        [userDefaults setObject:[NSNumber numberWithDouble:eveningDigest] forKey:@"LastScheduledDigest"];
-    }
-    [userDefaults setObject:[NSNumber numberWithDouble:now] forKey:@"LastDigest"];
     [userDefaults synchronize];
     [UserRequests registerDevice:uuidStr];
 }
@@ -208,6 +229,8 @@
 
 - (void)application:(UIApplication *)application didReceiveLocalNotification:(UILocalNotification *)notification
 {
+    DigestViewController *digestViewController = [(id)self.window.rootViewController viewControllers][0];
+    [self reloadFromCoreDataOrFetch:digestViewController];
     [[UIApplication sharedApplication] setApplicationIconBadgeNumber:0];
 }
 

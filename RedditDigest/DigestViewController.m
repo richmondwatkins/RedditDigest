@@ -554,48 +554,9 @@
     [RedditRequests retrieveLatestPostFromArray:subreddits withManagedObject:self.managedObjectContext  withCompletion:^(BOOL completed) {
         [self performNewFetchedDataActions:isDigest];
         completionHandler(UIBackgroundFetchResultNewData);
-        [self fireLocalNotificationAndMarkComplete];
     }];
 }
 
--(void)fireLocalNotificationAndMarkComplete
-{
-    UILocalNotification* localNotification = [[UILocalNotification alloc] init];
-    localNotification.fireDate = [NSDate dateWithTimeIntervalSinceNow:1];
-    localNotification.timeZone = [NSTimeZone defaultTimeZone];
-    localNotification.alertBody = @"Your reddit digest is ready for viewing";
-    localNotification.applicationIconBadgeNumber = [[UIApplication sharedApplication] applicationIconBadgeNumber] + 1;
-    [[UIApplication sharedApplication] scheduleLocalNotification:localNotification];
-
-    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-    NSTimeInterval timeInMiliseconds = [[NSDate date] timeIntervalSince1970];
-    NSNumber *timeObject = [NSNumber numberWithDouble:timeInMiliseconds];
-    [userDefaults setObject:timeObject forKey:@"LastDigest"];
-
-    NSNumber *currentDigest = [userDefaults objectForKey:@"NextDigest"];
-    [userDefaults setObject:currentDigest forKey:@"LastScheduled"];
-
-    NSCalendar *calendar = [NSCalendar currentCalendar];
-    NSDateComponents *eveningComponents = [calendar components:NSCalendarUnitDay|NSCalendarUnitMonth|NSCalendarUnitYear fromDate:[NSDate date]];
-    eveningComponents.hour = 20;
-    eveningComponents.timeZone = [NSTimeZone localTimeZone];
-    NSDate *eveningDate = [calendar dateFromComponents:eveningComponents];
-    NSTimeInterval eveningDigest = [eveningDate timeIntervalSince1970];
-
-    NSDateComponents *morningComponents = [calendar components:NSCalendarUnitDay|NSCalendarUnitMonth|NSCalendarUnitYear fromDate:[NSDate date]];
-    morningComponents.hour = 8;
-    morningComponents.timeZone = [NSTimeZone localTimeZone];
-    NSDate *morningDate = [calendar dateFromComponents:morningComponents];
-    NSTimeInterval morningDigest = [morningDate timeIntervalSince1970];
-
-    NSTimeInterval now = [[NSDate date] timeIntervalSince1970];
-    if (now < eveningDigest) {
-        [userDefaults setObject:[NSNumber numberWithDouble:eveningDigest] forKey:@"NextDigest"];
-    }else{
-        [userDefaults setObject:[NSNumber numberWithDouble:morningDigest] forKey:@"NextDigest"];
-    [userDefaults synchronize];
-    }
-}
 
 -(void)retrievePostsFromCoreData:(BOOL)isDigest withCompletion:(void (^)(BOOL))completionHandler
 {

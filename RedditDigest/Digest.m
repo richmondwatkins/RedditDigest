@@ -75,12 +75,5 @@
     NSLog(@"DELETEEEEEEEE %@",test ? @"true" : @"false");
 }
 
-//NSFileManager *fileManager = [NSFileManager defaultManager];
-//NSString *documentsPath = [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) objectAtIndex:0];
-//
-//NSString *filePath = [documentsPath stringByAppendingPathComponent:[NSString stringWithFormat:@"image-%@", fileName]];
-//
-//NSError *error;
-//[fileManager removeItemAtPath:filePath error:&error];
 
 @end
