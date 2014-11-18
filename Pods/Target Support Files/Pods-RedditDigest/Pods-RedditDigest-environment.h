@@ -54,6 +54,12 @@
 #define COCOAPODS_VERSION_MINOR_FLAnimatedImage 0
 #define COCOAPODS_VERSION_PATCH_FLAnimatedImage 4
 
+// HexColors
+#define COCOAPODS_POD_AVAILABLE_HexColors
+#define COCOAPODS_VERSION_MAJOR_HexColors 2
+#define COCOAPODS_VERSION_MINOR_HexColors 2
+#define COCOAPODS_VERSION_PATCH_HexColors 1
+
 // Mantle
 #define COCOAPODS_POD_AVAILABLE_Mantle
 #define COCOAPODS_VERSION_MAJOR_Mantle 1
@@ -83,6 +89,12 @@
 #define COCOAPODS_VERSION_MAJOR_SSKeychain 1
 #define COCOAPODS_VERSION_MINOR_SSKeychain 2
 #define COCOAPODS_VERSION_PATCH_SSKeychain 2
+
+// TSMessages
+#define COCOAPODS_POD_AVAILABLE_TSMessages
+#define COCOAPODS_VERSION_MAJOR_TSMessages 0
+#define COCOAPODS_VERSION_MINOR_TSMessages 9
+#define COCOAPODS_VERSION_PATCH_TSMessages 11
 
 // ZeroPush
 #define COCOAPODS_POD_AVAILABLE_ZeroPush

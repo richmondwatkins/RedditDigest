@@ -9,6 +9,7 @@ pod 'RedditKit', '1.3'
 pod 'SSKeychain'
 pod 'FLAnimatedImage', '~> 1.0'
 pod 'PocketAPI'
+pod 'TSMessages'
 end
 
 target 'RedditDigestTests' do

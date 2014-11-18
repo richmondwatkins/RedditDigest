@@ -11,6 +11,7 @@
 #import "Post.h"
 #import "TextViewWebViewController.h"
 #import "PocketAPI.h"
+#import "TSMessage.h"
 
 @interface CommentViewController () <UITableViewDelegate, UITableViewDataSource, UITextViewDelegate, UITabBarControllerDelegate, UITextViewDelegate, UIActionSheetDelegate>
 
@@ -189,12 +190,22 @@
 
 -(void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex{
     if (buttonIndex == 0) {
+        // Save post url to Pocket
         NSURL *url = [NSURL URLWithString:self.post.url];
         [[PocketAPI sharedAPI] saveURL:url handler:^(PocketAPI *api, NSURL *url, NSError *error) {
             if (error) {
                 NSLog(@"Error saving to Pocket %@", error.localizedDescription);
+                [TSMessage showNotificationInViewController:self.parentViewController
+                                                      title:@"Error Saving to Pocket!"
+                                                   subtitle:@"Try again later"
+                                                       type:TSMessageNotificationTypeSuccess
+                                                   duration:2.5];
             }
-            NSLog(@"Saved to Pocket!");
+            [TSMessage showNotificationInViewController:self.parentViewController
+                                                  title:@"Saved to Pocket!"
+                                               subtitle:nil
+                                                   type:TSMessageNotificationTypeSuccess
+                                               duration:1.5];
         }];
     }
 }
