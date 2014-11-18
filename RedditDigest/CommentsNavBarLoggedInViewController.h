@@ -8,6 +8,14 @@
 
 #import <UIKit/UIKit.h>
 
+@protocol CommentsNavBarLoggedInViewController <NSObject>
+
+- (void)onCommentsButtonTapped:(UITapGestureRecognizer *)tapGesture;
+
+@end
+
 @interface CommentsNavBarLoggedInViewController : UIViewController
+
+@property id<CommentsNavBarLoggedInViewController>delegate;
 
 @end

@@ -100,6 +100,7 @@
     else if ([segue.identifier isEqualToString:@"CustomNavBarViewControllerSegue"])
     {
         self.customNavBarContainerViewController = segue.destinationViewController;
+        //self.customNavBarContainerViewController.delegate = self;
         if ([RKClient sharedClient]) {
             self.customNavBarContainerViewController.userIsLoggedIn = YES;
         }
@@ -109,15 +110,6 @@
         }
     }
 }
-
-//- (IBAction)swapButtonPressed:(id)sender;
-
-//
-//- (IBAction)swapButtonPressed:(id)sender
-//{
-//    [self.containerViewController swapViewControllers];
-//}
-
 
 - (NSString*)textToHtml:(NSString*)string withCell:(CommentTableViewCell *)cell andComment:(Comment *)comment
 {
@@ -129,11 +121,6 @@
 
     return string;
 }
-
-//- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
-//{
-//    return self.cellHeight;
-//}
 
 - (void)reloadTableWithCommentsFromCurrentPost:(Post *)selectedPost
 {

@@ -8,8 +8,13 @@
 
 #import <UIKit/UIKit.h>
 
+//@protocol CommentsNavBarContainerViewControllerDelegate <NSObject>
+
+//@end
+
 @interface CommentsNavBarContainerViewController : UIViewController
 
 @property BOOL userIsLoggedIn;
+//@property id<CommentsNavBarContainerViewControllerDelegate>delegate;
 
 @end

@@ -1962,6 +1962,10 @@
                     <toolbarItems/>
                     <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
                     <size key="freeformSize" width="600" height="44"/>
+                    <connections>
+                        <outlet property="commentsHeightConstraint" destination="Cav-c2-9GA" id="985-UZ-9ho"/>
+                        <outlet property="commentsUpDownButton" destination="p0r-YO-JHs" id="rzb-ao-zca"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="MTb-zJ-HEh" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

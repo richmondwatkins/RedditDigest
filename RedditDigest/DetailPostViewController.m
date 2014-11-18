@@ -18,6 +18,7 @@
 #import "CommentViewController.h"
 #import "Comment.h"
 #import "ChildComment.h"
+#import "CommentsNavBarLoggedInViewController.h"
 
 @interface DetailPostViewController () <UIGestureRecognizerDelegate>
 
@@ -64,7 +65,7 @@
     panGestureRecognizer.delegate = self;
     [self.commentsViewController.view addGestureRecognizer:panGestureRecognizer];
 
-    UITapGestureRecognizer *tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(onTapGesture:)];
+    UITapGestureRecognizer *tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(onCommentsButtonTapped:)];
     tapGestureRecognizer.delegate = self;
     [self.commentsViewController.showHideCommentsViewButton addGestureRecognizer:tapGestureRecognizer];
 }
@@ -274,7 +275,7 @@
 }
 
 // Tap gesture to show/hide comments
-- (void)onTapGesture:(UITapGestureRecognizer *)tapGesture
+- (void)onCommentsButtonTapped:(UITapGestureRecognizer *)tapGesture
 {
     switch (tapGesture.state)
     {
