@@ -14,7 +14,7 @@
 @interface DigestPost : NSManagedObject
 
 @property (nonatomic, retain) NSNumber * totalComments;
-@property (nonatomic, retain) NSNumber * voteRaio;
+@property (nonatomic, retain) NSNumber * voteRatio;
 @property (nonatomic, retain) NSString * author;
 @property (nonatomic, retain) NSString * domain;
 @property (nonatomic, retain) NSString * html;
@@ -28,9 +28,11 @@
 @property (nonatomic, retain) NSNumber * isWebPage;
 @property (nonatomic, retain) NSNumber * isYouTube;
 @property (nonatomic, retain) NSNumber * nsfw;
-@property (nonatomic, retain) NSString * imagePath;
-@property (nonatomic, retain) NSString * thumbnailImagePath;
+@property (nonatomic, retain) NSNumber * image;
+@property (nonatomic, retain) NSNumber * thumbnailImagePath;
 @property (nonatomic, retain) Digest *digest;
+@property (nonatomic, retain) NSString * subreddit;
+@property (nonatomic, retain) NSNumber * subredditImage;
 
 +(void)createNewDigestPosts:(NSArray *)posts withManagedObject:(NSManagedObjectContext *)managedObject;
 

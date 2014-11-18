@@ -27,7 +27,7 @@
         <attribute name="author" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="domain" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="html" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="imagePath" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="image" optional="YES" attributeType="Boolean" syncable="YES"/>
         <attribute name="isGif" optional="YES" attributeType="Boolean" syncable="YES"/>
         <attribute name="isImageLink" optional="YES" attributeType="Boolean" syncable="YES"/>
         <attribute name="isSelfPost" optional="YES" attributeType="Boolean" syncable="YES"/>
@@ -36,11 +36,13 @@
         <attribute name="nsfw" optional="YES" attributeType="Boolean" syncable="YES"/>
         <attribute name="postID" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="selfText" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="thumbnailImagePath" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="subreddit" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="subredditImage" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="thumbnailImagePath" optional="YES" attributeType="Boolean" syncable="YES"/>
         <attribute name="title" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="totalComments" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
         <attribute name="url" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="voteRaio" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="voteRatio" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
         <relationship name="digest" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Digest" inverseName="digestPost" inverseEntity="Digest" syncable="YES"/>
     </entity>
     <entity name="Post" representedClassName="Post" syncable="YES">
@@ -48,7 +50,7 @@
         <attribute name="domain" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="downvoted" optional="YES" attributeType="Boolean" syncable="YES"/>
         <attribute name="html" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="image" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="image" optional="YES" attributeType="Boolean" syncable="YES"/>
         <attribute name="isGif" optional="YES" attributeType="Boolean" syncable="YES"/>
         <attribute name="isImageLink" optional="YES" attributeType="Boolean" defaultValueString="0" syncable="YES"/>
         <attribute name="isLocalPost" optional="YES" attributeType="Boolean" syncable="YES"/>
@@ -81,7 +83,7 @@
         <element name="Comment" positionX="-63" positionY="99" width="128" height="135"/>
         <element name="Digest" positionX="-54" positionY="135" width="128" height="90"/>
         <element name="DigestCategory" positionX="-45" positionY="144" width="128" height="75"/>
-        <element name="DigestPost" positionX="-54" positionY="135" width="128" height="313"/>
+        <element name="DigestPost" positionX="-54" positionY="135" width="128" height="343"/>
         <element name="Post" positionX="-63" positionY="-18" width="128" height="388"/>
         <element name="Subreddit" positionX="-54" positionY="117" width="128" height="133"/>
     </elements>

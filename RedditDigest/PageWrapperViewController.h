@@ -17,9 +17,10 @@
 @property NSString *selfPostText;
 @property NSData *imageData;
 @property Post *post;
+@property NSString *postID;
 @property int sourceViewIdentifier;
 @property NSMutableArray *comments;
-
+@property BOOL isOldDigest;
 @property UINavigationController *navController;
 
 @end

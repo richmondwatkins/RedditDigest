@@ -1,2829 +1,920 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
-<plist version="1.0">
-<dict>
-	<key>archiveVersion</key>
-	<string>1</string>
-	<key>classes</key>
-	<dict/>
-	<key>objectVersion</key>
-	<string>46</string>
-	<key>objects</key>
-	<dict>
-		<key>0C4AAC9EB76DD8D441DD99F5</key>
-		<dict>
-			<key>includeInIndex</key>
-			<string>1</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>text.xcconfig</string>
-			<key>name</key>
-			<string>Pods-RedditDigest.debug.xcconfig</string>
-			<key>path</key>
-			<string>Pods/Target Support Files/Pods-RedditDigest/Pods-RedditDigest.debug.xcconfig</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>3400A13A1A0EB30F00A39D3F</key>
-		<dict>
-			<key>children</key>
-			<array>
-				<string>34D1B9351A081B4D00C0C15F</string>
-				<string>34D1B9361A081B4D00C0C15F</string>
-				<string>34D1B9381A081D0C00C0C15F</string>
-				<string>34D1B9391A081D0C00C0C15F</string>
-				<string>3400A13B1A0EB50D00A39D3F</string>
-				<string>3400A13C1A0EB50D00A39D3F</string>
-			</array>
-			<key>isa</key>
-			<string>PBXGroup</string>
-			<key>name</key>
-			<string>Welcome &amp; Login Views</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>3400A13B1A0EB50D00A39D3F</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.h</string>
-			<key>path</key>
-			<string>CustomButton.h</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>3400A13C1A0EB50D00A39D3F</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.objc</string>
-			<key>path</key>
-			<string>CustomButton.m</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>3400A13D1A0EB50D00A39D3F</key>
-		<dict>
-			<key>fileRef</key>
-			<string>3400A13C1A0EB50D00A39D3F</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>340531EB1A1312AE000CF33C</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.h</string>
-			<key>path</key>
-			<string>CommentViewController.h</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>340531EC1A1312AE000CF33C</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.objc</string>
-			<key>path</key>
-			<string>CommentViewController.m</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>340531ED1A1312AE000CF33C</key>
-		<dict>
-			<key>fileRef</key>
-			<string>340531EC1A1312AE000CF33C</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>341340191A0C9925004C8C15</key>
-		<dict>
-			<key>children</key>
-			<array>
-				<string>5D5C12CA1A05716E002902A8</string>
-				<string>5D5C12CB1A05716E002902A8</string>
-				<string>3413401A1A0C993F004C8C15</string>
-			</array>
-			<key>isa</key>
-			<string>PBXGroup</string>
-			<key>name</key>
-			<string>Digest View</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>3413401A1A0C993F004C8C15</key>
-		<dict>
-			<key>children</key>
-			<array>
-				<string>3413401B1A0C996F004C8C15</string>
-				<string>3413401C1A0C996F004C8C15</string>
-			</array>
-			<key>isa</key>
-			<string>PBXGroup</string>
-			<key>name</key>
-			<string>Digest Cells</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>3413401B1A0C996F004C8C15</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.h</string>
-			<key>path</key>
-			<string>DigestCellWithImageTableViewCell.h</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>3413401C1A0C996F004C8C15</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.objc</string>
-			<key>path</key>
-			<string>DigestCellWithImageTableViewCell.m</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>3413401D1A0C996F004C8C15</key>
-		<dict>
-			<key>fileRef</key>
-			<string>3413401C1A0C996F004C8C15</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>3413FC331A11172C0018A172</key>
-		<dict>
-			<key>children</key>
-			<array>
-				<string>3413FC341A1117490018A172</string>
-				<string>3413FC351A1117490018A172</string>
-			</array>
-			<key>isa</key>
-			<string>PBXGroup</string>
-			<key>name</key>
-			<string>Loading View</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>3413FC341A1117490018A172</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.h</string>
-			<key>path</key>
-			<string>LoadingViewController.h</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>3413FC351A1117490018A172</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.objc</string>
-			<key>path</key>
-			<string>LoadingViewController.m</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>3413FC361A1117490018A172</key>
-		<dict>
-			<key>fileRef</key>
-			<string>3413FC351A1117490018A172</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>3417AC0B1A092D970026961C</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.h</string>
-			<key>path</key>
-			<string>SettingsViewController.h</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>3417AC0C1A092D970026961C</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.objc</string>
-			<key>path</key>
-			<string>SettingsViewController.m</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>3417AC0D1A092D970026961C</key>
-		<dict>
-			<key>fileRef</key>
-			<string>3417AC0C1A092D970026961C</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>3417AC0E1A092EBA0026961C</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>file.xib</string>
-			<key>name</key>
-			<string>SubredditSelectionCell.xib</string>
-			<key>path</key>
-			<string>RedditDigest/SubredditSelectionCell.xib</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>3417AC0F1A092EBA0026961C</key>
-		<dict>
-			<key>fileRef</key>
-			<string>3417AC0E1A092EBA0026961C</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>3417AC101A0945B40026961C</key>
-		<dict>
-			<key>children</key>
-			<array>
-				<string>3417AC111A0945B40026961C</string>
-				<string>3417AC121A0945B40026961C</string>
-			</array>
-			<key>isa</key>
-			<string>PBXGroup</string>
-			<key>path</key>
-			<string>CenterFlowLayout</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>3417AC111A0945B40026961C</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.h</string>
-			<key>path</key>
-			<string>KTCenterFlowLayout.h</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>3417AC121A0945B40026961C</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.objc</string>
-			<key>path</key>
-			<string>KTCenterFlowLayout.m</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>3417AC131A0945B40026961C</key>
-		<dict>
-			<key>fileRef</key>
-			<string>3417AC121A0945B40026961C</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>3432573F1A0A96CF003A3115</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.h</string>
-			<key>name</key>
-			<string>HeaderCollectionReusableView.h</string>
-			<key>path</key>
-			<string>RedditDigest/HeaderCollectionReusableView.h</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>343257401A0A96CF003A3115</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.objc</string>
-			<key>name</key>
-			<string>HeaderCollectionReusableView.m</string>
-			<key>path</key>
-			<string>RedditDigest/HeaderCollectionReusableView.m</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>343257411A0A96CF003A3115</key>
-		<dict>
-			<key>fileRef</key>
-			<string>343257401A0A96CF003A3115</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>345700D21A13B91B00FA6FC8</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.h</string>
-			<key>path</key>
-			<string>DetailPostViewController.h</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>345700D31A13B91B00FA6FC8</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.objc</string>
-			<key>path</key>
-			<string>DetailPostViewController.m</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>345700D41A13B91B00FA6FC8</key>
-		<dict>
-			<key>fileRef</key>
-			<string>345700D31A13B91B00FA6FC8</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>34D1B9351A081B4D00C0C15F</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.h</string>
-			<key>path</key>
-			<string>WelcomViewController.h</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>34D1B9361A081B4D00C0C15F</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.objc</string>
-			<key>path</key>
-			<string>WelcomViewController.m</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>34D1B9371A081B4D00C0C15F</key>
-		<dict>
-			<key>fileRef</key>
-			<string>34D1B9361A081B4D00C0C15F</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>34D1B9381A081D0C00C0C15F</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.h</string>
-			<key>path</key>
-			<string>LoginViewController.h</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>34D1B9391A081D0C00C0C15F</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.objc</string>
-			<key>path</key>
-			<string>LoginViewController.m</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>34D1B93A1A081D0C00C0C15F</key>
-		<dict>
-			<key>fileRef</key>
-			<string>34D1B9391A081D0C00C0C15F</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>34D1B93B1A08463500C0C15F</key>
-		<dict>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>wrapper.framework</string>
-			<key>name</key>
-			<string>Security.framework</string>
-			<key>path</key>
-			<string>System/Library/Frameworks/Security.framework</string>
-			<key>sourceTree</key>
-			<string>SDKROOT</string>
-		</dict>
-		<key>34D1B93C1A08463500C0C15F</key>
-		<dict>
-			<key>fileRef</key>
-			<string>34D1B93B1A08463500C0C15F</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>3C7D9FF115C812F50CB16C63</key>
-		<dict>
-			<key>explicitFileType</key>
-			<string>archive.ar</string>
-			<key>includeInIndex</key>
-			<string>0</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>path</key>
-			<string>libPods-RedditDigest.a</string>
-			<key>sourceTree</key>
-			<string>BUILT_PRODUCTS_DIR</string>
-		</dict>
-		<key>5D311EDD1A10A359002AFC3C</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.objc</string>
-			<key>path</key>
-			<string>CommentTableViewCell.m</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>5D311EDE1A10A359002AFC3C</key>
-		<dict>
-			<key>fileRef</key>
-			<string>5D311EDD1A10A359002AFC3C</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>5D311EDF1A10A49D002AFC3C</key>
-		<dict>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.h</string>
-			<key>path</key>
-			<string>CommentTableViewCell.h</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>5D366B871A194991006B0684</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.h</string>
-			<key>path</key>
-			<string>DigestTitleLabel.h</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>5D366B881A194991006B0684</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.objc</string>
-			<key>path</key>
-			<string>DigestTitleLabel.m</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>5D366B891A194991006B0684</key>
-		<dict>
-			<key>fileRef</key>
-			<string>5D366B881A194991006B0684</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>5D366B8A1A194F7E006B0684</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.h</string>
-			<key>path</key>
-			<string>TextViewWebViewController.h</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>5D366B8B1A194F7E006B0684</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.objc</string>
-			<key>path</key>
-			<string>TextViewWebViewController.m</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>5D366B8C1A194F7E006B0684</key>
-		<dict>
-			<key>fileRef</key>
-			<string>5D366B8B1A194F7E006B0684</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>5D366B931A19B873006B0684</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.h</string>
-			<key>path</key>
-			<string>RecHeaderCollectionReusableView.h</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>5D366B941A19B873006B0684</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.objc</string>
-			<key>path</key>
-			<string>RecHeaderCollectionReusableView.m</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>5D366B951A19B873006B0684</key>
-		<dict>
-			<key>fileRef</key>
-			<string>5D366B941A19B873006B0684</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>5D3AC6311A12BCCC0093E79E</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.h</string>
-			<key>path</key>
-			<string>DigestCategory.h</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>5D3AC6321A12BCCC0093E79E</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.objc</string>
-			<key>path</key>
-			<string>DigestCategory.m</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>5D3AC6331A12BCCC0093E79E</key>
-		<dict>
-			<key>fileRef</key>
-			<string>5D3AC6321A12BCCC0093E79E</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>5D5C12B41A05716E002902A8</key>
-		<dict>
-			<key>children</key>
-			<array>
-				<string>5D7DDE3A1A1B03AE0000C6C3</string>
-				<string>5D7DDE3B1A1B03AE0000C6C3</string>
-				<string>81D291231A19903D002B2708</string>
-				<string>5D366B871A194991006B0684</string>
-				<string>5D366B881A194991006B0684</string>
-				<string>5D366B8A1A194F7E006B0684</string>
-				<string>5D366B8B1A194F7E006B0684</string>
-				<string>5D614E501A16F73500A199A2</string>
-				<string>5D5C12BF1A05716E002902A8</string>
-				<string>5D5C12DC1A05716E002902A8</string>
-				<string>6BC050BB4AA0264B66F9BADA</string>
-				<string>711551BEEA23829AEA4B6967</string>
-			</array>
-			<key>isa</key>
-			<string>PBXGroup</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>5D5C12B51A05716E002902A8</key>
-		<dict>
-			<key>attributes</key>
-			<dict>
-				<key>LastUpgradeCheck</key>
-				<string>0610</string>
-				<key>ORGANIZATIONNAME</key>
-				<string>Richmond</string>
-				<key>TargetAttributes</key>
-				<dict>
-					<key>5D5C12BC1A05716E002902A8</key>
-					<dict>
-						<key>CreatedOnToolsVersion</key>
-						<string>6.1</string>
-						<key>DevelopmentTeam</key>
-						<string>4T52H7QMHA</string>
-					</dict>
-					<key>5D5C12D81A05716E002902A8</key>
-					<dict>
-						<key>CreatedOnToolsVersion</key>
-						<string>6.1</string>
-						<key>DevelopmentTeam</key>
-						<string>4T52H7QMHA</string>
-						<key>TestTargetID</key>
-						<string>5D5C12BC1A05716E002902A8</string>
-					</dict>
-				</dict>
-			</dict>
-			<key>buildConfigurationList</key>
-			<string>5D5C12B81A05716E002902A8</string>
-			<key>compatibilityVersion</key>
-			<string>Xcode 3.2</string>
-			<key>developmentRegion</key>
-			<string>English</string>
-			<key>hasScannedForEncodings</key>
-			<string>0</string>
-			<key>isa</key>
-			<string>PBXProject</string>
-			<key>knownRegions</key>
-			<array>
-				<string>en</string>
-				<string>Base</string>
-			</array>
-			<key>mainGroup</key>
-			<string>5D5C12B41A05716E002902A8</string>
-			<key>productRefGroup</key>
-			<string>5D5C12BE1A05716E002902A8</string>
-			<key>projectDirPath</key>
-			<string></string>
-			<key>projectReferences</key>
-			<array/>
-			<key>projectRoot</key>
-			<string></string>
-			<key>targets</key>
-			<array>
-				<string>5D5C12BC1A05716E002902A8</string>
-				<string>5D5C12D81A05716E002902A8</string>
-			</array>
-		</dict>
-		<key>5D5C12B81A05716E002902A8</key>
-		<dict>
-			<key>buildConfigurations</key>
-			<array>
-				<string>5D5C12E11A05716E002902A8</string>
-				<string>5D5C12E21A05716E002902A8</string>
-			</array>
-			<key>defaultConfigurationIsVisible</key>
-			<string>0</string>
-			<key>defaultConfigurationName</key>
-			<string>Release</string>
-			<key>isa</key>
-			<string>XCConfigurationList</string>
-		</dict>
-		<key>5D5C12B91A05716E002902A8</key>
-		<dict>
-			<key>buildActionMask</key>
-			<string>2147483647</string>
-			<key>files</key>
-			<array>
-				<string>5DE75C9B1A0D92580031F0F7</string>
-				<string>5DB5B84C1A084055007DC036</string>
-				<string>5DB47AEE1A0C4A700034EA84</string>
-				<string>5DE75CAC1A0DC9C30031F0F7</string>
-				<string>340531ED1A1312AE000CF33C</string>
-				<string>5D311EDE1A10A359002AFC3C</string>
-				<string>5DB5B8491A083DF0007DC036</string>
-				<string>3417AC131A0945B40026961C</string>
-				<string>3413FC361A1117490018A172</string>
-				<string>5D366B891A194991006B0684</string>
-				<string>5DDA80BF1A11DED900527AF9</string>
-				<string>5D366B951A19B873006B0684</string>
-				<string>5D3AC6331A12BCCC0093E79E</string>
-				<string>5D614E571A16F77A00A199A2</string>
-				<string>5DB47A5D1A0ABA5B0034EA84</string>
-				<string>5D5C12C91A05716E002902A8</string>
-				<string>3417AC0D1A092D970026961C</string>
-				<string>5D5C12C61A05716E002902A8</string>
-				<string>81D523811A0C0E710059C9B3</string>
-				<string>3413401D1A0C996F004C8C15</string>
-				<string>5DE75C9E1A0D92760031F0F7</string>
-				<string>5D7DDE3C1A1B03AE0000C6C3</string>
-				<string>34D1B93A1A081D0C00C0C15F</string>
-				<string>5DA1F14A1A0EEE480017DE39</string>
-				<string>5DAADDD51A0D502600BB91AB</string>
-				<string>5D614E591A16F77A00A199A2</string>
-				<string>5DA1F14B1A0EEE480017DE39</string>
-				<string>5D366B8C1A194F7E006B0684</string>
-				<string>5DAADDD21A0D4CD200BB91AB</string>
-				<string>815EED181A097E36006286FF</string>
-				<string>345700D41A13B91B00FA6FC8</string>
-				<string>343257411A0A96CF003A3115</string>
-				<string>5DA5E4011A1A672E0091867F</string>
-				<string>5DE75CA11A0D941D0031F0F7</string>
-				<string>5D5C12CC1A05716E002902A8</string>
-				<string>5D614E581A16F77A00A199A2</string>
-				<string>5D614E611A1838A200A199A2</string>
-				<string>5D5C12C31A05716E002902A8</string>
-				<string>5DA5E4001A1A672E0091867F</string>
-				<string>5DDA80C01A11DED900527AF9</string>
-				<string>34D1B9371A081B4D00C0C15F</string>
-				<string>5DB47AEB1A0C45190034EA84</string>
-				<string>3400A13D1A0EB50D00A39D3F</string>
-			</array>
-			<key>isa</key>
-			<string>PBXSourcesBuildPhase</string>
-			<key>runOnlyForDeploymentPostprocessing</key>
-			<string>0</string>
-		</dict>
-		<key>5D5C12BA1A05716E002902A8</key>
-		<dict>
-			<key>buildActionMask</key>
-			<string>2147483647</string>
-			<key>files</key>
-			<array>
-				<string>5D614E5B1A16F96100A199A2</string>
-				<string>5D614E4F1A15D70600A199A2</string>
-				<string>34D1B93C1A08463500C0C15F</string>
-				<string>B2AE06638CF58795B159B5A5</string>
-			</array>
-			<key>isa</key>
-			<string>PBXFrameworksBuildPhase</string>
-			<key>runOnlyForDeploymentPostprocessing</key>
-			<string>0</string>
-		</dict>
-		<key>5D5C12BB1A05716E002902A8</key>
-		<dict>
-			<key>buildActionMask</key>
-			<string>2147483647</string>
-			<key>files</key>
-			<array>
-				<string>81D2912B1A199054002B2708</string>
-				<string>5D5C12CF1A05716E002902A8</string>
-				<string>5D5C12D41A05716E002902A8</string>
-				<string>81D2912A1A199054002B2708</string>
-				<string>81D291291A199054002B2708</string>
-				<string>81D2912D1A199054002B2708</string>
-				<string>5D5C12D11A05716E002902A8</string>
-				<string>3417AC0F1A092EBA0026961C</string>
-				<string>81D2912C1A199054002B2708</string>
-			</array>
-			<key>isa</key>
-			<string>PBXResourcesBuildPhase</string>
-			<key>runOnlyForDeploymentPostprocessing</key>
-			<string>0</string>
-		</dict>
-		<key>5D5C12BC1A05716E002902A8</key>
-		<dict>
-			<key>buildConfigurationList</key>
-			<string>5D5C12E31A05716E002902A8</string>
-			<key>buildPhases</key>
-			<array>
-				<string>9E9E081AD0CFB5DD4F3BB937</string>
-				<string>5D5C12B91A05716E002902A8</string>
-				<string>5D5C12BA1A05716E002902A8</string>
-				<string>5D5C12BB1A05716E002902A8</string>
-				<string>A7CC2C6AED4E6C9D64DA03BD</string>
-			</array>
-			<key>buildRules</key>
-			<array/>
-			<key>dependencies</key>
-			<array/>
-			<key>isa</key>
-			<string>PBXNativeTarget</string>
-			<key>name</key>
-			<string>RedditDigest</string>
-			<key>productName</key>
-			<string>RedditDigest</string>
-			<key>productReference</key>
-			<string>5D5C12BD1A05716E002902A8</string>
-			<key>productType</key>
-			<string>com.apple.product-type.application</string>
-		</dict>
-		<key>5D5C12BD1A05716E002902A8</key>
-		<dict>
-			<key>explicitFileType</key>
-			<string>wrapper.application</string>
-			<key>includeInIndex</key>
-			<string>0</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>path</key>
-			<string>RedditDigest.app</string>
-			<key>sourceTree</key>
-			<string>BUILT_PRODUCTS_DIR</string>
-		</dict>
-		<key>5D5C12BE1A05716E002902A8</key>
-		<dict>
-			<key>children</key>
-			<array>
-				<string>5D5C12BD1A05716E002902A8</string>
-				<string>5D5C12D91A05716E002902A8</string>
-			</array>
-			<key>isa</key>
-			<string>PBXGroup</string>
-			<key>name</key>
-			<string>Products</string>
-			<key>path</key>
-			<string>..</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>5D5C12BF1A05716E002902A8</key>
-		<dict>
-			<key>children</key>
-			<array>
-				<string>5D5C12C41A05716E002902A8</string>
-				<string>5D5C12C51A05716E002902A8</string>
-				<string>5D5C12CD1A05716E002902A8</string>
-				<string>3400A13A1A0EB30F00A39D3F</string>
-				<string>5DE75CA61A0D99720031F0F7</string>
-				<string>3413FC331A11172C0018A172</string>
-				<string>341340191A0C9925004C8C15</string>
-				<string>5DE75CA41A0D98B30031F0F7</string>
-				<string>5DE75CA31A0D98930031F0F7</string>
-				<string>5DE75CA21A0D98740031F0F7</string>
-				<string>345700D21A13B91B00FA6FC8</string>
-				<string>345700D31A13B91B00FA6FC8</string>
-				<string>5DB47A5B1A0ABA5B0034EA84</string>
-				<string>5DB47A5C1A0ABA5B0034EA84</string>
-				<string>340531EB1A1312AE000CF33C</string>
-				<string>340531EC1A1312AE000CF33C</string>
-				<string>5D311EDF1A10A49D002AFC3C</string>
-				<string>5D311EDD1A10A359002AFC3C</string>
-				<string>3417AC0B1A092D970026961C</string>
-				<string>3417AC0C1A092D970026961C</string>
-				<string>81D5237F1A0C0E710059C9B3</string>
-				<string>81D523801A0C0E710059C9B3</string>
-				<string>815EED161A097E36006286FF</string>
-				<string>815EED171A097E36006286FF</string>
-				<string>5D614E5F1A1838A200A199A2</string>
-				<string>5D614E601A1838A200A199A2</string>
-				<string>5D5C12D01A05716E002902A8</string>
-				<string>5D5C12D21A05716E002902A8</string>
-				<string>5D366B931A19B873006B0684</string>
-				<string>5D366B941A19B873006B0684</string>
-				<string>5D5C12C71A05716E002902A8</string>
-				<string>5D5C12E91A05758E002902A8</string>
-				<string>5D5C12BE1A05716E002902A8</string>
-				<string>5D5C12C01A05716E002902A8</string>
-			</array>
-			<key>isa</key>
-			<string>PBXGroup</string>
-			<key>path</key>
-			<string>RedditDigest</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>5D5C12C01A05716E002902A8</key>
-		<dict>
-			<key>children</key>
-			<array>
-				<string>5D5C12C11A05716E002902A8</string>
-				<string>5D5C12C21A05716E002902A8</string>
-			</array>
-			<key>isa</key>
-			<string>PBXGroup</string>
-			<key>name</key>
-			<string>Supporting Files</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>5D5C12C11A05716E002902A8</key>
-		<dict>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>text.plist.xml</string>
-			<key>path</key>
-			<string>Info.plist</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>5D5C12C21A05716E002902A8</key>
-		<dict>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.objc</string>
-			<key>path</key>
-			<string>main.m</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>5D5C12C31A05716E002902A8</key>
-		<dict>
-			<key>fileRef</key>
-			<string>5D5C12C21A05716E002902A8</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>5D5C12C41A05716E002902A8</key>
-		<dict>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.h</string>
-			<key>path</key>
-			<string>AppDelegate.h</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>5D5C12C51A05716E002902A8</key>
-		<dict>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.objc</string>
-			<key>path</key>
-			<string>AppDelegate.m</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>5D5C12C61A05716E002902A8</key>
-		<dict>
-			<key>fileRef</key>
-			<string>5D5C12C51A05716E002902A8</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>5D5C12C71A05716E002902A8</key>
-		<dict>
-			<key>children</key>
-			<array>
-				<string>5D5C12C81A05716E002902A8</string>
-			</array>
-			<key>currentVersion</key>
-			<string>5D5C12C81A05716E002902A8</string>
-			<key>isa</key>
-			<string>XCVersionGroup</string>
-			<key>path</key>
-			<string>RedditDigest.xcdatamodeld</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-			<key>versionGroupType</key>
-			<string>wrapper.xcdatamodel</string>
-		</dict>
-		<key>5D5C12C81A05716E002902A8</key>
-		<dict>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>wrapper.xcdatamodel</string>
-			<key>path</key>
-			<string>RedditDigest.xcdatamodel</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>5D5C12C91A05716E002902A8</key>
-		<dict>
-			<key>fileRef</key>
-			<string>5D5C12C71A05716E002902A8</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>5D5C12CA1A05716E002902A8</key>
-		<dict>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.h</string>
-			<key>path</key>
-			<string>DigestViewController.h</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>5D5C12CB1A05716E002902A8</key>
-		<dict>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.objc</string>
-			<key>path</key>
-			<string>DigestViewController.m</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>5D5C12CC1A05716E002902A8</key>
-		<dict>
-			<key>fileRef</key>
-			<string>5D5C12CB1A05716E002902A8</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>5D5C12CD1A05716E002902A8</key>
-		<dict>
-			<key>children</key>
-			<array>
-				<string>5D5C12CE1A05716E002902A8</string>
-			</array>
-			<key>isa</key>
-			<string>PBXVariantGroup</string>
-			<key>name</key>
-			<string>Main.storyboard</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>5D5C12CE1A05716E002902A8</key>
-		<dict>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>file.storyboard</string>
-			<key>name</key>
-			<string>Base</string>
-			<key>path</key>
-			<string>Base.lproj/Main.storyboard</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>5D5C12CF1A05716E002902A8</key>
-		<dict>
-			<key>fileRef</key>
-			<string>5D5C12CD1A05716E002902A8</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>5D5C12D01A05716E002902A8</key>
-		<dict>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>folder.assetcatalog</string>
-			<key>path</key>
-			<string>Images.xcassets</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>5D5C12D11A05716E002902A8</key>
-		<dict>
-			<key>fileRef</key>
-			<string>5D5C12D01A05716E002902A8</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>5D5C12D21A05716E002902A8</key>
-		<dict>
-			<key>children</key>
-			<array>
-				<string>5D5C12D31A05716E002902A8</string>
-			</array>
-			<key>isa</key>
-			<string>PBXVariantGroup</string>
-			<key>name</key>
-			<string>LaunchScreen.xib</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>5D5C12D31A05716E002902A8</key>
-		<dict>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>file.xib</string>
-			<key>name</key>
-			<string>Base</string>
-			<key>path</key>
-			<string>Base.lproj/LaunchScreen.xib</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>5D5C12D41A05716E002902A8</key>
-		<dict>
-			<key>fileRef</key>
-			<string>5D5C12D21A05716E002902A8</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>5D5C12D51A05716E002902A8</key>
-		<dict>
-			<key>buildActionMask</key>
-			<string>2147483647</string>
-			<key>files</key>
-			<array>
-				<string>5D5C12E01A05716E002902A8</string>
-			</array>
-			<key>isa</key>
-			<string>PBXSourcesBuildPhase</string>
-			<key>runOnlyForDeploymentPostprocessing</key>
-			<string>0</string>
-		</dict>
-		<key>5D5C12D61A05716E002902A8</key>
-		<dict>
-			<key>buildActionMask</key>
-			<string>2147483647</string>
-			<key>files</key>
-			<array/>
-			<key>isa</key>
-			<string>PBXFrameworksBuildPhase</string>
-			<key>runOnlyForDeploymentPostprocessing</key>
-			<string>0</string>
-		</dict>
-		<key>5D5C12D71A05716E002902A8</key>
-		<dict>
-			<key>buildActionMask</key>
-			<string>2147483647</string>
-			<key>files</key>
-			<array/>
-			<key>isa</key>
-			<string>PBXResourcesBuildPhase</string>
-			<key>runOnlyForDeploymentPostprocessing</key>
-			<string>0</string>
-		</dict>
-		<key>5D5C12D81A05716E002902A8</key>
-		<dict>
-			<key>buildConfigurationList</key>
-			<string>5D5C12E61A05716E002902A8</string>
-			<key>buildPhases</key>
-			<array>
-				<string>5D5C12D51A05716E002902A8</string>
-				<string>5D5C12D61A05716E002902A8</string>
-				<string>5D5C12D71A05716E002902A8</string>
-			</array>
-			<key>buildRules</key>
-			<array/>
-			<key>dependencies</key>
-			<array>
-				<string>5D5C12DB1A05716E002902A8</string>
-			</array>
-			<key>isa</key>
-			<string>PBXNativeTarget</string>
-			<key>name</key>
-			<string>RedditDigestTests</string>
-			<key>productName</key>
-			<string>RedditDigestTests</string>
-			<key>productReference</key>
-			<string>5D5C12D91A05716E002902A8</string>
-			<key>productType</key>
-			<string>com.apple.product-type.bundle.unit-test</string>
-		</dict>
-		<key>5D5C12D91A05716E002902A8</key>
-		<dict>
-			<key>explicitFileType</key>
-			<string>wrapper.cfbundle</string>
-			<key>includeInIndex</key>
-			<string>0</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>path</key>
-			<string>RedditDigestTests.xctest</string>
-			<key>sourceTree</key>
-			<string>BUILT_PRODUCTS_DIR</string>
-		</dict>
-		<key>5D5C12DA1A05716E002902A8</key>
-		<dict>
-			<key>containerPortal</key>
-			<string>5D5C12B51A05716E002902A8</string>
-			<key>isa</key>
-			<string>PBXContainerItemProxy</string>
-			<key>proxyType</key>
-			<string>1</string>
-			<key>remoteGlobalIDString</key>
-			<string>5D5C12BC1A05716E002902A8</string>
-			<key>remoteInfo</key>
-			<string>RedditDigest</string>
-		</dict>
-		<key>5D5C12DB1A05716E002902A8</key>
-		<dict>
-			<key>isa</key>
-			<string>PBXTargetDependency</string>
-			<key>target</key>
-			<string>5D5C12BC1A05716E002902A8</string>
-			<key>targetProxy</key>
-			<string>5D5C12DA1A05716E002902A8</string>
-		</dict>
-		<key>5D5C12DC1A05716E002902A8</key>
-		<dict>
-			<key>children</key>
-			<array>
-				<string>5D5C12DF1A05716E002902A8</string>
-				<string>5D5C12DD1A05716E002902A8</string>
-			</array>
-			<key>isa</key>
-			<string>PBXGroup</string>
-			<key>path</key>
-			<string>RedditDigestTests</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>5D5C12DD1A05716E002902A8</key>
-		<dict>
-			<key>children</key>
-			<array>
-				<string>5D5C12DE1A05716E002902A8</string>
-			</array>
-			<key>isa</key>
-			<string>PBXGroup</string>
-			<key>name</key>
-			<string>Supporting Files</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>5D5C12DE1A05716E002902A8</key>
-		<dict>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>text.plist.xml</string>
-			<key>path</key>
-			<string>Info.plist</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>5D5C12DF1A05716E002902A8</key>
-		<dict>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.objc</string>
-			<key>path</key>
-			<string>RedditDigestTests.m</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>5D5C12E01A05716E002902A8</key>
-		<dict>
-			<key>fileRef</key>
-			<string>5D5C12DF1A05716E002902A8</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>5D5C12E11A05716E002902A8</key>
-		<dict>
-			<key>buildSettings</key>
-			<dict>
-				<key>ALWAYS_SEARCH_USER_PATHS</key>
-				<string>NO</string>
-				<key>CLANG_CXX_LANGUAGE_STANDARD</key>
-				<string>gnu++0x</string>
-				<key>CLANG_CXX_LIBRARY</key>
-				<string>libc++</string>
-				<key>CLANG_ENABLE_MODULES</key>
-				<string>YES</string>
-				<key>CLANG_ENABLE_OBJC_ARC</key>
-				<string>YES</string>
-				<key>CLANG_WARN_BOOL_CONVERSION</key>
-				<string>YES</string>
-				<key>CLANG_WARN_CONSTANT_CONVERSION</key>
-				<string>YES</string>
-				<key>CLANG_WARN_DIRECT_OBJC_ISA_USAGE</key>
-				<string>YES_ERROR</string>
-				<key>CLANG_WARN_EMPTY_BODY</key>
-				<string>YES</string>
-				<key>CLANG_WARN_ENUM_CONVERSION</key>
-				<string>YES</string>
-				<key>CLANG_WARN_INT_CONVERSION</key>
-				<string>YES</string>
-				<key>CLANG_WARN_OBJC_ROOT_CLASS</key>
-				<string>YES_ERROR</string>
-				<key>CLANG_WARN_UNREACHABLE_CODE</key>
-				<string>YES</string>
-				<key>CLANG_WARN__DUPLICATE_METHOD_MATCH</key>
-				<string>YES</string>
-				<key>CODE_SIGN_IDENTITY[sdk=iphoneos*]</key>
-				<string>iPhone Developer</string>
-				<key>COPY_PHASE_STRIP</key>
-				<string>NO</string>
-				<key>ENABLE_STRICT_OBJC_MSGSEND</key>
-				<string>YES</string>
-				<key>GCC_C_LANGUAGE_STANDARD</key>
-				<string>gnu99</string>
-				<key>GCC_DYNAMIC_NO_PIC</key>
-				<string>NO</string>
-				<key>GCC_OPTIMIZATION_LEVEL</key>
-				<string>0</string>
-				<key>GCC_PREPROCESSOR_DEFINITIONS</key>
-				<array>
-					<string>DEBUG=1</string>
-					<string>$(inherited)</string>
-				</array>
-				<key>GCC_SYMBOLS_PRIVATE_EXTERN</key>
-				<string>NO</string>
-				<key>GCC_WARN_64_TO_32_BIT_CONVERSION</key>
-				<string>YES</string>
-				<key>GCC_WARN_ABOUT_RETURN_TYPE</key>
-				<string>YES_ERROR</string>
-				<key>GCC_WARN_UNDECLARED_SELECTOR</key>
-				<string>YES</string>
-				<key>GCC_WARN_UNINITIALIZED_AUTOS</key>
-				<string>YES_AGGRESSIVE</string>
-				<key>GCC_WARN_UNUSED_FUNCTION</key>
-				<string>YES</string>
-				<key>GCC_WARN_UNUSED_VARIABLE</key>
-				<string>YES</string>
-				<key>IPHONEOS_DEPLOYMENT_TARGET</key>
-				<string>8.1</string>
-				<key>MTL_ENABLE_DEBUG_INFO</key>
-				<string>YES</string>
-				<key>ONLY_ACTIVE_ARCH</key>
-				<string>YES</string>
-				<key>OTHER_CFLAGS</key>
-				<string>-DBaseURL="@\"http://192.168.129.228:3000\""</string>
-				<key>SDKROOT</key>
-				<string>iphoneos</string>
-			</dict>
-			<key>isa</key>
-			<string>XCBuildConfiguration</string>
-			<key>name</key>
-			<string>Debug</string>
-		</dict>
-		<key>5D5C12E21A05716E002902A8</key>
-		<dict>
-			<key>buildSettings</key>
-			<dict>
-				<key>ALWAYS_SEARCH_USER_PATHS</key>
-				<string>NO</string>
-				<key>CLANG_CXX_LANGUAGE_STANDARD</key>
-				<string>gnu++0x</string>
-				<key>CLANG_CXX_LIBRARY</key>
-				<string>libc++</string>
-				<key>CLANG_ENABLE_MODULES</key>
-				<string>YES</string>
-				<key>CLANG_ENABLE_OBJC_ARC</key>
-				<string>YES</string>
-				<key>CLANG_WARN_BOOL_CONVERSION</key>
-				<string>YES</string>
-				<key>CLANG_WARN_CONSTANT_CONVERSION</key>
-				<string>YES</string>
-				<key>CLANG_WARN_DIRECT_OBJC_ISA_USAGE</key>
-				<string>YES_ERROR</string>
-				<key>CLANG_WARN_EMPTY_BODY</key>
-				<string>YES</string>
-				<key>CLANG_WARN_ENUM_CONVERSION</key>
-				<string>YES</string>
-				<key>CLANG_WARN_INT_CONVERSION</key>
-				<string>YES</string>
-				<key>CLANG_WARN_OBJC_ROOT_CLASS</key>
-				<string>YES_ERROR</string>
-				<key>CLANG_WARN_UNREACHABLE_CODE</key>
-				<string>YES</string>
-				<key>CLANG_WARN__DUPLICATE_METHOD_MATCH</key>
-				<string>YES</string>
-				<key>CODE_SIGN_IDENTITY[sdk=iphoneos*]</key>
-				<string>iPhone Developer</string>
-				<key>COPY_PHASE_STRIP</key>
-				<string>YES</string>
-				<key>ENABLE_NS_ASSERTIONS</key>
-				<string>NO</string>
-				<key>ENABLE_STRICT_OBJC_MSGSEND</key>
-				<string>YES</string>
-				<key>GCC_C_LANGUAGE_STANDARD</key>
-				<string>gnu99</string>
-				<key>GCC_WARN_64_TO_32_BIT_CONVERSION</key>
-				<string>YES</string>
-				<key>GCC_WARN_ABOUT_RETURN_TYPE</key>
-				<string>YES_ERROR</string>
-				<key>GCC_WARN_UNDECLARED_SELECTOR</key>
-				<string>YES</string>
-				<key>GCC_WARN_UNINITIALIZED_AUTOS</key>
-				<string>YES_AGGRESSIVE</string>
-				<key>GCC_WARN_UNUSED_FUNCTION</key>
-				<string>YES</string>
-				<key>GCC_WARN_UNUSED_VARIABLE</key>
-				<string>YES</string>
-				<key>IPHONEOS_DEPLOYMENT_TARGET</key>
-				<string>8.1</string>
-				<key>MTL_ENABLE_DEBUG_INFO</key>
-				<string>NO</string>
-				<key>OTHER_CFLAGS</key>
-				<string>-DBaseURL="@\"https://gentle-ocean-7650.herokuapp.com/\""</string>
-				<key>SDKROOT</key>
-				<string>iphoneos</string>
-				<key>VALIDATE_PRODUCT</key>
-				<string>YES</string>
-			</dict>
-			<key>isa</key>
-			<string>XCBuildConfiguration</string>
-			<key>name</key>
-			<string>Release</string>
-		</dict>
-		<key>5D5C12E31A05716E002902A8</key>
-		<dict>
-			<key>buildConfigurations</key>
-			<array>
-				<string>5D5C12E41A05716E002902A8</string>
-				<string>5D5C12E51A05716E002902A8</string>
-			</array>
-			<key>defaultConfigurationIsVisible</key>
-			<string>0</string>
-			<key>defaultConfigurationName</key>
-			<string>Release</string>
-			<key>isa</key>
-			<string>XCConfigurationList</string>
-		</dict>
-		<key>5D5C12E41A05716E002902A8</key>
-		<dict>
-			<key>baseConfigurationReference</key>
-			<string>0C4AAC9EB76DD8D441DD99F5</string>
-			<key>buildSettings</key>
-			<dict>
-				<key>ASSETCATALOG_COMPILER_APPICON_NAME</key>
-				<string>AppIcon</string>
-				<key>CODE_SIGN_IDENTITY</key>
-				<string>iPhone Developer</string>
-				<key>CODE_SIGN_IDENTITY[sdk=iphoneos*]</key>
-				<string>iPhone Developer</string>
-				<key>FRAMEWORK_SEARCH_PATHS</key>
-				<array>
-					<string>$(inherited)</string>
-					<string>$(PROJECT_DIR)/RedditDigest</string>
-				</array>
-				<key>HEADER_SEARCH_PATHS</key>
-				<array>
-					<string>"${PODS_ROOT}/Headers/Public"</string>
-					<string>"${PODS_ROOT}/Headers/Public/AFNetworking"</string>
-					<string>"${PODS_ROOT}/Headers/Public/FLAnimatedImage"</string>
-					<string>"${PODS_ROOT}/Headers/Public/Mantle"</string>
-					<string>"${PODS_ROOT}/Headers/Public/RedditKit"</string>
-					<string>"${PODS_ROOT}/Headers/Public/RedditKit/Categories"</string>
-					<string>"${PODS_ROOT}/Headers/Public/RedditKit/Model"</string>
-					<string>"${PODS_ROOT}/Headers/Public/RedditKit/Networking"</string>
-					<string>"${PODS_ROOT}/Headers/Public/SSKeychain"</string>
-					<string>"${PODS_ROOT}/Headers/Public/ZeroPush"</string>
-					<string>$(SDKROOT)/usr/include/libxml2</string>
-				</array>
-				<key>INFOPLIST_FILE</key>
-				<string>RedditDigest/Info.plist</string>
-				<key>IPHONEOS_DEPLOYMENT_TARGET</key>
-				<string>8.1</string>
-				<key>LD_RUNPATH_SEARCH_PATHS</key>
-				<string>$(inherited) @executable_path/Frameworks</string>
-				<key>PRODUCT_NAME</key>
-				<string>$(TARGET_NAME)</string>
-				<key>PROVISIONING_PROFILE</key>
-				<string></string>
-				<key>TARGETED_DEVICE_FAMILY</key>
-				<string>1</string>
-			</dict>
-			<key>isa</key>
-			<string>XCBuildConfiguration</string>
-			<key>name</key>
-			<string>Debug</string>
-		</dict>
-		<key>5D5C12E51A05716E002902A8</key>
-		<dict>
-			<key>baseConfigurationReference</key>
-			<string>9EDEC8BDBE184DC937399E93</string>
-			<key>buildSettings</key>
-			<dict>
-				<key>ASSETCATALOG_COMPILER_APPICON_NAME</key>
-				<string>AppIcon</string>
-				<key>CODE_SIGN_IDENTITY</key>
-				<string>iPhone Developer</string>
-				<key>CODE_SIGN_IDENTITY[sdk=iphoneos*]</key>
-				<string>iPhone Developer</string>
-				<key>FRAMEWORK_SEARCH_PATHS</key>
-				<array>
-					<string>$(inherited)</string>
-					<string>$(PROJECT_DIR)/RedditDigest</string>
-				</array>
-				<key>HEADER_SEARCH_PATHS</key>
-				<array>
-					<string>"${PODS_ROOT}/Headers/Public"</string>
-					<string>"${PODS_ROOT}/Headers/Public/AFNetworking"</string>
-					<string>"${PODS_ROOT}/Headers/Public/FLAnimatedImage"</string>
-					<string>"${PODS_ROOT}/Headers/Public/Mantle"</string>
-					<string>"${PODS_ROOT}/Headers/Public/RedditKit"</string>
-					<string>"${PODS_ROOT}/Headers/Public/RedditKit/Categories"</string>
-					<string>"${PODS_ROOT}/Headers/Public/RedditKit/Model"</string>
-					<string>"${PODS_ROOT}/Headers/Public/RedditKit/Networking"</string>
-					<string>"${PODS_ROOT}/Headers/Public/SSKeychain"</string>
-					<string>"${PODS_ROOT}/Headers/Public/ZeroPush"</string>
-					<string>$(SDKROOT)/usr/include/libxml2</string>
-				</array>
-				<key>INFOPLIST_FILE</key>
-				<string>RedditDigest/Info.plist</string>
-				<key>IPHONEOS_DEPLOYMENT_TARGET</key>
-				<string>8.1</string>
-				<key>LD_RUNPATH_SEARCH_PATHS</key>
-				<string>$(inherited) @executable_path/Frameworks</string>
-				<key>PRODUCT_NAME</key>
-				<string>$(TARGET_NAME)</string>
-				<key>PROVISIONING_PROFILE</key>
-				<string></string>
-				<key>TARGETED_DEVICE_FAMILY</key>
-				<string>1</string>
-			</dict>
-			<key>isa</key>
-			<string>XCBuildConfiguration</string>
-			<key>name</key>
-			<string>Release</string>
-		</dict>
-		<key>5D5C12E61A05716E002902A8</key>
-		<dict>
-			<key>buildConfigurations</key>
-			<array>
-				<string>5D5C12E71A05716E002902A8</string>
-				<string>5D5C12E81A05716E002902A8</string>
-			</array>
-			<key>defaultConfigurationIsVisible</key>
-			<string>0</string>
-			<key>defaultConfigurationName</key>
-			<string>Release</string>
-			<key>isa</key>
-			<string>XCConfigurationList</string>
-		</dict>
-		<key>5D5C12E71A05716E002902A8</key>
-		<dict>
-			<key>buildSettings</key>
-			<dict>
-				<key>BUNDLE_LOADER</key>
-				<string>$(TEST_HOST)</string>
-				<key>CODE_SIGN_IDENTITY</key>
-				<string>iPhone Developer</string>
-				<key>FRAMEWORK_SEARCH_PATHS</key>
-				<array>
-					<string>$(SDKROOT)/Developer/Library/Frameworks</string>
-					<string>$(inherited)</string>
-				</array>
-				<key>GCC_PREPROCESSOR_DEFINITIONS</key>
-				<array>
-					<string>DEBUG=1</string>
-					<string>$(inherited)</string>
-				</array>
-				<key>INFOPLIST_FILE</key>
-				<string>RedditDigestTests/Info.plist</string>
-				<key>LD_RUNPATH_SEARCH_PATHS</key>
-				<string>$(inherited) @executable_path/Frameworks @loader_path/Frameworks</string>
-				<key>PRODUCT_NAME</key>
-				<string>$(TARGET_NAME)</string>
-				<key>TEST_HOST</key>
-				<string>$(BUILT_PRODUCTS_DIR)/RedditDigest.app/RedditDigest</string>
-			</dict>
-			<key>isa</key>
-			<string>XCBuildConfiguration</string>
-			<key>name</key>
-			<string>Debug</string>
-		</dict>
-		<key>5D5C12E81A05716E002902A8</key>
-		<dict>
-			<key>buildSettings</key>
-			<dict>
-				<key>BUNDLE_LOADER</key>
-				<string>$(TEST_HOST)</string>
-				<key>CODE_SIGN_IDENTITY</key>
-				<string>iPhone Developer</string>
-				<key>FRAMEWORK_SEARCH_PATHS</key>
-				<array>
-					<string>$(SDKROOT)/Developer/Library/Frameworks</string>
-					<string>$(inherited)</string>
-				</array>
-				<key>INFOPLIST_FILE</key>
-				<string>RedditDigestTests/Info.plist</string>
-				<key>LD_RUNPATH_SEARCH_PATHS</key>
-				<string>$(inherited) @executable_path/Frameworks @loader_path/Frameworks</string>
-				<key>PRODUCT_NAME</key>
-				<string>$(TARGET_NAME)</string>
-				<key>TEST_HOST</key>
-				<string>$(BUILT_PRODUCTS_DIR)/RedditDigest.app/RedditDigest</string>
-			</dict>
-			<key>isa</key>
-			<string>XCBuildConfiguration</string>
-			<key>name</key>
-			<string>Release</string>
-		</dict>
-		<key>5D5C12E91A05758E002902A8</key>
-		<dict>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>file</string>
-			<key>path</key>
-			<string>RedditDigest_Push_Development.mobileprovision</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>5D614E4E1A15D70600A199A2</key>
-		<dict>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>wrapper.framework</string>
-			<key>name</key>
-			<string>CoreLocation.framework</string>
-			<key>path</key>
-			<string>System/Library/Frameworks/CoreLocation.framework</string>
-			<key>sourceTree</key>
-			<string>SDKROOT</string>
-		</dict>
-		<key>5D614E4F1A15D70600A199A2</key>
-		<dict>
-			<key>fileRef</key>
-			<string>5D614E4E1A15D70600A199A2</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>5D614E501A16F73500A199A2</key>
-		<dict>
-			<key>children</key>
-			<array>
-				<string>5D614E521A16F77A00A199A2</string>
-				<string>5D614E531A16F77A00A199A2</string>
-				<string>5D614E541A16F77A00A199A2</string>
-				<string>5D614E551A16F77A00A199A2</string>
-				<string>5D614E561A16F77A00A199A2</string>
-				<string>5D614E511A16F75600A199A2</string>
-			</array>
-			<key>isa</key>
-			<string>PBXGroup</string>
-			<key>name</key>
-			<string>HTMLParser</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>5D614E511A16F75600A199A2</key>
-		<dict>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.h</string>
-			<key>path</key>
-			<string>TFHpple.h</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>5D614E521A16F77A00A199A2</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.h</string>
-			<key>path</key>
-			<string>TFHppleElement.h</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>5D614E531A16F77A00A199A2</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.h</string>
-			<key>path</key>
-			<string>XPathQuery.h</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>5D614E541A16F77A00A199A2</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.objc</string>
-			<key>path</key>
-			<string>TFHpple.m</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>5D614E551A16F77A00A199A2</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.objc</string>
-			<key>path</key>
-			<string>TFHppleElement.m</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>5D614E561A16F77A00A199A2</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.objc</string>
-			<key>path</key>
-			<string>XPathQuery.m</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>5D614E571A16F77A00A199A2</key>
-		<dict>
-			<key>fileRef</key>
-			<string>5D614E541A16F77A00A199A2</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>5D614E581A16F77A00A199A2</key>
-		<dict>
-			<key>fileRef</key>
-			<string>5D614E551A16F77A00A199A2</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>5D614E591A16F77A00A199A2</key>
-		<dict>
-			<key>fileRef</key>
-			<string>5D614E561A16F77A00A199A2</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>5D614E5A1A16F96100A199A2</key>
-		<dict>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>compiled.mach-o.dylib</string>
-			<key>name</key>
-			<string>libxml2.dylib</string>
-			<key>path</key>
-			<string>usr/lib/libxml2.dylib</string>
-			<key>sourceTree</key>
-			<string>SDKROOT</string>
-		</dict>
-		<key>5D614E5B1A16F96100A199A2</key>
-		<dict>
-			<key>fileRef</key>
-			<string>5D614E5A1A16F96100A199A2</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>5D614E5F1A1838A200A199A2</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.h</string>
-			<key>path</key>
-			<string>RecommendedSubredditsViewController.h</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>5D614E601A1838A200A199A2</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.objc</string>
-			<key>path</key>
-			<string>RecommendedSubredditsViewController.m</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>5D614E611A1838A200A199A2</key>
-		<dict>
-			<key>fileRef</key>
-			<string>5D614E601A1838A200A199A2</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>5D7DDE3A1A1B03AE0000C6C3</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.h</string>
-			<key>path</key>
-			<string>PastDigestsViewController.h</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>5D7DDE3B1A1B03AE0000C6C3</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.objc</string>
-			<key>path</key>
-			<string>PastDigestsViewController.m</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>5D7DDE3C1A1B03AE0000C6C3</key>
-		<dict>
-			<key>fileRef</key>
-			<string>5D7DDE3B1A1B03AE0000C6C3</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>5DA1F1451A0EEE480017DE39</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.h</string>
-			<key>path</key>
-			<string>ChildComment.h</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>5DA1F1461A0EEE480017DE39</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.objc</string>
-			<key>path</key>
-			<string>ChildComment.m</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>5DA1F1471A0EEE480017DE39</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.h</string>
-			<key>path</key>
-			<string>Comment.h</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>5DA1F1481A0EEE480017DE39</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.objc</string>
-			<key>path</key>
-			<string>Comment.m</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>5DA1F14A1A0EEE480017DE39</key>
-		<dict>
-			<key>fileRef</key>
-			<string>5DA1F1461A0EEE480017DE39</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>5DA1F14B1A0EEE480017DE39</key>
-		<dict>
-			<key>fileRef</key>
-			<string>5DA1F1481A0EEE480017DE39</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>5DA5E3FC1A1A672E0091867F</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.h</string>
-			<key>path</key>
-			<string>Digest.h</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>5DA5E3FD1A1A672E0091867F</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.objc</string>
-			<key>path</key>
-			<string>Digest.m</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>5DA5E3FE1A1A672E0091867F</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.h</string>
-			<key>path</key>
-			<string>DigestPost.h</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>5DA5E3FF1A1A672E0091867F</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.objc</string>
-			<key>path</key>
-			<string>DigestPost.m</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>5DA5E4001A1A672E0091867F</key>
-		<dict>
-			<key>fileRef</key>
-			<string>5DA5E3FD1A1A672E0091867F</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>5DA5E4011A1A672E0091867F</key>
-		<dict>
-			<key>fileRef</key>
-			<string>5DA5E3FF1A1A672E0091867F</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>5DAADDD01A0D4CD200BB91AB</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.h</string>
-			<key>path</key>
-			<string>ImagePostViewController.h</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>5DAADDD11A0D4CD200BB91AB</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.objc</string>
-			<key>path</key>
-			<string>ImagePostViewController.m</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>5DAADDD21A0D4CD200BB91AB</key>
-		<dict>
-			<key>fileRef</key>
-			<string>5DAADDD11A0D4CD200BB91AB</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>5DAADDD31A0D502600BB91AB</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.h</string>
-			<key>path</key>
-			<string>WebPostViewController.h</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>5DAADDD41A0D502600BB91AB</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.objc</string>
-			<key>path</key>
-			<string>WebPostViewController.m</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>5DAADDD51A0D502600BB91AB</key>
-		<dict>
-			<key>fileRef</key>
-			<string>5DAADDD41A0D502600BB91AB</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>5DB47A5B1A0ABA5B0034EA84</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.h</string>
-			<key>path</key>
-			<string>PostViewController.h</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>5DB47A5C1A0ABA5B0034EA84</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.objc</string>
-			<key>path</key>
-			<string>PostViewController.m</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>5DB47A5D1A0ABA5B0034EA84</key>
-		<dict>
-			<key>fileRef</key>
-			<string>5DB47A5C1A0ABA5B0034EA84</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>5DB47AE91A0C45190034EA84</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.h</string>
-			<key>name</key>
-			<string>RedditRequests.h</string>
-			<key>path</key>
-			<string>RedditDigest/RedditRequests.h</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>5DB47AEA1A0C45190034EA84</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.objc</string>
-			<key>name</key>
-			<string>RedditRequests.m</string>
-			<key>path</key>
-			<string>RedditDigest/RedditRequests.m</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>5DB47AEB1A0C45190034EA84</key>
-		<dict>
-			<key>fileRef</key>
-			<string>5DB47AEA1A0C45190034EA84</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>5DB47AEC1A0C4A700034EA84</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.h</string>
-			<key>name</key>
-			<string>UserRequests.h</string>
-			<key>path</key>
-			<string>RedditDigest/UserRequests.h</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>5DB47AED1A0C4A700034EA84</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.objc</string>
-			<key>name</key>
-			<string>UserRequests.m</string>
-			<key>path</key>
-			<string>RedditDigest/UserRequests.m</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>5DB47AEE1A0C4A700034EA84</key>
-		<dict>
-			<key>fileRef</key>
-			<string>5DB47AED1A0C4A700034EA84</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>5DB5B8471A083DF0007DC036</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.h</string>
-			<key>path</key>
-			<string>SubredditSelectionViewController.h</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>5DB5B8481A083DF0007DC036</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.objc</string>
-			<key>path</key>
-			<string>SubredditSelectionViewController.m</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>5DB5B8491A083DF0007DC036</key>
-		<dict>
-			<key>fileRef</key>
-			<string>5DB5B8481A083DF0007DC036</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>5DB5B84A1A084055007DC036</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.h</string>
-			<key>name</key>
-			<string>SubredditListCollectionViewCell.h</string>
-			<key>path</key>
-			<string>RedditDigest/SubredditListCollectionViewCell.h</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>5DB5B84B1A084055007DC036</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.objc</string>
-			<key>name</key>
-			<string>SubredditListCollectionViewCell.m</string>
-			<key>path</key>
-			<string>RedditDigest/SubredditListCollectionViewCell.m</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>5DB5B84C1A084055007DC036</key>
-		<dict>
-			<key>fileRef</key>
-			<string>5DB5B84B1A084055007DC036</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>5DDA80BB1A11DED900527AF9</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.h</string>
-			<key>path</key>
-			<string>Subreddit.h</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>5DDA80BC1A11DED900527AF9</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.objc</string>
-			<key>path</key>
-			<string>Subreddit.m</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>5DDA80BD1A11DED900527AF9</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.h</string>
-			<key>path</key>
-			<string>Post.h</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>5DDA80BE1A11DED900527AF9</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.objc</string>
-			<key>path</key>
-			<string>Post.m</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>5DDA80BF1A11DED900527AF9</key>
-		<dict>
-			<key>fileRef</key>
-			<string>5DDA80BC1A11DED900527AF9</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>5DDA80C01A11DED900527AF9</key>
-		<dict>
-			<key>fileRef</key>
-			<string>5DDA80BE1A11DED900527AF9</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>5DE75C991A0D92580031F0F7</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.h</string>
-			<key>path</key>
-			<string>SelfPostViewController.h</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>5DE75C9A1A0D92580031F0F7</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.objc</string>
-			<key>path</key>
-			<string>SelfPostViewController.m</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>5DE75C9B1A0D92580031F0F7</key>
-		<dict>
-			<key>fileRef</key>
-			<string>5DE75C9A1A0D92580031F0F7</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>5DE75C9C1A0D92760031F0F7</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.h</string>
-			<key>path</key>
-			<string>GifPostViewController.h</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>5DE75C9D1A0D92760031F0F7</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.objc</string>
-			<key>path</key>
-			<string>GifPostViewController.m</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>5DE75C9E1A0D92760031F0F7</key>
-		<dict>
-			<key>fileRef</key>
-			<string>5DE75C9D1A0D92760031F0F7</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>5DE75C9F1A0D941D0031F0F7</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.h</string>
-			<key>path</key>
-			<string>VideoPostViewController.h</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>5DE75CA01A0D941D0031F0F7</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.objc</string>
-			<key>path</key>
-			<string>VideoPostViewController.m</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>5DE75CA11A0D941D0031F0F7</key>
-		<dict>
-			<key>fileRef</key>
-			<string>5DE75CA01A0D941D0031F0F7</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>5DE75CA21A0D98740031F0F7</key>
-		<dict>
-			<key>children</key>
-			<array>
-				<string>5DA5E3FC1A1A672E0091867F</string>
-				<string>5DA5E3FD1A1A672E0091867F</string>
-				<string>5DA5E3FE1A1A672E0091867F</string>
-				<string>5DA5E3FF1A1A672E0091867F</string>
-				<string>5DDA80BB1A11DED900527AF9</string>
-				<string>5DDA80BC1A11DED900527AF9</string>
-				<string>5DDA80BD1A11DED900527AF9</string>
-				<string>5DDA80BE1A11DED900527AF9</string>
-				<string>5DA1F1451A0EEE480017DE39</string>
-				<string>5DA1F1461A0EEE480017DE39</string>
-				<string>5DA1F1471A0EEE480017DE39</string>
-				<string>5DA1F1481A0EEE480017DE39</string>
-				<string>5D3AC6311A12BCCC0093E79E</string>
-				<string>5D3AC6321A12BCCC0093E79E</string>
-			</array>
-			<key>isa</key>
-			<string>PBXGroup</string>
-			<key>name</key>
-			<string>CoreDataModels</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>5DE75CA31A0D98930031F0F7</key>
-		<dict>
-			<key>children</key>
-			<array>
-				<string>5DB47AE91A0C45190034EA84</string>
-				<string>5DB47AEA1A0C45190034EA84</string>
-				<string>5DB47AEC1A0C4A700034EA84</string>
-				<string>5DB47AED1A0C4A700034EA84</string>
-			</array>
-			<key>isa</key>
-			<string>PBXGroup</string>
-			<key>name</key>
-			<string>HttpRequestHelpers</string>
-			<key>path</key>
-			<string>..</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>5DE75CA41A0D98B30031F0F7</key>
-		<dict>
-			<key>children</key>
-			<array>
-				<string>5DAADDD01A0D4CD200BB91AB</string>
-				<string>5DAADDD11A0D4CD200BB91AB</string>
-				<string>5DAADDD31A0D502600BB91AB</string>
-				<string>5DAADDD41A0D502600BB91AB</string>
-				<string>5DE75C991A0D92580031F0F7</string>
-				<string>5DE75C9A1A0D92580031F0F7</string>
-				<string>5DE75C9C1A0D92760031F0F7</string>
-				<string>5DE75C9D1A0D92760031F0F7</string>
-				<string>5DE75C9F1A0D941D0031F0F7</string>
-				<string>5DE75CA01A0D941D0031F0F7</string>
-				<string>5DE75CAA1A0DC9C30031F0F7</string>
-				<string>5DE75CAB1A0DC9C30031F0F7</string>
-			</array>
-			<key>isa</key>
-			<string>PBXGroup</string>
-			<key>name</key>
-			<string>PaginatedViewControllers</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>5DE75CA61A0D99720031F0F7</key>
-		<dict>
-			<key>children</key>
-			<array>
-				<string>5DB5B8471A083DF0007DC036</string>
-				<string>5DB5B8481A083DF0007DC036</string>
-				<string>5DB5B84A1A084055007DC036</string>
-				<string>5DB5B84B1A084055007DC036</string>
-				<string>3417AC0E1A092EBA0026961C</string>
-				<string>3432573F1A0A96CF003A3115</string>
-				<string>343257401A0A96CF003A3115</string>
-			</array>
-			<key>isa</key>
-			<string>PBXGroup</string>
-			<key>name</key>
-			<string>SubredditSelection</string>
-			<key>path</key>
-			<string>..</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>5DE75CAA1A0DC9C30031F0F7</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.h</string>
-			<key>path</key>
-			<string>PageWrapperViewController.h</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>5DE75CAB1A0DC9C30031F0F7</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.objc</string>
-			<key>path</key>
-			<string>PageWrapperViewController.m</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>5DE75CAC1A0DC9C30031F0F7</key>
-		<dict>
-			<key>fileRef</key>
-			<string>5DE75CAB1A0DC9C30031F0F7</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>6BC050BB4AA0264B66F9BADA</key>
-		<dict>
-			<key>children</key>
-			<array>
-				<string>0C4AAC9EB76DD8D441DD99F5</string>
-				<string>9EDEC8BDBE184DC937399E93</string>
-			</array>
-			<key>isa</key>
-			<string>PBXGroup</string>
-			<key>name</key>
-			<string>Pods</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>711551BEEA23829AEA4B6967</key>
-		<dict>
-			<key>children</key>
-			<array>
-				<string>5D614E5A1A16F96100A199A2</string>
-				<string>5D614E4E1A15D70600A199A2</string>
-				<string>3417AC101A0945B40026961C</string>
-				<string>34D1B93B1A08463500C0C15F</string>
-				<string>3C7D9FF115C812F50CB16C63</string>
-			</array>
-			<key>isa</key>
-			<string>PBXGroup</string>
-			<key>name</key>
-			<string>Frameworks</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>815EED161A097E36006286FF</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.h</string>
-			<key>path</key>
-			<string>EditSubredditViewController.h</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>815EED171A097E36006286FF</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.objc</string>
-			<key>path</key>
-			<string>EditSubredditViewController.m</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>815EED181A097E36006286FF</key>
-		<dict>
-			<key>fileRef</key>
-			<string>815EED171A097E36006286FF</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>81D291231A19903D002B2708</key>
-		<dict>
-			<key>children</key>
-			<array>
-				<string>81D291241A199054002B2708</string>
-				<string>81D291251A199054002B2708</string>
-				<string>81D291261A199054002B2708</string>
-				<string>81D291271A199054002B2708</string>
-				<string>81D291281A199054002B2708</string>
-			</array>
-			<key>isa</key>
-			<string>PBXGroup</string>
-			<key>name</key>
-			<string>Sounds</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>81D291241A199054002B2708</key>
-		<dict>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>audio.mp3</string>
-			<key>path</key>
-			<string>DeselectSubreddit.mp3</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>81D291251A199054002B2708</key>
-		<dict>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>audio.mp3</string>
-			<key>path</key>
-			<string>DownVoteTest.mp3</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>81D291261A199054002B2708</key>
-		<dict>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>audio.mp3</string>
-			<key>path</key>
-			<string>LoadDigest.mp3</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>81D291271A199054002B2708</key>
-		<dict>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>audio.mp3</string>
-			<key>path</key>
-			<string>SelectSubreddit.mp3</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>81D291281A199054002B2708</key>
-		<dict>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>audio.mp3</string>
-			<key>path</key>
-			<string>UpVote.mp3</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>81D291291A199054002B2708</key>
-		<dict>
-			<key>fileRef</key>
-			<string>81D291241A199054002B2708</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>81D2912A1A199054002B2708</key>
-		<dict>
-			<key>fileRef</key>
-			<string>81D291251A199054002B2708</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>81D2912B1A199054002B2708</key>
-		<dict>
-			<key>fileRef</key>
-			<string>81D291261A199054002B2708</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>81D2912C1A199054002B2708</key>
-		<dict>
-			<key>fileRef</key>
-			<string>81D291271A199054002B2708</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>81D2912D1A199054002B2708</key>
-		<dict>
-			<key>fileRef</key>
-			<string>81D291281A199054002B2708</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>81D5237F1A0C0E710059C9B3</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.h</string>
-			<key>path</key>
-			<string>SettingsAboutRedditViewController.h</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>81D523801A0C0E710059C9B3</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.objc</string>
-			<key>path</key>
-			<string>SettingsAboutRedditViewController.m</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>81D523811A0C0E710059C9B3</key>
-		<dict>
-			<key>fileRef</key>
-			<string>81D523801A0C0E710059C9B3</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>9E9E081AD0CFB5DD4F3BB937</key>
-		<dict>
-			<key>buildActionMask</key>
-			<string>2147483647</string>
-			<key>files</key>
-			<array/>
-			<key>inputPaths</key>
-			<array/>
-			<key>isa</key>
-			<string>PBXShellScriptBuildPhase</string>
-			<key>name</key>
-			<string>Check Pods Manifest.lock</string>
-			<key>outputPaths</key>
-			<array/>
-			<key>runOnlyForDeploymentPostprocessing</key>
-			<string>0</string>
-			<key>shellPath</key>
-			<string>/bin/sh</string>
-			<key>shellScript</key>
-			<string>diff "${PODS_ROOT}/../Podfile.lock" "${PODS_ROOT}/Manifest.lock" &gt; /dev/null
-if [[ $? != 0 ]] ; then
-    cat &lt;&lt; EOM
-error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.
-EOM
-    exit 1
-fi
-</string>
-			<key>showEnvVarsInLog</key>
-			<string>0</string>
-		</dict>
-		<key>9EDEC8BDBE184DC937399E93</key>
-		<dict>
-			<key>includeInIndex</key>
-			<string>1</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>text.xcconfig</string>
-			<key>name</key>
-			<string>Pods-RedditDigest.release.xcconfig</string>
-			<key>path</key>
-			<string>Pods/Target Support Files/Pods-RedditDigest/Pods-RedditDigest.release.xcconfig</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>A7CC2C6AED4E6C9D64DA03BD</key>
-		<dict>
-			<key>buildActionMask</key>
-			<string>2147483647</string>
-			<key>files</key>
-			<array/>
-			<key>inputPaths</key>
-			<array/>
-			<key>isa</key>
-			<string>PBXShellScriptBuildPhase</string>
-			<key>name</key>
-			<string>Copy Pods Resources</string>
-			<key>outputPaths</key>
-			<array/>
-			<key>runOnlyForDeploymentPostprocessing</key>
-			<string>0</string>
-			<key>shellPath</key>
-			<string>/bin/sh</string>
-			<key>shellScript</key>
-			<string>"${SRCROOT}/Pods/Target Support Files/Pods-RedditDigest/Pods-RedditDigest-resources.sh"
-</string>
-			<key>showEnvVarsInLog</key>
-			<string>0</string>
-		</dict>
-		<key>B2AE06638CF58795B159B5A5</key>
-		<dict>
-			<key>fileRef</key>
-			<string>3C7D9FF115C812F50CB16C63</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-	</dict>
-	<key>rootObject</key>
-	<string>5D5C12B51A05716E002902A8</string>
-</dict>
-</plist>
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		3400A13D1A0EB50D00A39D3F /* CustomButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 3400A13C1A0EB50D00A39D3F /* CustomButton.m */; };
+		340531ED1A1312AE000CF33C /* CommentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 340531EC1A1312AE000CF33C /* CommentViewController.m */; };
+		3413401D1A0C996F004C8C15 /* DigestCellWithImageTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3413401C1A0C996F004C8C15 /* DigestCellWithImageTableViewCell.m */; };
+		3413FC361A1117490018A172 /* LoadingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3413FC351A1117490018A172 /* LoadingViewController.m */; };
+		3417AC0D1A092D970026961C /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3417AC0C1A092D970026961C /* SettingsViewController.m */; };
+		3417AC0F1A092EBA0026961C /* SubredditSelectionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3417AC0E1A092EBA0026961C /* SubredditSelectionCell.xib */; };
+		3417AC131A0945B40026961C /* KTCenterFlowLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 3417AC121A0945B40026961C /* KTCenterFlowLayout.m */; };
+		343257411A0A96CF003A3115 /* HeaderCollectionReusableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 343257401A0A96CF003A3115 /* HeaderCollectionReusableView.m */; };
+		345700D41A13B91B00FA6FC8 /* DetailPostViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 345700D31A13B91B00FA6FC8 /* DetailPostViewController.m */; };
+		34D1B9371A081B4D00C0C15F /* WelcomViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 34D1B9361A081B4D00C0C15F /* WelcomViewController.m */; };
+		34D1B93A1A081D0C00C0C15F /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 34D1B9391A081D0C00C0C15F /* LoginViewController.m */; };
+		34D1B93C1A08463500C0C15F /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 34D1B93B1A08463500C0C15F /* Security.framework */; };
+		5D311EDE1A10A359002AFC3C /* CommentTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D311EDD1A10A359002AFC3C /* CommentTableViewCell.m */; };
+		5D366B891A194991006B0684 /* DigestTitleLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D366B881A194991006B0684 /* DigestTitleLabel.m */; };
+		5D366B8C1A194F7E006B0684 /* TextViewWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D366B8B1A194F7E006B0684 /* TextViewWebViewController.m */; };
+		5D366B951A19B873006B0684 /* RecHeaderCollectionReusableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D366B941A19B873006B0684 /* RecHeaderCollectionReusableView.m */; };
+		5D3AC6331A12BCCC0093E79E /* DigestCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D3AC6321A12BCCC0093E79E /* DigestCategory.m */; };
+		5D5C12C31A05716E002902A8 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D5C12C21A05716E002902A8 /* main.m */; };
+		5D5C12C61A05716E002902A8 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D5C12C51A05716E002902A8 /* AppDelegate.m */; };
+		5D5C12C91A05716E002902A8 /* RedditDigest.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 5D5C12C71A05716E002902A8 /* RedditDigest.xcdatamodeld */; };
+		5D5C12CC1A05716E002902A8 /* DigestViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D5C12CB1A05716E002902A8 /* DigestViewController.m */; };
+		5D5C12CF1A05716E002902A8 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5D5C12CD1A05716E002902A8 /* Main.storyboard */; };
+		5D5C12D11A05716E002902A8 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5D5C12D01A05716E002902A8 /* Images.xcassets */; };
+		5D5C12D41A05716E002902A8 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5D5C12D21A05716E002902A8 /* LaunchScreen.xib */; };
+		5D5C12E01A05716E002902A8 /* RedditDigestTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D5C12DF1A05716E002902A8 /* RedditDigestTests.m */; };
+		5D614E4F1A15D70600A199A2 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5D614E4E1A15D70600A199A2 /* CoreLocation.framework */; };
+		5D614E571A16F77A00A199A2 /* TFHpple.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D614E541A16F77A00A199A2 /* TFHpple.m */; };
+		5D614E581A16F77A00A199A2 /* TFHppleElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D614E551A16F77A00A199A2 /* TFHppleElement.m */; };
+		5D614E591A16F77A00A199A2 /* XPathQuery.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D614E561A16F77A00A199A2 /* XPathQuery.m */; };
+		5D614E5B1A16F96100A199A2 /* libxml2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 5D614E5A1A16F96100A199A2 /* libxml2.dylib */; };
+		5D614E611A1838A200A199A2 /* RecommendedSubredditsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D614E601A1838A200A199A2 /* RecommendedSubredditsViewController.m */; };
+		5D7DDE3C1A1B03AE0000C6C3 /* PastDigestsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D7DDE3B1A1B03AE0000C6C3 /* PastDigestsViewController.m */; };
+		5DA1F14A1A0EEE480017DE39 /* ChildComment.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DA1F1461A0EEE480017DE39 /* ChildComment.m */; };
+		5DA1F14B1A0EEE480017DE39 /* Comment.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DA1F1481A0EEE480017DE39 /* Comment.m */; };
+		5DA5E4001A1A672E0091867F /* Digest.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DA5E3FD1A1A672E0091867F /* Digest.m */; };
+		5DA5E4011A1A672E0091867F /* DigestPost.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DA5E3FF1A1A672E0091867F /* DigestPost.m */; };
+		5DAADDD21A0D4CD200BB91AB /* ImagePostViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DAADDD11A0D4CD200BB91AB /* ImagePostViewController.m */; };
+		5DAADDD51A0D502600BB91AB /* WebPostViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DAADDD41A0D502600BB91AB /* WebPostViewController.m */; };
+		5DB47A5D1A0ABA5B0034EA84 /* PostViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DB47A5C1A0ABA5B0034EA84 /* PostViewController.m */; };
+		5DB47AEB1A0C45190034EA84 /* RedditRequests.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DB47AEA1A0C45190034EA84 /* RedditRequests.m */; };
+		5DB47AEE1A0C4A700034EA84 /* UserRequests.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DB47AED1A0C4A700034EA84 /* UserRequests.m */; };
+		5DB5B8491A083DF0007DC036 /* SubredditSelectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DB5B8481A083DF0007DC036 /* SubredditSelectionViewController.m */; };
+		5DB5B84C1A084055007DC036 /* SubredditListCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DB5B84B1A084055007DC036 /* SubredditListCollectionViewCell.m */; };
+		5DDA80BF1A11DED900527AF9 /* Subreddit.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DDA80BC1A11DED900527AF9 /* Subreddit.m */; };
+		5DDA80C01A11DED900527AF9 /* Post.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DDA80BE1A11DED900527AF9 /* Post.m */; };
+		5DE75C9B1A0D92580031F0F7 /* SelfPostViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DE75C9A1A0D92580031F0F7 /* SelfPostViewController.m */; };
+		5DE75C9E1A0D92760031F0F7 /* GifPostViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DE75C9D1A0D92760031F0F7 /* GifPostViewController.m */; };
+		5DE75CA11A0D941D0031F0F7 /* VideoPostViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DE75CA01A0D941D0031F0F7 /* VideoPostViewController.m */; };
+		5DE75CAC1A0DC9C30031F0F7 /* PageWrapperViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DE75CAB1A0DC9C30031F0F7 /* PageWrapperViewController.m */; };
+		815EED181A097E36006286FF /* EditSubredditViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 815EED171A097E36006286FF /* EditSubredditViewController.m */; };
+		81D291291A199054002B2708 /* DeselectSubreddit.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 81D291241A199054002B2708 /* DeselectSubreddit.mp3 */; };
+		81D2912A1A199054002B2708 /* DownVoteTest.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 81D291251A199054002B2708 /* DownVoteTest.mp3 */; };
+		81D2912B1A199054002B2708 /* LoadDigest.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 81D291261A199054002B2708 /* LoadDigest.mp3 */; };
+		81D2912C1A199054002B2708 /* SelectSubreddit.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 81D291271A199054002B2708 /* SelectSubreddit.mp3 */; };
+		81D2912D1A199054002B2708 /* UpVote.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 81D291281A199054002B2708 /* UpVote.mp3 */; };
+		81D523811A0C0E710059C9B3 /* SettingsAboutRedditViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 81D523801A0C0E710059C9B3 /* SettingsAboutRedditViewController.m */; };
+		AFECB7D3E1AFD77137EC9E75 /* libPods-RedditDigest.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DCDE6A54A047557AD956D431 /* libPods-RedditDigest.a */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		5D5C12DA1A05716E002902A8 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 5D5C12B51A05716E002902A8 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 5D5C12BC1A05716E002902A8;
+			remoteInfo = RedditDigest;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		0C4AAC9EB76DD8D441DD99F5 /* Pods-RedditDigest.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RedditDigest.debug.xcconfig"; path = "Pods/Target Support Files/Pods-RedditDigest/Pods-RedditDigest.debug.xcconfig"; sourceTree = "<group>"; };
+		3400A13B1A0EB50D00A39D3F /* CustomButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomButton.h; sourceTree = "<group>"; };
+		3400A13C1A0EB50D00A39D3F /* CustomButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomButton.m; sourceTree = "<group>"; };
+		340531EB1A1312AE000CF33C /* CommentViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CommentViewController.h; sourceTree = "<group>"; };
+		340531EC1A1312AE000CF33C /* CommentViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CommentViewController.m; sourceTree = "<group>"; };
+		3413401B1A0C996F004C8C15 /* DigestCellWithImageTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DigestCellWithImageTableViewCell.h; sourceTree = "<group>"; };
+		3413401C1A0C996F004C8C15 /* DigestCellWithImageTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DigestCellWithImageTableViewCell.m; sourceTree = "<group>"; };
+		3413FC341A1117490018A172 /* LoadingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoadingViewController.h; sourceTree = "<group>"; };
+		3413FC351A1117490018A172 /* LoadingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoadingViewController.m; sourceTree = "<group>"; };
+		3417AC0B1A092D970026961C /* SettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsViewController.h; sourceTree = "<group>"; };
+		3417AC0C1A092D970026961C /* SettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsViewController.m; sourceTree = "<group>"; };
+		3417AC0E1A092EBA0026961C /* SubredditSelectionCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = SubredditSelectionCell.xib; path = RedditDigest/SubredditSelectionCell.xib; sourceTree = "<group>"; };
+		3417AC111A0945B40026961C /* KTCenterFlowLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTCenterFlowLayout.h; sourceTree = "<group>"; };
+		3417AC121A0945B40026961C /* KTCenterFlowLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTCenterFlowLayout.m; sourceTree = "<group>"; };
+		3432573F1A0A96CF003A3115 /* HeaderCollectionReusableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HeaderCollectionReusableView.h; path = RedditDigest/HeaderCollectionReusableView.h; sourceTree = "<group>"; };
+		343257401A0A96CF003A3115 /* HeaderCollectionReusableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HeaderCollectionReusableView.m; path = RedditDigest/HeaderCollectionReusableView.m; sourceTree = "<group>"; };
+		345700D21A13B91B00FA6FC8 /* DetailPostViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DetailPostViewController.h; sourceTree = "<group>"; };
+		345700D31A13B91B00FA6FC8 /* DetailPostViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DetailPostViewController.m; sourceTree = "<group>"; };
+		34D1B9351A081B4D00C0C15F /* WelcomViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WelcomViewController.h; sourceTree = "<group>"; };
+		34D1B9361A081B4D00C0C15F /* WelcomViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WelcomViewController.m; sourceTree = "<group>"; };
+		34D1B9381A081D0C00C0C15F /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
+		34D1B9391A081D0C00C0C15F /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
+		34D1B93B1A08463500C0C15F /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
+		5D311EDD1A10A359002AFC3C /* CommentTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CommentTableViewCell.m; sourceTree = "<group>"; };
+		5D311EDF1A10A49D002AFC3C /* CommentTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CommentTableViewCell.h; sourceTree = "<group>"; };
+		5D366B871A194991006B0684 /* DigestTitleLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DigestTitleLabel.h; sourceTree = "<group>"; };
+		5D366B881A194991006B0684 /* DigestTitleLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DigestTitleLabel.m; sourceTree = "<group>"; };
+		5D366B8A1A194F7E006B0684 /* TextViewWebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TextViewWebViewController.h; sourceTree = "<group>"; };
+		5D366B8B1A194F7E006B0684 /* TextViewWebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TextViewWebViewController.m; sourceTree = "<group>"; };
+		5D366B931A19B873006B0684 /* RecHeaderCollectionReusableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RecHeaderCollectionReusableView.h; sourceTree = "<group>"; };
+		5D366B941A19B873006B0684 /* RecHeaderCollectionReusableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RecHeaderCollectionReusableView.m; sourceTree = "<group>"; };
+		5D3AC6311A12BCCC0093E79E /* DigestCategory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DigestCategory.h; sourceTree = "<group>"; };
+		5D3AC6321A12BCCC0093E79E /* DigestCategory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DigestCategory.m; sourceTree = "<group>"; };
+		5D5C12BD1A05716E002902A8 /* RedditDigest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RedditDigest.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		5D5C12C11A05716E002902A8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		5D5C12C21A05716E002902A8 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		5D5C12C41A05716E002902A8 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		5D5C12C51A05716E002902A8 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		5D5C12C81A05716E002902A8 /* RedditDigest.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = RedditDigest.xcdatamodel; sourceTree = "<group>"; };
+		5D5C12CA1A05716E002902A8 /* DigestViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DigestViewController.h; sourceTree = "<group>"; };
+		5D5C12CB1A05716E002902A8 /* DigestViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DigestViewController.m; sourceTree = "<group>"; };
+		5D5C12CE1A05716E002902A8 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		5D5C12D01A05716E002902A8 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		5D5C12D31A05716E002902A8 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
+		5D5C12D91A05716E002902A8 /* RedditDigestTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RedditDigestTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		5D5C12DE1A05716E002902A8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		5D5C12DF1A05716E002902A8 /* RedditDigestTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RedditDigestTests.m; sourceTree = "<group>"; };
+		5D5C12E91A05758E002902A8 /* RedditDigest_Push_Development.mobileprovision */ = {isa = PBXFileReference; lastKnownFileType = file; path = RedditDigest_Push_Development.mobileprovision; sourceTree = "<group>"; };
+		5D614E4E1A15D70600A199A2 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		5D614E511A16F75600A199A2 /* TFHpple.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TFHpple.h; sourceTree = "<group>"; };
+		5D614E521A16F77A00A199A2 /* TFHppleElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TFHppleElement.h; sourceTree = "<group>"; };
+		5D614E531A16F77A00A199A2 /* XPathQuery.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XPathQuery.h; sourceTree = "<group>"; };
+		5D614E541A16F77A00A199A2 /* TFHpple.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TFHpple.m; sourceTree = "<group>"; };
+		5D614E551A16F77A00A199A2 /* TFHppleElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TFHppleElement.m; sourceTree = "<group>"; };
+		5D614E561A16F77A00A199A2 /* XPathQuery.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XPathQuery.m; sourceTree = "<group>"; };
+		5D614E5A1A16F96100A199A2 /* libxml2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.dylib; path = usr/lib/libxml2.dylib; sourceTree = SDKROOT; };
+		5D614E5F1A1838A200A199A2 /* RecommendedSubredditsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RecommendedSubredditsViewController.h; sourceTree = "<group>"; };
+		5D614E601A1838A200A199A2 /* RecommendedSubredditsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RecommendedSubredditsViewController.m; sourceTree = "<group>"; };
+		5D7DDE3A1A1B03AE0000C6C3 /* PastDigestsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PastDigestsViewController.h; sourceTree = "<group>"; };
+		5D7DDE3B1A1B03AE0000C6C3 /* PastDigestsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PastDigestsViewController.m; sourceTree = "<group>"; };
+		5DA1F1451A0EEE480017DE39 /* ChildComment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChildComment.h; sourceTree = "<group>"; };
+		5DA1F1461A0EEE480017DE39 /* ChildComment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChildComment.m; sourceTree = "<group>"; };
+		5DA1F1471A0EEE480017DE39 /* Comment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Comment.h; sourceTree = "<group>"; };
+		5DA1F1481A0EEE480017DE39 /* Comment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Comment.m; sourceTree = "<group>"; };
+		5DA5E3FC1A1A672E0091867F /* Digest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Digest.h; sourceTree = "<group>"; };
+		5DA5E3FD1A1A672E0091867F /* Digest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Digest.m; sourceTree = "<group>"; };
+		5DA5E3FE1A1A672E0091867F /* DigestPost.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DigestPost.h; sourceTree = "<group>"; };
+		5DA5E3FF1A1A672E0091867F /* DigestPost.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DigestPost.m; sourceTree = "<group>"; };
+		5DAADDD01A0D4CD200BB91AB /* ImagePostViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImagePostViewController.h; sourceTree = "<group>"; };
+		5DAADDD11A0D4CD200BB91AB /* ImagePostViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImagePostViewController.m; sourceTree = "<group>"; };
+		5DAADDD31A0D502600BB91AB /* WebPostViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WebPostViewController.h; sourceTree = "<group>"; };
+		5DAADDD41A0D502600BB91AB /* WebPostViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WebPostViewController.m; sourceTree = "<group>"; };
+		5DB47A5B1A0ABA5B0034EA84 /* PostViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PostViewController.h; sourceTree = "<group>"; };
+		5DB47A5C1A0ABA5B0034EA84 /* PostViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PostViewController.m; sourceTree = "<group>"; };
+		5DB47AE91A0C45190034EA84 /* RedditRequests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RedditRequests.h; path = RedditDigest/RedditRequests.h; sourceTree = "<group>"; };
+		5DB47AEA1A0C45190034EA84 /* RedditRequests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RedditRequests.m; path = RedditDigest/RedditRequests.m; sourceTree = "<group>"; };
+		5DB47AEC1A0C4A700034EA84 /* UserRequests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UserRequests.h; path = RedditDigest/UserRequests.h; sourceTree = "<group>"; };
+		5DB47AED1A0C4A700034EA84 /* UserRequests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UserRequests.m; path = RedditDigest/UserRequests.m; sourceTree = "<group>"; };
+		5DB5B8471A083DF0007DC036 /* SubredditSelectionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SubredditSelectionViewController.h; sourceTree = "<group>"; };
+		5DB5B8481A083DF0007DC036 /* SubredditSelectionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SubredditSelectionViewController.m; sourceTree = "<group>"; };
+		5DB5B84A1A084055007DC036 /* SubredditListCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SubredditListCollectionViewCell.h; path = RedditDigest/SubredditListCollectionViewCell.h; sourceTree = "<group>"; };
+		5DB5B84B1A084055007DC036 /* SubredditListCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SubredditListCollectionViewCell.m; path = RedditDigest/SubredditListCollectionViewCell.m; sourceTree = "<group>"; };
+		5DDA80BB1A11DED900527AF9 /* Subreddit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Subreddit.h; sourceTree = "<group>"; };
+		5DDA80BC1A11DED900527AF9 /* Subreddit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Subreddit.m; sourceTree = "<group>"; };
+		5DDA80BD1A11DED900527AF9 /* Post.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Post.h; sourceTree = "<group>"; };
+		5DDA80BE1A11DED900527AF9 /* Post.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Post.m; sourceTree = "<group>"; };
+		5DE75C991A0D92580031F0F7 /* SelfPostViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SelfPostViewController.h; sourceTree = "<group>"; };
+		5DE75C9A1A0D92580031F0F7 /* SelfPostViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SelfPostViewController.m; sourceTree = "<group>"; };
+		5DE75C9C1A0D92760031F0F7 /* GifPostViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GifPostViewController.h; sourceTree = "<group>"; };
+		5DE75C9D1A0D92760031F0F7 /* GifPostViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GifPostViewController.m; sourceTree = "<group>"; };
+		5DE75C9F1A0D941D0031F0F7 /* VideoPostViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VideoPostViewController.h; sourceTree = "<group>"; };
+		5DE75CA01A0D941D0031F0F7 /* VideoPostViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VideoPostViewController.m; sourceTree = "<group>"; };
+		5DE75CAA1A0DC9C30031F0F7 /* PageWrapperViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PageWrapperViewController.h; sourceTree = "<group>"; };
+		5DE75CAB1A0DC9C30031F0F7 /* PageWrapperViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PageWrapperViewController.m; sourceTree = "<group>"; };
+		815EED161A097E36006286FF /* EditSubredditViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EditSubredditViewController.h; sourceTree = "<group>"; };
+		815EED171A097E36006286FF /* EditSubredditViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EditSubredditViewController.m; sourceTree = "<group>"; };
+		81D291241A199054002B2708 /* DeselectSubreddit.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = DeselectSubreddit.mp3; sourceTree = "<group>"; };
+		81D291251A199054002B2708 /* DownVoteTest.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = DownVoteTest.mp3; sourceTree = "<group>"; };
+		81D291261A199054002B2708 /* LoadDigest.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = LoadDigest.mp3; sourceTree = "<group>"; };
+		81D291271A199054002B2708 /* SelectSubreddit.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = SelectSubreddit.mp3; sourceTree = "<group>"; };
+		81D291281A199054002B2708 /* UpVote.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = UpVote.mp3; sourceTree = "<group>"; };
+		81D5237F1A0C0E710059C9B3 /* SettingsAboutRedditViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsAboutRedditViewController.h; sourceTree = "<group>"; };
+		81D523801A0C0E710059C9B3 /* SettingsAboutRedditViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsAboutRedditViewController.m; sourceTree = "<group>"; };
+		9EDEC8BDBE184DC937399E93 /* Pods-RedditDigest.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RedditDigest.release.xcconfig"; path = "Pods/Target Support Files/Pods-RedditDigest/Pods-RedditDigest.release.xcconfig"; sourceTree = "<group>"; };
+		DCDE6A54A047557AD956D431 /* libPods-RedditDigest.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-RedditDigest.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		5D5C12BA1A05716E002902A8 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5D614E5B1A16F96100A199A2 /* libxml2.dylib in Frameworks */,
+				5D614E4F1A15D70600A199A2 /* CoreLocation.framework in Frameworks */,
+				34D1B93C1A08463500C0C15F /* Security.framework in Frameworks */,
+				AFECB7D3E1AFD77137EC9E75 /* libPods-RedditDigest.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5D5C12D61A05716E002902A8 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		3400A13A1A0EB30F00A39D3F /* Welcome & Login Views */ = {
+			isa = PBXGroup;
+			children = (
+				34D1B9351A081B4D00C0C15F /* WelcomViewController.h */,
+				34D1B9361A081B4D00C0C15F /* WelcomViewController.m */,
+				34D1B9381A081D0C00C0C15F /* LoginViewController.h */,
+				34D1B9391A081D0C00C0C15F /* LoginViewController.m */,
+				3400A13B1A0EB50D00A39D3F /* CustomButton.h */,
+				3400A13C1A0EB50D00A39D3F /* CustomButton.m */,
+			);
+			name = "Welcome & Login Views";
+			sourceTree = "<group>";
+		};
+		341340191A0C9925004C8C15 /* Digest View */ = {
+			isa = PBXGroup;
+			children = (
+				5D5C12CA1A05716E002902A8 /* DigestViewController.h */,
+				5D5C12CB1A05716E002902A8 /* DigestViewController.m */,
+				3413401A1A0C993F004C8C15 /* Digest Cells */,
+			);
+			name = "Digest View";
+			sourceTree = "<group>";
+		};
+		3413401A1A0C993F004C8C15 /* Digest Cells */ = {
+			isa = PBXGroup;
+			children = (
+				3413401B1A0C996F004C8C15 /* DigestCellWithImageTableViewCell.h */,
+				3413401C1A0C996F004C8C15 /* DigestCellWithImageTableViewCell.m */,
+			);
+			name = "Digest Cells";
+			sourceTree = "<group>";
+		};
+		3413FC331A11172C0018A172 /* Loading View */ = {
+			isa = PBXGroup;
+			children = (
+				3413FC341A1117490018A172 /* LoadingViewController.h */,
+				3413FC351A1117490018A172 /* LoadingViewController.m */,
+			);
+			name = "Loading View";
+			sourceTree = "<group>";
+		};
+		3417AC101A0945B40026961C /* CenterFlowLayout */ = {
+			isa = PBXGroup;
+			children = (
+				3417AC111A0945B40026961C /* KTCenterFlowLayout.h */,
+				3417AC121A0945B40026961C /* KTCenterFlowLayout.m */,
+			);
+			path = CenterFlowLayout;
+			sourceTree = "<group>";
+		};
+		5D5C12B41A05716E002902A8 = {
+			isa = PBXGroup;
+			children = (
+				5D7DDE3A1A1B03AE0000C6C3 /* PastDigestsViewController.h */,
+				5D7DDE3B1A1B03AE0000C6C3 /* PastDigestsViewController.m */,
+				81D291231A19903D002B2708 /* Sounds */,
+				5D366B871A194991006B0684 /* DigestTitleLabel.h */,
+				5D366B881A194991006B0684 /* DigestTitleLabel.m */,
+				5D366B8A1A194F7E006B0684 /* TextViewWebViewController.h */,
+				5D366B8B1A194F7E006B0684 /* TextViewWebViewController.m */,
+				5D614E501A16F73500A199A2 /* HTMLParser */,
+				5D5C12BF1A05716E002902A8 /* RedditDigest */,
+				5D5C12DC1A05716E002902A8 /* RedditDigestTests */,
+				6BC050BB4AA0264B66F9BADA /* Pods */,
+				711551BEEA23829AEA4B6967 /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		5D5C12BE1A05716E002902A8 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				5D5C12BD1A05716E002902A8 /* RedditDigest.app */,
+				5D5C12D91A05716E002902A8 /* RedditDigestTests.xctest */,
+			);
+			name = Products;
+			path = ..;
+			sourceTree = "<group>";
+		};
+		5D5C12BF1A05716E002902A8 /* RedditDigest */ = {
+			isa = PBXGroup;
+			children = (
+				5D5C12C41A05716E002902A8 /* AppDelegate.h */,
+				5D5C12C51A05716E002902A8 /* AppDelegate.m */,
+				5D5C12CD1A05716E002902A8 /* Main.storyboard */,
+				3400A13A1A0EB30F00A39D3F /* Welcome & Login Views */,
+				5DE75CA61A0D99720031F0F7 /* SubredditSelection */,
+				3413FC331A11172C0018A172 /* Loading View */,
+				341340191A0C9925004C8C15 /* Digest View */,
+				5DE75CA41A0D98B30031F0F7 /* PaginatedViewControllers */,
+				5DE75CA31A0D98930031F0F7 /* HttpRequestHelpers */,
+				5DE75CA21A0D98740031F0F7 /* CoreDataModels */,
+				345700D21A13B91B00FA6FC8 /* DetailPostViewController.h */,
+				345700D31A13B91B00FA6FC8 /* DetailPostViewController.m */,
+				5DB47A5B1A0ABA5B0034EA84 /* PostViewController.h */,
+				5DB47A5C1A0ABA5B0034EA84 /* PostViewController.m */,
+				340531EB1A1312AE000CF33C /* CommentViewController.h */,
+				340531EC1A1312AE000CF33C /* CommentViewController.m */,
+				5D311EDF1A10A49D002AFC3C /* CommentTableViewCell.h */,
+				5D311EDD1A10A359002AFC3C /* CommentTableViewCell.m */,
+				3417AC0B1A092D970026961C /* SettingsViewController.h */,
+				3417AC0C1A092D970026961C /* SettingsViewController.m */,
+				81D5237F1A0C0E710059C9B3 /* SettingsAboutRedditViewController.h */,
+				81D523801A0C0E710059C9B3 /* SettingsAboutRedditViewController.m */,
+				815EED161A097E36006286FF /* EditSubredditViewController.h */,
+				815EED171A097E36006286FF /* EditSubredditViewController.m */,
+				5D614E5F1A1838A200A199A2 /* RecommendedSubredditsViewController.h */,
+				5D614E601A1838A200A199A2 /* RecommendedSubredditsViewController.m */,
+				5D5C12D01A05716E002902A8 /* Images.xcassets */,
+				5D5C12D21A05716E002902A8 /* LaunchScreen.xib */,
+				5D366B931A19B873006B0684 /* RecHeaderCollectionReusableView.h */,
+				5D366B941A19B873006B0684 /* RecHeaderCollectionReusableView.m */,
+				5D5C12C71A05716E002902A8 /* RedditDigest.xcdatamodeld */,
+				5D5C12E91A05758E002902A8 /* RedditDigest_Push_Development.mobileprovision */,
+				5D5C12BE1A05716E002902A8 /* Products */,
+				5D5C12C01A05716E002902A8 /* Supporting Files */,
+			);
+			path = RedditDigest;
+			sourceTree = "<group>";
+		};
+		5D5C12C01A05716E002902A8 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				5D5C12C11A05716E002902A8 /* Info.plist */,
+				5D5C12C21A05716E002902A8 /* main.m */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		5D5C12DC1A05716E002902A8 /* RedditDigestTests */ = {
+			isa = PBXGroup;
+			children = (
+				5D5C12DF1A05716E002902A8 /* RedditDigestTests.m */,
+				5D5C12DD1A05716E002902A8 /* Supporting Files */,
+			);
+			path = RedditDigestTests;
+			sourceTree = "<group>";
+		};
+		5D5C12DD1A05716E002902A8 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				5D5C12DE1A05716E002902A8 /* Info.plist */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		5D614E501A16F73500A199A2 /* HTMLParser */ = {
+			isa = PBXGroup;
+			children = (
+				5D614E521A16F77A00A199A2 /* TFHppleElement.h */,
+				5D614E531A16F77A00A199A2 /* XPathQuery.h */,
+				5D614E541A16F77A00A199A2 /* TFHpple.m */,
+				5D614E551A16F77A00A199A2 /* TFHppleElement.m */,
+				5D614E561A16F77A00A199A2 /* XPathQuery.m */,
+				5D614E511A16F75600A199A2 /* TFHpple.h */,
+			);
+			name = HTMLParser;
+			sourceTree = "<group>";
+		};
+		5DE75CA21A0D98740031F0F7 /* CoreDataModels */ = {
+			isa = PBXGroup;
+			children = (
+				5DA5E3FC1A1A672E0091867F /* Digest.h */,
+				5DA5E3FD1A1A672E0091867F /* Digest.m */,
+				5DA5E3FE1A1A672E0091867F /* DigestPost.h */,
+				5DA5E3FF1A1A672E0091867F /* DigestPost.m */,
+				5DDA80BB1A11DED900527AF9 /* Subreddit.h */,
+				5DDA80BC1A11DED900527AF9 /* Subreddit.m */,
+				5DDA80BD1A11DED900527AF9 /* Post.h */,
+				5DDA80BE1A11DED900527AF9 /* Post.m */,
+				5DA1F1451A0EEE480017DE39 /* ChildComment.h */,
+				5DA1F1461A0EEE480017DE39 /* ChildComment.m */,
+				5DA1F1471A0EEE480017DE39 /* Comment.h */,
+				5DA1F1481A0EEE480017DE39 /* Comment.m */,
+				5D3AC6311A12BCCC0093E79E /* DigestCategory.h */,
+				5D3AC6321A12BCCC0093E79E /* DigestCategory.m */,
+			);
+			name = CoreDataModels;
+			sourceTree = "<group>";
+		};
+		5DE75CA31A0D98930031F0F7 /* HttpRequestHelpers */ = {
+			isa = PBXGroup;
+			children = (
+				5DB47AE91A0C45190034EA84 /* RedditRequests.h */,
+				5DB47AEA1A0C45190034EA84 /* RedditRequests.m */,
+				5DB47AEC1A0C4A700034EA84 /* UserRequests.h */,
+				5DB47AED1A0C4A700034EA84 /* UserRequests.m */,
+			);
+			name = HttpRequestHelpers;
+			path = ..;
+			sourceTree = "<group>";
+		};
+		5DE75CA41A0D98B30031F0F7 /* PaginatedViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				5DAADDD01A0D4CD200BB91AB /* ImagePostViewController.h */,
+				5DAADDD11A0D4CD200BB91AB /* ImagePostViewController.m */,
+				5DAADDD31A0D502600BB91AB /* WebPostViewController.h */,
+				5DAADDD41A0D502600BB91AB /* WebPostViewController.m */,
+				5DE75C991A0D92580031F0F7 /* SelfPostViewController.h */,
+				5DE75C9A1A0D92580031F0F7 /* SelfPostViewController.m */,
+				5DE75C9C1A0D92760031F0F7 /* GifPostViewController.h */,
+				5DE75C9D1A0D92760031F0F7 /* GifPostViewController.m */,
+				5DE75C9F1A0D941D0031F0F7 /* VideoPostViewController.h */,
+				5DE75CA01A0D941D0031F0F7 /* VideoPostViewController.m */,
+				5DE75CAA1A0DC9C30031F0F7 /* PageWrapperViewController.h */,
+				5DE75CAB1A0DC9C30031F0F7 /* PageWrapperViewController.m */,
+			);
+			name = PaginatedViewControllers;
+			sourceTree = "<group>";
+		};
+		5DE75CA61A0D99720031F0F7 /* SubredditSelection */ = {
+			isa = PBXGroup;
+			children = (
+				5DB5B8471A083DF0007DC036 /* SubredditSelectionViewController.h */,
+				5DB5B8481A083DF0007DC036 /* SubredditSelectionViewController.m */,
+				5DB5B84A1A084055007DC036 /* SubredditListCollectionViewCell.h */,
+				5DB5B84B1A084055007DC036 /* SubredditListCollectionViewCell.m */,
+				3417AC0E1A092EBA0026961C /* SubredditSelectionCell.xib */,
+				3432573F1A0A96CF003A3115 /* HeaderCollectionReusableView.h */,
+				343257401A0A96CF003A3115 /* HeaderCollectionReusableView.m */,
+			);
+			name = SubredditSelection;
+			path = ..;
+			sourceTree = "<group>";
+		};
+		6BC050BB4AA0264B66F9BADA /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				0C4AAC9EB76DD8D441DD99F5 /* Pods-RedditDigest.debug.xcconfig */,
+				9EDEC8BDBE184DC937399E93 /* Pods-RedditDigest.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+		711551BEEA23829AEA4B6967 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				5D614E5A1A16F96100A199A2 /* libxml2.dylib */,
+				5D614E4E1A15D70600A199A2 /* CoreLocation.framework */,
+				3417AC101A0945B40026961C /* CenterFlowLayout */,
+				34D1B93B1A08463500C0C15F /* Security.framework */,
+				DCDE6A54A047557AD956D431 /* libPods-RedditDigest.a */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		81D291231A19903D002B2708 /* Sounds */ = {
+			isa = PBXGroup;
+			children = (
+				81D291241A199054002B2708 /* DeselectSubreddit.mp3 */,
+				81D291251A199054002B2708 /* DownVoteTest.mp3 */,
+				81D291261A199054002B2708 /* LoadDigest.mp3 */,
+				81D291271A199054002B2708 /* SelectSubreddit.mp3 */,
+				81D291281A199054002B2708 /* UpVote.mp3 */,
+			);
+			name = Sounds;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		5D5C12BC1A05716E002902A8 /* RedditDigest */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 5D5C12E31A05716E002902A8 /* Build configuration list for PBXNativeTarget "RedditDigest" */;
+			buildPhases = (
+				9E9E081AD0CFB5DD4F3BB937 /* Check Pods Manifest.lock */,
+				5D5C12B91A05716E002902A8 /* Sources */,
+				5D5C12BA1A05716E002902A8 /* Frameworks */,
+				5D5C12BB1A05716E002902A8 /* Resources */,
+				A7CC2C6AED4E6C9D64DA03BD /* Copy Pods Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = RedditDigest;
+			productName = RedditDigest;
+			productReference = 5D5C12BD1A05716E002902A8 /* RedditDigest.app */;
+			productType = "com.apple.product-type.application";
+		};
+		5D5C12D81A05716E002902A8 /* RedditDigestTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 5D5C12E61A05716E002902A8 /* Build configuration list for PBXNativeTarget "RedditDigestTests" */;
+			buildPhases = (
+				5D5C12D51A05716E002902A8 /* Sources */,
+				5D5C12D61A05716E002902A8 /* Frameworks */,
+				5D5C12D71A05716E002902A8 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				5D5C12DB1A05716E002902A8 /* PBXTargetDependency */,
+			);
+			name = RedditDigestTests;
+			productName = RedditDigestTests;
+			productReference = 5D5C12D91A05716E002902A8 /* RedditDigestTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		5D5C12B51A05716E002902A8 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0610;
+				ORGANIZATIONNAME = Richmond;
+				TargetAttributes = {
+					5D5C12BC1A05716E002902A8 = {
+						CreatedOnToolsVersion = 6.1;
+						DevelopmentTeam = TB5YKEAJ2S;
+					};
+					5D5C12D81A05716E002902A8 = {
+						CreatedOnToolsVersion = 6.1;
+						DevelopmentTeam = TB5YKEAJ2S;
+						TestTargetID = 5D5C12BC1A05716E002902A8;
+					};
+				};
+			};
+			buildConfigurationList = 5D5C12B81A05716E002902A8 /* Build configuration list for PBXProject "RedditDigest" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 5D5C12B41A05716E002902A8;
+			productRefGroup = 5D5C12BE1A05716E002902A8 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				5D5C12BC1A05716E002902A8 /* RedditDigest */,
+				5D5C12D81A05716E002902A8 /* RedditDigestTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		5D5C12BB1A05716E002902A8 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				81D2912B1A199054002B2708 /* LoadDigest.mp3 in Resources */,
+				5D5C12CF1A05716E002902A8 /* Main.storyboard in Resources */,
+				5D5C12D41A05716E002902A8 /* LaunchScreen.xib in Resources */,
+				81D2912A1A199054002B2708 /* DownVoteTest.mp3 in Resources */,
+				81D291291A199054002B2708 /* DeselectSubreddit.mp3 in Resources */,
+				81D2912D1A199054002B2708 /* UpVote.mp3 in Resources */,
+				5D5C12D11A05716E002902A8 /* Images.xcassets in Resources */,
+				3417AC0F1A092EBA0026961C /* SubredditSelectionCell.xib in Resources */,
+				81D2912C1A199054002B2708 /* SelectSubreddit.mp3 in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5D5C12D71A05716E002902A8 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		9E9E081AD0CFB5DD4F3BB937 /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		A7CC2C6AED4E6C9D64DA03BD /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-RedditDigest/Pods-RedditDigest-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		5D5C12B91A05716E002902A8 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5DE75C9B1A0D92580031F0F7 /* SelfPostViewController.m in Sources */,
+				5DB5B84C1A084055007DC036 /* SubredditListCollectionViewCell.m in Sources */,
+				5DB47AEE1A0C4A700034EA84 /* UserRequests.m in Sources */,
+				5DE75CAC1A0DC9C30031F0F7 /* PageWrapperViewController.m in Sources */,
+				340531ED1A1312AE000CF33C /* CommentViewController.m in Sources */,
+				5D311EDE1A10A359002AFC3C /* CommentTableViewCell.m in Sources */,
+				5DB5B8491A083DF0007DC036 /* SubredditSelectionViewController.m in Sources */,
+				3417AC131A0945B40026961C /* KTCenterFlowLayout.m in Sources */,
+				3413FC361A1117490018A172 /* LoadingViewController.m in Sources */,
+				5D366B891A194991006B0684 /* DigestTitleLabel.m in Sources */,
+				5DDA80BF1A11DED900527AF9 /* Subreddit.m in Sources */,
+				5D366B951A19B873006B0684 /* RecHeaderCollectionReusableView.m in Sources */,
+				5D3AC6331A12BCCC0093E79E /* DigestCategory.m in Sources */,
+				5D614E571A16F77A00A199A2 /* TFHpple.m in Sources */,
+				5DB47A5D1A0ABA5B0034EA84 /* PostViewController.m in Sources */,
+				5D5C12C91A05716E002902A8 /* RedditDigest.xcdatamodeld in Sources */,
+				3417AC0D1A092D970026961C /* SettingsViewController.m in Sources */,
+				5D5C12C61A05716E002902A8 /* AppDelegate.m in Sources */,
+				81D523811A0C0E710059C9B3 /* SettingsAboutRedditViewController.m in Sources */,
+				3413401D1A0C996F004C8C15 /* DigestCellWithImageTableViewCell.m in Sources */,
+				5DE75C9E1A0D92760031F0F7 /* GifPostViewController.m in Sources */,
+				5D7DDE3C1A1B03AE0000C6C3 /* PastDigestsViewController.m in Sources */,
+				34D1B93A1A081D0C00C0C15F /* LoginViewController.m in Sources */,
+				5DA1F14A1A0EEE480017DE39 /* ChildComment.m in Sources */,
+				5DAADDD51A0D502600BB91AB /* WebPostViewController.m in Sources */,
+				5D614E591A16F77A00A199A2 /* XPathQuery.m in Sources */,
+				5DA1F14B1A0EEE480017DE39 /* Comment.m in Sources */,
+				5D366B8C1A194F7E006B0684 /* TextViewWebViewController.m in Sources */,
+				5DAADDD21A0D4CD200BB91AB /* ImagePostViewController.m in Sources */,
+				815EED181A097E36006286FF /* EditSubredditViewController.m in Sources */,
+				345700D41A13B91B00FA6FC8 /* DetailPostViewController.m in Sources */,
+				343257411A0A96CF003A3115 /* HeaderCollectionReusableView.m in Sources */,
+				5DA5E4011A1A672E0091867F /* DigestPost.m in Sources */,
+				5DE75CA11A0D941D0031F0F7 /* VideoPostViewController.m in Sources */,
+				5D5C12CC1A05716E002902A8 /* DigestViewController.m in Sources */,
+				5D614E581A16F77A00A199A2 /* TFHppleElement.m in Sources */,
+				5D614E611A1838A200A199A2 /* RecommendedSubredditsViewController.m in Sources */,
+				5D5C12C31A05716E002902A8 /* main.m in Sources */,
+				5DA5E4001A1A672E0091867F /* Digest.m in Sources */,
+				5DDA80C01A11DED900527AF9 /* Post.m in Sources */,
+				34D1B9371A081B4D00C0C15F /* WelcomViewController.m in Sources */,
+				5DB47AEB1A0C45190034EA84 /* RedditRequests.m in Sources */,
+				3400A13D1A0EB50D00A39D3F /* CustomButton.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5D5C12D51A05716E002902A8 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5D5C12E01A05716E002902A8 /* RedditDigestTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		5D5C12DB1A05716E002902A8 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 5D5C12BC1A05716E002902A8 /* RedditDigest */;
+			targetProxy = 5D5C12DA1A05716E002902A8 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		5D5C12CD1A05716E002902A8 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				5D5C12CE1A05716E002902A8 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		5D5C12D21A05716E002902A8 /* LaunchScreen.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				5D5C12D31A05716E002902A8 /* Base */,
+			);
+			name = LaunchScreen.xib;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		5D5C12E11A05716E002902A8 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				OTHER_CFLAGS = "-DBaseURL=\"@\\\"http://192.168.129.228:3000\\\"\"";
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		5D5C12E21A05716E002902A8 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				OTHER_CFLAGS = "-DBaseURL=\"@\\\"https://gentle-ocean-7650.herokuapp.com/\\\"\"";
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		5D5C12E41A05716E002902A8 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 0C4AAC9EB76DD8D441DD99F5 /* Pods-RedditDigest.debug.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/RedditDigest",
+				);
+				HEADER_SEARCH_PATHS = (
+					"\"${PODS_ROOT}/Headers/Public\"",
+					"\"${PODS_ROOT}/Headers/Public/AFNetworking\"",
+					"\"${PODS_ROOT}/Headers/Public/FLAnimatedImage\"",
+					"\"${PODS_ROOT}/Headers/Public/Mantle\"",
+					"\"${PODS_ROOT}/Headers/Public/RedditKit\"",
+					"\"${PODS_ROOT}/Headers/Public/RedditKit/Categories\"",
+					"\"${PODS_ROOT}/Headers/Public/RedditKit/Model\"",
+					"\"${PODS_ROOT}/Headers/Public/RedditKit/Networking\"",
+					"\"${PODS_ROOT}/Headers/Public/SSKeychain\"",
+					"\"${PODS_ROOT}/Headers/Public/ZeroPush\"",
+					"$(SDKROOT)/usr/include/libxml2",
+				);
+				INFOPLIST_FILE = RedditDigest/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Debug;
+		};
+		5D5C12E51A05716E002902A8 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 9EDEC8BDBE184DC937399E93 /* Pods-RedditDigest.release.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/RedditDigest",
+				);
+				HEADER_SEARCH_PATHS = (
+					"\"${PODS_ROOT}/Headers/Public\"",
+					"\"${PODS_ROOT}/Headers/Public/AFNetworking\"",
+					"\"${PODS_ROOT}/Headers/Public/FLAnimatedImage\"",
+					"\"${PODS_ROOT}/Headers/Public/Mantle\"",
+					"\"${PODS_ROOT}/Headers/Public/RedditKit\"",
+					"\"${PODS_ROOT}/Headers/Public/RedditKit/Categories\"",
+					"\"${PODS_ROOT}/Headers/Public/RedditKit/Model\"",
+					"\"${PODS_ROOT}/Headers/Public/RedditKit/Networking\"",
+					"\"${PODS_ROOT}/Headers/Public/SSKeychain\"",
+					"\"${PODS_ROOT}/Headers/Public/ZeroPush\"",
+					"$(SDKROOT)/usr/include/libxml2",
+				);
+				INFOPLIST_FILE = RedditDigest/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Release;
+		};
+		5D5C12E71A05716E002902A8 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+				);
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = RedditDigestTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/RedditDigest.app/RedditDigest";
+			};
+			name = Debug;
+		};
+		5D5C12E81A05716E002902A8 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = RedditDigestTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/RedditDigest.app/RedditDigest";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		5D5C12B81A05716E002902A8 /* Build configuration list for PBXProject "RedditDigest" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				5D5C12E11A05716E002902A8 /* Debug */,
+				5D5C12E21A05716E002902A8 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		5D5C12E31A05716E002902A8 /* Build configuration list for PBXNativeTarget "RedditDigest" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				5D5C12E41A05716E002902A8 /* Debug */,
+				5D5C12E51A05716E002902A8 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		5D5C12E61A05716E002902A8 /* Build configuration list for PBXNativeTarget "RedditDigestTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				5D5C12E71A05716E002902A8 /* Debug */,
+				5D5C12E81A05716E002902A8 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		5D5C12C71A05716E002902A8 /* RedditDigest.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				5D5C12C81A05716E002902A8 /* RedditDigest.xcdatamodel */,
+			);
+			currentVersion = 5D5C12C81A05716E002902A8 /* RedditDigest.xcdatamodel */;
+			path = RedditDigest.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
+	};
+	rootObject = 5D5C12B51A05716E002902A8 /* Project object */;
+}

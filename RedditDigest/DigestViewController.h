@@ -14,7 +14,8 @@
 @property NSMutableArray *subredditsForFirstDigest;
 @property BOOL isComingFromSubredditSelectionView;
 @property (strong, nonatomic) IBOutlet UITableView *digestTableView;
-
+@property NSArray *oldDigest;
+@property BOOL isFromPastDigest;
 -(void)fetchNewData:(BOOL)isDigest withCompletion:(void (^)(UIBackgroundFetchResult))completionHandler;
 -(void)requestNewLinks:(BOOL)isDigest;
 -(void)performNewFetchedDataActions:(BOOL)isDigest;

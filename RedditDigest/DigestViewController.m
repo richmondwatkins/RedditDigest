@@ -26,6 +26,7 @@
 #import <CoreLocation/CoreLocation.h>
 #import <AudioToolbox/AudioToolbox.h>
 #import "DigestPost.h"
+#import <ZeroPush.h>
 
 @interface DigestViewController () <UITableViewDataSource, UITableViewDelegate, DigestCellDelegate, CLLocationManagerDelegate>
 
@@ -56,6 +57,7 @@
     [self.digestTableView addSubview:self.refreshControl];
     [self getDateString];
     self.navigationItem.title = self.dateToday;
+    self.imageCache = [[NSCache alloc] init];
 
 }
 
@@ -74,8 +76,8 @@
 
 - (void)viewWillAppear:(BOOL)animated
 {
+    [self.imageCache removeAllObjects];
     [super viewWillAppear:animated];
-    self.imageCache = [[NSCache alloc] init];
     self.didUpdateLocation = NO;
 
     if (![[NSUserDefaults standardUserDefaults] boolForKey:@"HasSubscriptions"])
@@ -330,9 +332,7 @@
 
     DigestCellWithImageTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"DigestCell"];
 
-    Post *post = self.digestPosts[indexPath.row];
     cell.delegate = self;
-    cell.titleLabel.text = post.title;
     cell.titleLabel.lineBreakMode = NSLineBreakByWordWrapping;
     cell.titleLabel.numberOfLines = 0;
 
@@ -340,42 +340,66 @@
     UIImageView *selectedBackgroundView = [[UIImageView alloc]initWithFrame:cell.frame];
     selectedBackgroundView.backgroundColor = [UIColor colorWithRed:0.937 green:0.969 blue:1 alpha:1];
     cell.selectedBackgroundView = selectedBackgroundView;
-
-    cell.subredditLabel.text = post.subreddit.subreddit;
-    cell.authorLabel.text = post.author;
-    cell.upVoteDownVoteLabel.text = [self abbreviateNumber:post.voteRatio.integerValue];
-    cell.commentsLabel.text = [self abbreviateNumber:post.totalComments.integerValue];
-
-    if (post.image) {
-        cell.thumbnailImage.image = [self returnImageForCellFromData:post.postID withSubredditNameForKey:post.subreddit.subreddit andFilePathPrefix:@"image"];
-//        cell.thumbnailImage.image = [self returnImageForCellFromData: withSubredditNameForKey:post.subreddit.subreddit];
-    }else if([post.thumbnailImage boolValue]){
-        cell.thumbnailImage.image = [self returnImageForCellFromData:post.postID withSubredditNameForKey:post.subreddit.subreddit andFilePathPrefix:@"thumbnail"];
-    }else if([post.subreddit.image boolValue]){
-        cell.thumbnailImage.image = [self returnImageForCellFromData:post.subreddit.subreddit withSubredditNameForKey:post.subreddit.subreddit andFilePathPrefix:@"subreddit"];
-    }else{
-        cell.thumbnailImage.image = [UIImage imageNamed:@"snoo_camera_placeholder"];
-    }
-
     cell.thumbnailImage.contentMode = UIViewContentModeScaleAspectFill;
     cell.thumbnailImage.alpha = 0.75;
-
-    if ([post.upvoted boolValue] == YES) {
-        //[cell.upVoteButton setBackgroundImage:[UIImage imageNamed:@"upvote_arrow_selected"] forState:UIControlStateNormal];
-    }else{
-        //[cell.upVoteButton setBackgroundImage:[UIImage imageNamed:@"up_arrow"] forState:UIControlStateNormal];
-    }
-    if ([post.downvoted boolValue] == YES) {
-        //[cell.downVoteButton setBackgroundImage:[UIImage imageNamed:@"downvote_arrow_selected"] forState:UIControlStateNormal];
-    }else{
-        //[cell.downVoteButton setBackgroundImage:[UIImage imageNamed:@"down_arrow"] forState:UIControlStateNormal];
-    }
-
     cell.thumbnailImage.layer.cornerRadius = 2.0;
     cell.thumbnailImage.layer.masksToBounds = YES;
 
+
+    if (self.isFromPastDigest) {
+        DigestPost *post = self.digestPosts[indexPath.row];
+
+        cell.titleLabel.text = post.title;
+        cell.subredditLabel.text = post.subreddit;
+        cell.authorLabel.text = post.author;
+        cell.upVoteDownVoteLabel.text = [self abbreviateNumber:post.voteRatio.integerValue];
+        cell.commentsLabel.text = [self abbreviateNumber:post.totalComments.integerValue];
+
+        if ([post.image boolValue]) {
+            cell.thumbnailImage.image = [self returnImageForCellFromData:post.postID withSubredditNameForKey:post.subreddit andFilePathPrefix:@"image-copy"];
+        }else if([post.thumbnailImagePath boolValue]){
+            cell.thumbnailImage.image = [self returnImageForCellFromData:post.postID withSubredditNameForKey:post.subreddit  andFilePathPrefix:@"thumbnail-copy"];
+        }else if([post.subredditImage boolValue]){
+            cell.thumbnailImage.image = [self returnImageForCellFromData:post.subreddit withSubredditNameForKey:post.subreddit andFilePathPrefix:@"subreddit-copy"];
+        }else{
+            cell.thumbnailImage.image = [UIImage imageNamed:@"snoo_camera_placeholder"];
+        }
+    }else{
+        Post *post = self.digestPosts[indexPath.row];
+
+        cell.titleLabel.text = post.title;
+        cell.subredditLabel.text = post.subreddit.subreddit;
+        cell.authorLabel.text = post.author;
+        cell.upVoteDownVoteLabel.text = [self abbreviateNumber:post.voteRatio.integerValue];
+        cell.commentsLabel.text = [self abbreviateNumber:post.totalComments.integerValue];
+
+        if ([post.image boolValue]) {
+            cell.thumbnailImage.image = [self returnImageForCellFromData:post.postID withSubredditNameForKey:post.subreddit.subreddit andFilePathPrefix:@"image"];
+        }else if([post.thumbnailImage boolValue]){
+            cell.thumbnailImage.image = [self returnImageForCellFromData:post.postID withSubredditNameForKey:post.subreddit.subreddit andFilePathPrefix:@"thumbnail"];
+        }else if([post.subreddit.image boolValue]){
+            cell.thumbnailImage.image = [self returnImageForCellFromData:post.subreddit.subreddit withSubredditNameForKey:post.subreddit.subreddit andFilePathPrefix:@"subreddit"];
+        }else{
+            cell.thumbnailImage.image = [UIImage imageNamed:@"snoo_camera_placeholder"];
+        }
+
+    }
+
+
+//    if ([post.upvoted boolValue] == YES) {
+//        //[cell.upVoteButton setBackgroundImage:[UIImage imageNamed:@"upvote_arrow_selected"] forState:UIControlStateNormal];
+//    }else{
+//        //[cell.upVoteButton setBackgroundImage:[UIImage imageNamed:@"up_arrow"] forState:UIControlStateNormal];
+//    }
+//    if ([post.downvoted boolValue] == YES) {
+//        //[cell.downVoteButton setBackgroundImage:[UIImage imageNamed:@"downvote_arrow_selected"] forState:UIControlStateNormal];
+//    }else{
+//        //[cell.downVoteButton setBackgroundImage:[UIImage imageNamed:@"down_arrow"] forState:UIControlStateNormal];
+//    }
+
     return cell;
 }
+
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -533,53 +557,15 @@
     [RedditRequests retrieveLatestPostFromArray:subreddits withManagedObject:self.managedObjectContext  withCompletion:^(BOOL completed) {
         [self performNewFetchedDataActions:isDigest];
         completionHandler(UIBackgroundFetchResultNewData);
-        [self fireLocalNotificationAndMarkComplete];
     }];
 }
 
--(void)fireLocalNotificationAndMarkComplete
-{
-    UILocalNotification* localNotification = [[UILocalNotification alloc] init];
-    localNotification.fireDate = [NSDate dateWithTimeIntervalSinceNow:1];
-    localNotification.timeZone = [NSTimeZone defaultTimeZone];
-    localNotification.alertBody = @"Your reddit digest is ready for viewing";
-    localNotification.applicationIconBadgeNumber = [[UIApplication sharedApplication] applicationIconBadgeNumber] + 1;
-    [[UIApplication sharedApplication] scheduleLocalNotification:localNotification];
-
-    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-    NSTimeInterval timeInMiliseconds = [[NSDate date] timeIntervalSince1970];
-    NSNumber *timeObject = [NSNumber numberWithDouble:timeInMiliseconds];
-    [userDefaults setObject:timeObject forKey:@"LastDigest"];
-
-    NSNumber *currentDigest = [userDefaults objectForKey:@"NextDigest"];
-    [userDefaults setObject:currentDigest forKey:@"LastScheduled"];
-
-    NSCalendar *calendar = [NSCalendar currentCalendar];
-    NSDateComponents *eveningComponents = [calendar components:NSCalendarUnitDay|NSCalendarUnitMonth|NSCalendarUnitYear fromDate:[NSDate date]];
-    eveningComponents.hour = 20;
-    eveningComponents.timeZone = [NSTimeZone localTimeZone];
-    NSDate *eveningDate = [calendar dateFromComponents:eveningComponents];
-    NSTimeInterval eveningDigest = [eveningDate timeIntervalSince1970];
-
-    NSDateComponents *morningComponents = [calendar components:NSCalendarUnitDay|NSCalendarUnitMonth|NSCalendarUnitYear fromDate:[NSDate date]];
-    morningComponents.hour = 8;
-    morningComponents.timeZone = [NSTimeZone localTimeZone];
-    NSDate *morningDate = [calendar dateFromComponents:morningComponents];
-    NSTimeInterval morningDigest = [morningDate timeIntervalSince1970];
-
-    NSTimeInterval now = [[NSDate date] timeIntervalSince1970];
-    if (now < eveningDigest) {
-        [userDefaults setObject:[NSNumber numberWithDouble:eveningDigest] forKey:@"NextDigest"];
-    }else{
-        [userDefaults setObject:[NSNumber numberWithDouble:morningDigest] forKey:@"NextDigest"];
-    [userDefaults synchronize];
-    }
-}
 
 -(void)retrievePostsFromCoreData:(BOOL)isDigest withCompletion:(void (^)(BOOL))completionHandler
 {
     //    [Digest createAndSaveDigestWithPost:savedPost andManagedObject:managedObjectContext];
 
+    [self.imageCache removeAllObjects];
     self.digestPosts = [NSMutableArray array];
 
     NSFetchRequest * fetch = [[NSFetchRequest alloc] init];
@@ -603,6 +589,8 @@
 }
 
 -(void)requestNewLinksFromRefresh{
+    self.isFromPastDigest = NO;
+    [self.imageCache removeAllObjects];
     [self requestNewLinks:NO];
 }
 
@@ -639,26 +627,69 @@
         NSIndexPath *indexPath = [self.digestTableView indexPathForSelectedRow];
         detailPostViewController.allPosts = self.digestPosts;
         detailPostViewController.index = indexPath.row;
+        if (self.isFromPastDigest) {
+            detailPostViewController.isFromPastDigest = YES;
+        }
     }
     else if ([segue.identifier isEqualToString:@"SettingsSegue"])
     {
         SettingsViewController *settingsController = segue.destinationViewController;
         settingsController.managedObject = self.managedObjectContext;
     }
+
+    [self.imageCache removeAllObjects];
+//    self.isFromPastDigest = NO;
 }
 
 -(IBAction)unwindFromSubredditSelectionViewController:(UIStoryboardSegue *)segue
 {
-    [Post removeAllPostsFromCoreData:self.managedObjectContext];
-    [self.digestPosts removeAllObjects];
 
-    [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"HasSubscriptions"];
-    [[NSUserDefaults standardUserDefaults] synchronize];
-
+    if (self.isFromPastDigest) {
+        [self.imageCache removeAllObjects];
+        self.digestPosts = [NSMutableArray arrayWithArray:self.oldDigest];
+        [self.digestTableView reloadData];
+//        [self convertToPostObjects:[NSMutableArray arrayWithArray:self.oldDigest]];
+//        [self.digestTableView reloadData];
+    }
 
     if (self.isComingFromSubredditSelectionView) {
+        [Post removeAllPostsFromCoreData:self.managedObjectContext];
+        [self.digestPosts removeAllObjects];
+
+        if(![[NSUserDefaults standardUserDefaults] boolForKey:@"HasSubscriptions"]){
+            UIApplication *application = [UIApplication sharedApplication];
+            
+            [ZeroPush engageWithAPIKey:@"PM4ouAj1rzxmQysu5ej6" delegate:application];
+            [[UIApplication sharedApplication] registerUserNotificationSettings:[UIUserNotificationSettings settingsForTypes:(UIUserNotificationTypeSound | UIUserNotificationTypeAlert | UIUserNotificationTypeBadge) categories:nil]];
+            [[ZeroPush shared] registerForRemoteNotifications];
+
+            [application registerUserNotificationSettings:[UIUserNotificationSettings settingsForTypes:(UIUserNotificationTypeSound | UIUserNotificationTypeAlert | UIUserNotificationTypeBadge) categories:nil]];
+
+            [application registerForRemoteNotifications];
+        }
+
+        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"HasSubscriptions"];
+        [[NSUserDefaults standardUserDefaults] synchronize];
+
         [self requestNewLinks:YES];
     }
+}
+
+-(void)convertToPostObjects:(NSArray *)digestPosts{
+    for (DigestPost *digestPost in digestPosts) {
+        Post *post = [[Post alloc] init];
+        post.title = digestPost.title;
+        post.subreddit.subreddit = digestPost.subreddit;
+        post.author = digestPost.author;
+        post.voteRatio = digestPost.voteRatio;
+        post.totalComments = digestPost.totalComments;
+        post.postID = digestPost.postID;
+        post.image = digestPost.image;
+        post.subreddit.image = digestPost.subredditImage;
+
+        [self.digestPosts addObject:post];
+    }
+    [self.digestTableView reloadData];
 }
 
 #pragma mark - Buttons & Gestures

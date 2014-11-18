@@ -10,4 +10,5 @@
 
 @interface PastDigestsViewController : UIViewController
 
+@property NSManagedObjectContext *managedObject;
 @end

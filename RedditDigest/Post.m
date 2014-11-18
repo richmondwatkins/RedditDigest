@@ -80,9 +80,9 @@
 
             [self saveDataToDocumentsDirectory:data withFileNamePrefix:@"thumbnail" andPostfix:savedPost.postID];
 
-            if (post.isImageLink) {
+            if (post.customIsImage) {
                 savedPost.isImageLink = [NSNumber numberWithBool:YES];
-                NSURLRequest *mainImageRequest = [NSURLRequest requestWithURL:post.URL];
+                NSURLRequest *mainImageRequest = [NSURLRequest requestWithURL:post.customURL];
                 [NSURLConnection sendAsynchronousRequest:mainImageRequest queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
 
                     NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse*)response;
@@ -93,7 +93,7 @@
                         savedPost.isGif = [NSNumber numberWithBool:YES];
                     }else{
                         [self saveDataToDocumentsDirectory:data withFileNamePrefix:@"image" andPostfix:savedPost.postID];
-                        savedPost.image = post.fullName;
+                        savedPost.image = [NSNumber numberWithBool:YES];
                     }
 
                     [managedObjectContext save:nil];

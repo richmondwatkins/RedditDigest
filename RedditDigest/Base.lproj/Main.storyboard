@@ -620,7 +620,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="ig4-6X-2pQ">
-                                                    <rect key="frame" x="508" y="6" width="51" height="31"/>
+                                                    <rect key="frame" x="543" y="4" width="51" height="31"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="49" id="1mV-zI-MAD"/>
                                                         <constraint firstAttribute="height" constant="31" id="9lS-EU-8Fu"/>
@@ -631,10 +631,10 @@
                                                 </switch>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstItem="ig4-6X-2pQ" firstAttribute="top" secondItem="aKk-7i-xHe" secondAttribute="topMargin" constant="-2" id="HcT-yp-3dN"/>
+                                                <constraint firstItem="ig4-6X-2pQ" firstAttribute="top" secondItem="aKk-7i-xHe" secondAttribute="topMargin" constant="-4" id="HcT-yp-3dN"/>
                                                 <constraint firstItem="zDk-K9-hyR" firstAttribute="top" secondItem="aKk-7i-xHe" secondAttribute="topMargin" constant="-2" id="RaX-cD-QIb"/>
                                                 <constraint firstItem="zDk-K9-hyR" firstAttribute="leading" secondItem="aKk-7i-xHe" secondAttribute="leadingMargin" constant="13" id="fcd-s0-Fal"/>
-                                                <constraint firstAttribute="trailingMargin" secondItem="ig4-6X-2pQ" secondAttribute="trailing" constant="35" id="pEm-dz-MDk"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="ig4-6X-2pQ" secondAttribute="trailing" id="pEm-dz-MDk"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
@@ -683,7 +683,7 @@
                                             </constraints>
                                         </tableViewCellContentView>
                                         <connections>
-                                            <segue destination="5pH-7p-oC6" kind="show" id="Cak-jp-A1q"/>
+                                            <segue destination="5pH-7p-oC6" kind="show" identifier="PastDigestSegue" id="Cak-jp-A1q"/>
                                         </connections>
                                     </tableViewCell>
                                 </cells>
@@ -729,7 +729,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="MIz-OR-cBX">
-                                                    <rect key="frame" x="510" y="8" width="51" height="31"/>
+                                                    <rect key="frame" x="543" y="7" width="51" height="31"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="31" id="3al-1C-cLy"/>
                                                         <constraint firstAttribute="width" constant="49" id="TTp-ps-2vK"/>
@@ -740,10 +740,10 @@
                                                 </switch>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstItem="MIz-OR-cBX" firstAttribute="top" secondItem="kF7-Qr-VdS" secondAttribute="topMargin" id="1rj-jb-ccE"/>
+                                                <constraint firstItem="MIz-OR-cBX" firstAttribute="top" secondItem="kF7-Qr-VdS" secondAttribute="topMargin" constant="-1" id="1rj-jb-ccE"/>
                                                 <constraint firstItem="GaN-3b-tRf" firstAttribute="top" secondItem="kF7-Qr-VdS" secondAttribute="topMargin" id="XtA-sZ-Aqu"/>
                                                 <constraint firstItem="GaN-3b-tRf" firstAttribute="leading" secondItem="kF7-Qr-VdS" secondAttribute="leadingMargin" constant="13" id="Y5G-Eq-fts"/>
-                                                <constraint firstAttribute="trailingMargin" secondItem="MIz-OR-cBX" secondAttribute="trailing" constant="33" id="ZXn-R8-ouI"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="MIz-OR-cBX" secondAttribute="trailing" id="ZXn-R8-ouI"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
@@ -804,32 +804,38 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="smM-ck-meZ">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="Faj-xv-Gld">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="DigestCell" id="rth-2h-3j3">
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="DigestCell" id="Y3m-Y3-Ixc">
                                         <rect key="frame" x="0.0" y="0.0" width="600" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="rth-2h-3j3" id="JOG-Fv-cBX">
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Y3m-Y3-Ixc" id="S16-Ao-8Wy">
                                             <autoresizingMask key="autoresizingMask"/>
                                         </tableViewCellContentView>
                                         <connections>
-                                            <segue destination="nKc-Mn-Ulc" kind="unwind" unwindAction="unwindFromSubredditSelectionViewController:" id="kB3-ef-JC1"/>
+                                            <segue destination="nKc-Mn-Ulc" kind="unwind" unwindAction="unwindFromSubredditSelectionViewController:" id="ne8-AV-eaY"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
-                                <variation key="widthClass=compact" fixedFrame="YES">
-                                    <rect key="frame" x="0.0" y="0.0" width="0.0" height="0.0"/>
-                                </variation>
                                 <connections>
-                                    <outlet property="dataSource" destination="5pH-7p-oC6" id="gaI-jQ-6jn"/>
-                                    <outlet property="delegate" destination="5pH-7p-oC6" id="15u-el-euB"/>
+                                    <outlet property="dataSource" destination="5pH-7p-oC6" id="aYt-2k-FFm"/>
+                                    <outlet property="delegate" destination="5pH-7p-oC6" id="TOZ-ba-Zm0"/>
                                 </connections>
                             </tableView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="Faj-xv-Gld" firstAttribute="bottom" secondItem="PjV-PM-jSq" secondAttribute="top" id="83X-uE-P4e"/>
+                            <constraint firstItem="Faj-xv-Gld" firstAttribute="top" secondItem="oRb-Cx-j9t" secondAttribute="top" id="YJr-CC-EJh"/>
+                            <constraint firstItem="Faj-xv-Gld" firstAttribute="leading" secondItem="oRb-Cx-j9t" secondAttribute="leading" id="d0k-BD-gLK"/>
+                            <constraint firstAttribute="trailing" secondItem="Faj-xv-Gld" secondAttribute="trailing" id="ggZ-il-KM8"/>
+                        </constraints>
                     </view>
+                    <connections>
+                        <outlet property="pastDigestTableView" destination="Faj-xv-Gld" id="Hnp-2v-lcd"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="6i8-IX-u2s" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="nKc-Mn-Ulc" userLabel="Exit" sceneMemberID="exit"/>
@@ -1789,8 +1795,8 @@
         <image name="welcome_snoo" width="400" height="537"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="LaA-qT-0SF"/>
-        <segue reference="UQ5-hC-TYb"/>
         <segue reference="jTu-Ox-EHd"/>
+        <segue reference="LaA-qT-0SF"/>
+        <segue reference="PcQ-bC-EQa"/>
     </inferredMetricsTieBreakers>
 </document>

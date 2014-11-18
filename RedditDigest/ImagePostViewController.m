@@ -24,7 +24,8 @@
     [self.activityIndicator startAnimating];
     self.activityIndicator.hidden = NO;
     dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(void){
-        UIImage *image = [UIImage imageWithData:[self documentsPathForFileName:self.post.postID]];
+        NSLog(@"POST IDDD %@",self.postID);
+        UIImage *image = [UIImage imageWithData:[self documentsPathForFileName:self.postID]];
         dispatch_async(dispatch_get_main_queue(), ^(void){
             self.imageView.image = image;
             self.imageView.contentMode = UIViewContentModeScaleAspectFit;
@@ -54,11 +55,15 @@
 {
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
     NSString *documentsPath = [paths objectAtIndex:0];
-
-    NSString *pathCompenent = [NSString stringWithFormat:@"image-%@", name];
+    NSString *pathCompenent;
+    if (self.isOldDigest) {
+        pathCompenent = [NSString stringWithFormat:@"image-copy-%@", name];
+    }else{
+        pathCompenent = [NSString stringWithFormat:@"image-%@", name];
+    }
 
     NSString *filePath = [documentsPath stringByAppendingPathComponent:pathCompenent];
-
+    NSLog(@"FILE PATH %@",filePath);
     return [NSData dataWithContentsOfFile:filePath];
 }
 

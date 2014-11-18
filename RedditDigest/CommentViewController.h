@@ -20,5 +20,5 @@
 @property Post *post;
 @property NSInteger constant;
 @property (weak, nonatomic) IBOutlet UIButton *showHideCommentsViewButton;
-
+@property BOOL isFromPastDigest;
 @end

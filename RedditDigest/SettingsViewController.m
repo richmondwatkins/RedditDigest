@@ -15,9 +15,9 @@
 #import "Subreddit.h"
 #import "RecommendedSubredditsViewController.h"
 #import "Digest.h"
+#import "PastDigestsViewController.h"
 #import "PocketAPI.h"
 #import "TSMessage.h"
-
 @interface SettingsViewController () <UITableViewDataSource, UITableViewDelegate, CLLocationManagerDelegate>
 
 @property (strong, nonatomic) IBOutlet UITableView *tableView;
@@ -250,6 +250,9 @@
     } else if([segue.identifier isEqualToString:@"RecommendedSegue"]){
         RecommendedSubredditsViewController *recController = segue.destinationViewController;
         recController.managedObject = self.managedObject;
+    } else if ([segue.identifier isEqualToString:@"PastDigestSegue"]){
+        PastDigestsViewController *pastController = segue.destinationViewController;
+        pastController.managedObject = self.managedObject;
     }
 }
 

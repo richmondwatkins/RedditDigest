@@ -9,11 +9,11 @@
 #import "DigestPost.h"
 #import "Digest.h"
 #import "Post.h"
-
+#import "Subreddit.h"
 @implementation DigestPost
 
 @dynamic totalComments;
-@dynamic voteRaio;
+@dynamic voteRatio;
 @dynamic author;
 @dynamic domain;
 @dynamic html;
@@ -27,19 +27,31 @@
 @dynamic isWebPage;
 @dynamic isYouTube;
 @dynamic nsfw;
-@dynamic imagePath;
+@dynamic image;
 @dynamic thumbnailImagePath;
 @dynamic digest;
+@dynamic subreddit;
+@dynamic subredditImage;
 
 +(void)createNewDigestPosts:(NSArray *)posts withManagedObject:(NSManagedObjectContext *)managedObject{
     NSMutableArray *savedDigestPosts = [NSMutableArray array];
     for (Post *post in posts) {
         DigestPost *savedPost = [NSEntityDescription insertNewObjectForEntityForName:@"DigestPost" inManagedObjectContext:managedObject];
         savedPost.totalComments = post.totalComments;
-        savedPost.voteRaio = post.voteRatio;
+        savedPost.voteRatio = post.voteRatio;
         savedPost.author = post.author;
         savedPost.domain = post.domain;
         savedPost.postID = post.postID;
+        savedPost.subreddit = post.subreddit.subreddit;
+
+        if (post.subreddit) {
+            NSData *imageData = [self documentsPathForFileName:post.subreddit.subreddit andPrefix:@"subreddit"];
+            [self saveDataToDocumentsDirectory:imageData withFileNamePrefix:@"subreddit-copy" andPostfix:post.subreddit.subreddit];
+            if (imageData) {
+                savedPost.subredditImage = [NSNumber numberWithBool:YES];
+            }
+        }
+
         if (post.isSelfPost) {
             savedPost.selfText = post.selfText;
             savedPost.isSelfPost = post.isSelfPost;
@@ -48,6 +60,7 @@
         savedPost.url = post.url;
 
         if (post.thumbnailImage) {
+            savedPost.thumbnailImagePath = [NSNumber numberWithBool:YES];
             NSData *imageData = [self documentsPathForFileName:post.postID andPrefix:@"thumbnail"];
             [self saveDataToDocumentsDirectory:imageData withFileNamePrefix:@"thumbnail-copy" andPostfix:post.postID];
         }
@@ -58,8 +71,13 @@
 
         if (post.isImageLink) {
             savedPost.isImageLink = post.isImageLink;
+
             NSData *imageData = [self documentsPathForFileName:post.postID andPrefix:@"image"];
             [self saveDataToDocumentsDirectory:imageData withFileNamePrefix:@"image-copy" andPostfix:post.postID];
+
+            if (imageData) {
+                savedPost.image = [NSNumber numberWithBool:YES];
+            }
         }
 
         if (post.isWebPage) {
