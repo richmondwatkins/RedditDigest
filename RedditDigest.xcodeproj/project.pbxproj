@@ -42,6 +42,7 @@
 		5D614E591A16F77A00A199A2 /* XPathQuery.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D614E561A16F77A00A199A2 /* XPathQuery.m */; };
 		5D614E5B1A16F96100A199A2 /* libxml2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 5D614E5A1A16F96100A199A2 /* libxml2.dylib */; };
 		5D614E611A1838A200A199A2 /* RecommendedSubredditsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D614E601A1838A200A199A2 /* RecommendedSubredditsViewController.m */; };
+		5D7DDE3C1A1B03AE0000C6C3 /* PastDigestsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D7DDE3B1A1B03AE0000C6C3 /* PastDigestsViewController.m */; };
 		5DA1F14A1A0EEE480017DE39 /* ChildComment.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DA1F1461A0EEE480017DE39 /* ChildComment.m */; };
 		5DA1F14B1A0EEE480017DE39 /* Comment.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DA1F1481A0EEE480017DE39 /* Comment.m */; };
 		5DA5E4001A1A672E0091867F /* Digest.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DA5E3FD1A1A672E0091867F /* Digest.m */; };
@@ -146,6 +147,8 @@
 		5D614E5A1A16F96100A199A2 /* libxml2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.dylib; path = usr/lib/libxml2.dylib; sourceTree = SDKROOT; };
 		5D614E5F1A1838A200A199A2 /* RecommendedSubredditsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RecommendedSubredditsViewController.h; sourceTree = "<group>"; };
 		5D614E601A1838A200A199A2 /* RecommendedSubredditsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RecommendedSubredditsViewController.m; sourceTree = "<group>"; };
+		5D7DDE3A1A1B03AE0000C6C3 /* PastDigestsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PastDigestsViewController.h; sourceTree = "<group>"; };
+		5D7DDE3B1A1B03AE0000C6C3 /* PastDigestsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PastDigestsViewController.m; sourceTree = "<group>"; };
 		5DA1F1451A0EEE480017DE39 /* ChildComment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChildComment.h; sourceTree = "<group>"; };
 		5DA1F1461A0EEE480017DE39 /* ChildComment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChildComment.m; sourceTree = "<group>"; };
 		5DA1F1471A0EEE480017DE39 /* Comment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Comment.h; sourceTree = "<group>"; };
@@ -268,6 +271,8 @@
 		5D5C12B41A05716E002902A8 = {
 			isa = PBXGroup;
 			children = (
+				5D7DDE3A1A1B03AE0000C6C3 /* PastDigestsViewController.h */,
+				5D7DDE3B1A1B03AE0000C6C3 /* PastDigestsViewController.m */,
 				81D291231A19903D002B2708 /* Sounds */,
 				5D366B871A194991006B0684 /* DigestTitleLabel.h */,
 				5D366B881A194991006B0684 /* DigestTitleLabel.m */,
@@ -644,6 +649,7 @@
 				3413401D1A0C996F004C8C15 /* DigestCellWithImageTableViewCell.m in Sources */,
 				346DB3661A1ADD7600E0C83B /* CommentsNavBarLoggedInViewController.m in Sources */,
 				5DE75C9E1A0D92760031F0F7 /* GifPostViewController.m in Sources */,
+				5D7DDE3C1A1B03AE0000C6C3 /* PastDigestsViewController.m in Sources */,
 				346DB32E1A1A714E00E0C83B /* CommentsNavBarContainerViewController.m in Sources */,
 				34D1B93A1A081D0C00C0C15F /* LoginViewController.m in Sources */,
 				5DA1F14A1A0EEE480017DE39 /* ChildComment.m in Sources */,
