@@ -381,7 +381,7 @@
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 
--(UIImage *)returnImageForCellFromData:(NSData *)imageData withSubredditNameForKey:(NSString *)subreddit{
+-(UIImage *)returnImageForCellFromData:(NSString *)filePath withSubredditNameForKey:(NSString *)subreddit andFilePathPrefix:(NSString *)prefix{
     UIImage *image = [self.imageCache objectForKey:subreddit];
     if (image == nil) {
         NSData *imageData = [NSData dataWithContentsOfFile:[self documentsPathForFileName:filePath withPrefix:prefix]];
