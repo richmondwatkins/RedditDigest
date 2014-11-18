@@ -79,10 +79,10 @@
     <elements>
         <element name="ChildComment" positionX="-45" positionY="126" width="128" height="103"/>
         <element name="Comment" positionX="-63" positionY="99" width="128" height="135"/>
-        <element name="Digest" positionX="-54" positionY="135" width="128" height="88"/>
+        <element name="Digest" positionX="-54" positionY="135" width="128" height="90"/>
         <element name="DigestCategory" positionX="-45" positionY="144" width="128" height="75"/>
+        <element name="DigestPost" positionX="-54" positionY="135" width="128" height="313"/>
         <element name="Post" positionX="-63" positionY="-18" width="128" height="388"/>
         <element name="Subreddit" positionX="-54" positionY="117" width="128" height="133"/>
-        <element name="DigestPost" positionX="-54" positionY="135" width="128" height="313"/>
     </elements>
 </model>
