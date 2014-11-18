@@ -19,6 +19,7 @@
 @property (weak, nonatomic) IBOutlet UITextField *passwordTextField;
 @property (weak, nonatomic) IBOutlet UIButton *loginButton;
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *loginActivityIndicatorView;
+@property (weak, nonatomic) IBOutlet UIButton *takeMeBackButton;
 
 @end
 
@@ -55,13 +56,14 @@
     [self.passwordTextField addTarget:self action:@selector(login:) forControlEvents:UIControlEventEditingDidEndOnExit];
 
     if (self.isFromSettings == YES) {
-
+        self.takeMeBackButton.hidden = YES;
         NSLog(@"IS from Settings");
 
-        } else {
-            
-            NSLog(@"IS NOT from Settings");
         }
+    else {
+        self.takeMeBackButton.hidden = NO;
+        NSLog(@"IS NOT from Settings");
+    }
 }
 
 - (IBAction)onTapHideKeyboard:(id)sender

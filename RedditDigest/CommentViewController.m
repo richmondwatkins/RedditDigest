@@ -182,7 +182,7 @@
                                                              delegate:self
                                                     cancelButtonTitle:@"Cancel"
                                                destructiveButtonTitle:nil
-                                                    otherButtonTitles:@"Save Post Url to Pocket", nil];
+                                                    otherButtonTitles:@"Save Post to Pocket", nil];
     [actionSheet showInView:self.view];
 }
 

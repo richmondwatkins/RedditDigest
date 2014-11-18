@@ -49,7 +49,7 @@
     [self retrievePastDigestFromCoreData];
 }
 
-#pragma mark - Login Credentials and Login or Logout
+#pragma mark - Login
 
 - (void)setupLoginCell
 {
@@ -75,6 +75,13 @@
     [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"HasRedditAccount"];
     [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"UserIsLoggedIn"];
     [[NSUserDefaults standardUserDefaults] synchronize];
+    NSString *message = [@"Logged out " stringByAppendingString:[self findUserName]];
+
+    [TSMessage showNotificationInViewController:self
+                                          title:message
+                                       subtitle:nil
+                                           type:TSMessageNotificationTypeSuccess
+                                       duration:1.3];
 
     // Remove user from keychain
     [SSKeychain deletePasswordForService:@"friendsOfSnoo" account:[self findUserName]];
@@ -102,13 +109,56 @@
 {
     if (sender.on) {
         [self.locationManger requestWhenInUseAuthorization];
-
+        // TODO make this only happen when user has actually allowed app to use their location
         [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"Location"];
+        // if success
+        [TSMessage showNotificationInViewController:self
+                                              title:@"Enabled Local subreddits"
+                                           subtitle:@"If there are any subreddits local to your area they will show up in your digest."
+                                               type:TSMessageNotificationTypeSuccess
+                                           duration:TSMessageNotificationDurationAutomatic];
     }else{
        [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"Location"];
         [Subreddit removeLocalPostsAndSubreddits:self.managedObject];
     }
     [[NSUserDefaults standardUserDefaults] synchronize];
+}
+
+// TODO figure out why this method isn't being called and make it get called
+- (void)locationManager: (CLLocationManager *)manager didFailWithError: (NSError *)error
+{
+    [manager stopUpdatingLocation];
+    self.locationSwitcher.on = NO;
+    if ([error domain] == kCLErrorDomain) {
+        switch([error code])
+        {
+            case kCLErrorNetwork:
+            {
+                [TSMessage showNotificationInViewController:self
+                                                      title:@"Network Error"
+                                                   subtitle:@"Please check your network connection or that you are not in airplane mode"
+                                                       type:TSMessageNotificationTypeError
+                                                   duration:TSMessageNotificationDurationAutomatic];
+
+                break;
+            }
+            case kCLErrorDenied:
+            {
+                [TSMessage showNotificationInViewController:self
+                                                      title:nil
+                                                   subtitle:@"In the future if you would like to turn on local subreddits, go to your location settings and allow Reddit Digest"
+                                                       type:TSMessageNotificationTypeError
+                                                   duration:TSMessageNotificationDurationAutomatic];
+                break;
+            }
+            default:
+            {
+                NSLog(@"Unknown location error");
+                break;
+            }
+        }
+
+    }
 }
 
 #pragma mark - Auto Updating
@@ -118,7 +168,7 @@
     if ([[NSUserDefaults standardUserDefaults] boolForKey:@"BackgroundFetch"]) {
         self.autoUpdatingSwitcher.on = YES;
     } else {
-        self.locationSwitcher.on = NO;
+        self.autoUpdatingSwitcher.on = NO;
     }
 }
 
@@ -126,8 +176,18 @@
 {
     if (sender.on) {
         [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"BackgroundFetch"];
+        [TSMessage showNotificationInViewController:self
+                                              title:@"Turned on Autoupdating!"
+                                           subtitle:@"Now, the more often you use Reddit Digest you're content will be up to date"
+                                               type:TSMessageNotificationTypeSuccess
+                                           duration:TSMessageNotificationDurationAutomatic];
     } else {
         [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"BackgroundFetch"];
+        [TSMessage showNotificationInViewController:self
+                                              title:@"Turned off Autoupdating!"
+                                           subtitle:nil
+                                               type:TSMessageNotificationTypeError
+                                           duration:1.5];
     }
     [[NSUserDefaults standardUserDefaults] synchronize];
 }
@@ -149,14 +209,22 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    if ([indexPath section] == 1)
+    // ACCOUNT
+    if ([indexPath section] == 2)
     {
+        // LOGIN/LOGOUG
         if (indexPath.row == 0) {
             if ([[NSUserDefaults standardUserDefaults] boolForKey:@"UserIsLoggedIn"]) {
                 [self logout];
             }
         }
-        else if (indexPath.row == 3) {
+    }
+    // SHARING
+    else if ([indexPath section] == 3)
+    {
+        // LINK POCKET
+        if (indexPath.row == 0)
+        {
             if ([[NSUserDefaults standardUserDefaults] boolForKey:@"HasAuthorizedPocket"]) {
                 [self unlinkPocket];
             } else {
@@ -167,6 +235,23 @@
 }
 
 #pragma mark -  Segue
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
+
+    if ([segue.identifier isEqualToString:@"SubredditCollectionView"]) {
+        UINavigationController *selectionControllerNavigationParentVC = segue.destinationViewController;
+        SubredditSelectionViewController *selectionController = selectionControllerNavigationParentVC.childViewControllers.firstObject;
+        selectionController.isFromSettings = YES;
+        selectionController.managedObject = self.managedObject;
+    } else if([segue.identifier isEqualToString:@"SettingsToLogin"]){
+        LoginViewController *loginController = segue.destinationViewController;
+        loginController.managedObject = self.managedObject;
+        loginController.isFromSettings = YES;
+    } else if([segue.identifier isEqualToString:@"RecommendedSegue"]){
+        RecommendedSubredditsViewController *recController = segue.destinationViewController;
+        recController.managedObject = self.managedObject;
+    }
+}
 
 - (BOOL)shouldPerformSegueWithIdentifier:(NSString *)identifier sender:(id)sender
 {
@@ -200,7 +285,7 @@
         if (error)
         {
             NSLog(@"Error authorizing Pocket %@", error.localizedDescription);
-            [TSMessage showNotificationInViewController:self.parentViewController
+            [TSMessage showNotificationInViewController:self
                                                   title:@"Error Authorizing Pocket!"
                                                subtitle:error.localizedDescription
                                                    type:TSMessageNotificationTypeError
@@ -209,7 +294,7 @@
         }
         else
         {
-            [TSMessage showNotificationInViewController:self.parentViewController
+            [TSMessage showNotificationInViewController:self
                                                   title:@"Authorized Pocket!"
                                                subtitle:nil
                                                    type:TSMessageNotificationTypeSuccess
@@ -226,29 +311,14 @@
     [[PocketAPI sharedAPI] logout];
     [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"HasAuthorizedPocket"];
     self.linkPocketLabel.text = @"Link Pocket";
-    [TSMessage showNotificationInViewController:self.parentViewController
+    [TSMessage showNotificationInViewController:self
                                           title:@"Unauthorized Pocket!"
                                        subtitle:nil
-                                           type:TSMessageNotificationTypeSuccess
+                                           type:TSMessageNotificationTypeError
                                        duration:1.5];
 }
 
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
 
-    if ([segue.identifier isEqualToString:@"SubredditCollectionView"]) {
-        UINavigationController *selectionControllerNavigationParentVC = segue.destinationViewController;
-        SubredditSelectionViewController *selectionController = selectionControllerNavigationParentVC.childViewControllers.firstObject;
-        selectionController.isFromSettings = YES;
-        selectionController.managedObject = self.managedObject;
-    } else if([segue.identifier isEqualToString:@"SettingsToLogin"]){
-        LoginViewController *loginController = segue.destinationViewController;
-        loginController.managedObject = self.managedObject;
-        loginController.isFromSettings = YES;
-    } else if([segue.identifier isEqualToString:@"RecommendedSegue"]){
-        RecommendedSubredditsViewController *recController = segue.destinationViewController;
-        recController.managedObject = self.managedObject;
-    }
-}
 
 
 @end

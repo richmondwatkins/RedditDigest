@@ -104,6 +104,7 @@
 
     if (self.isComingFromSubredditSelectionView) {
         [self createLoadingSnoo];
+        self.navigationItem.rightBarButtonItem.enabled = NO;
     }
 //    [self.digestTableView reloadData];
 }
@@ -409,6 +410,7 @@
         if (self.isComingFromSubredditSelectionView) {
             UIView *viewToRemove = [self.view viewWithTag:1];
             [self.snooTextTimer invalidate];
+            self.navigationItem.rightBarButtonItem.enabled = YES;
 
             // Fade out loading snoo
             [UIView animateWithDuration:0.3 delay:0.0

@@ -41,8 +41,6 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-
-
     KTCenterFlowLayout *layout = [KTCenterFlowLayout new];
     layout.minimumInteritemSpacing = 10.f;
     layout.minimumLineSpacing = 10.f;
