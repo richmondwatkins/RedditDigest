@@ -21,5 +21,5 @@
 
 @property NSMutableArray *allPosts;
 @property NSInteger index;
-
+@property BOOL isFromPastDigest;
 @end

@@ -19,7 +19,7 @@
 #import "Comment.h"
 #import "ChildComment.h"
 #import "CommentsNavBarLoggedInViewController.h"
-
+#import "DigestPost.h"
 @interface DetailPostViewController () <UIGestureRecognizerDelegate>
 
 @property (strong, nonatomic) UIPageViewController *postPageController;
@@ -76,6 +76,7 @@
     {
         self.commentsViewController = segue.destinationViewController;
         self.delegate = self.commentsViewController;
+        
         [self loadCommentsFromSelectedPost:self.index];
     }
 }
@@ -132,15 +133,19 @@
 
 - (void)loadCommentsFromSelectedPost:(NSUInteger)index
 {
-    if ((index <= 0) || (index == NSNotFound)) {
-        index = self.allPosts.count;
-    }
+    if (!self.isFromPastDigest) {
+        if (!self.isFromPastDigest) {
+            if ((index <= 0) || (index == NSNotFound)) {
+                index = self.allPosts.count;
+            }
 
-    if (index >= self.allPosts.count) {
-        index = 0;
+            if (index >= self.allPosts.count) {
+                index = 0;
+            }
+            Post *post = self.allPosts[index];
+            [self.commentsViewController reloadTableWithCommentsFromCurrentPost:post];
+        }
     }
-    Post *post = self.allPosts[index];
-    [self.commentsViewController reloadTableWithCommentsFromCurrentPost:post];
 }
 
 - (PageWrapperViewController *)viewControllerAtIndex:(NSInteger)index
@@ -149,35 +154,65 @@
        index = self.allPosts.count;
     }
 
+    PageWrapperViewController *viewController;
+
     if (index >= self.allPosts.count) {
        index = 0;
     }
 
-    Post *post = self.allPosts[index];
+    if (!self.isFromPastDigest) {
+        Post *post = self.allPosts[index];
 
-    PageWrapperViewController *viewController;
-    if (post.isImageLink.intValue == 1) {
-        viewController = [self.storyboard instantiateViewControllerWithIdentifier:@"ImageView"];
-        viewController.sourceViewIdentifier = 1;
-    }else if(post.isYouTube.intValue == 1){
-        viewController = [self.storyboard instantiateViewControllerWithIdentifier:@"VideoView"];
-        viewController.sourceViewIdentifier = 2;
-        viewController.url = post.url;
-    }else if(post.isGif.intValue == 1){
-        viewController =[self.storyboard instantiateViewControllerWithIdentifier:@"GifView"];
-        viewController.sourceViewIdentifier = 3;
-        viewController.url = post.url;
-    }else if(post.isSelfPost.integerValue == 1){
-        viewController = [self.storyboard instantiateViewControllerWithIdentifier:@"SelfPostView"];
-        viewController.sourceViewIdentifier = 4;
-        viewController.selfPostText = post.selfText;
+        if (post.isImageLink.intValue == 1) {
+            viewController = [self.storyboard instantiateViewControllerWithIdentifier:@"ImageView"];
+            viewController.sourceViewIdentifier = 1;
+        }else if(post.isYouTube.intValue == 1){
+            viewController = [self.storyboard instantiateViewControllerWithIdentifier:@"VideoView"];
+            viewController.sourceViewIdentifier = 2;
+            viewController.url = post.url;
+        }else if(post.isGif.intValue == 1){
+            viewController =[self.storyboard instantiateViewControllerWithIdentifier:@"GifView"];
+            viewController.sourceViewIdentifier = 3;
+            viewController.url = post.url;
+        }else if(post.isSelfPost.integerValue == 1){
+            viewController = [self.storyboard instantiateViewControllerWithIdentifier:@"SelfPostView"];
+            viewController.sourceViewIdentifier = 4;
+            viewController.selfPostText = post.selfText;
+        }else{
+            viewController = [self.storyboard instantiateViewControllerWithIdentifier:@"WebView"];
+            viewController.sourceViewIdentifier = 5;
+            viewController.url = post.url;
+        }
+        viewController.postID = post.postID;
     }else{
-        viewController = [self.storyboard instantiateViewControllerWithIdentifier:@"WebView"];
-        viewController.sourceViewIdentifier = 5;
-        viewController.url = post.url;
+        DigestPost *post = self.allPosts[index];
+
+        if (post.isImageLink.intValue == 1) {
+            viewController = [self.storyboard instantiateViewControllerWithIdentifier:@"ImageView"];
+            viewController.sourceViewIdentifier = 1;
+        }else if(post.isYouTube.intValue == 1){
+            viewController = [self.storyboard instantiateViewControllerWithIdentifier:@"VideoView"];
+            viewController.sourceViewIdentifier = 2;
+            viewController.url = post.url;
+        }else if(post.isGif.intValue == 1){
+            viewController =[self.storyboard instantiateViewControllerWithIdentifier:@"GifView"];
+            viewController.sourceViewIdentifier = 3;
+            viewController.url = post.url;
+        }else if(post.isSelfPost.integerValue == 1){
+            viewController = [self.storyboard instantiateViewControllerWithIdentifier:@"SelfPostView"];
+            viewController.sourceViewIdentifier = 4;
+            viewController.selfPostText = post.selfText;
+        }else{
+            viewController = [self.storyboard instantiateViewControllerWithIdentifier:@"WebView"];
+            viewController.sourceViewIdentifier = 5;
+            viewController.url = post.url;
+        }
+        viewController.isOldDigest = YES;
+        viewController.postID = post.postID;
     }
 
-    viewController.post = post;
+
+//    viewController.post = post;
     viewController.index = index;
     viewController.navController = self.navigationController;
 

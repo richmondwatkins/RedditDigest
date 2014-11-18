@@ -657,20 +657,24 @@
 
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-    [self.imageCache removeAllObjects];
-    self.isFromPastDigest = NO;
     if ([segue.identifier isEqualToString:@"PostSegue"])
     {
         DetailPostViewController *detailPostViewController = segue.destinationViewController;
         NSIndexPath *indexPath = [self.digestTableView indexPathForSelectedRow];
         detailPostViewController.allPosts = self.digestPosts;
         detailPostViewController.index = indexPath.row;
+        if (self.isFromPastDigest) {
+            detailPostViewController.isFromPastDigest = YES;
+        }
     }
     else if ([segue.identifier isEqualToString:@"SettingsSegue"])
     {
         SettingsViewController *settingsController = segue.destinationViewController;
         settingsController.managedObject = self.managedObjectContext;
     }
+
+    [self.imageCache removeAllObjects];
+    self.isFromPastDigest = NO;
 }
 
 -(IBAction)unwindFromSubredditSelectionViewController:(UIStoryboardSegue *)segue
