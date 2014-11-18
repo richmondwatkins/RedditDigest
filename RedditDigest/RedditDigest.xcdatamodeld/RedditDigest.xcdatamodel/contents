@@ -27,7 +27,7 @@
         <attribute name="author" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="domain" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="html" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="imagePath" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="image" optional="YES" attributeType="Boolean" syncable="YES"/>
         <attribute name="isGif" optional="YES" attributeType="Boolean" syncable="YES"/>
         <attribute name="isImageLink" optional="YES" attributeType="Boolean" syncable="YES"/>
         <attribute name="isSelfPost" optional="YES" attributeType="Boolean" syncable="YES"/>
@@ -50,7 +50,7 @@
         <attribute name="domain" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="downvoted" optional="YES" attributeType="Boolean" syncable="YES"/>
         <attribute name="html" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="image" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="image" optional="YES" attributeType="Boolean" syncable="YES"/>
         <attribute name="isGif" optional="YES" attributeType="Boolean" syncable="YES"/>
         <attribute name="isImageLink" optional="YES" attributeType="Boolean" defaultValueString="0" syncable="YES"/>
         <attribute name="isLocalPost" optional="YES" attributeType="Boolean" syncable="YES"/>

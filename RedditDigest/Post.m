@@ -93,7 +93,7 @@
                         savedPost.isGif = [NSNumber numberWithBool:YES];
                     }else{
                         [self saveDataToDocumentsDirectory:data withFileNamePrefix:@"image" andPostfix:savedPost.postID];
-                        savedPost.image = post.fullName;
+                        savedPost.image = [NSNumber numberWithBool:YES];
                     }
 
                     [managedObjectContext save:nil];

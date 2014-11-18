@@ -27,7 +27,7 @@
 @dynamic isWebPage;
 @dynamic isYouTube;
 @dynamic nsfw;
-@dynamic imagePath;
+@dynamic image;
 @dynamic thumbnailImagePath;
 @dynamic digest;
 @dynamic subreddit;
@@ -76,7 +76,7 @@
             [self saveDataToDocumentsDirectory:imageData withFileNamePrefix:@"image-copy" andPostfix:post.postID];
 
             if (imageData) {
-                savedPost.imagePath = [NSNumber numberWithBool:YES];
+                savedPost.image = [NSNumber numberWithBool:YES];
             }
         }
 

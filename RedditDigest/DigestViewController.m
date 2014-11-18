@@ -347,17 +347,13 @@
     if (self.isFromPastDigest) {
         DigestPost *post = self.digestPosts[indexPath.row];
 
-        Post *new = [[Post alloc] init];
-        new.title = @"hey";
-        new.subreddit.subreddit= @"test";
-
         cell.titleLabel.text = post.title;
         cell.subredditLabel.text = post.subreddit;
         cell.authorLabel.text = post.author;
         cell.upVoteDownVoteLabel.text = [self abbreviateNumber:post.voteRatio.integerValue];
         cell.commentsLabel.text = [self abbreviateNumber:post.totalComments.integerValue];
 
-        if ([post.imagePath boolValue]) {
+        if ([post.image boolValue]) {
             cell.thumbnailImage.image = [self returnImageForCellFromData:post.postID withSubredditNameForKey:post.subreddit andFilePathPrefix:@"image-copy"];
         }else if([post.thumbnailImagePath boolValue]){
             cell.thumbnailImage.image = [self returnImageForCellFromData:post.postID withSubredditNameForKey:post.subreddit  andFilePathPrefix:@"thumbnail-copy"];
@@ -366,7 +362,6 @@
         }else{
             cell.thumbnailImage.image = [UIImage imageNamed:@"snoo_camera_placeholder"];
         }
-
     }else{
         Post *post = self.digestPosts[indexPath.row];
 
@@ -376,7 +371,7 @@
         cell.upVoteDownVoteLabel.text = [self abbreviateNumber:post.voteRatio.integerValue];
         cell.commentsLabel.text = [self abbreviateNumber:post.totalComments.integerValue];
 
-        if (post.image) {
+        if ([post.image boolValue]) {
             cell.thumbnailImage.image = [self returnImageForCellFromData:post.postID withSubredditNameForKey:post.subreddit.subreddit andFilePathPrefix:@"image"];
         }else if([post.thumbnailImage boolValue]){
             cell.thumbnailImage.image = [self returnImageForCellFromData:post.postID withSubredditNameForKey:post.subreddit.subreddit andFilePathPrefix:@"thumbnail"];
@@ -631,6 +626,7 @@
 
 -(void)requestNewLinksFromRefresh{
     self.isFromPastDigest = NO;
+    [self.imageCache removeAllObjects];
     [self requestNewLinks:NO];
 }
 
@@ -661,6 +657,8 @@
 
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
+    [self.imageCache removeAllObjects];
+    self.isFromPastDigest = NO;
     if ([segue.identifier isEqualToString:@"PostSegue"])
     {
         DetailPostViewController *detailPostViewController = segue.destinationViewController;
@@ -680,8 +678,10 @@
 
     if (self.isFromPastDigest) {
         [self.imageCache removeAllObjects];
-        [self convertToPostObjects:[NSMutableArray arrayWithArray:self.oldDigest]];
+        self.digestPosts = [NSMutableArray arrayWithArray:self.oldDigest];
         [self.digestTableView reloadData];
+//        [self convertToPostObjects:[NSMutableArray arrayWithArray:self.oldDigest]];
+//        [self.digestTableView reloadData];
     }
 
     if (self.isComingFromSubredditSelectionView) {
@@ -704,23 +704,12 @@
         post.voteRatio = digestPost.voteRatio;
         post.totalComments = digestPost.totalComments;
         post.postID = digestPost.postID;
-        post.image = digestPost.imagePath;
+        post.image = digestPost.image;
+        post.subreddit.image = digestPost.subredditImage;
+
+        [self.digestPosts addObject:post];
     }
-//    cell.titleLabel.text = post.title;
-//    cell.subredditLabel.text = post.subreddit.subreddit;
-//    cell.authorLabel.text = post.author;
-//    cell.upVoteDownVoteLabel.text = [self abbreviateNumber:post.voteRatio.integerValue];
-//    cell.commentsLabel.text = [self abbreviateNumber:post.totalComments.integerValue];
-//
-//    if (post.image) {
-//        cell.thumbnailImage.image = [self returnImageForCellFromData:post.postID withSubredditNameForKey:post.subreddit.subreddit andFilePathPrefix:@"image"];
-//    }else if([post.thumbnailImage boolValue]){
-//        cell.thumbnailImage.image = [self returnImageForCellFromData:post.postID withSubredditNameForKey:post.subreddit.subreddit andFilePathPrefix:@"thumbnail"];
-//    }else if([post.subreddit.image boolValue]){
-//        cell.thumbnailImage.image = [self returnImageForCellFromData:post.subreddit.subreddit withSubredditNameForKey:post.subreddit.subreddit andFilePathPrefix:@"subreddit"];
-//    }else{
-//        cell.thumbnailImage.image = [UIImage imageNamed:@"snoo_camera_placeholder"];
-//    }
+    [self.digestTableView reloadData];
 }
 
 #pragma mark - Buttons & Gestures
