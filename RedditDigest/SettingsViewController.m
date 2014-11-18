@@ -20,7 +20,6 @@
 @property (strong, nonatomic) IBOutlet UITableView *tableView;
 @property NSArray *settingsArray;
 @property NSArray *titlesArray;
-@property NSString *currentUserName;
 @property CLLocationManager *locationManger;
 @property CLLocationCoordinate2D userLocation;
 @property (strong, nonatomic) IBOutlet UISwitch *locationSwitcher;
@@ -36,13 +35,13 @@
     [super viewDidLoad];
     self.locationManger = [[CLLocationManager alloc] init];
 
-    [self findUserName];
-    self.title = self.currentUserName;
+    self.title = @"Settings";
 
-    if (self.currentUserName == nil){
+    if ([[NSUserDefaults standardUserDefaults] boolForKey:@"UserIsLoggedIn"]) {
+        self.loginLogoutLabel.text = [@"Logout - " stringByAppendingString:[self findUserName]];
+    }
+    else {
         self.loginLogoutLabel.text = @"Login";
-    }else{
-        self.loginLogoutLabel.text = @"Logout";
     }
 
     if ([[NSUserDefaults standardUserDefaults] boolForKey:@"Location"]) {
@@ -62,15 +61,26 @@
 
 #pragma mark - Login Credentials and Login or Logout
 
--(void)findUserName
+-(NSString *)findUserName
 {
     NSArray *array = [SSKeychain accountsForService:@"friendsOfSnoo"];
     NSDictionary *accountInfoDictionary = array.firstObject;
     NSString *username = accountInfoDictionary[@"acct"];
-    self.currentUserName = username;
+    return username;
 }
 
+- (void)logout
+{
+    [[RKClient sharedClient] signOut];
+    [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"HasRedditAccount"];
+    [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"UserIsLoggedIn"];
+    [[NSUserDefaults standardUserDefaults] synchronize];
 
+    // Remove user from keychain
+    [SSKeychain deletePasswordForService:@"friendsOfSnoo" account:[self findUserName]];
+
+    self.loginLogoutLabel.text = @"Login";
+}
 
 #pragma mark - Unwind from Edit Subreddits
 - (IBAction)unwindToSettingsViewController:(UIStoryboardSegue *)segue {
@@ -111,8 +121,32 @@
     }
 }
 
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    if ([indexPath section] == 1) {
+        if (indexPath.row == 0) {
+            if ([[NSUserDefaults standardUserDefaults] boolForKey:@"UserIsLoggedIn"]) {
+                [self logout];
+            }
+        }
+    }
+}
 
-// In a storyboard-based application, you will often want to do a little preparation before navigation
+- (BOOL)shouldPerformSegueWithIdentifier:(NSString *)identifier sender:(id)sender
+{
+    if ([identifier isEqualToString:@"SettingsToLogin" ]) {
+        if ([[NSUserDefaults standardUserDefaults] boolForKey:@"UserIsLoggedIn"]) {
+            return NO;
+        }
+        else {
+            return YES;
+        }
+    }
+    return YES;
+}
+
+#pragma mark - Segue
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
 
     if ([segue.identifier isEqualToString:@"SubredditCollectionView"]) {
@@ -129,5 +163,6 @@
         recController.managedObject = self.managedObject;
     }
 }
+
 
 @end

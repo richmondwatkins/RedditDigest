@@ -187,9 +187,7 @@
             //
         }
     }];
-    
 }
-
 
 #pragma mark - Collection View Delegate Methods
 

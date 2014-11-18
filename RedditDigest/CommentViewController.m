@@ -17,6 +17,9 @@
 @property CGFloat cellHeight;
 @property NSMutableArray *tableCells;
 @property NSURL *urlToSend;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *leadingConstraintForCommentsButton;
+@property (weak, nonatomic) IBOutlet UIButton *upVoteButton;
+@property (weak, nonatomic) IBOutlet UIButton *downVoteButton;
 
 @end
 
@@ -25,6 +28,21 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+
+    if ([[NSUserDefaults standardUserDefaults] boolForKey:@"UserIsLoggedIn"])
+    {
+        self.upVoteButton.hidden = NO;
+        self.downVoteButton.hidden = NO;
+        // Size of constraint set in storyboard
+        self.leadingConstraintForCommentsButton.constant = 134.0;
+    }
+    else {
+        self.upVoteButton.hidden = YES;
+        self.downVoteButton.hidden = YES;
+        CGFloat size = self.leadingConstraintForCommentsButton.constant;
+        self.leadingConstraintForCommentsButton.constant -= size / 2;
+    }
+
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
@@ -141,5 +159,24 @@
 
     return matchedComments;
 }
+
+#pragma mark - Voting
+- (IBAction)onDownVoteButtonPressed:(id)sender
+{
+
+}
+
+- (IBAction)onUpVoteButtonPressed:(id)sender
+{
+
+}
+
+#pragma mark - Share
+- (IBAction)onShareButtonPressed:(id)sender
+{
+
+}
+
+
 
 @end

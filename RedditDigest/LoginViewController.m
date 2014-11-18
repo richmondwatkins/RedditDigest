@@ -92,6 +92,7 @@
         {
             NSLog(@"Successfully signed in!");
             [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"HasRedditAccount"];
+            [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"UserIsLoggedIn"];
             [[NSUserDefaults standardUserDefaults] synchronize];
             // Store credentials in Keychain
             BOOL result = [SSKeychain setPassword:self.passwordTextField.text forService:@"friendsOfSnoo" account:self.usernameTextField.text];
