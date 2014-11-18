@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6250" systemVersion="14B23" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="9zg-4H-k34">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6250" systemVersion="14A389" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="9zg-4H-k34">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6244"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
@@ -653,7 +653,7 @@
                                                 <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="4EI-mw-U2U">
                                                     <rect key="frame" x="513" y="6" width="51" height="31"/>
                                                     <connections>
-                                                        <action selector="switchLocalization:" destination="TR2-7E-2C6" eventType="valueChanged" id="ifn-Hh-9DJ"/>
+                                                        <action selector="switchLocalization:" destination="TR2-7E-2C6" eventType="valueChanged" id="i4N-EJ-933"/>
                                                     </connections>
                                                 </switch>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Display local subreddits" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zHH-X8-2Qa">
@@ -677,7 +677,7 @@
                                                 <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="MIz-OR-cBX">
                                                     <rect key="frame" x="513" y="6" width="51" height="31"/>
                                                     <connections>
-                                                        <action selector="switchAutoUpdating:" destination="TR2-7E-2C6" eventType="valueChanged" id="Cxh-MG-5Us"/>
+                                                        <action selector="switchAutoUpdating:" destination="TR2-7E-2C6" eventType="valueChanged" id="m4u-dR-BNR"/>
                                                     </connections>
                                                 </switch>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Automatic Updating" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GaN-3b-tRf">
@@ -728,7 +728,7 @@
                                             </subviews>
                                         </tableViewCellContentView>
                                         <connections>
-                                            <segue destination="5pH-7p-oC6" kind="show" id="Cak-jp-A1q"/>
+                                            <segue destination="5pH-7p-oC6" kind="show" identifier="RecentDigestSegue" id="Cak-jp-A1q"/>
                                         </connections>
                                     </tableViewCell>
                                 </cells>
@@ -740,8 +740,8 @@
                         </connections>
                     </tableView>
                     <connections>
-                        <outlet property="autoUpdatingSwitcher" destination="MIz-OR-cBX" id="VSo-ju-w6I"/>
-                        <outlet property="locationSwitcher" destination="4EI-mw-U2U" id="DpE-FH-NUx"/>
+                        <outlet property="autoUpdatingSwitcher" destination="MIz-OR-cBX" id="Cey-fh-KEb"/>
+                        <outlet property="locationSwitcher" destination="4EI-mw-U2U" id="dr3-jN-t1p"/>
                         <outlet property="loginLogoutLabel" destination="ks2-c6-pnf" id="cOa-C8-Xed"/>
                         <outlet property="tableView" destination="Ije-ZS-zQI" id="ZdU-7z-ice"/>
                     </connections>
@@ -785,6 +785,9 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
+                    <connections>
+                        <outlet property="pastDigestTableView" destination="smM-ck-meZ" id="EVm-17-to7"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="6i8-IX-u2s" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="nKc-Mn-Ulc" userLabel="Exit" sceneMemberID="exit"/>
@@ -813,9 +816,26 @@
                                     <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 </collectionViewFlowLayout>
                                 <cells/>
-                                <collectionReusableView key="sectionHeaderView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="HeaderView" id="NHz-rG-d7i">
+                                <collectionReusableView key="sectionHeaderView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="HeaderView" id="NHz-rG-d7i" customClass="RecHeaderCollectionReusableView">
                                     <rect key="frame" x="0.0" y="64" width="600" height="50"/>
                                     <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LRf-vf-tTy">
+                                            <rect key="frame" x="76" y="8" width="461" height="34"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstItem="LRf-vf-tTy" firstAttribute="bottom" secondItem="NHz-rG-d7i" secondAttribute="bottomMargin" id="QSd-c6-7DR"/>
+                                        <constraint firstItem="LRf-vf-tTy" firstAttribute="leading" secondItem="NHz-rG-d7i" secondAttribute="leadingMargin" constant="68" id="bAa-mh-Vat"/>
+                                        <constraint firstAttribute="trailingMargin" secondItem="LRf-vf-tTy" secondAttribute="trailing" constant="55" id="drA-u4-PUm"/>
+                                        <constraint firstItem="LRf-vf-tTy" firstAttribute="top" secondItem="NHz-rG-d7i" secondAttribute="topMargin" id="jLb-Mn-uAc"/>
+                                    </constraints>
+                                    <connections>
+                                        <outlet property="recHeaderView" destination="LRf-vf-tTy" id="20F-YY-2Lk"/>
+                                    </connections>
                                 </collectionReusableView>
                                 <collectionReusableView key="sectionFooterView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="FooterView" id="hBb-R6-AyE">
                                     <rect key="frame" x="0.0" y="114" width="600" height="50"/>
@@ -866,7 +886,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="TCU-ba-utd" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="BP1-WI-iTM" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="1667" y="-500"/>
+            <point key="canvasLocation" x="1674" y="-527"/>
         </scene>
         <!--Settings About Reddit View Controller-->
         <scene sceneID="NUo-nm-YjV">
@@ -1023,7 +1043,7 @@
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="eg1-5b-zUs" id="TIW-74-Ifz">
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="upy-7j-1GM">
+                                                <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="upy-7j-1GM">
                                                     <rect key="frame" x="8" y="203" width="584" height="20"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="subreddit" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="u9V-3r-XgS">
@@ -1042,21 +1062,21 @@
                                                                 </mask>
                                                             </variation>
                                                         </label>
-                                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="snoo_square_gray" translatesAutoresizingMaskIntoConstraints="NO" id="4vQ-S3-CqE">
+                                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="snoo_square_gray" translatesAutoresizingMaskIntoConstraints="NO" id="4vQ-S3-CqE">
                                                             <rect key="frame" x="58" y="-3" width="26" height="25"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="height" constant="25" id="AvM-68-G9R"/>
                                                                 <constraint firstAttribute="width" constant="26" id="hDh-4x-DRP"/>
                                                             </constraints>
                                                         </imageView>
-                                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="upvote_downvote_square_gray" translatesAutoresizingMaskIntoConstraints="NO" id="o70-OA-hBd">
+                                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="upvote_downvote_square_gray" translatesAutoresizingMaskIntoConstraints="NO" id="o70-OA-hBd">
                                                             <rect key="frame" x="140" y="0.0" width="20" height="20"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="width" constant="20" id="fIH-Ap-P3u"/>
                                                                 <constraint firstAttribute="height" constant="20" id="xfN-Wo-QlA"/>
                                                             </constraints>
                                                         </imageView>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="hankthedog" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Qch-SH-AKQ">
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="hankthedog" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Qch-SH-AKQ">
                                                             <rect key="frame" x="85" y="0.0" width="54" height="20"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="height" constant="20" id="EYP-NP-7vh"/>
@@ -1066,7 +1086,7 @@
                                                             <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="2.3k" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8si-Mc-4aB">
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="2.3k" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8si-Mc-4aB">
                                                             <rect key="frame" x="161" y="2" width="25" height="17"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="width" constant="25" id="CmZ-ZR-Bmj"/>
@@ -1094,13 +1114,13 @@
                                                         <constraint firstItem="4vQ-S3-CqE" firstAttribute="leading" secondItem="u9V-3r-XgS" secondAttribute="trailing" constant="1" id="vlz-6R-Hxh"/>
                                                     </constraints>
                                                 </view>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="gNq-N4-MhL">
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="gNq-N4-MhL">
                                                     <rect key="frame" x="8" y="40" width="584" height="163"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="163" id="fod-bn-MfT"/>
                                                     </constraints>
                                                 </imageView>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Pack my box with five dozen liquor jugs" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="COR-ut-o5n" customClass="DigestTitleLabel">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Pack my box with five dozen liquor jugs" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="COR-ut-o5n" customClass="DigestTitleLabel">
                                                     <rect key="frame" x="8" y="8" width="584" height="31"/>
                                                     <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="17"/>
                                                     <nil key="highlightedColor"/>

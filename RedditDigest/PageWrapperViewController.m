@@ -36,11 +36,6 @@
 
 }
 
--(void)webViewDidStartLoad:(UIWebView *)webView
-{
-    NSURL *url = webView.request.URL;
-    NSLog(@"URL %@",url);
-}
 
 #pragma mark - Pan 
 - (IBAction)onPan:(UIPanGestureRecognizer *)panGesture

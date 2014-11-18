@@ -15,6 +15,7 @@
 #import "Subreddit.h"
 #import "RecommendedSubredditsViewController.h"
 #import "Digest.h"
+#import "PastDigestsViewController.h"
 @interface SettingsViewController () <UITableViewDataSource, UITableViewDelegate, CLLocationManagerDelegate>
 
 @property (strong, nonatomic) IBOutlet UITableView *tableView;
@@ -56,8 +57,6 @@
     }else{
         self.locationSwitcher.on = NO;
     }
-
-    [self retrievePastDigestFromCoreData];
 }
 
 #pragma mark - Login Credentials and Login or Logout
@@ -79,36 +78,27 @@
 
 
 - (IBAction)switchLocalization:(UISwitch *)sender {
+    NSUserDefaults *userDefaults = [[NSUserDefaults standardUserDefaults] init];
+
     if (sender.on) {
         [self.locationManger requestWhenInUseAuthorization];
 
-        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"Location"];
+        [userDefaults setBool:YES forKey:@"Location"];
     }else{
-       [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"Location"];
+       [userDefaults setBool:NO forKey:@"Location"];
         [Subreddit removeLocalPostsAndSubreddits:self.managedObject];
     }
-    [[NSUserDefaults standardUserDefaults] synchronize];
+    [userDefaults synchronize];
 }
 
 - (IBAction)switchAutoUpdating:(UISwitch *)sender {
+    NSUserDefaults *userDefaults = [[NSUserDefaults standardUserDefaults] init];
     if (sender.on) {
-        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"BackgroundFetch"];
+        [userDefaults setBool:YES forKey:@"BackgroundFetch"];
     }else{
-        [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"BackgroundFetch"];
+        [userDefaults setBool:NO forKey:@"BackgroundFetch"];
     }
-    [[NSUserDefaults standardUserDefaults] synchronize];
-}
-
-
--(void)retrievePastDigestFromCoreData{
-    NSFetchRequest *fetchDigests = [[NSFetchRequest alloc] initWithEntityName:@"Digest"];
-    NSSortDescriptor *sorter = [[NSSortDescriptor alloc] initWithKey:@"time" ascending:NO];
-    [fetchDigests setSortDescriptors:@[sorter]];
-
-    NSArray *digests = [self.managedObject executeFetchRequest:fetchDigests error:nil];
-    for (Digest *digest in digests) {
-        NSLog(@"DIGESTSSS %@",digest.digestPost);
-    }
+    [userDefaults synchronize];
 }
 
 
@@ -127,6 +117,9 @@
     } else if([segue.identifier isEqualToString:@"RecommendedSegue"]){
         RecommendedSubredditsViewController *recController = segue.destinationViewController;
         recController.managedObject = self.managedObject;
+    } else if([segue.identifier isEqualToString:@"RecentDigestSegue"]){
+        PastDigestsViewController *pastDigestController = segue.destinationViewController;
+        pastDigestController.managedObject = self.managedObject;
     }
 }
 

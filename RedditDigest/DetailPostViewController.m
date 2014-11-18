@@ -103,11 +103,30 @@
 - (void)pageViewController:(UIPageViewController *)pageViewController willTransitionToViewControllers:(NSArray *)pendingViewControllers
 {
     NSUInteger index;
+
     if([pendingViewControllers count] > 0)
     {
         index =[(PageWrapperViewController*)[pendingViewControllers objectAtIndex:0] index];
+
+        if ((index <= 0) || (index == NSNotFound)) {
+            index = self.allPosts.count;
+        }
+
+        if (index >= self.allPosts.count) {
+            index = 0;
+        }
+
         [self loadCommentsFromSelectedPost:index];
     }
+
+    if ((index <= 0) || (index == NSNotFound)) {
+        index = self.allPosts.count;
+    }
+
+    if (index >= self.allPosts.count) {
+        index = 0;
+    }
+
     [self showCounterLabelAtIndex:index];
 }
 
@@ -140,7 +159,6 @@
     if (post.isImageLink.intValue == 1) {
         viewController = [self.storyboard instantiateViewControllerWithIdentifier:@"ImageView"];
         viewController.sourceViewIdentifier = 1;
-        viewController.imageData = post.image;
     }else if(post.isYouTube.intValue == 1){
         viewController = [self.storyboard instantiateViewControllerWithIdentifier:@"VideoView"];
         viewController.sourceViewIdentifier = 2;

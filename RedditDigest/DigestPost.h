@@ -28,9 +28,11 @@
 @property (nonatomic, retain) NSNumber * isWebPage;
 @property (nonatomic, retain) NSNumber * isYouTube;
 @property (nonatomic, retain) NSNumber * nsfw;
-@property (nonatomic, retain) NSString * imagePath;
-@property (nonatomic, retain) NSString * thumbnailImagePath;
+@property (nonatomic, retain) NSNumber * imagePath;
+@property (nonatomic, retain) NSNumber * thumbnailImagePath;
 @property (nonatomic, retain) Digest *digest;
+@property (nonatomic, retain) NSString * subreddit;
+@property (nonatomic, retain) NSNumber * subredditImage;
 
 +(void)createNewDigestPosts:(NSArray *)posts withManagedObject:(NSManagedObjectContext *)managedObject;
 

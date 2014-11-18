@@ -9,7 +9,7 @@
 #import "DigestPost.h"
 #import "Digest.h"
 #import "Post.h"
-
+#import "Subreddit.h"
 @implementation DigestPost
 
 @dynamic totalComments;
@@ -30,6 +30,8 @@
 @dynamic imagePath;
 @dynamic thumbnailImagePath;
 @dynamic digest;
+@dynamic subreddit;
+@dynamic subredditImage;
 
 +(void)createNewDigestPosts:(NSArray *)posts withManagedObject:(NSManagedObjectContext *)managedObject{
     NSMutableArray *savedDigestPosts = [NSMutableArray array];
@@ -40,6 +42,16 @@
         savedPost.author = post.author;
         savedPost.domain = post.domain;
         savedPost.postID = post.postID;
+        savedPost.subreddit = post.subreddit.subreddit;
+
+        if (post.subreddit) {
+            NSData *imageData = [self documentsPathForFileName:post.subreddit.subreddit andPrefix:@"subreddit"];
+            [self saveDataToDocumentsDirectory:imageData withFileNamePrefix:@"subreddit-copy" andPostfix:post.subreddit.subreddit];
+            if (imageData) {
+                savedPost.subredditImage = [NSNumber numberWithBool:YES];
+            }
+        }
+
         if (post.isSelfPost) {
             savedPost.selfText = post.selfText;
             savedPost.isSelfPost = post.isSelfPost;
@@ -48,6 +60,7 @@
         savedPost.url = post.url;
 
         if (post.thumbnailImage) {
+            savedPost.thumbnailImagePath = [NSNumber numberWithBool:YES];
             NSData *imageData = [self documentsPathForFileName:post.postID andPrefix:@"thumbnail"];
             [self saveDataToDocumentsDirectory:imageData withFileNamePrefix:@"thumbnail-copy" andPostfix:post.postID];
         }
@@ -58,8 +71,13 @@
 
         if (post.isImageLink) {
             savedPost.isImageLink = post.isImageLink;
+
             NSData *imageData = [self documentsPathForFileName:post.postID andPrefix:@"image"];
             [self saveDataToDocumentsDirectory:imageData withFileNamePrefix:@"image-copy" andPostfix:post.postID];
+
+            if (imageData) {
+                savedPost.imagePath = [NSNumber numberWithBool:YES];
+            }
         }
 
         if (post.isWebPage) {

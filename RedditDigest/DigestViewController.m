@@ -56,6 +56,7 @@
     [self.digestTableView addSubview:self.refreshControl];
     [self getDateString];
     self.navigationItem.title = self.dateToday;
+    self.imageCache = [[NSCache alloc] init];
 
 }
 
@@ -74,8 +75,8 @@
 
 - (void)viewWillAppear:(BOOL)animated
 {
+    [self.imageCache removeAllObjects];
     [super viewWillAppear:animated];
-    self.imageCache = [[NSCache alloc] init];
     self.didUpdateLocation = NO;
 
     if (![[NSUserDefaults standardUserDefaults] boolForKey:@"HasSubscriptions"])
@@ -329,9 +330,7 @@
 
     DigestCellWithImageTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"DigestCell"];
 
-    Post *post = self.digestPosts[indexPath.row];
     cell.delegate = self;
-    cell.titleLabel.text = post.title;
     cell.titleLabel.lineBreakMode = NSLineBreakByWordWrapping;
     cell.titleLabel.numberOfLines = 0;
 
@@ -339,42 +338,67 @@
     UIImageView *selectedBackgroundView = [[UIImageView alloc]initWithFrame:cell.frame];
     selectedBackgroundView.backgroundColor = [UIColor colorWithRed:0.937 green:0.969 blue:1 alpha:1];
     cell.selectedBackgroundView = selectedBackgroundView;
-
-    cell.subredditLabel.text = post.subreddit.subreddit;
-    cell.authorLabel.text = post.author;
-    cell.upVoteDownVoteLabel.text = [self abbreviateNumber:post.voteRatio.integerValue];
-    cell.commentsLabel.text = [self abbreviateNumber:post.totalComments.integerValue];
-
-    if (post.image) {
-        cell.thumbnailImage.image = [self returnImageForCellFromData:post.postID withSubredditNameForKey:post.subreddit.subreddit andFilePathPrefix:@"image"];
-//        cell.thumbnailImage.image = [self returnImageForCellFromData: withSubredditNameForKey:post.subreddit.subreddit];
-    }else if([post.thumbnailImage boolValue]){
-        cell.thumbnailImage.image = [self returnImageForCellFromData:post.postID withSubredditNameForKey:post.subreddit.subreddit andFilePathPrefix:@"thumbnail"];
-    }else if([post.subreddit.image boolValue]){
-        cell.thumbnailImage.image = [self returnImageForCellFromData:post.subreddit.subreddit withSubredditNameForKey:post.subreddit.subreddit andFilePathPrefix:@"subreddit"];
-    }else{
-        cell.thumbnailImage.image = [UIImage imageNamed:@"snoo_camera_placeholder"];
-    }
-
     cell.thumbnailImage.contentMode = UIViewContentModeScaleAspectFill;
     cell.thumbnailImage.alpha = 0.75;
-
-    if ([post.upvoted boolValue] == YES) {
-        //[cell.upVoteButton setBackgroundImage:[UIImage imageNamed:@"upvote_arrow_selected"] forState:UIControlStateNormal];
-    }else{
-        //[cell.upVoteButton setBackgroundImage:[UIImage imageNamed:@"up_arrow"] forState:UIControlStateNormal];
-    }
-    if ([post.downvoted boolValue] == YES) {
-        //[cell.downVoteButton setBackgroundImage:[UIImage imageNamed:@"downvote_arrow_selected"] forState:UIControlStateNormal];
-    }else{
-        //[cell.downVoteButton setBackgroundImage:[UIImage imageNamed:@"down_arrow"] forState:UIControlStateNormal];
-    }
-
     cell.thumbnailImage.layer.cornerRadius = 2.0;
     cell.thumbnailImage.layer.masksToBounds = YES;
 
+
+    if (self.isFromPastDigest) {
+        DigestPost *post = self.digestPosts[indexPath.row];
+
+        cell.titleLabel.text = post.title;
+//        cell.subredditLabel.text = post.subreddit.subreddit;
+        cell.authorLabel.text = post.author;
+        cell.upVoteDownVoteLabel.text = [self abbreviateNumber:post.voteRaio.integerValue];
+        cell.commentsLabel.text = [self abbreviateNumber:post.totalComments.integerValue];
+
+        if ([post.imagePath boolValue]) {
+            cell.thumbnailImage.image = [self returnImageForCellFromData:post.postID withSubredditNameForKey:post.subreddit andFilePathPrefix:@"image-copy"];
+        }else if([post.thumbnailImagePath boolValue]){
+            cell.thumbnailImage.image = [self returnImageForCellFromData:post.postID withSubredditNameForKey:post.subreddit  andFilePathPrefix:@"thumbnail-copy"];
+        }else if([post.subredditImage boolValue]){
+            cell.thumbnailImage.image = [self returnImageForCellFromData:post.subreddit withSubredditNameForKey:post.subreddit andFilePathPrefix:@"subreddit-copy"];
+        }else{
+            cell.thumbnailImage.image = [UIImage imageNamed:@"snoo_camera_placeholder"];
+        }
+
+    }else{
+        Post *post = self.digestPosts[indexPath.row];
+
+        cell.titleLabel.text = post.title;
+        cell.subredditLabel.text = post.subreddit.subreddit;
+        cell.authorLabel.text = post.author;
+        cell.upVoteDownVoteLabel.text = [self abbreviateNumber:post.voteRatio.integerValue];
+        cell.commentsLabel.text = [self abbreviateNumber:post.totalComments.integerValue];
+
+        if (post.image) {
+            cell.thumbnailImage.image = [self returnImageForCellFromData:post.postID withSubredditNameForKey:post.subreddit.subreddit andFilePathPrefix:@"image"];
+        }else if([post.thumbnailImage boolValue]){
+            cell.thumbnailImage.image = [self returnImageForCellFromData:post.postID withSubredditNameForKey:post.subreddit.subreddit andFilePathPrefix:@"thumbnail"];
+        }else if([post.subreddit.image boolValue]){
+            cell.thumbnailImage.image = [self returnImageForCellFromData:post.subreddit.subreddit withSubredditNameForKey:post.subreddit.subreddit andFilePathPrefix:@"subreddit"];
+        }else{
+            cell.thumbnailImage.image = [UIImage imageNamed:@"snoo_camera_placeholder"];
+        }
+
+    }
+
+
+//    if ([post.upvoted boolValue] == YES) {
+//        //[cell.upVoteButton setBackgroundImage:[UIImage imageNamed:@"upvote_arrow_selected"] forState:UIControlStateNormal];
+//    }else{
+//        //[cell.upVoteButton setBackgroundImage:[UIImage imageNamed:@"up_arrow"] forState:UIControlStateNormal];
+//    }
+//    if ([post.downvoted boolValue] == YES) {
+//        //[cell.downVoteButton setBackgroundImage:[UIImage imageNamed:@"downvote_arrow_selected"] forState:UIControlStateNormal];
+//    }else{
+//        //[cell.downVoteButton setBackgroundImage:[UIImage imageNamed:@"down_arrow"] forState:UIControlStateNormal];
+//    }
+
     return cell;
 }
+
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -578,6 +602,7 @@
 {
     //    [Digest createAndSaveDigestWithPost:savedPost andManagedObject:managedObjectContext];
 
+    [self.imageCache removeAllObjects];
     self.digestPosts = [NSMutableArray array];
 
     NSFetchRequest * fetch = [[NSFetchRequest alloc] init];
@@ -601,6 +626,7 @@
 }
 
 -(void)requestNewLinksFromRefresh{
+    self.isFromPastDigest = NO;
     [self requestNewLinks:NO];
 }
 
@@ -647,14 +673,20 @@
 
 -(IBAction)unwindFromSubredditSelectionViewController:(UIStoryboardSegue *)segue
 {
-    [Post removeAllPostsFromCoreData:self.managedObjectContext];
-    [self.digestPosts removeAllObjects];
 
-    [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"HasSubscriptions"];
-    [[NSUserDefaults standardUserDefaults] synchronize];
-
+    if (self.isFromPastDigest) {
+        [self.imageCache removeAllObjects];
+        self.digestPosts = [NSMutableArray arrayWithArray:self.oldDigest];
+        [self.digestTableView reloadData];
+    }
 
     if (self.isComingFromSubredditSelectionView) {
+        [Post removeAllPostsFromCoreData:self.managedObjectContext];
+        [self.digestPosts removeAllObjects];
+
+        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"HasSubscriptions"];
+        [[NSUserDefaults standardUserDefaults] synchronize];
+
         [self requestNewLinks:YES];
     }
 }
