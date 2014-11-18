@@ -13,7 +13,7 @@
 @implementation DigestPost
 
 @dynamic totalComments;
-@dynamic voteRaio;
+@dynamic voteRatio;
 @dynamic author;
 @dynamic domain;
 @dynamic html;
@@ -38,7 +38,7 @@
     for (Post *post in posts) {
         DigestPost *savedPost = [NSEntityDescription insertNewObjectForEntityForName:@"DigestPost" inManagedObjectContext:managedObject];
         savedPost.totalComments = post.totalComments;
-        savedPost.voteRaio = post.voteRatio;
+        savedPost.voteRatio = post.voteRatio;
         savedPost.author = post.author;
         savedPost.domain = post.domain;
         savedPost.postID = post.postID;

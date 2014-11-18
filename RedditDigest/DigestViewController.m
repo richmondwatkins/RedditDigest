@@ -347,10 +347,14 @@
     if (self.isFromPastDigest) {
         DigestPost *post = self.digestPosts[indexPath.row];
 
+        Post *new = [[Post alloc] init];
+        new.title = @"hey";
+        new.subreddit.subreddit= @"test";
+
         cell.titleLabel.text = post.title;
-//        cell.subredditLabel.text = post.subreddit.subreddit;
+        cell.subredditLabel.text = post.subreddit;
         cell.authorLabel.text = post.author;
-        cell.upVoteDownVoteLabel.text = [self abbreviateNumber:post.voteRaio.integerValue];
+        cell.upVoteDownVoteLabel.text = [self abbreviateNumber:post.voteRatio.integerValue];
         cell.commentsLabel.text = [self abbreviateNumber:post.totalComments.integerValue];
 
         if ([post.imagePath boolValue]) {
@@ -676,7 +680,7 @@
 
     if (self.isFromPastDigest) {
         [self.imageCache removeAllObjects];
-        self.digestPosts = [NSMutableArray arrayWithArray:self.oldDigest];
+        [self convertToPostObjects:[NSMutableArray arrayWithArray:self.oldDigest]];
         [self.digestTableView reloadData];
     }
 
@@ -689,6 +693,34 @@
 
         [self requestNewLinks:YES];
     }
+}
+
+-(void)convertToPostObjects:(NSArray *)digestPosts{
+    for (DigestPost *digestPost in digestPosts) {
+        Post *post = [[Post alloc] init];
+        post.title = digestPost.title;
+        post.subreddit.subreddit = digestPost.subreddit;
+        post.author = digestPost.author;
+        post.voteRatio = digestPost.voteRatio;
+        post.totalComments = digestPost.totalComments;
+        post.postID = digestPost.postID;
+        post.image = digestPost.imagePath;
+    }
+//    cell.titleLabel.text = post.title;
+//    cell.subredditLabel.text = post.subreddit.subreddit;
+//    cell.authorLabel.text = post.author;
+//    cell.upVoteDownVoteLabel.text = [self abbreviateNumber:post.voteRatio.integerValue];
+//    cell.commentsLabel.text = [self abbreviateNumber:post.totalComments.integerValue];
+//
+//    if (post.image) {
+//        cell.thumbnailImage.image = [self returnImageForCellFromData:post.postID withSubredditNameForKey:post.subreddit.subreddit andFilePathPrefix:@"image"];
+//    }else if([post.thumbnailImage boolValue]){
+//        cell.thumbnailImage.image = [self returnImageForCellFromData:post.postID withSubredditNameForKey:post.subreddit.subreddit andFilePathPrefix:@"thumbnail"];
+//    }else if([post.subreddit.image boolValue]){
+//        cell.thumbnailImage.image = [self returnImageForCellFromData:post.subreddit.subreddit withSubredditNameForKey:post.subreddit.subreddit andFilePathPrefix:@"subreddit"];
+//    }else{
+//        cell.thumbnailImage.image = [UIImage imageNamed:@"snoo_camera_placeholder"];
+//    }
 }
 
 #pragma mark - Buttons & Gestures

@@ -14,7 +14,7 @@
 @interface DigestPost : NSManagedObject
 
 @property (nonatomic, retain) NSNumber * totalComments;
-@property (nonatomic, retain) NSNumber * voteRaio;
+@property (nonatomic, retain) NSNumber * voteRatio;
 @property (nonatomic, retain) NSString * author;
 @property (nonatomic, retain) NSString * domain;
 @property (nonatomic, retain) NSString * html;
