@@ -18,7 +18,6 @@
 #import "CommentViewController.h"
 #import "Comment.h"
 #import "ChildComment.h"
-#import "CommentsNavBarLoggedInViewController.h"
 
 @interface DetailPostViewController () <UIGestureRecognizerDelegate>
 
