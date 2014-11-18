@@ -18,7 +18,6 @@
 #import "CommentViewController.h"
 #import "Comment.h"
 #import "ChildComment.h"
-#import "CommentsNavBarLoggedInViewController.h"
 #import "DigestPost.h"
 @interface DetailPostViewController () <UIGestureRecognizerDelegate>
 
@@ -119,8 +118,9 @@
 
         [self loadCommentsFromSelectedPost:index];
     }
+    [self showCounterLabelAtIndex:index];
 
-    if ((index <= 0) || (index == NSNotFound)) {
+    if (index <= 0 || (index == NSNotFound)) {
         index = self.allPosts.count;
     }
 

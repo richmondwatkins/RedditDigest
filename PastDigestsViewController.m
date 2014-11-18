@@ -31,6 +31,7 @@
     NSArray *digests = [self.managedObject executeFetchRequest:fetchDigests error:nil];
     if (digests) {
         self.digests = digests;
+        NSLog(@"opwaifjwop %lu",(unsigned long)self.digests.count);
         [self.pastDigestTableView reloadData];
     }
 }

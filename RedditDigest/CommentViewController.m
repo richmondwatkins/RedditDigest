@@ -10,7 +10,6 @@
 #import "CommentTableViewCell.h"
 #import "Post.h"
 #import "TextViewWebViewController.h"
-#import "CommentsNavBarContainerViewController.h"
 
 @interface CommentViewController () <UITableViewDelegate, UITableViewDataSource, UITextViewDelegate, UITabBarControllerDelegate, UITextViewDelegate>
 
@@ -18,7 +17,6 @@
 @property CGFloat cellHeight;
 @property NSMutableArray *tableCells;
 @property NSURL *urlToSend;
-@property (nonatomic, weak) CommentsNavBarContainerViewController *customNavBarContainerViewController;
 
 @end
 
@@ -108,18 +106,6 @@
         TextViewWebViewController *commentWebCtrl = segue.destinationViewController;
         commentWebCtrl.urlToLoad = self.urlToSend;
     }
-    else if ([segue.identifier isEqualToString:@"CustomNavBarViewControllerSegue"])
-    {
-        self.customNavBarContainerViewController = segue.destinationViewController;
-        //self.customNavBarContainerViewController.delegate = self;
-        if ([RKClient sharedClient]) {
-            self.customNavBarContainerViewController.userIsLoggedIn = YES;
-        }
-        else
-        {
-            self.customNavBarContainerViewController.userIsLoggedIn = NO;
-        }
-    }
 }
 
 - (NSString*)textToHtml:(NSString*)string withCell:(CommentTableViewCell *)cell andComment:(Comment *)comment
@@ -165,28 +151,6 @@
     }
 
     return matchedComments;
-}
-
-#pragma mark - Device Rotating 
-
-- (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
-{
-    // TODO: Fix rotate issue with comments bar...
-//    UIView *viewToRemove = [self.view viewWithTag:2];
-//    [viewToRemove removeFromSuperview];
-//    UIVisualEffect *blurEffect = [UIBlurEffect effectWithStyle:UIBlurEffectStyleLight];
-//    UIVisualEffectView *visualEffectView = [[UIVisualEffectView alloc] initWithEffect:blurEffect];
-//    CGRect blurView;
-//    NSLog(@"%f", self.navigationController.navigationBar.frame.size.height);
-//    if (!self.navigationController.navigationBarHidden) {
-//        blurView = CGRectMake(0, self.navigationController.navigationBar.frame.size.height + 20, self.view.frame.size.width, self.view.frame.size.height);
-//    }
-//    else {
-//        blurView = CGRectMake(0, 20, self.view.frame.size.width, self.view.frame.size.height);
-//    }
-//    [visualEffectView setFrame:blurView];
-//    visualEffectView.tag = 2;
-//    [self.view insertSubview:visualEffectView belowSubview:self.tableView];
 }
 
 @end
