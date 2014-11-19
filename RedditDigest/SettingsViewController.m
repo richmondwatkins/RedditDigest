@@ -225,7 +225,7 @@
         // LINK POCKET
         if (indexPath.row == 0)
         {
-            if ([[NSUserDefaults standardUserDefaults] boolForKey:@"HasAuthorizedPocket"]) {
+            if ([[PocketAPI sharedAPI] isLoggedIn]) {
                 [self unlinkPocket];
             } else {
                 [self linkPocket];
@@ -273,7 +273,7 @@
 
 - (void)setupLinkPocketCell
 {
-    if ([[NSUserDefaults standardUserDefaults] boolForKey:@"HasAuthorizedPocket"]) {
+    if ([[PocketAPI sharedAPI] isLoggedIn]) {
         self.linkPocketLabel.text = @"Unlink Pocket";
     }
     else {
@@ -303,7 +303,7 @@
                                                    type:TSMessageNotificationTypeSuccess
                                                duration:1.5];
             self.linkPocketLabel.text = @"Unlink Pocket";
-            [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"HasAuthorizedPocket"];
+            //[[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"HasAuthorizedPocket"];
         }
 
     }];
@@ -312,7 +312,7 @@
 - (void)unlinkPocket
 {
     [[PocketAPI sharedAPI] logout];
-    [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"HasAuthorizedPocket"];
+    //[[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"HasAuthorizedPocket"];
     self.linkPocketLabel.text = @"Link Pocket";
     [TSMessage showNotificationInViewController:self
                                           title:@"Unauthorized Pocket!"
