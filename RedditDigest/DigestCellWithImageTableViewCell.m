@@ -11,14 +11,14 @@
 @implementation DigestCellWithImageTableViewCell
 
 
-//- (IBAction)upVoteButtonPressed:(UIButton *)sender {
-//    [self.delegate upVoteButtonPressed:self];
-//}
+- (IBAction)upVoteButtonPressed:(UIButton *)sender {
+    [self.delegate upVoteButtonPressed:self];
+}
 
 
-//- (IBAction)downVoteButtonPressed:(UIButton *)sender {
-//    [self.delegate downVoteButtonPressed:self];
-//}
+- (IBAction)downVoteButtonPressed:(UIButton *)sender {
+    [self.delegate downVoteButtonPressed:self];
+}
 
 
 @end

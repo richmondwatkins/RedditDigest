@@ -113,8 +113,8 @@
         [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"Location"];
         // if success
         [TSMessage showNotificationInViewController:self
-                                              title:@"Enabled Local Subreddits"
-                                           subtitle:@"If there are any subreddits for your current location, they will appear in your digest."
+                                              title:@"Enabled Local subreddits"
+                                           subtitle:@"If there are any subreddits local to your area they will show up in your digest."
                                                type:TSMessageNotificationTypeSuccess
                                            duration:TSMessageNotificationDurationAutomatic];
     }else{
