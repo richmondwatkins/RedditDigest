@@ -109,7 +109,8 @@
         [self createLoadingSnoo];
         self.navigationItem.rightBarButtonItem.enabled = NO;
     }
-    //    [self.digestTableView reloadData];
+//    [self.digestTableView reloadData];
+    [[UIApplication sharedApplication] setApplicationIconBadgeNumber:0];
 }
 
 #pragma mark - Location Services
@@ -488,7 +489,6 @@
 {
     //    [Digest createAndSaveDigestWithPost:savedPost andManagedObject:managedObjectContext];
 
-    [self.imageCache removeAllObjects];
     self.digestPosts = [NSMutableArray array];
 
     NSFetchRequest * fetch = [[NSFetchRequest alloc] init];
@@ -503,6 +503,7 @@
 
     if (self.digestPosts.count) {
         completionHandler(YES);
+        [self.imageCache removeAllObjects];
         [self.digestTableView reloadData];
 
         if (isDigest) {
@@ -513,7 +514,6 @@
 
 -(void)requestNewLinksFromRefresh{
     self.isFromPastDigest = NO;
-    [self.imageCache removeAllObjects];
     [self requestNewLinks:NO];
 }
 
@@ -581,8 +581,8 @@
 
         if(![[NSUserDefaults standardUserDefaults] boolForKey:@"HasSubscriptions"]){
             UIApplication *application = [UIApplication sharedApplication];
-
-            [ZeroPush engageWithAPIKey:@"PM4ouAj1rzxmQysu5ej6" delegate:application];
+            
+            [ZeroPush engageWithAPIKey:@"QfpEFaa6fkgKYzUCYGQE" delegate:application];
             [[UIApplication sharedApplication] registerUserNotificationSettings:[UIUserNotificationSettings settingsForTypes:(UIUserNotificationTypeSound | UIUserNotificationTypeAlert | UIUserNotificationTypeBadge) categories:nil]];
             [[ZeroPush shared] registerForRemoteNotifications];
 
