@@ -40,6 +40,7 @@
 @property CLLocation *userLocation;
 @property BOOL didUpdateLocation;
 @property NSCache *imageCache;
+@property (strong, nonatomic) IBOutlet UIBarButtonItem *todayBarButton;
 @end
 
 @implementation DigestViewController
@@ -52,10 +53,7 @@
     SystemSoundID audioEffect;
     AudioServicesCreateSystemSoundID((__bridge CFURLRef) pathURL, &audioEffect);
     AudioServicesPlaySystemSound(audioEffect);
-    self.refreshControl = [[UIRefreshControl alloc] init];
 
-    [self.refreshControl addTarget:self action:@selector(requestNewLinksFromRefresh) forControlEvents:UIControlEventValueChanged];
-    [self.digestTableView addSubview:self.refreshControl];
     [self getDateString];
     self.navigationItem.title = self.dateToday;
     self.imageCache = [[NSCache alloc] init];
@@ -77,6 +75,18 @@
 
 - (void)viewWillAppear:(BOOL)animated
 {
+    if (self.isFromPastDigest != YES) {
+        self.refreshControl = [[UIRefreshControl alloc] init];
+
+        [self.refreshControl addTarget:self action:@selector(requestNewLinksFromRefresh) forControlEvents:UIControlEventValueChanged];
+        [self.digestTableView addSubview:self.refreshControl];
+    }else{
+        self.todayBarButton.title = @"Today";
+        [self.refreshControl endRefreshing];
+        [self.refreshControl removeFromSuperview];
+        self.refreshControl = nil;
+    }
+
     [self.imageCache removeAllObjects];
     [super viewWillAppear:animated];
     self.didUpdateLocation = NO;
@@ -160,6 +170,15 @@
     }];
 }
 
+- (IBAction)onTodayButtonTouched:(id)sender {
+    self.isFromPastDigest = NO;
+    [self retrievePostsFromCoreData:YES withCompletion:^(BOOL completed) {
+        self.todayBarButton.title = @"";
+        self.refreshControl = [[UIRefreshControl alloc] init];
+        [self.refreshControl addTarget:self action:@selector(requestNewLinksFromRefresh) forControlEvents:UIControlEventValueChanged];
+        [self.digestTableView addSubview:self.refreshControl];
+    }];
+}
 
 #pragma mark - Animation
 

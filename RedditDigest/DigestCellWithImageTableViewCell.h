@@ -26,6 +26,8 @@
 @property (weak, nonatomic) IBOutlet UILabel *authorLabel;
 @property (strong, nonatomic) IBOutlet UIButton *upVoteButton;
 @property (strong, nonatomic) IBOutlet UIButton *downVoteButton;
+@property (strong, nonatomic) IBOutlet UIView *upvoteView;
+@property (strong, nonatomic) IBOutlet UIView *downvoteView;
 
 //@property id <DigestCellDelegate> delegate;
 
