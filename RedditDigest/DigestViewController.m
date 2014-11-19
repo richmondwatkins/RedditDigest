@@ -332,7 +332,7 @@
 
     DigestCellWithImageTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"DigestCell"];
 
-//    cell.delegate = self;
+    cell.delegate = self;
     cell.titleLabel.lineBreakMode = NSLineBreakByWordWrapping;
     cell.titleLabel.numberOfLines = 0;
 
@@ -345,24 +345,6 @@
     cell.thumbnailImage.layer.cornerRadius = 2.0;
     cell.thumbnailImage.layer.masksToBounds = YES;
 
-
-    if ([cell respondsToSelector:@selector(setSeparatorInset:)]) {
-        cell.separatorInset = UIEdgeInsetsZero;
-    }
-
-    UIView *upvoteView = [self viewWithImageName:@"up_arrow"];
-    UIColor *upvoteColor = [UIColor colorWithRed:1 green:0.545 blue:0.376 alpha:1];
-
-    UIView *downvoteView = [self viewWithImageName:@"down_arrow"];
-    UIColor *downvoteColor = [UIColor colorWithRed:0.58 green:0.58 blue:1 alpha:1];
-
-    [cell setSwipeGestureWithView:upvoteView color:upvoteColor mode:MCSwipeTableViewCellModeSwitch state:MCSwipeTableViewCellState1 completionBlock:^(MCSwipeTableViewCell *cell, MCSwipeTableViewCellState state, MCSwipeTableViewCellMode mode) {
-        NSLog(@"Did swipe \"Checkmark\" cell");
-    }];
-
-    [cell setSwipeGestureWithView:downvoteView color:downvoteColor mode:MCSwipeTableViewCellModeSwitch state:MCSwipeTableViewCellState3 completionBlock:^(MCSwipeTableViewCell *cell, MCSwipeTableViewCellState state, MCSwipeTableViewCellMode mode) {
-        NSLog(@"Did swipe \"Clock\" cell");
-    }];
 
     if (self.isFromPastDigest) {
         DigestPost *post = self.digestPosts[indexPath.row];
@@ -416,13 +398,6 @@
 //    }
 
     return cell;
-}
-
-- (UIView *)viewWithImageName:(NSString *)imageName {
-    UIImage *image = [UIImage imageNamed:imageName];
-    UIImageView *imageView = [[UIImageView alloc] initWithImage:image];
-    imageView.contentMode = UIViewContentModeCenter;
-    return imageView;
 }
 
 
@@ -684,7 +659,7 @@
         if(![[NSUserDefaults standardUserDefaults] boolForKey:@"HasSubscriptions"]){
             UIApplication *application = [UIApplication sharedApplication];
             
-            [ZeroPush engageWithAPIKey:@"QfpEFaa6fkgKYzUCYGQE" delegate:application];
+            [ZeroPush engageWithAPIKey:@"PM4ouAj1rzxmQysu5ej6" delegate:application];
             [[UIApplication sharedApplication] registerUserNotificationSettings:[UIUserNotificationSettings settingsForTypes:(UIUserNotificationTypeSound | UIUserNotificationTypeAlert | UIUserNotificationTypeBadge) categories:nil]];
             [[ZeroPush shared] registerForRemoteNotifications];
 
@@ -782,12 +757,9 @@
     DigestCellWithImageTableViewCell *swipedCell  = (DigestCellWithImageTableViewCell *)[self.digestTableView cellForRowAtIndexPath:swipedIndexPath];
     Post *post = [self.digestPosts objectAtIndex:swipedIndexPath.row];
     post.upvoted = [NSNumber numberWithBool:YES];
+    
 
     [self upVoteButtonPressed:swipedCell];
-
-    NSLog(@"Right Swiped and Upvoted");
-
-
 }
 
 - (IBAction)onLeftSwipeGesture:(UISwipeGestureRecognizer *)leftSwipe
@@ -799,8 +771,6 @@
     post.downvoted = [NSNumber numberWithBool:YES];
 
         [self downVoteButtonPressed:swipedCell];
-
-    NSLog(@"Left Swiped and Downvoted");
 }
 
 -(void)sendUpVoteToReddit:(NSString *)postID{

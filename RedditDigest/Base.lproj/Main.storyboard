@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6250" systemVersion="14A389" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="9zg-4H-k34">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6250" systemVersion="14B23" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="9zg-4H-k34">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6244"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
@@ -757,7 +757,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Link with Pocket" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CQ8-rh-bbW">
-                                                    <rect key="frame" x="21" y="6" width="124" height="31"/>
+                                                    <rect key="frame" x="21" y="6" width="123.5" height="31"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="31" id="bly-rX-N4V"/>
                                                     </constraints>
@@ -864,26 +864,9 @@
                                     <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 </collectionViewFlowLayout>
                                 <cells/>
-                                <collectionReusableView key="sectionHeaderView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="HeaderView" id="NHz-rG-d7i" customClass="RecHeaderCollectionReusableView">
+                                <collectionReusableView key="sectionHeaderView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="HeaderView" id="NHz-rG-d7i">
                                     <rect key="frame" x="0.0" y="64" width="600" height="50"/>
                                     <autoresizingMask key="autoresizingMask"/>
-                                    <subviews>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="laq-iu-mos">
-                                            <rect key="frame" x="102" y="8" width="396" height="34"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                            <nil key="highlightedColor"/>
-                                        </label>
-                                    </subviews>
-                                    <constraints>
-                                        <constraint firstItem="laq-iu-mos" firstAttribute="centerX" secondItem="NHz-rG-d7i" secondAttribute="centerX" id="999-UZ-ADO"/>
-                                        <constraint firstItem="laq-iu-mos" firstAttribute="bottom" secondItem="NHz-rG-d7i" secondAttribute="bottomMargin" id="C8g-QR-fQG"/>
-                                        <constraint firstItem="laq-iu-mos" firstAttribute="leading" secondItem="NHz-rG-d7i" secondAttribute="leadingMargin" constant="94" id="ix7-ad-IfV"/>
-                                        <constraint firstItem="laq-iu-mos" firstAttribute="top" secondItem="NHz-rG-d7i" secondAttribute="topMargin" id="mWc-xz-hfk"/>
-                                    </constraints>
-                                    <connections>
-                                        <outlet property="recHeaderView" destination="laq-iu-mos" id="YHC-MW-Xdv"/>
-                                    </connections>
                                 </collectionReusableView>
                                 <collectionReusableView key="sectionFooterView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="FooterView" id="hBb-R6-AyE">
                                     <rect key="frame" x="0.0" y="114" width="600" height="50"/>
