@@ -70,6 +70,12 @@
             post.customURL = post.URL;
         }
 
+        if ([[post.URL absoluteString] containsString:@"imgur"] && [post.URL absoluteString].length == 24 && ![[post.URL absoluteString] containsString:@"/a/"] && ![[post.URL absoluteString] containsString:@"gallery"]) {
+            NSString *stringURL = [NSString stringWithFormat:@"%@.jpg", [post.URL absoluteString]];
+            post.customIsImage = YES;
+            post.customURL = [NSURL URLWithString:stringURL];
+        }
+
         [self createSubredditRelationship:post withPostObject:savedPost withManagedObj:managedObjectContext];
 
         NSURLRequest *thumbnailRequest = [NSURLRequest requestWithURL:post.thumbnailURL];
@@ -204,7 +210,6 @@
 //            post.customIsImage = NO;
 //        }
 //    }
-
 
 
 @end

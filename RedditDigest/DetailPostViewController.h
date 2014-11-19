@@ -18,7 +18,7 @@
 @interface DetailPostViewController : UIViewController <UIPageViewControllerDataSource, UIPageViewControllerDelegate>
 
 @property id<DetailPostViewControllerDelegate> delegate;
-
+//
 @property NSMutableArray *allPosts;
 @property NSInteger index;
 @property BOOL isFromPastDigest;
