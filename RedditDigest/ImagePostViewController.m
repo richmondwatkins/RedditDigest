@@ -24,7 +24,7 @@
     [self.activityIndicator startAnimating];
     self.activityIndicator.hidden = NO;
     dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(void){
-        NSLog(@"POST IDDD %@",self.postID);
+        //NSLog(@"POST IDDD %@",self.postID);
         UIImage *image = [UIImage imageWithData:[self documentsPathForFileName:self.postID]];
         dispatch_async(dispatch_get_main_queue(), ^(void){
             self.imageView.image = image;
