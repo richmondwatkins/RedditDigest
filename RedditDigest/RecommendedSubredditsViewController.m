@@ -33,6 +33,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.activityIndicator.hidden = NO;
+    [self.activityIndicator startAnimating];
+
     [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
 
     KTCenterFlowLayout *layout = [KTCenterFlowLayout new];
@@ -71,6 +73,8 @@
 
                     if (i == results.count) {
                         self.activityIndicator.hidden = YES;
+                        [self.activityIndicator stopAnimating];
+
                         [self checkForExistingSubscription:self.recommendedFromUsers];
                         [self.recomendations addObject:self.recommendedFromUsers];
                         [self.subredditCollectionView reloadData];
@@ -114,6 +118,7 @@
             if (i == flattenedSubNames.count) {
                 [self checkForExistingSubscription:self.recommendedFromSubscriptions];
                 [self.recomendations addObject:self.recommendedFromSubscriptions];
+                [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
                 [self.subredditCollectionView reloadData];
             }
         }];
