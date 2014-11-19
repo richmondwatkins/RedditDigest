@@ -1717,6 +1717,9 @@
                                 <constraints>
                                     <constraint firstAttribute="height" constant="319" id="doJ-KB-Ljm"/>
                                 </constraints>
+                                <connections>
+                                    <outlet property="delegate" destination="8af-0V-Opd" id="QtC-c4-kze"/>
+                                </connections>
                             </webView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="61a-5h-oKC">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="20"/>

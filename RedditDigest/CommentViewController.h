@@ -21,4 +21,6 @@
 @property NSInteger constant;
 @property (weak, nonatomic) IBOutlet UIButton *showHideCommentsViewButton;
 @property BOOL isFromPastDigest;
+@property (strong, nonatomic) NSManagedObjectContext *managedObjectContext;
+
 @end

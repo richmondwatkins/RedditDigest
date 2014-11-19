@@ -22,4 +22,6 @@
 @property NSMutableArray *allPosts;
 @property NSInteger index;
 @property BOOL isFromPastDigest;
+@property (strong, nonatomic) NSManagedObjectContext *managedObjectContext;
+
 @end

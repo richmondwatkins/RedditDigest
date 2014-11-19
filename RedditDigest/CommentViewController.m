@@ -37,6 +37,7 @@
         self.downVoteButton.hidden = NO;
         // Size of constraint set in storyboard
         self.leadingConstraintForCommentsButton.constant = 134.0;
+        [self setupVoteButtons];
     }
     else {
         self.upVoteButton.hidden = YES;
@@ -174,16 +175,97 @@
 }
 
 #pragma mark - Voting
+
+- (void)setupVoteButtons
+{
+    if ([self.post.upvoted boolValue]) {
+        [self.upVoteButton setImage:[UIImage imageNamed:@"up_arrow_selected"] forState:UIControlStateNormal];
+    }
+    else {
+        [self.upVoteButton setImage:[UIImage imageNamed:@"up_arrow"] forState:UIControlStateNormal];
+    }
+    if ([self.post.downvoted isEqual:[NSNumber numberWithInt:1]]) {
+        [self.downVoteButton setImage:[UIImage imageNamed:@"down_arrow_selected"] forState:UIControlStateNormal];
+    }
+    else {
+        [self.downVoteButton setImage:[UIImage imageNamed:@"down_arrow"] forState:UIControlStateNormal];
+    }
+}
+
 - (IBAction)onDownVoteButtonPressed:(UIButton *)downVoteButton
 {
-    [downVoteButton setImage:[UIImage imageNamed:@"down_arrow_selected"] forState:UIControlStateNormal];
-    [self.upVoteButton setImage:[UIImage imageNamed:@"up_arrow"] forState:UIControlStateNormal];
+    if ([self.post.downvoted boolValue]) {
+        // Remove downvote
+        [downVoteButton setImage:[UIImage imageNamed:@"down_arrow"] forState:UIControlStateNormal];
+        [self.upVoteButton setImage:[UIImage imageNamed:@"up_arrow"] forState:UIControlStateNormal];
+        self.post.downvoted = [NSNumber numberWithBool:NO];
+        self.post.upvoted = [NSNumber numberWithBool:NO];
+        // Remove vote from reddit
+        [self removeVoteFromReddit:self.post.postID];
+    }
+    else {
+        // Downvote
+        [downVoteButton setImage:[UIImage imageNamed:@"down_arrow_selected"] forState:UIControlStateNormal];
+        [self.upVoteButton setImage:[UIImage imageNamed:@"up_arrow"] forState:UIControlStateNormal];
+        self.post.downvoted = [NSNumber numberWithBool:YES];
+        self.post.upvoted = [NSNumber numberWithBool:NO];
+        // Remove vote from reddit
+        [self sendDownVoteToReddit:self.post.postID];
+    }
+    [self.managedObjectContext save:nil];
+
 }
 
 - (IBAction)onUpVoteButtonPressed:(UIButton *)upVoteButton
 {
-    [upVoteButton setImage:[UIImage imageNamed:@"up_arrow_selected"] forState:UIControlStateNormal];
-    [self.downVoteButton setImage:[UIImage imageNamed:@"down_arrow"] forState:UIControlStateNormal];
+    if (self.post.upvoted) {
+        // Remove upvote
+        [upVoteButton setImage:[UIImage imageNamed:@"up_arrow"] forState:UIControlStateNormal];
+        [self.downVoteButton setImage:[UIImage imageNamed:@"down_arrow"] forState:UIControlStateNormal];
+        self.post.upvoted = [NSNumber numberWithBool:NO];
+        self.post.downvoted = [NSNumber numberWithBool:NO];
+        // Remove vote from reddit
+        [self removeVoteFromReddit:self.post.postID];
+    }
+    else {
+        // Upvote
+        [upVoteButton setImage:[UIImage imageNamed:@"up_arrow_selected"] forState:UIControlStateNormal];
+        [self.downVoteButton setImage:[UIImage imageNamed:@"down_arrow"] forState:UIControlStateNormal];
+        self.post.upvoted = [NSNumber numberWithBool:YES];
+        self.post.downvoted = [NSNumber numberWithBool:NO];
+        // Remove vote from reddit
+        [self sendUpVoteToReddit:self.post.postID];
+    }
+
+    [self.managedObjectContext save:nil];
+}
+
+-(void)sendUpVoteToReddit:(NSString *)postID
+{
+    [[RKClient sharedClient] linkWithFullName:postID completion:^(id object, NSError *error) {
+        [[RKClient sharedClient] upvote:object completion:^(NSError *error) {
+            NSLog(@"Upvote");
+        }];
+    }];
+}
+
+-(void)sendDownVoteToReddit:(NSString *)postID
+{
+    [[RKClient sharedClient] linkWithFullName:postID completion:^(id object, NSError *error) {
+        [[RKClient sharedClient] downvote:object completion:^(NSError *error) {
+            NSLog(@"Downvote");
+        }];
+    }];
+
+}
+
+- (void)removeVoteFromReddit:(NSString *)postID
+{
+    [[RKClient sharedClient] linkWithFullName:postID completion:^(id object, NSError *error) {
+        [[RKClient sharedClient] revokeVote:object completion:^(NSError *error) {
+            NSLog(@"Removed Vote");
+        }];
+    }];
 }
 
 #pragma mark - Share
