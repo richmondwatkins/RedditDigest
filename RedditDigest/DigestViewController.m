@@ -85,6 +85,7 @@
         [self.refreshControl endRefreshing];
         [self.refreshControl removeFromSuperview];
         self.refreshControl = nil;
+        self.title = self.oldDigestDate;
     }
 
     [self.imageCache removeAllObjects];

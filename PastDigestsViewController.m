@@ -66,8 +66,8 @@
 
     NSDateFormatter *dateFormat =[[NSDateFormatter alloc]init];
     [dateFormat setDateFormat:@"MMMM dd, yyyy"];
-
-    cell.textLabel.text = [dateFormat stringFromDate:date];
+    NSString *dateText = [dateFormat stringFromDate:date];
+    cell.textLabel.text = dateText;
     return cell;
 }
 
@@ -97,6 +97,12 @@
 
     digestController.oldDigest = [selectedDigest.digestPost allObjects];
     digestController.isFromPastDigest = YES;
+
+    NSDateFormatter *dateFormat =[[NSDateFormatter alloc] init];
+    [dateFormat setDateFormat:@"MMMM dd, yyyy"];
+    NSString *dateText = [dateFormat stringFromDate:[NSDate dateWithTimeIntervalSince1970:[selectedDigest.time doubleValue]]];
+
+    digestController.oldDigestDate = dateText;
 }
 
 @end
