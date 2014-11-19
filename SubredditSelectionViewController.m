@@ -55,6 +55,15 @@
     self.subreddits = [NSMutableArray array];
     [self.activityIndicator startAnimating];
 
+    if (self.isFromSettings) {
+        //[self.navigationItem setHidesBackButton:YES]; <-- This didn't work so create a view to put over the button
+        UIView *backButtonCoverView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 44, 44)];
+        backButtonCoverView.backgroundColor = [UIColor colorWithRed:0.2 green:0.4 blue:0.6 alpha:1];
+        self.navigationController.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:backButtonCoverView];
+        [UIView animateWithDuration:0.3 animations:^{
+            self.doneSelectingSubredditsButton.alpha = 1.0;
+        }];
+    }
     // Logged in with reddit account
     if ([[NSUserDefaults standardUserDefaults] boolForKey:@"HasRedditAccount"])
     {
