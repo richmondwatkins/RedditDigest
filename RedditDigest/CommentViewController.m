@@ -12,6 +12,7 @@
 #import "TextViewWebViewController.h"
 #import "PocketAPI.h"
 #import "TSMessage.h"
+#import <SafariServices/SafariServices.h>
 
 @interface CommentViewController () <UITableViewDelegate, UITableViewDataSource, UITextViewDelegate, UITabBarControllerDelegate, UITextViewDelegate, UIActionSheetDelegate>
 
@@ -275,7 +276,7 @@
                                                              delegate:self
                                                     cancelButtonTitle:@"Cancel"
                                                destructiveButtonTitle:nil
-                                                    otherButtonTitles:@"Save Post to Pocket", nil];
+                                                    otherButtonTitles:@"Save Post to Pocket", @"Save to Reading List", nil];
     [actionSheet showInView:self.view];
 }
 
@@ -302,6 +303,19 @@
                                                    duration:1.5];
             }
         }];
+    }
+    else if (buttonIndex == 1) {
+        SSReadingList * readList = [SSReadingList defaultReadingList];
+        NSError * error = [NSError new];
+
+        BOOL status =[readList addReadingListItemWithURL:[NSURL URLWithString:self.post.url] title:self.post.title previewText:self.post.description error:&error];
+
+        if(status) {
+            NSLog(@"Added URL");
+        }
+        else {
+            NSLog(@"Error %@", error.localizedDescription);
+        }
     }
 }
 
