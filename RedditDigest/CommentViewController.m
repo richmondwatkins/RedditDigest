@@ -270,52 +270,14 @@
 #pragma mark - Share
 - (IBAction)onShareButtonPressed:(id)sender
 {
-    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:nil
-                                                             delegate:self
-                                                    cancelButtonTitle:@"Cancel"
-                                               destructiveButtonTitle:nil
-                                                    otherButtonTitles:@"Save Post to Pocket", @"Save to Reading List", nil];
-    [actionSheet showInView:self.view];
+    UIActivityViewController *activityViewController = [[UIActivityViewController alloc] initWithActivityItems:@[self.post.title, self.post.url]
+                                      applicationActivities:nil];
+            [self.navigationController presentViewController:activityViewController
+                                                   animated:YES
+                                                 completion:^{
+                                                    NSLog(@"Share Pressed");
+                                                 }];
+
 }
-
-#pragma mark - UIActionSheet Delegate Methods 
-
--(void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex{
-    if (buttonIndex == 0) {
-        // Save post url to Pocket
-        NSURL *url = [NSURL URLWithString:self.post.url];
-        [[PocketAPI sharedAPI] saveURL:url handler:^(PocketAPI *api, NSURL *url, NSError *error) {
-            if (error) {
-                NSLog(@"Error saving to Pocket %@", error.localizedDescription);
-                [TSMessage showNotificationInViewController:self.parentViewController
-                                                      title:@"Error Saving to Pocket!"
-                                                   subtitle:@"Try again later"
-                                                       type:TSMessageNotificationTypeError
-                                                   duration:2.5];
-            }
-            else {
-                [TSMessage showNotificationInViewController:self.parentViewController
-                                                      title:@"Saved to Pocket!"
-                                                   subtitle:nil
-                                                       type:TSMessageNotificationTypeSuccess
-                                                   duration:1.5];
-            }
-        }];
-    }
-    else if (buttonIndex == 1) {
-        SSReadingList * readList = [SSReadingList defaultReadingList];
-        NSError * error = [NSError new];
-
-        BOOL status =[readList addReadingListItemWithURL:[NSURL URLWithString:self.post.url] title:self.post.title previewText:self.post.description error:&error];
-
-        if(status) {
-            NSLog(@"Added URL");
-        }
-        else {
-            NSLog(@"Error %@", error.localizedDescription);
-        }
-    }
-}
-
 
 @end
