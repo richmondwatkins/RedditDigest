@@ -582,6 +582,10 @@
     }
 
     [self.imageCache removeAllObjects];
+
+    [self.refreshControl endRefreshing];
+    [self.refreshControl removeFromSuperview];
+    self.refreshControl = nil;
     //    self.isFromPastDigest = NO;
 }
 
