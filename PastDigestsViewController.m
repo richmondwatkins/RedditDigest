@@ -23,7 +23,6 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self retrievePastDigestFromCoreData];
-    self.imageCache = [[NSCache alloc] init];
 }
 
 
@@ -66,18 +65,16 @@
 
     NSDateFormatter *dateFormat =[[NSDateFormatter alloc]init];
     [dateFormat setDateFormat:@"MMMM dd, yyyy"];
-
-    cell.textLabel.text = [dateFormat stringFromDate:date];
+    NSString *dateText = [dateFormat stringFromDate:date];
+    cell.textLabel.text = dateText;
     return cell;
 }
 
 -(UIImage *)returnImageForCellFromData:(NSString *)filePath withSubredditNameForKey:(NSString *)subreddit andFilePathPrefix:(NSString *)prefix{
-    UIImage *image = [self.imageCache objectForKey:subreddit];
-    if (image == nil) {
-        NSData *imageData = [NSData dataWithContentsOfFile:[self documentsPathForFileName:filePath withPrefix:prefix]];
-        image = [UIImage imageWithData:imageData];
-        [self.imageCache setObject:image forKey:subreddit];
-    }
+
+    NSData *imageData = [NSData dataWithContentsOfFile:[self documentsPathForFileName:filePath withPrefix:prefix]];
+    UIImage *image = [UIImage imageWithData:imageData];
+
     return image;
 }
 
@@ -97,6 +94,12 @@
 
     digestController.oldDigest = [selectedDigest.digestPost allObjects];
     digestController.isFromPastDigest = YES;
+
+    NSDateFormatter *dateFormat =[[NSDateFormatter alloc] init];
+    [dateFormat setDateFormat:@"MMMM dd, yyyy"];
+    NSString *dateText = [dateFormat stringFromDate:[NSDate dateWithTimeIntervalSince1970:[selectedDigest.time doubleValue]]];
+
+    digestController.oldDigestDate = dateText;
 }
 
 @end
