@@ -659,7 +659,7 @@
         if(![[NSUserDefaults standardUserDefaults] boolForKey:@"HasSubscriptions"]){
             UIApplication *application = [UIApplication sharedApplication];
             
-            [ZeroPush engageWithAPIKey:@"PM4ouAj1rzxmQysu5ej6" delegate:application];
+            [ZeroPush engageWithAPIKey:@"QfpEFaa6fkgKYzUCYGQE" delegate:application];
             [[UIApplication sharedApplication] registerUserNotificationSettings:[UIUserNotificationSettings settingsForTypes:(UIUserNotificationTypeSound | UIUserNotificationTypeAlert | UIUserNotificationTypeBadge) categories:nil]];
             [[ZeroPush shared] registerForRemoteNotifications];
 

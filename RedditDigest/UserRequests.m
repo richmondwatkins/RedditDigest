@@ -12,7 +12,7 @@
 
 +(void)retrieveUsersSubredditswithCompletion:(void (^)(NSDictionary *results))complete{
     NSString *deviceString = [[NSUserDefaults standardUserDefaults] valueForKey:@"DeviceID"];
-    NSString *urlString = [NSString stringWithFormat:@"http://192.168.1.4:3000/subreddits/%@",deviceString];
+    NSString *urlString = [NSString stringWithFormat:@"https://gentle-ocean-7650.herokuapp.com/subreddits/%@",deviceString];
 
     NSURL *url = [[NSURL alloc] initWithString:[urlString stringByAddingPercentEscapesUsingEncoding:NSASCIIStringEncoding]];
 
@@ -31,7 +31,7 @@
 
     NSString *deviceString = [[NSUserDefaults standardUserDefaults] valueForKey:@"DeviceID"];
     NSError *error;
-    NSString *urlString = [NSString stringWithFormat:@"http://192.168.1.4:3000/subreddits/%@",  deviceString];
+    NSString *urlString = [NSString stringWithFormat:@"https://gentle-ocean-7650.herokuapp.com/subreddits/%@",  deviceString];
 
     NSMutableArray *subsArray = [NSMutableArray array];
     for (RKSubreddit *selectableSubbreddit in selectionsDictionary[@"subreddits"]) {
@@ -63,10 +63,10 @@
 +(void)registerDevice:(NSString *)deviceID{
     NSString *deviceString = [NSString stringWithFormat:@"%@", deviceID];
 
-    NSString* deviceURLString = @"http://192.168.1.4:3000/register/device";
+    NSString* deviceURLString = @"https://gentle-ocean-7650.herokuapp.com/register/device";
 
     NSURL *url = [[NSURL alloc] initWithString:[deviceURLString stringByAddingPercentEscapesUsingEncoding:NSASCIIStringEncoding]];
-    NSLog(@"INS URS RE %@",deviceID);
+    NSLog(@"INS URS RE %@",url);
     NSError *error;
     NSDictionary *deviceIdDictionary = [[NSDictionary alloc] initWithObjectsAndKeys:deviceString, @"deviceid", nil];
     NSData *postData = [NSJSONSerialization dataWithJSONObject:deviceIdDictionary options:0 error:&error];
@@ -89,7 +89,7 @@
 
     NSString *deviceString = [[NSUserDefaults standardUserDefaults] valueForKey:@"DeviceID"];
 
-    NSString* urlString = @"http://192.168.1.4:3000/register/push";
+    NSString* urlString = @"https://gentle-ocean-7650.herokuapp.com/register/push";
 
     NSURL *url = [[NSURL alloc] initWithString:[urlString stringByAddingPercentEscapesUsingEncoding:NSASCIIStringEncoding]];
 
@@ -118,7 +118,7 @@
 
     NSString *deviceString = [[NSUserDefaults standardUserDefaults] valueForKey:@"DeviceID"];
 
-    NSString *urlString = [NSString stringWithFormat:@"http://192.168.1.4:3000/recommendations/%@", deviceString];
+    NSString *urlString = [NSString stringWithFormat:@"https://gentle-ocean-7650.herokuapp.com/recommendations/%@", deviceString];
 
     NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:urlString]];
     [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
