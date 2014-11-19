@@ -550,6 +550,7 @@
         NSIndexPath *indexPath = [self.digestTableView indexPathForSelectedRow];
         detailPostViewController.allPosts = self.digestPosts;
         detailPostViewController.index = indexPath.row;
+        detailPostViewController.managedObjectContext = self.managedObjectContext;
         if (self.isFromPastDigest) {
             detailPostViewController.isFromPastDigest = YES;
         }
