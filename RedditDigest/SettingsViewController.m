@@ -218,6 +218,11 @@
     }
 }
 
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return 44;
+}
+
 #pragma mark -  Segue
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
