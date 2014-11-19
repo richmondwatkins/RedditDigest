@@ -174,6 +174,9 @@
     self.isFromPastDigest = NO;
     [self retrievePostsFromCoreData:YES withCompletion:^(BOOL completed) {
         self.todayBarButton.title = @"";
+        self.refreshControl = [[UIRefreshControl alloc] init];
+        [self.refreshControl addTarget:self action:@selector(requestNewLinksFromRefresh) forControlEvents:UIControlEventValueChanged];
+        [self.digestTableView addSubview:self.refreshControl];
     }];
 }
 
