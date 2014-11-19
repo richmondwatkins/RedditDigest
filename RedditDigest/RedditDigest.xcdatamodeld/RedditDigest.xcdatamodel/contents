@@ -1,4 +1,90 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model name="Test1.xcdatamodel" userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="1" systemVersion="11A491" minimumToolsVersion="Automatic" macOSVersion="Automatic" iOSVersion="Automatic">
-    <elements/>
+<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="6252" systemVersion="14A389" minimumToolsVersion="Automatic" macOSVersion="Automatic" iOSVersion="Automatic">
+    <entity name="ChildComment" representedClassName="ChildComment" syncable="YES">
+        <attribute name="author" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="body" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="score" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <relationship name="comment" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Comment" inverseName="childcomments" inverseEntity="Comment" syncable="YES"/>
+    </entity>
+    <entity name="Comment" representedClassName="Comment" syncable="YES">
+        <attribute name="author" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="body" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="html" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="score" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <relationship name="childcomments" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="ChildComment" inverseName="comment" inverseEntity="ChildComment" syncable="YES"/>
+        <relationship name="post" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Post" inverseName="comments" inverseEntity="Post" syncable="YES"/>
+    </entity>
+    <entity name="Digest" representedClassName="Digest" syncable="YES">
+        <attribute name="isMorning" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="time" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <relationship name="digestPost" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="DigestPost" inverseName="digest" inverseEntity="DigestPost" syncable="YES"/>
+    </entity>
+    <entity name="DigestCategory" representedClassName="DigestCategory" syncable="YES">
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="subreddits" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Subreddit" inverseName="digestCategory" inverseEntity="Subreddit" syncable="YES"/>
+    </entity>
+    <entity name="DigestPost" representedClassName="DigestPost" syncable="YES">
+        <attribute name="author" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="domain" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="html" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="image" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="isGif" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="isImageLink" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="isSelfPost" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="isWebPage" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="isYouTube" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="nsfw" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="postID" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="selfText" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="subreddit" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="subredditImage" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="thumbnailImagePath" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="title" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="totalComments" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="url" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="voteRatio" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
+        <relationship name="digest" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Digest" inverseName="digestPost" inverseEntity="Digest" syncable="YES"/>
+    </entity>
+    <entity name="Post" representedClassName="Post" syncable="YES">
+        <attribute name="author" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="domain" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="downvoted" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="html" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="image" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="isGif" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="isImageLink" optional="YES" attributeType="Boolean" defaultValueString="0" syncable="YES"/>
+        <attribute name="isLocalPost" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="isSelfPost" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="isWebPage" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="isYouTube" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="nsfw" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="postID" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="selfText" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="thumbnailImage" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="title" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="totalComments" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="upvoted" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="url" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="viewed" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="voteRatio" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
+        <relationship name="comments" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Comment" inverseName="post" inverseEntity="Comment" syncable="YES"/>
+        <relationship name="subreddit" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Subreddit" inverseName="post" inverseEntity="Subreddit" syncable="YES"/>
+    </entity>
+    <entity name="Subreddit" representedClassName="Subreddit" syncable="YES">
+        <attribute name="image" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="isLocalSubreddit" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="subreddit" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="url" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="digestCategory" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="DigestCategory" inverseName="subreddits" inverseEntity="DigestCategory" syncable="YES"/>
+        <relationship name="post" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="Post" inverseName="subreddit" inverseEntity="Post" syncable="YES"/>
+    </entity>
+    <elements>
+        <element name="ChildComment" positionX="-45" positionY="126" width="128" height="103"/>
+        <element name="Comment" positionX="-63" positionY="99" width="128" height="135"/>
+        <element name="Digest" positionX="-54" positionY="135" width="128" height="90"/>
+        <element name="DigestCategory" positionX="-45" positionY="144" width="128" height="75"/>
+        <element name="DigestPost" positionX="-54" positionY="135" width="128" height="343"/>
+        <element name="Post" positionX="-63" positionY="-18" width="128" height="388"/>
+        <element name="Subreddit" positionX="-54" positionY="117" width="128" height="133"/>
+    </elements>
 </model>

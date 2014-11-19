@@ -8,135 +8,238 @@
 
 #import "AppDelegate.h"
 #import <ZeroPush.h>
-#import "ViewController.h"
+#import "DigestViewController.h"
+#import <SSKeychain/SSKeychain.h>
+#import <RedditKit/RedditKit.h>
+#import "UserRequests.h"
+#import "PocketAPI.h"
+#import "Digest.h"
+
 @interface AppDelegate ()
-@property NSString *token;
+
 @property (nonatomic, strong) NSString *temperature;
+@property NSString *deviceString;
+@property NSMutableArray *posts;
 
 @end
 
 @implementation AppDelegate
 
+- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
+{
+    UINavigationController *navigationController = (UINavigationController *)self.window.rootViewController;
+    DigestViewController *digestController = (DigestViewController *)navigationController.topViewController;
+    digestController.managedObjectContext = self.managedObjectContext;
+
+    if (![[NSUserDefaults standardUserDefaults] valueForKey:@"DeviceID"]) {
+        [self performFirstTimeUserMethods];
+    }else{
+        [self reloadFromCoreDataOrFetch:digestController];
+    }
+
+    // Regester PocketAPI
+    [[PocketAPI sharedAPI] setConsumerKey:@"34696-ed6afb7268cf07819ef8f0b9"];
+
+    [self setUpUI];
+
+    [self showWelcomeViewOrDigestView];
+    [[UIApplication sharedApplication] setMinimumBackgroundFetchInterval:UIApplicationBackgroundFetchIntervalMinimum];
+    [[UIApplication sharedApplication] setApplicationIconBadgeNumber:0];
+
+    return YES;
+}
+
+-(BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url
+{
+    if ([[PocketAPI sharedAPI] handleOpenURL:url]) {
+        return YES;
+    }
+    else
+    {
+        return NO;
+    }
+}
 
 - (void)applicationDidBecomeActive:(UIApplication *)application
 {
-    [ZeroPush engageWithAPIKey:@"PM4ouAj1rzxmQysu5ej6" delegate:self];
-//    [[ZeroPush shared] registerForRemoteNotificationTypes:(UIRemoteNotificationTypeAlert |
-//                                                           UIRemoteNotificationTypeBadge |
-//                                                           UIRemoteNotificationTypeSound)];
-    [[UIApplication sharedApplication] registerUserNotificationSettings:[UIUserNotificationSettings settingsForTypes:(UIUserNotificationTypeSound | UIUserNotificationTypeAlert | UIUserNotificationTypeBadge) categories:nil]];
-         [[ZeroPush shared] registerForRemoteNotifications];
+
+}
+
+- (void)setUpUI
+{
+    // #336699 - reddit dark blue
+    [[UINavigationBar appearance] setBarTintColor:[UIColor colorWithRed:0.2 green:0.4 blue:0.6 alpha:1]];
+    // Nav bar buttons white
+    [[UINavigationBar appearance] setTintColor:[UIColor whiteColor]];
+    // White nav bar text color - font Helvetica Neue Regular
+    [[UINavigationBar appearance] setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor whiteColor],
+                                                                      NSFontAttributeName : [UIFont fontWithName:@"Avenir-Medium" size:18.0]}];
+    [[UINavigationBar appearance] setTranslucent:NO];
+
+    // White status bar
+    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
 }
 
 - (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)tokenData
 {
     [[ZeroPush shared] registerDeviceToken:tokenData];
-
-    self.token = [ZeroPush deviceTokenFromData:tokenData];
-//    [self runRequest];
+    NSString *token = [ZeroPush deviceTokenFromData:tokenData];
+    [UserRequests registerDeviceForPushNotifications:token];
 }
 
+- (void)application:(UIApplication *)application didRegisterUserNotificationSettings:(UIUserNotificationSettings *)notificationSettings{
 
--(void)runRequest{
-    NSString* deviceId = [NSString stringWithFormat:@"https://gentle-ocean-7650.herokuapp.com/deviceid/%@", self.token];
-//    NSString* deviceId = [NSString stringWithFormat:@"https://192.168.129.228:3000/deviceid/%@", self.token];
+    NSCalendar *morningCalendar = [NSCalendar currentCalendar];
+    NSDateComponents *morningComponents = [[NSDateComponents alloc] init];
+    [morningComponents setHour: 8];
+    [morningComponents setMinute: 0];
+    [morningComponents setSecond: 0];
+    [morningComponents setTimeZone: [NSTimeZone defaultTimeZone]];
+    NSDate *morningDigest= [morningCalendar dateFromComponents:morningComponents];
 
-    NSURL* url = [NSURL URLWithString:deviceId];
+    UILocalNotification* morningNotification = [[UILocalNotification alloc] init];
+    morningNotification.fireDate = morningDigest;
+    morningNotification.timeZone = [NSTimeZone defaultTimeZone];
+    morningNotification.repeatInterval = NSCalendarUnitDay;
+    morningNotification.alertBody = @"Your reddit digest is ready for viewing";
+    morningNotification.applicationIconBadgeNumber = [[UIApplication sharedApplication] applicationIconBadgeNumber] + 1;
+    [[UIApplication sharedApplication] scheduleLocalNotification:morningNotification];
 
-    NSMutableURLRequest* request = [NSMutableURLRequest requestWithURL:url];
-    request.HTTPMethod = @"POST";
+    NSCalendar *afternoonCalendar = [NSCalendar currentCalendar];
+    NSDateComponents *afternoonComponents = [[NSDateComponents alloc] init];
+    [afternoonComponents setHour: 18];
+    [afternoonComponents setMinute: 0];
+    [afternoonComponents setSecond: 0];
+    [afternoonComponents setTimeZone: [NSTimeZone defaultTimeZone]];
+    NSDate *afternoonDigest = [afternoonCalendar dateFromComponents:afternoonComponents];
 
-    [request addValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
+    UILocalNotification* afternoonNotification = [[UILocalNotification alloc] init];
+    afternoonNotification.fireDate = afternoonDigest;
+    afternoonNotification.timeZone = [NSTimeZone defaultTimeZone];
+    afternoonNotification.repeatInterval = NSCalendarUnitDay;
+    afternoonNotification.alertBody = @"Your reddit digest is ready for viewing";
+    afternoonNotification.applicationIconBadgeNumber = [[UIApplication sharedApplication] applicationIconBadgeNumber] + 1;
+    [[UIApplication sharedApplication] scheduleLocalNotification:afternoonNotification];
 
-    NSURLSessionConfiguration* config = [NSURLSessionConfiguration defaultSessionConfiguration];
-    NSURLSession* session = [NSURLSession sessionWithConfiguration:config];
-
-    NSURLSessionDataTask* dataTask = [session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
-        if (!error) {
-            NSLog(@"%@",response);
-        }
-    }];
-    [dataTask resume];
 }
+
 
 -(void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error {
     NSLog(@"%@", error.localizedDescription);
 }
 
 
-- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+-(void)reloadFromCoreDataOrFetch:(DigestViewController *)digestController{
 
+    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:@"Digest"];
+    NSSortDescriptor *sorter = [[NSSortDescriptor alloc] initWithKey:@"time" ascending:NO];
+    [fetchRequest setSortDescriptors:@[sorter]];
 
+    NSArray *results = [self.managedObjectContext executeFetchRequest:fetchRequest error:nil];
 
-    return YES;
+    if (results.count) {
+        Digest *lastDigest = results.firstObject;
+
+        NSTimeInterval currentTime = [[NSDate date] timeIntervalSince1970];
+
+        if (currentTime - 3600000 > lastDigest.time.doubleValue) {
+            [digestController requestNewLinks:YES];
+        }else{
+            [digestController performNewFetchedDataActions:YES];
+        }
+    }
 }
 
+-(void)performFirstTimeUserMethods{
+    CFUUIDRef uuidObject = CFUUIDCreate(NULL);
+
+    NSString *uuidStr = (__bridge_transfer NSString *)CFUUIDCreateString(NULL, uuidObject);
+    CFRelease(uuidObject);
+
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    [userDefaults setObject:uuidStr forKey:@"DeviceID"];
+
+    [userDefaults synchronize];
+    [UserRequests registerDevice:uuidStr];
+}
+
+
+- (void)showWelcomeViewOrDigestView
+{
+    if ([[NSUserDefaults standardUserDefaults] valueForKey:@"DeviceID"])
+    {
+        if ([[NSUserDefaults standardUserDefaults] boolForKey:@"HasRedditAccount"])
+        {
+            NSArray *array = [SSKeychain accountsForService:@"friendsOfSnoo"];
+            NSDictionary *accountInfoDictionary = array.firstObject;
+            NSString *username = accountInfoDictionary[@"acct"];
+            NSString *password = [SSKeychain passwordForService:@"friendsOfSnoo" account:username];
+
+            [[RKClient sharedClient] signInWithUsername:accountInfoDictionary[@"acct"] password:password completion:^(NSError *error) {
+                if (!error)
+                {
+                    NSLog(@"Successfully signed in!");
+
+                    /* // Richmond, uncomment this to get what you need after the user logs in correctly
+                     [[RKClient sharedClient] subscribedSubredditsWithCompletion:^(NSArray *collection, RKPagination *pagination, NSError *error) {
+
+                     RKSubreddit *subreddit = collection.firstObject;
+
+                     [[RKClient sharedClient] linksInSubreddit:subreddit pagination:nil completion:^(NSArray *links, RKPagination *pagination, NSError *error) {
+                     //                    NSLog(@"Links: %@", links);
+                     [[RKClient sharedClient] upvote:links.firstObject completion:^(NSError *error) {
+                     NSLog(@"Upvoted the link!");
+                     }];
+                     }];
+
+                     }];
+                     */
+                }
+                else
+                {
+                   
+                }
+            }];
+        }
+        else
+        {
+            // Get information about user who has no account. Unique ID? Generate content.
+            NSLog(@"User Has no reddit account, but that's cool we'll just give them the content they requested the first time they setup the app. Bam!");
+        }
+    }
+    else
+    {
+        
+        // This is the first launch ever -- ooooo
+    }
+}
 
 
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo fetchCompletionHandler:(void (^)(UIBackgroundFetchResult result))handler{
-
-    NSLog(@"Background fetch started...");
-
-    // 30 seconds to perform the fetch
-
-    NSString *urlString = [NSString stringWithFormat: @"http://api.openweathermap.org/data/2.5/weather?q=%@", @"Singapore"];
-
-    NSURLSession *session = [NSURLSession sharedSession];
-    [[session dataTaskWithURL:[NSURL URLWithString:urlString]
-            completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
-
-                NSHTTPURLResponse *httpResp = (NSHTTPURLResponse*) response;
-                if (!error && httpResp.statusCode == 200) {
-                    NSString *result = [[NSString alloc] initWithBytes:[data bytes] length:[data length] encoding:NSUTF8StringEncoding];
-                    NSLog(@"RESULTS %@",result);
-                    [self parseJSONData:data];
-
-                    ViewController *vc = (ViewController *) [[[UIApplication sharedApplication] keyWindow] rootViewController];
-                    dispatch_sync(dispatch_get_main_queue(), ^{
-                        vc.lblStatus.text = self.temperature;
-                    });
-
-                    handler(UIBackgroundFetchResultNewData);
-
-                    NSLog(@"Background fetch completed...");
-                } else {
-                    NSLog(@"%@", error.description);
-                    handler(UIBackgroundFetchResultFailed);
-                    NSLog(@"Background fetch Failed...");
-                }
-            }
-      
-      ] resume ];
-
-}
-
-// used for testing updating the view
-- (void)parseJSONData:(NSData *)data {
-    NSError *error;
-    NSDictionary *parsedJSONData =
-    [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
-    NSDictionary *main = [parsedJSONData objectForKey:@"main"];
-
-    //---temperature in Kelvin---
-    NSString *temp = [main valueForKey:@"temp"];
-
-    //---convert temperature to Celcius---
-    float temperature = [temp floatValue] - 273;
-
-    //---get current time---
-    NSDate *date = [NSDate date];
-    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-    [formatter setDateFormat:@"HH:mm:ss"];
-
-    NSString *timeString = [formatter stringFromDate:date];
-
-    self.temperature = [NSString stringWithFormat:@"%.0f degrees Celsius, fetched at %@",temperature, timeString];
+    DigestViewController *digestViewController = [(id)self.window.rootViewController viewControllers][0];
+    [digestViewController fetchNewData:YES withCompletion:^(UIBackgroundFetchResult result) {
+        handler(result);
+    }];
 }
 
 - (void)application:(UIApplication *)application didReceiveLocalNotification:(UILocalNotification *)notification
 {
-    application.applicationIconBadgeNumber = 0;
-    NSLog(@"Local Notifc called");
+    DigestViewController *digestViewController = [(id)self.window.rootViewController viewControllers][0];
+    [self reloadFromCoreDataOrFetch:digestViewController];
+    [[UIApplication sharedApplication] setApplicationIconBadgeNumber:0];
+}
+
+
+-(void) application:(UIApplication *)application performFetchWithCompletionHandler: (void (^)(UIBackgroundFetchResult))completionHandler {
+    if (![[NSUserDefaults standardUserDefaults] boolForKey:@"BackgroundFetch"]) {
+        completionHandler(UIBackgroundFetchResultNoData);
+    }else{
+        DigestViewController *digestViewController = [(id)self.window.rootViewController viewControllers][0];
+        digestViewController.managedObjectContext = self.managedObjectContext;
+        [digestViewController fetchNewData:NO withCompletion:^(UIBackgroundFetchResult result) {
+            completionHandler(YES);
+        }];
+    }
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application {
@@ -145,13 +248,6 @@
 }
 
 - (void)applicationDidEnterBackground:(UIApplication *)application {
-//    UILocalNotification *notification = [[UILocalNotification alloc]init];
-//    notification.repeatInterval = NSCalendarUnitDay;
-//    [notification setAlertBody:@"Hello world"];
-//    [notification setFireDate:[NSDate dateWithTimeIntervalSinceNow:1]];
-//    [notification setTimeZone:[NSTimeZone  defaultTimeZone]];
-//    [application setScheduledLocalNotifications:[NSArray arrayWithObject:notification]];
-
     // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
     // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
 }
@@ -177,6 +273,7 @@
 @synthesize persistentStoreCoordinator = _persistentStoreCoordinator;
 
 - (NSURL *)applicationDocumentsDirectory {
+    NSLog(@"%@",[[[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory  inDomains:NSUserDomainMask] lastObject]);
     // The directory the application uses to store the Core Data store file. This code uses a directory named "com-greekconnect.RedditDigest" in the application's documents directory.
     return [[[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask] lastObject];
 }

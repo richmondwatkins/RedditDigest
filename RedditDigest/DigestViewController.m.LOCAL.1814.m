@@ -13,11 +13,36 @@
 @interface ViewController ()
 
 @end
-//
+
 @implementation ViewController
-///
+
 - (void)viewDidLoad {
     [super viewDidLoad];
+
+    [[RKClient sharedClient] signInWithUsername:@"hankthedog" password:@"Duncan12" completion:^(NSError *error) {
+
+
+    }];
+
+    //PFUser *currentUser = [PFUser currentUser];
+    BOOL currentUser = NO;
+    if (currentUser) {
+        //NSLog(@"The current user is: %@", currentUser.username);
+       // [self.tabBarController.tabBar setHidden:NO];
+        //[self getMyfollowersImages];
+    }
+    else {
+        UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+        UIViewController *welcomeViewController = [storyboard instantiateViewControllerWithIdentifier:@"WelcomeViewController"];
+
+        [self.parentViewController presentViewController:welcomeViewController animated:YES completion:nil];
+
+
+        //[self presentViewController:welcomeViewController animated:YES completion:nil];
+        //[self performSegueWithIdentifier:@"ShowLoginSegue" sender:self];
+    }
+
+    /*
     [[RKClient sharedClient] signInWithUsername:@"hankthedog" password:@"Duncan12" completion:^(NSError *error) {
         if (!error)
         {
@@ -29,7 +54,7 @@
                 RKSubreddit *subreddit = collection.firstObject;
 
                 [[RKClient sharedClient] linksInSubreddit:subreddit pagination:nil completion:^(NSArray *links, RKPagination *pagination, NSError *error) {
-                    NSLog(@"Links: %@", links);
+//                    NSLog(@"Links: %@", links);
                     [[RKClient sharedClient] upvote:links.firstObject completion:^(NSError *error) {
                         NSLog(@"Upvoted the link!");
                     }];
@@ -38,6 +63,7 @@
             }];
         }
     }];
+     */
 
 }
 
