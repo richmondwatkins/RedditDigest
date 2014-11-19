@@ -132,7 +132,6 @@
     }
 }
 
-
 -(void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations{
     if (self.didUpdateLocation == NO) {
         for(CLLocation *location in locations){
@@ -274,12 +273,15 @@
     UIView *downVoteView = [self viewWithImageName:@"down_arrow"];
     UIColor *downVoteColor = [UIColor colorWithRed:0.58 green:0.58 blue:1 alpha:1];
 
+    cell.upvoteView.backgroundColor = upVoteColor;
+    cell.downvoteView.backgroundColor = downVoteColor;
+
     [cell setSwipeGestureWithView:upVoteView color:upVoteColor mode:MCSwipeTableViewCellModeSwitch state:MCSwipeTableViewCellState1 completionBlock:^(MCSwipeTableViewCell *cell, MCSwipeTableViewCellState state, MCSwipeTableViewCellMode mode) {
-        NSLog(@"Did swipe \"Checkmark\" cell");
+//        NSLog(@"Did swipe \"Checkmark\" cell");
     }];
 
     [cell setSwipeGestureWithView:downVoteView color:downVoteColor mode:MCSwipeTableViewCellModeSwitch state:MCSwipeTableViewCellState3 completionBlock:^(MCSwipeTableViewCell *cell, MCSwipeTableViewCellState state, MCSwipeTableViewCellMode mode) {
-        NSLog(@"Did swipe \"Clock\" cell");
+//        NSLog(@"Did swipe \"Clock\" cell");
     }];
 
     if (self.isFromPastDigest) {
@@ -300,7 +302,9 @@
         }else{
             cell.thumbnailImage.image = [UIImage imageNamed:@"snoo_camera_placeholder"];
         }
-    }else{
+
+    } else {
+
         Post *post = self.digestPosts[indexPath.row];
 
         cell.titleLabel.text = post.title;
@@ -319,19 +323,23 @@
             cell.thumbnailImage.image = [UIImage imageNamed:@"snoo_camera_placeholder"];
         }
 
+
+            // Initialize vote status of cells
+
+            if ([post.upvoted boolValue] == YES) {
+                cell.upvoteView.hidden = NO;
+
+            }else{
+                cell.upvoteView.hidden = YES;
+
+            }
+            if ([post.downvoted boolValue] == YES) {
+                cell.downvoteView.hidden = NO;
+            } else {
+                cell.downvoteView.hidden = YES;
+            }
+
     }
-
-
-    //    if ([post.upvoted boolValue] == YES) {
-    //        //[cell.upVoteButton setBackgroundImage:[UIImage imageNamed:@"upvote_arrow_selected"] forState:UIControlStateNormal];
-    //    }else{
-    //        //[cell.upVoteButton setBackgroundImage:[UIImage imageNamed:@"up_arrow"] forState:UIControlStateNormal];
-    //    }
-    //    if ([post.downvoted boolValue] == YES) {
-    //        //[cell.downVoteButton setBackgroundImage:[UIImage imageNamed:@"downvote_arrow_selected"] forState:UIControlStateNormal];
-    //    }else{
-    //        //[cell.downVoteButton setBackgroundImage:[UIImage imageNamed:@"down_arrow"] forState:UIControlStateNormal];
-    //    }
 
     return cell;
 }
@@ -343,6 +351,7 @@
     imageView.contentMode = UIViewContentModeCenter;
     return imageView;
 }
+
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -639,21 +648,21 @@
 
 -(void)upVoteButtonPressed:(DigestCellWithImageTableViewCell*)cell{
 
-    NSString *path  = [[NSBundle mainBundle] pathForResource:@"UpVote" ofType:@"mp3"];
-    NSURL *pathURL = [NSURL fileURLWithPath : path];
-
-    SystemSoundID audioEffect;
-    AudioServicesCreateSystemSoundID((__bridge CFURLRef) pathURL, &audioEffect);
-    AudioServicesPlaySystemSound(audioEffect);
-
+//    NSString *path  = [[NSBundle mainBundle] pathForResource:@"UpVote" ofType:@"mp3"];
+//    NSURL *pathURL = [NSURL fileURLWithPath : path];
+//
+//    SystemSoundID audioEffect;
+//    AudioServicesCreateSystemSoundID((__bridge CFURLRef) pathURL, &audioEffect);
+//    AudioServicesPlaySystemSound(audioEffect);
+//
 
     if ([[NSUserDefaults standardUserDefaults] boolForKey:@"HasRedditAccount"]){
 
         NSIndexPath *indexPath = [self.digestTableView indexPathForCell:cell];
         Post *selectedPost = [self.digestPosts objectAtIndex:indexPath.row];
 
-        selectedPost.upvoted = [NSNumber numberWithBool:YES];
-        selectedPost.downvoted = [NSNumber numberWithBool:NO];
+//        selectedPost.upvoted = [NSNumber numberWithBool:YES];
+//        selectedPost.downvoted = [NSNumber numberWithBool:NO];
         [self.managedObjectContext save:nil];
 
         // TODO:
@@ -679,8 +688,8 @@
         NSIndexPath *indexPath = [self.digestTableView indexPathForCell:cell];
         Post *selectedPost = [self.digestPosts objectAtIndex:indexPath.row];
 
-        selectedPost.downvoted = [NSNumber numberWithBool:YES];
-        selectedPost.upvoted = [NSNumber numberWithBool:NO];
+//        selectedPost.downvoted = [NSNumber numberWithBool:YES];
+//        selectedPost.upvoted = [NSNumber numberWithBool:NO];
         [self.managedObjectContext save:nil];
 
         // TODO:
@@ -694,12 +703,43 @@
 
 - (IBAction)onRightSwipeGesture:(UISwipeGestureRecognizer *)rightSwipe
 {
+    NSLog(@"SWIPED RIGHT... let's see what happens");
 
     CGPoint location = [rightSwipe locationInView:self.digestTableView];
     NSIndexPath *swipedIndexPath = [self.digestTableView indexPathForRowAtPoint:location];
     DigestCellWithImageTableViewCell *swipedCell  = (DigestCellWithImageTableViewCell *)[self.digestTableView cellForRowAtIndexPath:swipedIndexPath];
     Post *post = [self.digestPosts objectAtIndex:swipedIndexPath.row];
-    post.upvoted = [NSNumber numberWithBool:YES];
+//    post.upvoted = [NSNumber numberWithBool:YES];
+
+    // if post cell is already upvoted, then unvote and hide indicator
+
+    NSLog(@"SWIPED RIGHT... and the Bool says %@", post.upvoted);
+
+
+    if ([post.upvoted boolValue])
+
+    {
+        swipedCell.upvoteView.hidden = YES;
+        swipedCell.downvoteView.hidden = YES;
+        post.upvoted = [NSNumber numberWithBool:NO];
+        post.downvoted = [NSNumber numberWithBool:NO];
+        NSLog(@"Hide the upvote indicator");
+
+        // remove vote & check property of cell isUpvoted/Downvoted
+        // really want to upvote
+
+        // if cell is not upvoted, then upVote and show indicator
+
+    } else {
+
+        swipedCell.upvoteView.hidden = NO;
+        swipedCell.downvoteView.hidden = YES;
+        post.upvoted = [NSNumber numberWithBool:YES];
+        post.downvoted = [NSNumber numberWithBool:NO];
+        NSLog(@"Show the upvote indicator");
+        // add upvote
+    }
+
 
 
     [self upVoteButtonPressed:swipedCell];
@@ -707,11 +747,44 @@
 
 - (IBAction)onLeftSwipeGesture:(UISwipeGestureRecognizer *)leftSwipe
 {
+    NSLog(@"SWIPED LEFT... let's see what happens");
+
+
     CGPoint location = [leftSwipe locationInView:self.digestTableView];
     NSIndexPath *swipedIndexPath = [self.digestTableView indexPathForRowAtPoint:location];
     DigestCellWithImageTableViewCell *swipedCell  = (DigestCellWithImageTableViewCell *)[self.digestTableView cellForRowAtIndexPath:swipedIndexPath];
     Post *post = [self.digestPosts objectAtIndex:swipedIndexPath.row];
-    post.downvoted = [NSNumber numberWithBool:YES];
+//    post.downvoted = [NSNumber numberWithBool:YES];
+
+
+    NSLog(@"SWIPED LEFT... and the Bool says %@", post.upvoted);
+
+
+    if ([post.downvoted boolValue])
+
+    {
+        swipedCell.upvoteView.hidden = YES;
+        swipedCell.downvoteView.hidden = YES;
+        post.upvoted = [NSNumber numberWithBool:NO];
+        post.downvoted = [NSNumber numberWithBool:NO];
+        NSLog(@"Hide the downvote indicator");
+
+        // remove vote & check property of cell isUpvoted/Downvoted
+        // really want to upvote
+
+        // if cell is not upvoted, then upVote and show indicator
+
+    } else {
+
+        swipedCell.upvoteView.hidden = YES;
+        swipedCell.downvoteView.hidden = NO;
+        post.upvoted = [NSNumber numberWithBool:NO];
+        post.downvoted = [NSNumber numberWithBool:YES];
+        NSLog(@"Show the downvote indicator");
+        // add upvote
+    }
+
+
 
     [self downVoteButtonPressed:swipedCell];
 }
