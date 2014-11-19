@@ -23,7 +23,6 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self retrievePastDigestFromCoreData];
-    self.imageCache = [[NSCache alloc] init];
 }
 
 
@@ -72,12 +71,10 @@
 }
 
 -(UIImage *)returnImageForCellFromData:(NSString *)filePath withSubredditNameForKey:(NSString *)subreddit andFilePathPrefix:(NSString *)prefix{
-    UIImage *image = [self.imageCache objectForKey:subreddit];
-    if (image == nil) {
-        NSData *imageData = [NSData dataWithContentsOfFile:[self documentsPathForFileName:filePath withPrefix:prefix]];
-        image = [UIImage imageWithData:imageData];
-        [self.imageCache setObject:image forKey:subreddit];
-    }
+
+    NSData *imageData = [NSData dataWithContentsOfFile:[self documentsPathForFileName:filePath withPrefix:prefix]];
+    UIImage *image = [UIImage imageWithData:imageData];
+
     return image;
 }
 
