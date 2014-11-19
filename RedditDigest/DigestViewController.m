@@ -350,17 +350,17 @@
         cell.separatorInset = UIEdgeInsetsZero;
     }
 
-    UIView *checkView = [self viewWithImageName:@"up_arrow"];
-    UIColor *greenColor = [UIColor colorWithRed:1 green:0.545 blue:0.376 alpha:1];
+    UIView *upvoteView = [self viewWithImageName:@"up_arrow"];
+    UIColor *upvoteColor = [UIColor colorWithRed:1 green:0.545 blue:0.376 alpha:1];
 
-    UIView *clockView = [self viewWithImageName:@"down_arrow"];
-    UIColor *yellowColor = [UIColor colorWithRed:0.58 green:0.58 blue:1 alpha:1];
+    UIView *downvoteView = [self viewWithImageName:@"down_arrow"];
+    UIColor *downvoteColor = [UIColor colorWithRed:0.58 green:0.58 blue:1 alpha:1];
 
-    [cell setSwipeGestureWithView:checkView color:greenColor mode:MCSwipeTableViewCellModeSwitch state:MCSwipeTableViewCellState1 completionBlock:^(MCSwipeTableViewCell *cell, MCSwipeTableViewCellState state, MCSwipeTableViewCellMode mode) {
+    [cell setSwipeGestureWithView:upvoteView color:upvoteColor mode:MCSwipeTableViewCellModeSwitch state:MCSwipeTableViewCellState1 completionBlock:^(MCSwipeTableViewCell *cell, MCSwipeTableViewCellState state, MCSwipeTableViewCellMode mode) {
         NSLog(@"Did swipe \"Checkmark\" cell");
     }];
 
-    [cell setSwipeGestureWithView:clockView color:yellowColor mode:MCSwipeTableViewCellModeSwitch state:MCSwipeTableViewCellState3 completionBlock:^(MCSwipeTableViewCell *cell, MCSwipeTableViewCellState state, MCSwipeTableViewCellMode mode) {
+    [cell setSwipeGestureWithView:downvoteView color:downvoteColor mode:MCSwipeTableViewCellModeSwitch state:MCSwipeTableViewCellState3 completionBlock:^(MCSwipeTableViewCell *cell, MCSwipeTableViewCellState state, MCSwipeTableViewCellMode mode) {
         NSLog(@"Did swipe \"Clock\" cell");
     }];
 
@@ -782,9 +782,12 @@
     DigestCellWithImageTableViewCell *swipedCell  = (DigestCellWithImageTableViewCell *)[self.digestTableView cellForRowAtIndexPath:swipedIndexPath];
     Post *post = [self.digestPosts objectAtIndex:swipedIndexPath.row];
     post.upvoted = [NSNumber numberWithBool:YES];
-    
 
     [self upVoteButtonPressed:swipedCell];
+
+    NSLog(@"Right Swiped and Upvoted");
+
+
 }
 
 - (IBAction)onLeftSwipeGesture:(UISwipeGestureRecognizer *)leftSwipe
@@ -796,6 +799,8 @@
     post.downvoted = [NSNumber numberWithBool:YES];
 
         [self downVoteButtonPressed:swipedCell];
+
+    NSLog(@"Left Swiped and Downvoted");
 }
 
 -(void)sendUpVoteToReddit:(NSString *)postID{

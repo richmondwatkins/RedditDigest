@@ -1,0 +1,1 @@
+PODS_REDDITDIGEST_POCKETAPI_OTHER_LDFLAGS = -framework "Foundation" -framework "Security"
