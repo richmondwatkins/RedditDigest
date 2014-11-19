@@ -16,7 +16,6 @@
 #import "RecommendedSubredditsViewController.h"
 #import "Digest.h"
 #import "PastDigestsViewController.h"
-#import "PocketAPI.h"
 #import "TSMessage.h"
 @interface SettingsViewController () <UITableViewDataSource, UITableViewDelegate, CLLocationManagerDelegate>
 
@@ -27,7 +26,6 @@
 @property CLLocationCoordinate2D userLocation;
 @property (strong, nonatomic) IBOutlet UISwitch *locationSwitcher;
 @property (strong, nonatomic) IBOutlet UISwitch *autoUpdatingSwitcher;
-@property (weak, nonatomic) IBOutlet UILabel *linkPocketLabel;
 
 @property (strong, nonatomic) IBOutlet UILabel *loginLogoutLabel;
 
@@ -44,7 +42,6 @@
     [self setupLoginCell];
     [self setupLocationCell];
     [self setupAutoUpdatingCell];
-    [self setupLinkPocketCell];
 
     [self retrievePastDigestFromCoreData];
 }
@@ -219,19 +216,6 @@
             }
         }
     }
-    // SHARING
-    else if ([indexPath section] == 3)
-    {
-        // LINK POCKET
-        if (indexPath.row == 0)
-        {
-            if ([[PocketAPI sharedAPI] isLoggedIn]) {
-                [self unlinkPocket];
-            } else {
-                [self linkPocket];
-            }
-        }
-    }
 }
 
 #pragma mark -  Segue
@@ -267,58 +251,6 @@
         }
     }
     return YES;
-}
-
-#pragma mark - Link With Pocket
-
-- (void)setupLinkPocketCell
-{
-    if ([[PocketAPI sharedAPI] isLoggedIn]) {
-        self.linkPocketLabel.text = @"Unlink Pocket";
-    }
-    else {
-        self.linkPocketLabel.text = @"Link Pocket";
-    }
-}
-
-- (void)linkPocket
-{
-    [[PocketAPI sharedAPI] loginWithHandler: ^(PocketAPI *API, NSError *error)
-    {
-        if (error)
-        {
-            NSLog(@"Error authorizing Pocket %@", error.localizedDescription);
-            [TSMessage showNotificationInViewController:self
-                                                  title:@"Error Authorizing Pocket!"
-                                               subtitle:error.localizedDescription
-                                                   type:TSMessageNotificationTypeError
-                                               duration:2.5];
-            self.linkPocketLabel.text = @"Link Pocket";
-        }
-        else
-        {
-            [TSMessage showNotificationInViewController:self
-                                                  title:@"Authorized Pocket!"
-                                               subtitle:nil
-                                                   type:TSMessageNotificationTypeSuccess
-                                               duration:1.5];
-            self.linkPocketLabel.text = @"Unlink Pocket";
-            //[[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"HasAuthorizedPocket"];
-        }
-
-    }];
-}
-
-- (void)unlinkPocket
-{
-    [[PocketAPI sharedAPI] logout];
-    //[[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"HasAuthorizedPocket"];
-    self.linkPocketLabel.text = @"Link Pocket";
-    [TSMessage showNotificationInViewController:self
-                                          title:@"Unauthorized Pocket!"
-                                       subtitle:nil
-                                           type:TSMessageNotificationTypeError
-                                       duration:1.5];
 }
 
 

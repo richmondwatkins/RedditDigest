@@ -10,11 +10,9 @@
 #import "CommentTableViewCell.h"
 #import "Post.h"
 #import "TextViewWebViewController.h"
-#import "PocketAPI.h"
 #import "TSMessage.h"
-#import <SafariServices/SafariServices.h>
 
-@interface CommentViewController () <UITableViewDelegate, UITableViewDataSource, UITextViewDelegate, UITabBarControllerDelegate, UITextViewDelegate, UIActionSheetDelegate>
+@interface CommentViewController () <UITableViewDelegate, UITableViewDataSource, UITextViewDelegate, UITabBarControllerDelegate, UITextViewDelegate>
 
 @property Comment *selectedComment;
 @property CGFloat cellHeight;

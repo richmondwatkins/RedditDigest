@@ -12,7 +12,6 @@
 #import <SSKeychain/SSKeychain.h>
 #import <RedditKit/RedditKit.h>
 #import "UserRequests.h"
-#import "PocketAPI.h"
 #import "Digest.h"
 
 @interface AppDelegate ()
@@ -37,9 +36,6 @@
         [self reloadFromCoreDataOrFetch:digestController];
     }
 
-    // Regester PocketAPI
-    [[PocketAPI sharedAPI] setConsumerKey:@"34696-ed6afb7268cf07819ef8f0b9"];
-
     [self setUpUI];
 
     [self showWelcomeViewOrDigestView];
@@ -47,17 +43,6 @@
     [[UIApplication sharedApplication] setApplicationIconBadgeNumber:0];
 
     return YES;
-}
-
--(BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url
-{
-    if ([[PocketAPI sharedAPI] handleOpenURL:url]) {
-        return YES;
-    }
-    else
-    {
-        return NO;
-    }
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application
