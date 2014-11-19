@@ -120,6 +120,9 @@
         [self loadCommentsFromSelectedPost:index];
     }
     [self showCounterLabelAtIndex:index];
+    // Set title of nav bar on change to new post 
+    Post *currentPost = [self.allPosts objectAtIndex:index];
+    self.navigationItem.title = currentPost.title;
 
     if (index <= 0 || (index == NSNotFound)) {
         index = self.allPosts.count;
