@@ -40,6 +40,7 @@
 @property CLLocation *userLocation;
 @property BOOL didUpdateLocation;
 @property NSCache *imageCache;
+@property (strong, nonatomic) IBOutlet UIBarButtonItem *todayBarButton;
 @end
 
 @implementation DigestViewController
@@ -80,6 +81,8 @@
         [self.refreshControl addTarget:self action:@selector(requestNewLinksFromRefresh) forControlEvents:UIControlEventValueChanged];
         [self.digestTableView addSubview:self.refreshControl];
     }else{
+        self.todayBarButton.title = @"Today";
+        [self.refreshControl endRefreshing];
         [self.refreshControl removeFromSuperview];
         self.refreshControl = nil;
     }
@@ -167,6 +170,12 @@
     }];
 }
 
+- (IBAction)onTodayButtonTouched:(id)sender {
+    self.isFromPastDigest = NO;
+    [self retrievePostsFromCoreData:YES withCompletion:^(BOOL completed) {
+        self.todayBarButton.title = @"";
+    }];
+}
 
 #pragma mark - Animation
 

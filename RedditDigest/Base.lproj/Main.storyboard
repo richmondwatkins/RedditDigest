@@ -1164,6 +1164,11 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Thursday September 12th" id="Qty-cj-ePJ">
+                        <barButtonItem key="leftBarButtonItem" id="LJU-Zy-HPd" userLabel="Today Bar Button Item">
+                            <connections>
+                                <action selector="onTodayButtonTouched:" destination="vXZ-lx-hvc" id="zXd-eN-0ZM"/>
+                            </connections>
+                        </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" image="settings_icon" id="MS0-GG-KNW">
                             <connections>
                                 <segue destination="TR2-7E-2C6" kind="show" identifier="SettingsSegue" id="Ycp-Jl-p5z"/>
@@ -1172,6 +1177,7 @@
                     </navigationItem>
                     <connections>
                         <outlet property="digestTableView" destination="Ud7-YU-1kZ" id="BgF-ER-13U"/>
+                        <outlet property="todayBarButton" destination="LJU-Zy-HPd" id="0Pf-fQ-rJT"/>
                         <segue destination="xQ7-9y-dXT" kind="show" identifier="ShowLoginSegue" id="3oS-Bl-KOE"/>
                     </connections>
                 </viewController>
