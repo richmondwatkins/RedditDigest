@@ -52,10 +52,7 @@
     SystemSoundID audioEffect;
     AudioServicesCreateSystemSoundID((__bridge CFURLRef) pathURL, &audioEffect);
     AudioServicesPlaySystemSound(audioEffect);
-    self.refreshControl = [[UIRefreshControl alloc] init];
 
-    [self.refreshControl addTarget:self action:@selector(requestNewLinksFromRefresh) forControlEvents:UIControlEventValueChanged];
-    [self.digestTableView addSubview:self.refreshControl];
     [self getDateString];
     self.navigationItem.title = self.dateToday;
     self.imageCache = [[NSCache alloc] init];
@@ -77,6 +74,16 @@
 
 - (void)viewWillAppear:(BOOL)animated
 {
+    if (self.isFromPastDigest != YES) {
+        self.refreshControl = [[UIRefreshControl alloc] init];
+
+        [self.refreshControl addTarget:self action:@selector(requestNewLinksFromRefresh) forControlEvents:UIControlEventValueChanged];
+        [self.digestTableView addSubview:self.refreshControl];
+    }else{
+        [self.refreshControl removeFromSuperview];
+        self.refreshControl = nil;
+    }
+
     [self.imageCache removeAllObjects];
     [super viewWillAppear:animated];
     self.didUpdateLocation = NO;
