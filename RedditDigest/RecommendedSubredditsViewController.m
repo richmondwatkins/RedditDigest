@@ -24,6 +24,7 @@
 @property (strong, nonatomic) IBOutlet UICollectionView *subredditCollectionView;
 @property (strong, nonatomic) IBOutlet UIButton *doneSelectingSubredditsButton;
 @property SubredditListCollectionViewCell *sizingCell;
+@property (strong, nonatomic) IBOutlet UILabel *recHeader;
 
 @end
 
