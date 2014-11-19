@@ -667,8 +667,8 @@
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="SKK-HQ-clL" id="KEj-pZ-XVS">
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Recent Digests" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hug-ij-5Nc">
-                                                    <rect key="frame" x="21" y="6" width="116" height="31"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Archived Digests" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hug-ij-5Nc">
+                                                    <rect key="frame" x="21" y="6" width="132" height="31"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="31" id="Ylb-qJ-Aec"/>
                                                     </constraints>
@@ -863,6 +863,10 @@
                                     <size key="footerReferenceSize" width="50" height="50"/>
                                     <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 </collectionViewFlowLayout>
+                                <activityIndicatorView key="backgroundView" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" style="gray" id="yTK-Ra-4Xi">
+                                    <rect key="frame" x="0.0" y="-275" width="600" height="600"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                </activityIndicatorView>
                                 <cells/>
                                 <collectionReusableView key="sectionHeaderView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="HeaderView" id="NHz-rG-d7i" customClass="RecHeaderCollectionReusableView">
                                     <rect key="frame" x="0.0" y="64" width="600" height="50"/>
@@ -927,6 +931,7 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="activityIndicator" destination="yTK-Ra-4Xi" id="x6r-XL-h8L"/>
                         <outlet property="doneSelectingSubredditsButton" destination="J8O-Nf-ZfV" id="pYp-cG-Bc1"/>
                         <outlet property="subredditCollectionView" destination="rNG-7N-iyS" id="rq0-sM-Rvh"/>
                     </connections>
@@ -1043,7 +1048,7 @@
                                                     <rect key="frame" x="8" y="203" width="584" height="20"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="subreddit" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="u9V-3r-XgS">
-                                                            <rect key="frame" x="0.0" y="-2" width="57.5" height="25"/>
+                                                            <rect key="frame" x="0.0" y="-2" width="58" height="25"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="width" relation="lessThanOrEqual" constant="200" id="8U5-cO-zVT"/>
                                                                 <constraint firstAttribute="width" constant="63" id="bhi-ow-Kow"/>

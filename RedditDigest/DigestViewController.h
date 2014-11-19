@@ -16,6 +16,7 @@
 @property (strong, nonatomic) IBOutlet UITableView *digestTableView;
 @property NSArray *oldDigest;
 @property BOOL isFromPastDigest;
+@property NSString *oldDigestDate;
 -(void)fetchNewData:(BOOL)isDigest withCompletion:(void (^)(UIBackgroundFetchResult))completionHandler;
 -(void)requestNewLinks:(BOOL)isDigest;
 -(void)performNewFetchedDataActions:(BOOL)isDigest;
