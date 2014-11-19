@@ -8,14 +8,15 @@
 
 #import <UIKit/UIKit.h>
 #import "Post.h"
-@protocol DigestCellDelegate <NSObject>
+#import "MCSwipeTableViewCell.h"
+//@protocol DigestCellDelegate <NSObject>
+//
+//-(void)upVoteButtonPressed:(id)cell;
+//-(void)downVoteButtonPressed:(id)cell;
+//
+//@end
 
--(void)upVoteButtonPressed:(id)cell;
--(void)downVoteButtonPressed:(id)cell;
-
-@end
-
-@interface DigestCellWithImageTableViewCell : UITableViewCell
+@interface DigestCellWithImageTableViewCell : MCSwipeTableViewCell
 
 @property (weak, nonatomic) IBOutlet UIImageView *thumbnailImage;
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
@@ -26,6 +27,6 @@
 @property (strong, nonatomic) IBOutlet UIButton *upVoteButton;
 @property (strong, nonatomic) IBOutlet UIButton *downVoteButton;
 
-@property id <DigestCellDelegate> delegate;
+//@property id <DigestCellDelegate> delegate;
 
 @end

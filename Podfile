@@ -10,6 +10,7 @@ pod 'SSKeychain'
 pod 'FLAnimatedImage', '~> 1.0'
 pod 'PocketAPI'
 pod 'TSMessages'
+pod 'MCSwipeTableViewCell', '~> 2.1'
 end
 
 target 'RedditDigestTests' do

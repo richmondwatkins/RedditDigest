@@ -12,12 +12,12 @@
 
 
 - (IBAction)upVoteButtonPressed:(UIButton *)sender {
-    [self.delegate upVoteButtonPressed:self];
+    //[self.delegate upVoteButtonPressed:self];
 }
 
 
 - (IBAction)downVoteButtonPressed:(UIButton *)sender {
-    [self.delegate downVoteButtonPressed:self];
+    //[self.delegate downVoteButtonPressed:self];
 }
 
 
