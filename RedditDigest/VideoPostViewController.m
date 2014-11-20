@@ -9,7 +9,7 @@
 //#define REDDIT_DARK_BLUE [UIColor colorWithRed:0.2 green:0.4 blue:0.6 alpha:1];
 
 #import "VideoPostViewController.h"
-
+#import "InternetConnectionTest.h"
 @interface VideoPostViewController () <UIWebViewDelegate>  //<UIGestureRecognizerDelegate, UIScrollViewDelegate>
 
 @property (weak, nonatomic) IBOutlet UIView *statusBarBackground;
@@ -27,24 +27,28 @@
 {
     [super viewWillAppear:animated];
 
-    CGRect screenRect =[[UIScreen mainScreen] bounds];
-    CGFloat screenWidth = screenRect.size.width;
-    CGFloat screenHeight = screenRect.size.height;
-    NSString* embedHTML = [NSString stringWithFormat:@"\
-                           <html>\
-                           <body style='margin:0px;padding:0px;'>\
-                           <script type='text/javascript' src='http://www.youtube.com/iframe_api'></script>\
-                           <iframe id='playerId' type='text/html' width='%f' height='%f' src='http://%@?enablejsapi=1&rel=0&playsinline=1&autoplay=1' frameborder='0'>\
-                           </body>\
-                           </html>", screenWidth, screenHeight/2, self.url];
-    [self.videoView loadHTMLString:embedHTML baseURL:[[NSBundle mainBundle] resourceURL]];
+    [InternetConnectionTest testInternetConnectionWithViewController:self andCompletion:^(BOOL internet) {
+        if (internet == YES) {
+            CGRect screenRect =[[UIScreen mainScreen] bounds];
+            CGFloat screenWidth = screenRect.size.width;
+            CGFloat screenHeight = screenRect.size.height;
+            NSString* embedHTML = [NSString stringWithFormat:@"\
+                                   <html>\
+                                   <body style='margin:0px;padding:0px;'>\
+                                   <script type='text/javascript' src='http://www.youtube.com/iframe_api'></script>\
+                                   <iframe id='playerId' type='text/html' width='%f' height='%f' src='http://%@?enablejsapi=1&rel=0&playsinline=1&autoplay=1' frameborder='0'>\
+                                   </body>\
+                                   </html>", screenWidth, screenHeight/2, self.url];
+            [self.videoView loadHTMLString:embedHTML baseURL:[[NSBundle mainBundle] resourceURL]];
 
-    if (!self.navController.navigationBarHidden) {
-        self.statusBarBackground.alpha = 0.0;
-    }
-    else {
-        self.statusBarBackground.alpha = 1.0;
-    }
+            if (!self.navController.navigationBarHidden) {
+                self.statusBarBackground.alpha = 0.0;
+            }
+            else {
+                self.statusBarBackground.alpha = 1.0;
+            }
+        }
+    }];
 }
 
 - (void)webViewDidStartLoad:(UIWebView *)webView

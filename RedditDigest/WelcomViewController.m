@@ -10,10 +10,12 @@
 #import "SubredditSelectionViewController.h"
 #import "CustomButton.h"
 #import "LoginViewController.h"
+#import "InternetConnectionTest.h"
 @interface WelcomViewController ()
 
 @property (weak, nonatomic) IBOutlet CustomButton *signInWithRedditAccountButton;
 @property (weak, nonatomic) IBOutlet CustomButton *signInWithoutRedditAccountButton;
+
 
 @end
 
@@ -29,6 +31,13 @@
     self.signInWithRedditAccountButton.layer.borderWidth = 0.5;
     self.signInWithRedditAccountButton.layer.cornerRadius = 5.0;
     self.signInWithRedditAccountButton.layer.borderColor = [UIColor colorWithRed:0.2 green:0.4 blue:0.6 alpha:1].CGColor;
+
+    [InternetConnectionTest testInternetConnectionWithViewController:self andCompletion:^(BOOL internet) {
+        if (internet == NO) {
+            self.signInWithoutRedditAccountButton.enabled = NO;
+            self.signInWithRedditAccountButton.enabled = NO;
+        }
+    }];
 }
 
 

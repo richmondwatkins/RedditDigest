@@ -594,7 +594,7 @@
     [self.refreshControl removeFromSuperview];
     self.refreshControl = nil;
     //needs two for some reason
-    
+
     [self.imageCache removeAllObjects];
     [self.refreshControl endRefreshing];
     [self.refreshControl removeFromSuperview];

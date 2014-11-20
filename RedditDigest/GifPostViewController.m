@@ -10,7 +10,7 @@
 
 #import "GifPostViewController.h"
 #import "FLAnimatedImage.h"
-
+#import "InternetConnectionTest.h"
 @interface GifPostViewController ()<UIGestureRecognizerDelegate, UIScrollViewDelegate>
 
 @property (weak, nonatomic) IBOutlet UIView *statusBarBackground;
@@ -34,31 +34,35 @@
 {
     [super viewWillAppear:animated];
 
-    self.activityIndicator.hidden = NO;
-    [self.activityIndicator startAnimating];
+    [InternetConnectionTest testInternetConnectionWithViewController:self andCompletion:^(BOOL internet) {
+        if (internet == YES) {
+            self.activityIndicator.hidden = NO;
+            [self.activityIndicator startAnimating];
 
-    dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(void){
-        FLAnimatedImage *image = [FLAnimatedImage animatedImageWithGIFData:[NSData dataWithContentsOfURL:[NSURL URLWithString:self.url]]];
-        dispatch_async(dispatch_get_main_queue(), ^(void){
-            FLAnimatedImageView *imageView = [[FLAnimatedImageView alloc] init];
-            imageView.animatedImage = image;
-            CGRect screenRect =[[UIScreen mainScreen] bounds];
-            CGFloat screenWidth = screenRect.size.width;
-            CGFloat screenHeight = screenRect.size.height;
-            imageView.frame = CGRectMake(0.0, self.view.center.y/2, screenWidth, screenHeight/2);
-            [self.view addSubview:imageView];
+            dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(void){
+                FLAnimatedImage *image = [FLAnimatedImage animatedImageWithGIFData:[NSData dataWithContentsOfURL:[NSURL URLWithString:self.url]]];
+                dispatch_async(dispatch_get_main_queue(), ^(void){
+                    FLAnimatedImageView *imageView = [[FLAnimatedImageView alloc] init];
+                    imageView.animatedImage = image;
+                    CGRect screenRect =[[UIScreen mainScreen] bounds];
+                    CGFloat screenWidth = screenRect.size.width;
+                    CGFloat screenHeight = screenRect.size.height;
+                    imageView.frame = CGRectMake(0.0, self.view.center.y/2, screenWidth, screenHeight/2);
+                    [self.view addSubview:imageView];
 
-            [self.activityIndicator stopAnimating];
-            self.activityIndicator.hidden = YES;
-        });
-    });
+                    [self.activityIndicator stopAnimating];
+                    self.activityIndicator.hidden = YES;
+                });
+            });
 
-    if (!self.navController.navigationBarHidden) {
-        self.statusBarBackground.alpha = 0.0;
-    }
-    else {
-        self.statusBarBackground.alpha = 1.0;
-    }
+            if (!self.navController.navigationBarHidden) {
+                self.statusBarBackground.alpha = 0.0;
+            }
+            else {
+                self.statusBarBackground.alpha = 1.0;
+            }
+        }
+    }];
 }
 
 - (IBAction)onPan:(UIPanGestureRecognizer *)panGesture
