@@ -2,8 +2,8 @@
 //  IndividualPostViewController.h
 //  RedditDigest
 //
-//  Created by Richmond on 11/7/14.
-//  Copyright (c) 2014 Richmond. All rights reserved.
+//  Created by Richmond, Taylor & Chris on 11/7/14.
+//  Copyright (c) 2014 Richmond, Taylor & Chris. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>
@@ -11,6 +11,6 @@
 
 @interface ImagePostViewController : PageWrapperViewController
 
-@property (strong, nonatomic) IBOutlet UIImageView *imageView;
+@property (nonatomic, strong) UIImageView *imageView;
 
 @end
