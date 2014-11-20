@@ -277,11 +277,9 @@
     cell.downvoteView.backgroundColor = downVoteColor;
 
     [cell setSwipeGestureWithView:upVoteView color:upVoteColor mode:MCSwipeTableViewCellModeSwitch state:MCSwipeTableViewCellState1 completionBlock:^(MCSwipeTableViewCell *cell, MCSwipeTableViewCellState state, MCSwipeTableViewCellMode mode) {
-//        NSLog(@"Did swipe \"Checkmark\" cell");
     }];
 
     [cell setSwipeGestureWithView:downVoteView color:downVoteColor mode:MCSwipeTableViewCellModeSwitch state:MCSwipeTableViewCellState3 completionBlock:^(MCSwipeTableViewCell *cell, MCSwipeTableViewCellState state, MCSwipeTableViewCellMode mode) {
-//        NSLog(@"Did swipe \"Clock\" cell");
     }];
 
     if (self.isFromPastDigest) {
