@@ -72,10 +72,10 @@
 
     [[RKClient sharedClient] linksInSubreddit:subreddit pagination:nil completion:^(NSArray *collection, RKPagination *pagination, NSError *error) {
         RKLink *topPost = collection.firstObject;
-        topPost.isLocalPost = YES;
         if (topPost.stickied) {
             topPost = collection[1];
         }
+        topPost.isLocalPost = YES;
 
         if (![RedditRequests existsInCoreData:topPost.fullName withManagedObject:managedObject]) {
             [[RKClient sharedClient] commentsForLink:topPost completion:^(NSArray *collection, RKPagination *pagination, NSError *error) {
