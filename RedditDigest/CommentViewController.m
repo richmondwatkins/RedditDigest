@@ -218,7 +218,7 @@
 
 - (IBAction)onUpVoteButtonPressed:(UIButton *)upVoteButton
 {
-    if (self.post.upvoted) {
+    if ([self.post.upvoted boolValue]) {
         // Remove upvote
         [upVoteButton setImage:[UIImage imageNamed:@"up_arrow"] forState:UIControlStateNormal];
         [self.downVoteButton setImage:[UIImage imageNamed:@"down_arrow"] forState:UIControlStateNormal];
