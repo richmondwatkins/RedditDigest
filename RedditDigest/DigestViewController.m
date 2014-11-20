@@ -279,13 +279,13 @@
     UIView *downVoteView = [self viewWithImageName:@"down_arrow"];
     UIColor *downVoteColor = [UIColor colorWithRed:0.58 green:0.58 blue:1 alpha:1];
 
-    [cell setSwipeGestureWithView:upVoteView color:upVoteColor mode:MCSwipeTableViewCellModeSwitch state:MCSwipeTableViewCellState1 completionBlock:^(MCSwipeTableViewCell *cell, MCSwipeTableViewCellState state, MCSwipeTableViewCellMode mode) {
-        NSLog(@"Did swipe \"Checkmark\" cell");
-    }];
-
-    [cell setSwipeGestureWithView:downVoteView color:downVoteColor mode:MCSwipeTableViewCellModeSwitch state:MCSwipeTableViewCellState3 completionBlock:^(MCSwipeTableViewCell *cell, MCSwipeTableViewCellState state, MCSwipeTableViewCellMode mode) {
-        NSLog(@"Did swipe \"Clock\" cell");
-    }];
+//    [cell setSwipeGestureWithView:upVoteView color:upVoteColor mode:MCSwipeTableViewCellModeSwitch state:MCSwipeTableViewCellState1 completionBlock:^(MCSwipeTableViewCell *cell, MCSwipeTableViewCellState state, MCSwipeTableViewCellMode mode) {
+//        NSLog(@"Did swipe \"Checkmark\" cell");
+//    }];
+//
+//    [cell setSwipeGestureWithView:downVoteView color:downVoteColor mode:MCSwipeTableViewCellModeSwitch state:MCSwipeTableViewCellState3 completionBlock:^(MCSwipeTableViewCell *cell, MCSwipeTableViewCellState state, MCSwipeTableViewCellMode mode) {
+//        NSLog(@"Did swipe \"Clock\" cell");
+//    }];
 
     if (self.isFromPastDigest) {
         DigestPost *post = self.digestPosts[indexPath.row];
@@ -543,7 +543,6 @@
 
 -(void)requestNewLinks:(BOOL)isDigest
 {
-//    [Post removeAllPostsFromCoreData:self.managedObjectContext];
 
     NSFetchRequest * fetch = [[NSFetchRequest alloc] init];
     [fetch setEntity:[NSEntityDescription entityForName:@"Subreddit" inManagedObjectContext:self.managedObjectContext]];
@@ -591,6 +590,12 @@
     [self.refreshControl endRefreshing];
     [self.refreshControl removeFromSuperview];
     self.refreshControl = nil;
+
+    [self.imageCache removeAllObjects];
+
+    [self.refreshControl endRefreshing];
+    [self.refreshControl removeFromSuperview];
+    self.refreshControl = nil;
     //    self.isFromPastDigest = NO;
 }
 
@@ -608,6 +613,7 @@
     if (self.isComingFromSubredditSelectionView) {
 //        [Post removeAllPostsFromCoreData:self.managedObjectContext];
         [self.digestPosts removeAllObjects];
+        [self requestNewLinks:YES];
 
         if(![[NSUserDefaults standardUserDefaults] boolForKey:@"HasSubscriptions"]){
             UIApplication *application = [UIApplication sharedApplication];
@@ -623,8 +629,6 @@
 
         [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"HasSubscriptions"];
         [[NSUserDefaults standardUserDefaults] synchronize];
-
-        [self requestNewLinks:YES];
     }
 }
 
