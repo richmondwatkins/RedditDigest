@@ -13,6 +13,7 @@
 @property (weak, nonatomic) IBOutlet UIView *statusBarBackground;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *verticalSpaceConstraint;
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *activityIndicator;
+@property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
 
 @end
 
@@ -43,6 +44,11 @@
     else {
         self.statusBarBackground.alpha = 1.0;
     }
+
+    self.scrollView.minimumZoomScale = 0.5;
+    self.scrollView.maximumZoomScale = 6.0;
+    self.scrollView.contentSize = CGSizeMake(1280, 960);
+    self.scrollView.delegate = self;
 }
 
 - (void)viewDidLoad
@@ -65,6 +71,14 @@
     NSLog(@"FILE PATH %@",filePath);
     return [NSData dataWithContentsOfFile:filePath];
 }
+
+#pragma mark - Scroll View Delegate 
+
+- (UIView *)viewForZoomingInScrollView:(UIScrollView *)scrollView
+{
+    return self.imageView;
+}
+
 
 #pragma mark - Pan
 - (IBAction)onPan:(UIPanGestureRecognizer *)panGesture
