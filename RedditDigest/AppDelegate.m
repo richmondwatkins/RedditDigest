@@ -216,15 +216,12 @@
 
 
 -(void) application:(UIApplication *)application performFetchWithCompletionHandler: (void (^)(UIBackgroundFetchResult))completionHandler {
-    if (![[NSUserDefaults standardUserDefaults] boolForKey:@"BackgroundFetch"]) {
-        completionHandler(UIBackgroundFetchResultNoData);
-    }else{
-        DigestViewController *digestViewController = [(id)self.window.rootViewController viewControllers][0];
-        digestViewController.managedObjectContext = self.managedObjectContext;
-        [digestViewController fetchNewData:NO withCompletion:^(UIBackgroundFetchResult result) {
-            completionHandler(YES);
-        }];
-    }
+
+    DigestViewController *digestViewController = [(id)self.window.rootViewController viewControllers][0];
+    digestViewController.managedObjectContext = self.managedObjectContext;
+    [digestViewController fetchNewData:NO withCompletion:^(UIBackgroundFetchResult result) {
+        completionHandler(YES);
+    }];
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application {

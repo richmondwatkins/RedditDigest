@@ -27,17 +27,6 @@
     [super viewDidLoad];
     [self retrievePastDigestFromCoreData];
 
-    UIApplication *application = [UIApplication sharedApplication];
-
-    if ([application respondsToSelector:@selector(isRegisteredForRemoteNotifications)])
-    {
-        self.notificationsOn = [application isRegisteredForRemoteNotifications];
-    }
-    else
-    {
-        UIRemoteNotificationType types = [application enabledRemoteNotificationTypes];
-        self.notificationsOn = types & UIRemoteNotificationTypeAlert;
-    }
 }
 
 
@@ -56,19 +45,13 @@
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
 
-    if (self.notificationsOn) {
-        return self.digests.count;
-    }else{
-        return 1;
-    }
+    return self.digests.count;
 }
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
 
     ArchivedDigestTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"DigestCell"];
 
-    if (self.notificationsOn)
-    {
         Digest *digest = [self.digests objectAtIndex:indexPath.row];
 
         NSArray *posts = [digest.digestPost allObjects];
@@ -91,12 +74,7 @@
         [dateFormat setDateFormat:@"MMMM dd, yyyy - h:mm"];
         NSString *dateText = [dateFormat stringFromDate:date];
         cell.archiveTitleLabel.text = dateText;
-    }
-    else {
-        [cell setUserInteractionEnabled:NO];
-        cell.archiveTitleLabel.text = @"Push notifications must be enabled to recieve archived digests";
-    }
-    cell.archiveTitleLabel.lineBreakMode = NSLineBreakByWordWrapping;
+        cell.archiveTitleLabel.lineBreakMode = NSLineBreakByWordWrapping;
 
     return cell;
 }

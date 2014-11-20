@@ -119,7 +119,7 @@
         [self initializeRefreshControl];
 
     }else if([[NSUserDefaults standardUserDefaults] boolForKey:@"HasSubscriptions"] && self.isFromPastDigest == YES){
-        self.todayBarButton.title = @"Today";
+        self.todayBarButton.title = @"Recent";
         [self.refreshControl endRefreshing];
         [self.refreshControl removeFromSuperview];
         self.refreshControl = nil;
