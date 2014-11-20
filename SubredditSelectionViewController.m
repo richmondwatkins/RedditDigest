@@ -103,7 +103,7 @@
 
 -(void)setUpView{
     self.subredditCollectionView.contentOffset = CGPointMake(0, 44);
-    self.navigationItem.title = @"Choose Your Subreddits";
+    self.navigationItem.title = @"Choose Your subreddits";
     //for resizing template
     UINib *cellNib = [UINib nibWithNibName:@"SubredditSelectionCell" bundle:nil];
     [self.subredditCollectionView registerNib:cellNib forCellWithReuseIdentifier:@"Cell"];
