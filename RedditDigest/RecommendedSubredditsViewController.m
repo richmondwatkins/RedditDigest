@@ -231,7 +231,7 @@
 
 -(void)setUpView{
     self.subredditCollectionView.contentOffset = CGPointMake(0, 44);
-    self.navigationItem.title = @"Recommended Subreddits";
+    self.navigationItem.title = @"Recommended subreddits";
     //for resizing template
     UINib *cellNib = [UINib nibWithNibName:@"SubredditSelectionCell" bundle:nil];
     [self.subredditCollectionView registerNib:cellNib forCellWithReuseIdentifier:@"Cell"];
@@ -256,13 +256,13 @@
     cell.subredditTitleLabel.text = subreddit.name;
 
     // SubredditTitleLabel font and color
-    cell.subredditTitleLabel.font = [UIFont fontWithName:@"Helvetica" size:16.0];
+    cell.subredditTitleLabel.font = [UIFont fontWithName:@"AvenirNext-Medium" size:16.0];
     cell.subredditTitleLabel.textColor = REDDIT_DARK_BLUE;
 }
 
 - (UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout insetForSectionAtIndex:(NSInteger)section
 {
-    return UIEdgeInsetsMake(20, 15, 10, 15);
+    return UIEdgeInsetsMake(0, 15, 10, 15);
 }
 
 - (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout minimumInteritemSpacingForSectionAtIndex:(NSInteger)section
