@@ -344,20 +344,7 @@
 }
 
 #pragma mark - Backend
-/*
-    .         .
-    |         |
-    j    :    l
-   /           \
-  /             \
- Y       .       Y
- |       |       |
- l "----~Y~----" !
-  \      |      /
-   Y     |     Y
-   |     I     |
- ***************************************
- */
+
 - (IBAction)finishSelectingSubreddits:(id)sender
 {
     NSString *path  = [[NSBundle mainBundle] pathForResource:@"LoadDigest" ofType:@"mp3"];
