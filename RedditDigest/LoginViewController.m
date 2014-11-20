@@ -97,6 +97,11 @@
             [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"UserIsLoggedIn"];
             [[NSUserDefaults standardUserDefaults] synchronize];
             // Store credentials in Keychain
+            NSArray *array = [SSKeychain accountsForService:@"friendsOfSnoo"];
+            NSDictionary *accountInfoDictionary = array.firstObject;
+            NSString *username = accountInfoDictionary[@"acct"];
+            [SSKeychain deletePasswordForService:@"friendsOfSnoo" account:username];
+
             BOOL result = [SSKeychain setPassword:self.passwordTextField.text forService:@"friendsOfSnoo" account:self.usernameTextField.text];
 
             if (result) {

@@ -305,10 +305,13 @@ NSInteger const MAX_SELECTABLE_SUBREDDITS_FOR_DIGEST = 20;
 
     [[RKClient sharedClient] subredditWithName:subredditName completion:^(RKSubreddit *subreddit, NSError *error) {
         if (subreddit != NULL) {
-            [self.subreddits insertObject:subreddit atIndex:0];
-            NSIndexPath *firstIndex = [NSIndexPath indexPathForRow:0 inSection:0];
-            [self.subredditCollectionView insertItemsAtIndexPaths:@[firstIndex]];
-
+            if (![self.subreddits containsObject:subreddit]) {
+                [self.subreddits insertObject:subreddit atIndex:0];
+                NSIndexPath *firstIndex = [NSIndexPath indexPathForRow:0 inSection:0];
+                [self.subredditCollectionView insertItemsAtIndexPaths:@[firstIndex]];
+            }else{
+                textField.placeholder = @"Subreddit already in list";
+            }
         }
         else
         {
