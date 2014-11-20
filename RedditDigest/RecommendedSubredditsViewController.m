@@ -96,7 +96,6 @@
 
 
 -(void)retrieveSubredditInfoFromReddit:(NSMutableArray *)recommendedSubNames{
-    NSLog(@"SUB SUB SUB SUB SqwfqwefUB %@",recommendedSubNames);
 
     NSArray *flattenedSubNames = [recommendedSubNames valueForKeyPath: @"@unionOfArrays.self"];
     __block int i = 0;
@@ -110,7 +109,7 @@
                 }
             }
 
-            if (i == flattenedSubNames.count) {
+            if (i >= flattenedSubNames.count) {
                 [self checkForExistingSubscription:self.recommendedFromSubscriptions];
                 [self.recomendations addObject:self.recommendedFromSubscriptions];
 //                [self.subredditCollectionView reloadData];
