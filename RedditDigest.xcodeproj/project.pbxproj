@@ -20,7 +20,6 @@
 		34D1B9371A081B4D00C0C15F /* WelcomViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 34D1B9361A081B4D00C0C15F /* WelcomViewController.m */; };
 		34D1B93A1A081D0C00C0C15F /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 34D1B9391A081D0C00C0C15F /* LoginViewController.m */; };
 		34D1B93C1A08463500C0C15F /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 34D1B93B1A08463500C0C15F /* Security.framework */; };
-		5D09FB981A1DA523002845F1 /* NoInternetAlertControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D09FB971A1DA523002845F1 /* NoInternetAlertControl.m */; };
 		5D311EDE1A10A359002AFC3C /* CommentTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D311EDD1A10A359002AFC3C /* CommentTableViewCell.m */; };
 		5D366B891A194991006B0684 /* DigestTitleLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D366B881A194991006B0684 /* DigestTitleLabel.m */; };
 		5D366B8C1A194F7E006B0684 /* TextViewWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D366B8B1A194F7E006B0684 /* TextViewWebViewController.m */; };
@@ -104,8 +103,6 @@
 		34D1B9381A081D0C00C0C15F /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
 		34D1B9391A081D0C00C0C15F /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
 		34D1B93B1A08463500C0C15F /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
-		5D09FB961A1DA523002845F1 /* NoInternetAlertControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NoInternetAlertControl.h; sourceTree = "<group>"; };
-		5D09FB971A1DA523002845F1 /* NoInternetAlertControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NoInternetAlertControl.m; sourceTree = "<group>"; };
 		5D311EDD1A10A359002AFC3C /* CommentTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CommentTableViewCell.m; sourceTree = "<group>"; };
 		5D311EDF1A10A49D002AFC3C /* CommentTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CommentTableViewCell.h; sourceTree = "<group>"; };
 		5D366B871A194991006B0684 /* DigestTitleLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DigestTitleLabel.h; sourceTree = "<group>"; };
@@ -265,8 +262,6 @@
 		34C2BD611A1DB0E000D2E245 /* Archive Digest */ = {
 			isa = PBXGroup;
 			children = (
-				5D09FB961A1DA523002845F1 /* NoInternetAlertControl.h */,
-				5D09FB971A1DA523002845F1 /* NoInternetAlertControl.m */,
 				5D7DDE3A1A1B03AE0000C6C3 /* PastDigestsViewController.h */,
 				5D7DDE3B1A1B03AE0000C6C3 /* PastDigestsViewController.m */,
 				34C2BD5E1A1DAF6100D2E245 /* ArchivedDigestTableViewCell.h */,
@@ -632,7 +627,6 @@
 				5DE75CAC1A0DC9C30031F0F7 /* PageWrapperViewController.m in Sources */,
 				340531ED1A1312AE000CF33C /* CommentViewController.m in Sources */,
 				5D311EDE1A10A359002AFC3C /* CommentTableViewCell.m in Sources */,
-				5D09FB981A1DA523002845F1 /* NoInternetAlertControl.m in Sources */,
 				5DB5B8491A083DF0007DC036 /* SubredditSelectionViewController.m in Sources */,
 				3417AC131A0945B40026961C /* KTCenterFlowLayout.m in Sources */,
 				3413FC361A1117490018A172 /* LoadingViewController.m in Sources */,
