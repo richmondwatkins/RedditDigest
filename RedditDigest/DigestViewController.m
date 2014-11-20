@@ -601,14 +601,17 @@
 {
     if (self.isFromPastDigest) {
         [self.imageCache removeAllObjects];
-        self.digestPosts = [NSMutableArray arrayWithArray:self.oldDigest];
+//        self.digestPosts = [NSMutableArray arrayWithArray:self.oldDigest];
+        NSSortDescriptor *voteSort = [NSSortDescriptor sortDescriptorWithKey:@"voteRatio" ascending:NO];
+        self.digestPosts = [NSMutableArray arrayWithArray:[self.oldDigest sortedArrayUsingDescriptors:[NSArray arrayWithObject:voteSort]]];
+
         [self.digestTableView reloadData];
     }
 
     if (self.isComingFromSubredditSelectionView) {
 //        [Post removeAllPostsFromCoreData:self.managedObjectContext];
         [self.digestPosts removeAllObjects];
-        [self requestNewLinks:YES];
+        [self requestNewLinks:NO];
 
         if(![[NSUserDefaults standardUserDefaults] boolForKey:@"HasSubscriptions"]){
             UIApplication *application = [UIApplication sharedApplication];

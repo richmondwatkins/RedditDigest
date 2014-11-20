@@ -130,7 +130,7 @@
         if (currentTime - 3600000 > lastDigest.time.doubleValue) {
             [digestController requestNewLinks:NO];
         }else{
-            [digestController performNewFetchedDataActions:NO];
+            [digestController performNewFetchedDataActions:NO]; //fetches from core data
         }
     }
 }
