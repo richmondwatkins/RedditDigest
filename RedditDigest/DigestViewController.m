@@ -146,13 +146,13 @@
 -(void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations{
     if (self.didUpdateLocation == NO) {
         for(CLLocation *location in locations){
-            if (location.verticalAccuracy < 1000 && location.horizontalAccuracy < 1000) {
+//            if (location.verticalAccuracy < 100 && location.horizontalAccuracy < 100) {
                 self.userLocation = location;
                 [self findUsersLocationByCityName];
                 [self.locationManger stopUpdatingLocation];
                 self.didUpdateLocation = YES;
                 break;
-            }
+//            }
         }
     }
 }
@@ -525,8 +525,9 @@
     NSFetchRequest * fetch = [[NSFetchRequest alloc] init];
     [fetch setEntity:[NSEntityDescription entityForName:@"Post" inManagedObjectContext:self.managedObjectContext]];
     NSSortDescriptor *sorter = [[NSSortDescriptor alloc] initWithKey:@"voteRatio" ascending:NO];
+    NSSortDescriptor *sorterTwo = [[NSSortDescriptor alloc] initWithKey:@"isLocalPost" ascending:NO];
 
-    [fetch setSortDescriptors:@[sorter]];
+    [fetch setSortDescriptors:@[sorterTwo, sorter]];
 
     NSArray * posts = [self.managedObjectContext executeFetchRequest:fetch error:nil];
 
