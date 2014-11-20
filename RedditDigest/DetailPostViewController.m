@@ -148,6 +148,7 @@
         Post *post = self.allPosts[index];
         [self.commentsViewController reloadTableWithCommentsFromCurrentPost:post];
         self.commentsViewController.post = post;
+        [self.commentsViewController setupVoteButtons];
     }else{
         self.commentsViewController.isFromPastDigest = YES;
     }

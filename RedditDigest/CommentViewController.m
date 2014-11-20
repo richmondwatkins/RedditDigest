@@ -36,7 +36,6 @@
         self.downVoteButton.hidden = NO;
         // Size of constraint set in storyboard
         self.leadingConstraintForCommentsButton.constant = 134.0;
-        [self setupVoteButtons];
     }
     else {
         self.upVoteButton.hidden = YES;
@@ -64,6 +63,7 @@
 
     self.tableView.estimatedRowHeight = 45.0;
     self.tableView.rowHeight = UITableViewAutomaticDimension;
+    [self setupVoteButtons];
 }
 
 #pragma mark - Table View Delegate Methods
@@ -190,7 +190,7 @@
     else {
         [self.upVoteButton setImage:[UIImage imageNamed:@"up_arrow"] forState:UIControlStateNormal];
     }
-    if ([self.post.downvoted isEqual:[NSNumber numberWithInt:1]]) {
+    if ([self.post.downvoted boolValue]) {
         [self.downVoteButton setImage:[UIImage imageNamed:@"down_arrow_selected"] forState:UIControlStateNormal];
     }
     else {

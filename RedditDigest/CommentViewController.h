@@ -23,4 +23,6 @@
 @property BOOL isFromPastDigest;
 @property (strong, nonatomic) NSManagedObjectContext *managedObjectContext;
 
+- (void)setupVoteButtons;
+
 @end
