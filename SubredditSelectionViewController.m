@@ -218,7 +218,9 @@ NSInteger const MAX_SELECTABLE_SUBREDDITS_FOR_DIGEST = 20;
 - (void)collectionView:(UICollectionView *)collectionView didDeselectItemAtIndexPath:(NSIndexPath *)indexPath
 {
     RKSubreddit *subreddit = self.subreddits[indexPath.row];
+    NSLog(@"DESELECTED SUB %@",subreddit);
     if ([self.selectedSubreddits containsObject:subreddit]) {
+        NSLog(@"REMOVE SUB %@",subreddit);
         [self.selectedSubreddits removeObject:subreddit];
         if (subreddit.isCurrentlySubscribed) {
             [Subreddit removeFromCoreData:subreddit.name withManagedObject:self.managedObject];

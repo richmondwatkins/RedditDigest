@@ -48,7 +48,6 @@
 -(void)setUpPageViewController
 {
     self.postPageController = [[UIPageViewController alloc] initWithTransitionStyle:UIPageViewControllerTransitionStyleScroll navigationOrientation:UIPageViewControllerNavigationOrientationHorizontal options:nil];
-
     self.postPageController.dataSource = self;
     self.postPageController.view.frame = self.view.bounds;
     self.postPageController.delegate = self;
@@ -101,30 +100,10 @@
     return [self viewControllerAtIndex:(pageWrapperViewController.index + 1)];
 }
 
-- (void)pageViewController:(UIPageViewController *)pageViewController willTransitionToViewControllers:(NSArray *)pendingViewControllers
-{
-    NSUInteger index;
+-(void)pageViewController:(UIPageViewController *)pageViewController didFinishAnimating:(BOOL)finished previousViewControllers:(NSArray *)previousViewControllers transitionCompleted:(BOOL)completed{
 
-    if([pendingViewControllers count] > 0)
-    {
-        index =[(PageWrapperViewController*)[pendingViewControllers objectAtIndex:0] index];
-
-        if ((index <= 0) || (index == NSNotFound)) {
-            index = self.allPosts.count;
-        }
-
-        if (index >= self.allPosts.count) {
-            index = 0;
-        }
-
-        [self loadCommentsFromSelectedPost:index];
-    }
-    [self showCounterLabelAtIndex:index];
-    // Set title of nav bar on change to new post 
-    Post *currentPost = [self.allPosts objectAtIndex:index];
-    self.navigationItem.title = currentPost.title;
-
-    if (index <= 0 || (index == NSNotFound)) {
+    NSUInteger index = [[pageViewController.viewControllers lastObject] index];
+    if ((index <= 0) || (index == NSNotFound)) {
         index = self.allPosts.count;
     }
 
@@ -132,7 +111,48 @@
         index = 0;
     }
 
+    [self loadCommentsFromSelectedPost:index];
+//    [self showCounterLabelAtIndex:index];
+    // Set title of nav bar on change to new post
+    Post *currentPost = [self.allPosts objectAtIndex:index];
+    self.navigationItem.title = currentPost.title;
+
+
     [self showCounterLabelAtIndex:index];
+}
+
+- (void)pageViewController:(UIPageViewController *)pageViewController willTransitionToViewControllers:(NSArray *)pendingViewControllers
+{
+//    NSUInteger index;
+//
+//    if([pendingViewControllers count] > 0)
+//    {
+//        index =[(PageWrapperViewController*)[pendingViewControllers objectAtIndex:0] index];
+//
+//        if ((index <= 0) || (index == NSNotFound)) {
+//            index = self.allPosts.count;
+//        }
+//
+//        if (index >= self.allPosts.count) {
+//            index = 0;
+//        }
+//
+//        [self loadCommentsFromSelectedPost:index];
+//    }
+//    [self showCounterLabelAtIndex:index];
+//    // Set title of nav bar on change to new post 
+//    Post *currentPost = [self.allPosts objectAtIndex:index];
+//    self.navigationItem.title = currentPost.title;
+//
+//    if (index <= 0 || (index == NSNotFound)) {
+//        index = self.allPosts.count;
+//    }
+//
+//    if (index >= self.allPosts.count) {
+//        index = 0;
+//    }
+//
+//    [self showCounterLabelAtIndex:index];
 }
 
 - (void)loadCommentsFromSelectedPost:(NSUInteger)index
