@@ -104,8 +104,8 @@
 		5D311EDF1A10A49D002AFC3C /* CommentTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CommentTableViewCell.h; sourceTree = "<group>"; };
 		5D366B871A194991006B0684 /* DigestTitleLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DigestTitleLabel.h; sourceTree = "<group>"; };
 		5D366B881A194991006B0684 /* DigestTitleLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DigestTitleLabel.m; sourceTree = "<group>"; };
-		5D366B8A1A194F7E006B0684 /* TextViewWebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TextViewWebViewController.h; sourceTree = "<group>"; };
-		5D366B8B1A194F7E006B0684 /* TextViewWebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TextViewWebViewController.m; sourceTree = "<group>"; };
+		5D366B8A1A194F7E006B0684 /* TextViewWebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TextViewWebViewController.h; path = ../TextViewWebViewController.h; sourceTree = "<group>"; };
+		5D366B8B1A194F7E006B0684 /* TextViewWebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TextViewWebViewController.m; path = ../TextViewWebViewController.m; sourceTree = "<group>"; };
 		5D366B931A19B873006B0684 /* RecHeaderCollectionReusableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RecHeaderCollectionReusableView.h; sourceTree = "<group>"; };
 		5D366B941A19B873006B0684 /* RecHeaderCollectionReusableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RecHeaderCollectionReusableView.m; sourceTree = "<group>"; };
 		5D3AC6311A12BCCC0093E79E /* DigestCategory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DigestCategory.h; sourceTree = "<group>"; };
@@ -264,8 +264,6 @@
 				81D291231A19903D002B2708 /* Sounds */,
 				5D366B871A194991006B0684 /* DigestTitleLabel.h */,
 				5D366B881A194991006B0684 /* DigestTitleLabel.m */,
-				5D366B8A1A194F7E006B0684 /* TextViewWebViewController.h */,
-				5D366B8B1A194F7E006B0684 /* TextViewWebViewController.m */,
 				5D614E501A16F73500A199A2 /* HTMLParser */,
 				5D5C12BF1A05716E002902A8 /* RedditDigest */,
 				5D5C12DC1A05716E002902A8 /* RedditDigestTests */,
@@ -305,6 +303,8 @@
 				340531EC1A1312AE000CF33C /* CommentViewController.m */,
 				5D311EDF1A10A49D002AFC3C /* CommentTableViewCell.h */,
 				5D311EDD1A10A359002AFC3C /* CommentTableViewCell.m */,
+				5D366B8A1A194F7E006B0684 /* TextViewWebViewController.h */,
+				5D366B8B1A194F7E006B0684 /* TextViewWebViewController.m */,
 				3417AC0B1A092D970026961C /* SettingsViewController.h */,
 				3417AC0C1A092D970026961C /* SettingsViewController.m */,
 				81D5237F1A0C0E710059C9B3 /* SettingsAboutRedditViewController.h */,

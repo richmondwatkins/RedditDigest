@@ -123,7 +123,8 @@
 
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
     if ([segue.identifier isEqualToString:@"TextViewWebSegue"]) {
-        TextViewWebViewController *commentWebCtrl = segue.destinationViewController;
+        UINavigationController *navigationController = segue.destinationViewController;
+        TextViewWebViewController *commentWebCtrl = navigationController.viewControllers.firstObject;
         commentWebCtrl.urlToLoad = self.urlToSend;
     }
 }
