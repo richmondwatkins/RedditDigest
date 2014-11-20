@@ -147,6 +147,7 @@
         }
         Post *post = self.allPosts[index];
         [self.commentsViewController reloadTableWithCommentsFromCurrentPost:post];
+        self.commentsViewController.post = post;
     }else{
         self.commentsViewController.isFromPastDigest = YES;
     }

@@ -38,7 +38,7 @@
         if (internet == YES) {
             self.activityIndicator.hidden = NO;
             [self.activityIndicator startAnimating];
-            NSLog(@"GIF URLLLLL %@",self.url);
+
             dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(void){
                 FLAnimatedImage *image = [FLAnimatedImage animatedImageWithGIFData:[NSData dataWithContentsOfURL:[NSURL URLWithString:self.url]]];
                 dispatch_async(dispatch_get_main_queue(), ^(void){

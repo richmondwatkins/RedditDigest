@@ -31,6 +31,7 @@
 -(void)webViewDidFinishLoad:(UIWebView *)webView{
     [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
     [self.activityIndicator stopAnimating];
+    self.activityIndicator.hidden = YES;
 }
 
 @end

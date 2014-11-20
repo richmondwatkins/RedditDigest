@@ -276,6 +276,7 @@
 #pragma mark - Share
 - (IBAction)onShareButtonPressed:(id)sender
 {
+    NSLog(@"SELECTED POST %@",self.self.post.url);
     UIActivityViewController *activityViewController = [[UIActivityViewController alloc] initWithActivityItems:@[self.post.title, self.post.url]
                                       applicationActivities:nil];
             [self.navigationController presentViewController:activityViewController
