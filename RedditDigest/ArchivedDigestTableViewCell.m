@@ -6,9 +6,9 @@
 //  Copyright (c) 2014 Richmond. All rights reserved.
 //
 
-#import "RecommendedSubredditsTableViewCell.h"
+#import "ArchivedDigestTableViewCell.h"
 
-@implementation RecommendedSubredditsTableViewCell
+@implementation ArchivedDigestTableViewCell
 
 - (void)awakeFromNib {
     // Initialization code

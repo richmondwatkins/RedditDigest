@@ -8,6 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
-@interface RecommendedSubredditsTableViewCell : UITableViewCell
+@interface ArchivedDigestTableViewCell : UITableViewCell
+@property (weak, nonatomic) IBOutlet UILabel *archiveTitleLabel;
+@property (weak, nonatomic) IBOutlet UIImageView *archiveImageView;
 
 @end
