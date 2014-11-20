@@ -75,9 +75,9 @@
 
 - (void)viewWillAppear:(BOOL)animated
 {
+    [super viewWillAppear:animated];
 
     [self.imageCache removeAllObjects];
-    [super viewWillAppear:animated];
     self.didUpdateLocation = NO;
 
     if (![[NSUserDefaults standardUserDefaults] boolForKey:@"HasSubscriptions"])
@@ -88,6 +88,11 @@
         [self.parentViewController presentViewController:welcomeViewController animated:YES completion:nil];
     }
     [self checkForLocationServices];
+
+    NSIndexPath *selectedRowIndexPath = [self.digestTableView indexPathForSelectedRow];
+    if (selectedRowIndexPath) {
+        [self.digestTableView reloadRowsAtIndexPaths:@[selectedRowIndexPath] withRowAnimation:UITableViewRowAnimationNone];
+    }
 
     //    [self performNewFetchedDataActions];
 }
@@ -259,7 +264,6 @@
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-
     DigestCellWithImageTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"DigestCell"];
 
     cell.delegate = self;
@@ -284,42 +288,41 @@
     cell.upvoteView.backgroundColor = upVoteColor;
     cell.downvoteView.backgroundColor = downVoteColor;
 
-    [cell setSwipeGestureWithView:upVoteView color:upVoteColor mode:MCSwipeTableViewCellModeSwitch state:MCSwipeTableViewCellState1 completionBlock:^(MCSwipeTableViewCell *cell, MCSwipeTableViewCellState state, MCSwipeTableViewCellMode mode) {
+    // Functionality for right swipe, upvote
+    [cell setSwipeGestureWithView:upVoteView color:upVoteColor mode:MCSwipeTableViewCellModeSwitch state:MCSwipeTableViewCellState1 completionBlock:^(MCSwipeTableViewCell *cell, MCSwipeTableViewCellState state, MCSwipeTableViewCellMode mode)
+     {
+         DigestCellWithImageTableViewCell *swipedCell  = (DigestCellWithImageTableViewCell *)cell;
+         NSIndexPath *swipedIndexPath = [self.digestTableView indexPathForCell:swipedCell];
 
-        //CGPoint location = [rightSwipe locationInView:self.digestTableView];
-        //NSIndexPath *swipedIndexPath = [self.digestTableView indexPathForRowAtPoint:location];
+         Post *post = [self.digestPosts objectAtIndex:swipedIndexPath.row];
+
+         if ([post.upvoted boolValue]) {
+             // Remove upvote
+             swipedCell.upvoteView.hidden = YES;
+             swipedCell.downvoteView.hidden = YES;
+             post.upvoted = [NSNumber numberWithBool:NO];
+             post.downvoted = [NSNumber numberWithBool:NO];
+             // Remove from reddit
+             [self removeVoteFromReddit:post.postID];
+         }
+         else {
+             // Upvote
+             swipedCell.upvoteView.hidden = NO;
+             swipedCell.downvoteView.hidden = YES;
+             post.upvoted = [NSNumber numberWithBool:YES];
+             post.downvoted = [NSNumber numberWithBool:NO];
+             // Send upvote to reddit
+             [self sendUpVoteToReddit:post.postID];
+         }
+         [self.managedObjectContext save:nil];
+     }];
+
+    // Functionality for left swipe, downvote
+    [cell setSwipeGestureWithView:downVoteView color:downVoteColor mode:MCSwipeTableViewCellModeSwitch state:MCSwipeTableViewCellState3 completionBlock:^(MCSwipeTableViewCell *cell, MCSwipeTableViewCellState state, MCSwipeTableViewCellMode mode)
+    {
         DigestCellWithImageTableViewCell *swipedCell  = (DigestCellWithImageTableViewCell *)cell;
         NSIndexPath *swipedIndexPath = [self.digestTableView indexPathForCell:swipedCell];
 
-        Post *post = [self.digestPosts objectAtIndex:swipedIndexPath.row];
-
-        if ([post.upvoted boolValue]) {
-            // Remove upvote
-            swipedCell.upvoteView.hidden = YES;
-            swipedCell.downvoteView.hidden = YES;
-            post.upvoted = [NSNumber numberWithBool:NO];
-            post.downvoted = [NSNumber numberWithBool:NO];
-            // Remove from reddit
-            [self removeVoteFromReddit:post.postID];
-        }
-        else {
-            // Upvote
-            swipedCell.upvoteView.hidden = NO;
-            swipedCell.downvoteView.hidden = YES;
-            post.upvoted = [NSNumber numberWithBool:YES];
-            post.downvoted = [NSNumber numberWithBool:NO];
-            // Send upvote to reddit
-            [self sendUpVoteToReddit:post.postID];
-        }
-        [self.managedObjectContext save:nil];
-    }];
-
-    [cell setSwipeGestureWithView:downVoteView color:downVoteColor mode:MCSwipeTableViewCellModeSwitch state:MCSwipeTableViewCellState3 completionBlock:^(MCSwipeTableViewCell *cell, MCSwipeTableViewCellState state, MCSwipeTableViewCellMode mode) {
-        DigestCellWithImageTableViewCell *swipedCell  = (DigestCellWithImageTableViewCell *)cell;
-        NSIndexPath *swipedIndexPath = [self.digestTableView indexPathForCell:swipedCell];
-        //CGPoint location = [leftSwipe locationInView:self.digestTableView];
-        //NSIndexPath *swipedIndexPath = [self.digestTableView indexPathForRowAtPoint:location];
-        //DigestCellWithImageTableViewCell *swipedCell = (DigestCellWithImageTableViewCell *)[self.digestTableView cellForRowAtIndexPath:swipedIndexPath];
         Post *post = [self.digestPosts objectAtIndex:swipedIndexPath.row];
 
         if ([post.downvoted boolValue]) {
@@ -339,7 +342,6 @@
             [self sendDownVoteToReddit:post.postID];
         }
         [self.managedObjectContext save:nil];
-        
     }];
 
     if (self.isFromPastDigest) {
@@ -405,11 +407,6 @@
     UIImageView *imageView = [[UIImageView alloc] initWithImage:image];
     imageView.contentMode = UIViewContentModeCenter;
     return imageView;
-}
-
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 
 -(UIImage *)returnImageForCellFromData:(NSString *)filePath withSubredditNameForKey:(NSString *)subreddit andFilePathPrefix:(NSString *)prefix{
@@ -657,117 +654,7 @@
     [self.digestTableView reloadData];
 }
 
-#pragma mark - Buttons & Gestures
-
-//-(void)upVoteButtonPressed:(DigestCellWithImageTableViewCell*)cell{
-//
-////    NSString *path  = [[NSBundle mainBundle] pathForResource:@"UpVote" ofType:@"mp3"];
-////    NSURL *pathURL = [NSURL fileURLWithPath : path];
-////
-////    SystemSoundID audioEffect;
-////    AudioServicesCreateSystemSoundID((__bridge CFURLRef) pathURL, &audioEffect);
-////    AudioServicesPlaySystemSound(audioEffect);
-////
-//
-//    if ([[NSUserDefaults standardUserDefaults] boolForKey:@"HasRedditAccount"]){
-//
-//        NSIndexPath *indexPath = [self.digestTableView indexPathForCell:cell];
-//        Post *selectedPost = [self.digestPosts objectAtIndex:indexPath.row];
-//
-////        selectedPost.upvoted = [NSNumber numberWithBool:YES];
-////        selectedPost.downvoted = [NSNumber numberWithBool:NO];
-//        [self.managedObjectContext save:nil];
-//
-//        [self sendUpVoteToReddit:selectedPost.postID];
-//    }
-//}
-
-//-(void)downVoteButtonPressed:(DigestCellWithImageTableViewCell *)cell
-//{
-//    /*
-//    NSString *path  = [[NSBundle mainBundle] pathForResource:@"DownVoteTest" ofType:@"mp3"];
-//    NSURL *pathURL = [NSURL fileURLWithPath : path];
-//
-//    SystemSoundID audioEffect;
-//    AudioServicesCreateSystemSoundID((__bridge CFURLRef) pathURL, &audioEffect);
-//    AudioServicesPlaySystemSound(audioEffect);
-//     */
-//
-//    if ([[NSUserDefaults standardUserDefaults] boolForKey:@"HasRedditAccount"]){
-//
-//        NSIndexPath *indexPath = [self.digestTableView indexPathForCell:cell];
-//        Post *selectedPost = [self.digestPosts objectAtIndex:indexPath.row];
-//
-////        selectedPost.downvoted = [NSNumber numberWithBool:YES];
-////        selectedPost.upvoted = [NSNumber numberWithBool:NO];
-//
-//        // TODO:
-//        // Show upvote indicator in cell
-//        //[cell.downVoteButton setBackgroundImage:[UIImage imageNamed:@"downvote_arrow_selected"] forState:UIControlStateNormal];
-//        //[cell.upVoteButton setBackgroundImage:[UIImage imageNamed:@"upvote_arrow"] forState:UIControlStateNormal];
-//
-//        [self sendDownVoteToReddit:selectedPost.postID];
-//    }
-//}
-
-- (void)swipeTableViewCellDidEndSwiping:(MCSwipeTableViewCell *)cell
-{
-    NSLog(@"End");
-}
-
-- (IBAction)onRightSwipeGesture:(UISwipeGestureRecognizer *)rightSwipe
-{
-//    CGPoint location = [rightSwipe locationInView:self.digestTableView];
-//    NSIndexPath *swipedIndexPath = [self.digestTableView indexPathForRowAtPoint:location];
-//    DigestCellWithImageTableViewCell *swipedCell  = (DigestCellWithImageTableViewCell *)[self.digestTableView cellForRowAtIndexPath:swipedIndexPath];
-//    Post *post = [self.digestPosts objectAtIndex:swipedIndexPath.row];
-//
-//    if ([post.upvoted boolValue]) {
-//        // Remove upvote
-//        swipedCell.upvoteView.hidden = YES;
-//        swipedCell.downvoteView.hidden = YES;
-//        post.upvoted = [NSNumber numberWithBool:NO];
-//        post.downvoted = [NSNumber numberWithBool:NO];
-//        // Remove from reddit
-//        [self removeVoteFromReddit:post.postID];
-//    }
-//    else {
-//        // Upvote
-//        swipedCell.upvoteView.hidden = NO;
-//        swipedCell.downvoteView.hidden = YES;
-//        post.upvoted = [NSNumber numberWithBool:YES];
-//        post.downvoted = [NSNumber numberWithBool:NO];
-//        // Send upvote to reddit
-//        [self sendUpVoteToReddit:post.postID];
-//    }
-//    [self.managedObjectContext save:nil];
-}
-
-- (IBAction)onLeftSwipeGesture:(UISwipeGestureRecognizer *)leftSwipe
-{
-//    CGPoint location = [leftSwipe locationInView:self.digestTableView];
-//    NSIndexPath *swipedIndexPath = [self.digestTableView indexPathForRowAtPoint:location];
-//    DigestCellWithImageTableViewCell *swipedCell = (DigestCellWithImageTableViewCell *)[self.digestTableView cellForRowAtIndexPath:swipedIndexPath];
-//    Post *post = [self.digestPosts objectAtIndex:swipedIndexPath.row];
-//
-//    if ([post.downvoted boolValue]) {
-//        swipedCell.upvoteView.hidden = YES;
-//        swipedCell.downvoteView.hidden = YES;
-//        post.upvoted = [NSNumber numberWithBool:NO];
-//        post.downvoted = [NSNumber numberWithBool:NO];
-//        // Remove from reddit
-//        [self removeVoteFromReddit:post.postID];
-//    }
-//    else {
-//        swipedCell.upvoteView.hidden = YES;
-//        swipedCell.downvoteView.hidden = NO;
-//        post.upvoted = [NSNumber numberWithBool:NO];
-//        post.downvoted = [NSNumber numberWithBool:YES];
-//        // Send downvote to reddit
-//        [self sendDownVoteToReddit:post.postID];
-//    }
-//    [self.managedObjectContext save:nil];
-}
+#pragma mark - Upvote & Downvote
 
 -(void)sendUpVoteToReddit:(NSString *)postID{
     [[RKClient sharedClient] linkWithFullName:postID completion:^(id object, NSError *error) {
