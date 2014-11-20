@@ -16,7 +16,9 @@
 #import "SubredditListCollectionViewCell.h"
 #import "DigestViewController.h"
 #import "RecHeaderCollectionReusableView.h"
+
 @interface RecommendedSubredditsViewController () <UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout>
+
 @property NSMutableArray *recommendedFromSubscriptions;
 @property NSMutableArray *recommendedFromUsers;
 @property NSMutableArray *selectedSubreddits;
@@ -256,13 +258,13 @@
     cell.subredditTitleLabel.text = subreddit.name;
 
     // SubredditTitleLabel font and color
-    cell.subredditTitleLabel.font = [UIFont fontWithName:@"AvenirNext-Medium" size:16.0];
+    cell.subredditTitleLabel.font = [UIFont fontWithName:@"AvenirNext" size:16.0];
     cell.subredditTitleLabel.textColor = REDDIT_DARK_BLUE;
 }
 
 - (UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout insetForSectionAtIndex:(NSInteger)section
 {
-    return UIEdgeInsetsMake(0, 15, 10, 15);
+    return UIEdgeInsetsMake(0, 15, 0, 15);
 }
 
 - (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout minimumInteritemSpacingForSectionAtIndex:(NSInteger)section
@@ -305,6 +307,13 @@
     return reusableview;
 }
 
+#pragma mark - Subreddit Label Counter 
 
+- (void)updateSelectedSubredditCounter
+{
+    // Set number of subredds select and number left to select
+    NSString *selectedSubredditsCount = [NSString stringWithFormat:@"%lu/%zd", (unsigned long)self.selectedSubreddits.count, MAX_SELECTABLE_SUBREDDITS_FOR_DIGEST];
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:selectedSubredditsCount style:UIBarButtonItemStylePlain target:nil action:nil];
+}
 
 @end
