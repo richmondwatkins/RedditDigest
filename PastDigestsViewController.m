@@ -93,6 +93,7 @@
         cell.archiveTitleLabel.text = dateText;
     }
     else {
+        [cell setUserInteractionEnabled:NO];
         cell.archiveTitleLabel.text = @"Push notifications must be enabled to recieve archived digests";
     }
     cell.archiveTitleLabel.lineBreakMode = NSLineBreakByWordWrapping;
