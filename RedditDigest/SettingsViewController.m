@@ -191,7 +191,7 @@
         [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"BackgroundFetch"];
         [TSMessage showNotificationInViewController:self
                                               title:@"Turned on Autoupdating!"
-                                           subtitle:@"Now, the more often you use Reddit Digest you're content will be up to date"
+                                           subtitle:@"Now, the more often you use Reddit Digest the more your content will be up to date"
                                                type:TSMessageNotificationTypeSuccess
                                            duration:TSMessageNotificationDurationAutomatic];
     } else {

@@ -170,6 +170,7 @@
 
 +(NSArray *)retrieveAllSubreddits:(NSManagedObjectContext *)managedObject{
     NSFetchRequest *subredditFetch = [[NSFetchRequest alloc] initWithEntityName:@"Subreddit"];
+    subredditFetch.predicate = [NSPredicate predicateWithFormat:@"isLocalSubreddit = nil"];
     NSArray *results = [managedObject executeFetchRequest:subredditFetch error:nil];
 
     if (results) {

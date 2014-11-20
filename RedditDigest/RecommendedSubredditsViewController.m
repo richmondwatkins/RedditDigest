@@ -61,6 +61,7 @@
     NSMutableArray *usersSubreddits = [NSMutableArray arrayWithArray:[Subreddit retrieveAllSubreddits:self.managedObject]];
     [self lookUpRelatedSubreddit:usersSubreddits];
 
+
     self.totalSubreddits = usersSubreddits.count;
 
     // Tell the user that they have the max subreddits selected and have to remove some in edit digest
