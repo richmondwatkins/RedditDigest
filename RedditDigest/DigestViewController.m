@@ -495,7 +495,7 @@
 
 -(void)fetchNewData:(BOOL)isDigest withCompletion:(void (^)(UIBackgroundFetchResult))completionHandler
 {
-    [Post removeAllPostsFromCoreData:self.managedObjectContext];
+//    [Post removeAllPostsFromCoreData:self.managedObjectContext];
     [self.digestPosts removeAllObjects];
     NSArray *subreddits = [Subreddit retrieveAllSubreddits:self.managedObjectContext];
     [RedditRequests retrieveLatestPostFromArray:subreddits withManagedObject:self.managedObjectContext  withCompletion:^(BOOL completed) {
@@ -539,7 +539,7 @@
 
 -(void)requestNewLinks:(BOOL)isDigest
 {
-    [Post removeAllPostsFromCoreData:self.managedObjectContext];
+//    [Post removeAllPostsFromCoreData:self.managedObjectContext];
 
     NSFetchRequest * fetch = [[NSFetchRequest alloc] init];
     [fetch setEntity:[NSEntityDescription entityForName:@"Subreddit" inManagedObjectContext:self.managedObjectContext]];
@@ -601,7 +601,7 @@
     }
 
     if (self.isComingFromSubredditSelectionView) {
-        [Post removeAllPostsFromCoreData:self.managedObjectContext];
+//        [Post removeAllPostsFromCoreData:self.managedObjectContext];
         [self.digestPosts removeAllObjects];
 
         if(![[NSUserDefaults standardUserDefaults] boolForKey:@"HasSubscriptions"]){
