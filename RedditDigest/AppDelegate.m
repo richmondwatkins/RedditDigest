@@ -128,9 +128,9 @@
         NSTimeInterval currentTime = [[NSDate date] timeIntervalSince1970];
 
         if (currentTime - 3600000 > lastDigest.time.doubleValue) {
-            [digestController requestNewLinks:YES];
+            [digestController requestNewLinks:NO];
         }else{
-            [digestController performNewFetchedDataActions:YES];
+            [digestController performNewFetchedDataActions:NO];
         }
     }
 }

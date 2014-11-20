@@ -28,7 +28,7 @@
 #import "DigestPost.h"
 #import <ZeroPush.h>
 #import "MCSwipeTableViewCell.h"
-
+//#import "NoInternetAlertControl.h"
 @interface DigestViewController () <UITableViewDataSource, UITableViewDelegate, CLLocationManagerDelegate, MCSwipeTableViewCellDelegate>
 
 @property NSMutableArray *digestPosts;
@@ -99,6 +99,8 @@
 
 - (void)viewDidAppear:(BOOL)animated
 {
+//    [NoInternetAlertControl checkForInternetReachability:self];
+
     [super viewDidAppear:animated];
     // These two lines enable automatic cell resizing thanks to iOS 8 🐋
     self.digestTableView.estimatedRowHeight = 227.0;
@@ -116,14 +118,17 @@
 
         [self.refreshControl addTarget:self action:@selector(requestNewLinksFromRefresh) forControlEvents:UIControlEventValueChanged];
         [self.digestTableView addSubview:self.refreshControl];
-    }else{
+    }else if([[NSUserDefaults standardUserDefaults] boolForKey:@"HasSubscriptions"]){
         self.todayBarButton.title = @"Today";
         [self.refreshControl endRefreshing];
         [self.refreshControl removeFromSuperview];
         self.refreshControl = nil;
         self.title = self.oldDigestDate;
     }
-
+    
+    [self retrievePostsFromCoreData:NO withCompletion:^(BOOL completed) {
+        //
+    }];
 }
 
 #pragma mark - Location Services
@@ -177,11 +182,13 @@
 
 - (IBAction)onTodayButtonTouched:(id)sender {
     self.isFromPastDigest = NO;
-    [self retrievePostsFromCoreData:YES withCompletion:^(BOOL completed) {
-        self.todayBarButton.title = @"";
-        self.refreshControl = [[UIRefreshControl alloc] init];
-        [self.refreshControl addTarget:self action:@selector(requestNewLinksFromRefresh) forControlEvents:UIControlEventValueChanged];
-        [self.digestTableView addSubview:self.refreshControl];
+    [self retrievePostsFromCoreData:NO withCompletion:^(BOOL completed) {
+        if (!self.refreshControl) {
+            self.todayBarButton.title = @"";
+            self.refreshControl = [[UIRefreshControl alloc] init];
+            [self.refreshControl addTarget:self action:@selector(requestNewLinksFromRefresh) forControlEvents:UIControlEventValueChanged];
+            [self.digestTableView addSubview:self.refreshControl];
+        }
     }];
 }
 
@@ -601,19 +608,17 @@
 
 -(IBAction)unwindFromSubredditSelectionViewController:(UIStoryboardSegue *)segue
 {
-
     if (self.isFromPastDigest) {
         [self.imageCache removeAllObjects];
         self.digestPosts = [NSMutableArray arrayWithArray:self.oldDigest];
         [self.digestTableView reloadData];
         //        [self convertToPostObjects:[NSMutableArray arrayWithArray:self.oldDigest]];
-        //        [self.digestTableView reloadData];
     }
 
     if (self.isComingFromSubredditSelectionView) {
 //        [Post removeAllPostsFromCoreData:self.managedObjectContext];
         [self.digestPosts removeAllObjects];
-        [self requestNewLinks:YES];
+        [self requestNewLinks:NO];
 
         if(![[NSUserDefaults standardUserDefaults] boolForKey:@"HasSubscriptions"]){
             UIApplication *application = [UIApplication sharedApplication];
