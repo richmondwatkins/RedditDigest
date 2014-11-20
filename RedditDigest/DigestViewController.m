@@ -71,6 +71,10 @@
 {
     [super viewWillAppear:animated];
 
+    if (self.madeChangeToLocation) {
+        [self performNewFetchedDataActions:YES];
+    }
+
     [self.imageCache removeAllObjects];
     self.didUpdateLocation = NO;
 
@@ -582,6 +586,7 @@
     {
         SettingsViewController *settingsController = segue.destinationViewController;
         settingsController.managedObject = self.managedObjectContext;
+        settingsController.digestViewController = self;
     }
 
     [self.imageCache removeAllObjects];

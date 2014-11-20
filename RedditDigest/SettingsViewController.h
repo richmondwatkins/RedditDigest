@@ -7,8 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "DigestViewController.h"
 
 @interface SettingsViewController : UITableViewController
 @property NSManagedObjectContext *managedObject;
 @property BOOL isFromSettings;
+@property DigestViewController *digestViewController;
 @end

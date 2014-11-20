@@ -18,6 +18,7 @@
 @property BOOL isFromPastDigest;
 @property NSString *oldDigestDate;
 @property BOOL turnedOffLocal;
+@property BOOL madeChangeToLocation;
 -(void)fetchNewData:(BOOL)isDigest withCompletion:(void (^)(UIBackgroundFetchResult))completionHandler;
 -(void)requestNewLinks:(BOOL)isDigest;
 -(void)performNewFetchedDataActions:(BOOL)isDigest;

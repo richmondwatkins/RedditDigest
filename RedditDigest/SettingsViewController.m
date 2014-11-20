@@ -18,7 +18,6 @@
 #import "PastDigestsViewController.h"
 #import "TSMessage.h"
 #import "InternetConnectionTest.h"
-
 @interface SettingsViewController () <UITableViewDataSource, UITableViewDelegate, CLLocationManagerDelegate>
 
 @property (strong, nonatomic) IBOutlet UITableView *tableView;
@@ -35,7 +34,7 @@
 @property (strong, nonatomic) IBOutlet UITableViewCell *recCell;
 @property (strong, nonatomic) IBOutlet UITableViewCell *archiveCell;
 @property (strong, nonatomic) IBOutlet UITableViewCell *loginCell;
-
+@property BOOL madChangeToLocation;
 @end
 
 @implementation SettingsViewController
@@ -58,7 +57,8 @@
                 self.editDigestCell.userInteractionEnabled = NO;
             }
     }];
-
+    
+    self.digestViewController.madeChangeToLocation = NO;
     [self retrievePastDigestFromCoreData];
 }
 
@@ -135,6 +135,7 @@
         [Subreddit removeLocalPostsAndSubreddits:self.managedObject];
     }
     [[NSUserDefaults standardUserDefaults] synchronize];
+    self.digestViewController.madeChangeToLocation = YES;
 }
 
 // TODO figure out why this method isn't being called and make it get called
