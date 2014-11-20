@@ -125,13 +125,11 @@
         self.refreshControl = nil;
         self.title = self.oldDigestDate;
     }
-    
 }
 
 #pragma mark - Location Services
--(void)checkForLocationServices{
-
-    NSLog(@"MADE IT");
+-(void)checkForLocationServices
+{
     if ([[NSUserDefaults standardUserDefaults] boolForKey:@"Location"] && [CLLocationManager locationServicesEnabled]) {
         self.locationManger = [[CLLocationManager alloc] init];
         self.locationManger.delegate = self;
@@ -139,7 +137,8 @@
     }
 }
 
--(void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations{
+-(void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations
+{
     if (self.didUpdateLocation == NO) {
         for(CLLocation *location in locations){
 //            if (location.verticalAccuracy < 100 && location.horizontalAccuracy < 100) {
@@ -276,10 +275,10 @@
     cell.thumbnailImage.layer.cornerRadius = 2.0;
     cell.thumbnailImage.layer.masksToBounds = YES;
 
-    UIView *upVoteView = [self viewWithImageName:@"up_arrow"];
+    UIView *upVoteView = [self viewWithImageName:@"up_arrow_white"];
     UIColor *upVoteColor = [UIColor colorWithRed:1 green:0.545 blue:0.376 alpha:1];
 
-    UIView *downVoteView = [self viewWithImageName:@"down_arrow"];
+    UIView *downVoteView = [self viewWithImageName:@"down_arrow_white"];
     UIColor *downVoteColor = [UIColor colorWithRed:0.58 green:0.58 blue:1 alpha:1];
 
     cell.upvoteView.backgroundColor = upVoteColor;
@@ -719,96 +718,64 @@
 
 - (IBAction)onRightSwipeGesture:(UISwipeGestureRecognizer *)rightSwipe
 {
-    NSLog(@"SWIPED RIGHT... let's see what happens");
-
     CGPoint location = [rightSwipe locationInView:self.digestTableView];
     NSIndexPath *swipedIndexPath = [self.digestTableView indexPathForRowAtPoint:location];
     DigestCellWithImageTableViewCell *swipedCell  = (DigestCellWithImageTableViewCell *)[self.digestTableView cellForRowAtIndexPath:swipedIndexPath];
     Post *post = [self.digestPosts objectAtIndex:swipedIndexPath.row];
-//    post.upvoted = [NSNumber numberWithBool:YES];
-
     // if post cell is already upvoted, then unvote and hide indicator
-
-    NSLog(@"SWIPED RIGHT... and the Bool says %@", post.upvoted);
-
-
     if ([post.upvoted boolValue])
-
     {
         swipedCell.upvoteView.hidden = YES;
         swipedCell.downvoteView.hidden = YES;
         post.upvoted = [NSNumber numberWithBool:NO];
         post.downvoted = [NSNumber numberWithBool:NO];
-        NSLog(@"Hide the upvote indicator");
-
         // remove vote & check property of cell isUpvoted/Downvoted
         // really want to upvote
-
         // if cell is not upvoted, then upVote and show indicator
-
-    } else {
-
+    }
+    else {
         swipedCell.upvoteView.hidden = NO;
         swipedCell.downvoteView.hidden = YES;
         post.upvoted = [NSNumber numberWithBool:YES];
         post.downvoted = [NSNumber numberWithBool:NO];
-        NSLog(@"Show the upvote indicator");
         // add upvote
     }
-
-
-
     [self upVoteButtonPressed:swipedCell];
 }
 
 - (IBAction)onLeftSwipeGesture:(UISwipeGestureRecognizer *)leftSwipe
 {
-    NSLog(@"SWIPED LEFT... let's see what happens");
-
-
     CGPoint location = [leftSwipe locationInView:self.digestTableView];
     NSIndexPath *swipedIndexPath = [self.digestTableView indexPathForRowAtPoint:location];
     DigestCellWithImageTableViewCell *swipedCell  = (DigestCellWithImageTableViewCell *)[self.digestTableView cellForRowAtIndexPath:swipedIndexPath];
     Post *post = [self.digestPosts objectAtIndex:swipedIndexPath.row];
-//    post.downvoted = [NSNumber numberWithBool:YES];
-
-
-    NSLog(@"SWIPED LEFT... and the Bool says %@", post.upvoted);
-
 
     if ([post.downvoted boolValue])
-
     {
         swipedCell.upvoteView.hidden = YES;
         swipedCell.downvoteView.hidden = YES;
         post.upvoted = [NSNumber numberWithBool:NO];
         post.downvoted = [NSNumber numberWithBool:NO];
-        NSLog(@"Hide the downvote indicator");
-
         // remove vote & check property of cell isUpvoted/Downvoted
         // really want to upvote
 
         // if cell is not upvoted, then upVote and show indicator
 
-    } else {
-
+    }
+    else {
         swipedCell.upvoteView.hidden = YES;
         swipedCell.downvoteView.hidden = NO;
         post.upvoted = [NSNumber numberWithBool:NO];
         post.downvoted = [NSNumber numberWithBool:YES];
-        NSLog(@"Show the downvote indicator");
         // add upvote
     }
-
-
-
     [self downVoteButtonPressed:swipedCell];
 }
 
 -(void)sendUpVoteToReddit:(NSString *)postID{
     [[RKClient sharedClient] linkWithFullName:postID completion:^(id object, NSError *error) {
         [[RKClient sharedClient] upvote:object completion:^(NSError *error) {
-            NSLog(@"Upvote");
+            //NSLog(@"Upvote");
         }];
     }];
 }
@@ -816,7 +783,7 @@
 -(void)sendDownVoteToReddit:(NSString *)postID{
     [[RKClient sharedClient] linkWithFullName:postID completion:^(id object, NSError *error) {
         [[RKClient sharedClient] downvote:object completion:^(NSError *error) {
-            NSLog(@"Downvote");
+            //NSLog(@"Downvote");
         }];
     }];
 }
