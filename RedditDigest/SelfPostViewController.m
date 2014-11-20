@@ -25,8 +25,13 @@
     [super viewWillAppear:animated];
     self.activityIndicator.hidden = NO;
     [self.activityIndicator startAnimating];
+    NSLog(@"SELFPOST STRINGGGGGG %@",self.selfPostText);
+    if ([self.selfPostText isEqualToString:@""]) {
+        self.selfPostText = self.post.title;
+    }else{
+        self.textView.text = self.selfPostText;
+    }
 
-    self.textView.text = self.selfPostText;
     self.textView.delegate = self;
     if (!self.navController.navigationBarHidden) {
         self.statusBarBackground.alpha = 0.0;

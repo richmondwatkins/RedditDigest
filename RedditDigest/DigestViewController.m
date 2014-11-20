@@ -350,7 +350,7 @@
         cell.subredditLabel.text = post.subreddit;
         cell.authorLabel.text = post.author;
         cell.upVoteDownVoteLabel.text = [self abbreviateNumber:post.voteRatio.integerValue];
-        cell.commentsLabel.text = [self abbreviateNumber:post.totalComments.integerValue];
+//        cell.commentsLabel.text = [self abbreviateNumber:post.totalComments.integerValue];
 
         if ([post.image boolValue]) {
             cell.thumbnailImage.image = [self returnImageForCellFromData:post.postID withSubredditNameForKey:post.subreddit andFilePathPrefix:@"image-copy"];
@@ -369,7 +369,7 @@
         cell.subredditLabel.text = post.subreddit.subreddit;
         cell.authorLabel.text = post.author;
         cell.upVoteDownVoteLabel.text = [self abbreviateNumber:post.voteRatio.integerValue];
-        cell.commentsLabel.text = [self abbreviateNumber:post.totalComments.integerValue];
+//        cell.commentsLabel.text = [self abbreviateNumber:post.totalComments.integerValue];
 
         if ([post.image boolValue]) {
             cell.thumbnailImage.image = [self returnImageForCellFromData:post.postID withSubredditNameForKey:post.subreddit.subreddit andFilePathPrefix:@"image"];
