@@ -117,10 +117,10 @@
 //    [self.digestTableView reloadData];
     [[UIApplication sharedApplication] setApplicationIconBadgeNumber:0];
 
-    if (self.isFromPastDigest != YES && [[NSUserDefaults standardUserDefaults] boolForKey:@"HasSubscriptions"]) {
+    if (self.isFromPastDigest == NO && [[NSUserDefaults standardUserDefaults] boolForKey:@"HasSubscriptions"]) {
         [self initializeRefreshControl];
 
-    }else if([[NSUserDefaults standardUserDefaults] boolForKey:@"HasSubscriptions"]){
+    }else if([[NSUserDefaults standardUserDefaults] boolForKey:@"HasSubscriptions"] && self.isFromPastDigest == YES){
         self.todayBarButton.title = @"Today";
         [self.refreshControl endRefreshing];
         [self.refreshControl removeFromSuperview];
@@ -283,7 +283,7 @@
     cell.upvoteView.backgroundColor = upVoteColor;
     cell.downvoteView.backgroundColor = downVoteColor;
 
-    if ([[NSUserDefaults standardUserDefaults] boolForKey:@"UserIsLoggedIn"]) {
+    if ([[NSUserDefaults standardUserDefaults] boolForKey:@"UserIsLoggedIn"] && self.isFromPastDigest == NO) {
 
     // Functionality for right swipe, upvote
         [cell setSwipeGestureWithView:upVoteView color:upVoteColor mode:MCSwipeTableViewCellModeSwitch state:MCSwipeTableViewCellState1 completionBlock:^(MCSwipeTableViewCell *cell, MCSwipeTableViewCellState state, MCSwipeTableViewCellMode mode)
@@ -609,7 +609,6 @@
         [self.imageCache removeAllObjects];
         self.digestPosts = [NSMutableArray arrayWithArray:self.oldDigest];
         [self.digestTableView reloadData];
-        //        [self convertToPostObjects:[NSMutableArray arrayWithArray:self.oldDigest]];
     }
 
     if (self.isComingFromSubredditSelectionView) {
