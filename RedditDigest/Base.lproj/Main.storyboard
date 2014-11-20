@@ -1053,7 +1053,7 @@
                                                     <rect key="frame" x="8" y="203" width="584" height="20"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="subreddit" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="u9V-3r-XgS">
-                                                            <rect key="frame" x="0.0" y="-2" width="58" height="25"/>
+                                                            <rect key="frame" x="0.0" y="-2" width="57.5" height="25"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="width" relation="lessThanOrEqual" constant="200" id="8U5-cO-zVT"/>
                                                                 <constraint firstAttribute="width" constant="63" id="bhi-ow-Kow"/>
@@ -1069,31 +1069,31 @@
                                                             </variation>
                                                         </label>
                                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="snoo_square_gray" translatesAutoresizingMaskIntoConstraints="NO" id="4vQ-S3-CqE">
-                                                            <rect key="frame" x="58" y="-3" width="26" height="25"/>
+                                                            <rect key="frame" x="58.5" y="-3" width="26" height="25"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="height" constant="25" id="AvM-68-G9R"/>
                                                                 <constraint firstAttribute="width" constant="26" id="hDh-4x-DRP"/>
                                                             </constraints>
                                                         </imageView>
                                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="upvote_downvote_square_gray" translatesAutoresizingMaskIntoConstraints="NO" id="o70-OA-hBd">
-                                                            <rect key="frame" x="140" y="0.0" width="20" height="20"/>
+                                                            <rect key="frame" x="140.5" y="0.0" width="20" height="20"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="width" constant="20" id="fIH-Ap-P3u"/>
                                                                 <constraint firstAttribute="height" constant="20" id="xfN-Wo-QlA"/>
                                                             </constraints>
                                                         </imageView>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="hankthedog" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Qch-SH-AKQ">
-                                                            <rect key="frame" x="85" y="0.0" width="54" height="20"/>
+                                                            <rect key="frame" x="85.5" y="0.0" width="54" height="20"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="height" constant="20" id="EYP-NP-7vh"/>
-                                                                <constraint firstAttribute="width" relation="lessThanOrEqual" constant="59" id="rA7-Fa-nzz"/>
+                                                                <constraint firstAttribute="width" relation="lessThanOrEqual" constant="200" id="rA7-Fa-nzz"/>
                                                             </constraints>
                                                             <fontDescription key="fontDescription" name="AvenirNext-UltraLight" family="Avenir Next" pointSize="10"/>
                                                             <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="2.3k" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8si-Mc-4aB">
-                                                            <rect key="frame" x="161" y="2" width="25" height="17"/>
+                                                            <rect key="frame" x="161.5" y="2" width="25" height="17"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="width" constant="25" id="CmZ-ZR-Bmj"/>
                                                                 <constraint firstAttribute="height" constant="17" id="RyU-AL-gs8"/>
