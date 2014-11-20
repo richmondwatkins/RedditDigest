@@ -360,12 +360,14 @@ NSInteger const MAX_SELECTABLE_SUBREDDITS_FOR_DIGEST = 20;
 
 - (IBAction)finishSelectingSubreddits:(id)sender
 {
+    /*
     NSString *path  = [[NSBundle mainBundle] pathForResource:@"LoadDigest" ofType:@"mp3"];
     NSURL *pathURL = [NSURL fileURLWithPath : path];
 
     SystemSoundID audioEffect;
     AudioServicesCreateSystemSoundID((__bridge CFURLRef) pathURL, &audioEffect);
     AudioServicesPlaySystemSound(audioEffect);
+    */
 
     [Subreddit addSubredditsToCoreData:self.selectedSubreddits withManagedObject:self.managedObject];
 
