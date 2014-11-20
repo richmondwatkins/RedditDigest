@@ -17,6 +17,8 @@
 #import "Digest.h"
 #import "PastDigestsViewController.h"
 #import "TSMessage.h"
+#import "InternetConnectionTest.h"
+
 @interface SettingsViewController () <UITableViewDataSource, UITableViewDelegate, CLLocationManagerDelegate>
 
 @property (strong, nonatomic) IBOutlet UITableView *tableView;
@@ -42,6 +44,12 @@
     [self setupLoginCell];
     [self setupLocationCell];
     [self setupAutoUpdatingCell];
+
+    [InternetConnectionTest testInternetConnectionWithViewController:self andCompletion:^(BOOL completed) {
+        //        if (completed == NO) {
+        //            return NO;
+        //        }
+    }];
 
     [self retrievePastDigestFromCoreData];
 }
@@ -247,6 +255,7 @@
 
 - (BOOL)shouldPerformSegueWithIdentifier:(NSString *)identifier sender:(id)sender
 {
+
     if ([identifier isEqualToString:@"SettingsToLogin" ]) {
         if ([[NSUserDefaults standardUserDefaults] boolForKey:@"UserIsLoggedIn"]) {
             return NO;

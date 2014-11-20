@@ -28,7 +28,7 @@
 #import "DigestPost.h"
 #import <ZeroPush.h>
 #import "MCSwipeTableViewCell.h"
-//#import "NoInternetAlertControl.h"
+#import "InternetConnectionTest.h"
 @interface DigestViewController () <UITableViewDataSource, UITableViewDelegate, CLLocationManagerDelegate, MCSwipeTableViewCellDelegate>
 
 @property NSMutableArray *digestPosts;
@@ -99,7 +99,6 @@
 
 - (void)viewDidAppear:(BOOL)animated
 {
-//    [NoInternetAlertControl checkForInternetReachability:self];
 
     [super viewDidAppear:animated];
     // These two lines enable automatic cell resizing thanks to iOS 8 🐋
@@ -114,10 +113,8 @@
     [[UIApplication sharedApplication] setApplicationIconBadgeNumber:0];
 
     if (self.isFromPastDigest != YES && [[NSUserDefaults standardUserDefaults] boolForKey:@"HasSubscriptions"]) {
-        self.refreshControl = [[UIRefreshControl alloc] init];
+        [self initializeRefreshControl];
 
-        [self.refreshControl addTarget:self action:@selector(requestNewLinksFromRefresh) forControlEvents:UIControlEventValueChanged];
-        [self.digestTableView addSubview:self.refreshControl];
     }else if([[NSUserDefaults standardUserDefaults] boolForKey:@"HasSubscriptions"]){
         self.todayBarButton.title = @"Today";
         [self.refreshControl endRefreshing];
@@ -180,9 +177,7 @@
     [self retrievePostsFromCoreData:NO withCompletion:^(BOOL completed) {
         if (!self.refreshControl) {
             self.todayBarButton.title = @"";
-            self.refreshControl = [[UIRefreshControl alloc] init];
-            [self.refreshControl addTarget:self action:@selector(requestNewLinksFromRefresh) forControlEvents:UIControlEventValueChanged];
-            [self.digestTableView addSubview:self.refreshControl];
+            [self initializeRefreshControl];
         }
     }];
 }
@@ -598,13 +593,11 @@
     }
 
     [self.imageCache removeAllObjects];
-
     [self.refreshControl endRefreshing];
     [self.refreshControl removeFromSuperview];
     self.refreshControl = nil;
 
     [self.imageCache removeAllObjects];
-
     [self.refreshControl endRefreshing];
     [self.refreshControl removeFromSuperview];
     self.refreshControl = nil;
@@ -785,6 +778,25 @@
         [[RKClient sharedClient] downvote:object completion:^(NSError *error) {
             //NSLog(@"Downvote");
         }];
+    }];
+}
+
+-(void)initializeRefreshControl{
+
+    [InternetConnectionTest testInternetConnectionWithViewController:self andCompletion:^(BOOL internet) {
+        if (internet) {
+            self.refreshControl = [[UIRefreshControl alloc] init];
+
+            [self.refreshControl addTarget:self action:@selector(requestNewLinksFromRefresh) forControlEvents:UIControlEventValueChanged];
+            [self.digestTableView addSubview:self.refreshControl];
+        }else{
+            [self.refreshControl endRefreshing];
+            [self.refreshControl removeFromSuperview];
+            self.refreshControl = nil;
+            [self.refreshControl endRefreshing];
+            [self.refreshControl removeFromSuperview];
+            self.refreshControl = nil;
+        }
     }];
 }
 

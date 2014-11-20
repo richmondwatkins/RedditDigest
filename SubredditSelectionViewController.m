@@ -22,7 +22,7 @@
 #import "LoginViewController.h"
 #import "DigestCategory.h"
 #import <AudioToolbox/AudioToolbox.h>
-//#import "NoInternetAlertControl.h"
+#import "InternetConnectionTest.h"
 NSInteger const MAX_SELECTABLE_SUBREDDITS_FOR_DIGEST = 20;
 
 @interface SubredditSelectionViewController () <UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, UIAlertViewDelegate, UITextFieldDelegate>
@@ -35,6 +35,7 @@ NSInteger const MAX_SELECTABLE_SUBREDDITS_FOR_DIGEST = 20;
 @property NSInteger direction;
 @property NSInteger shakes;
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *activityIndicator;
+
 @end
 
 @implementation SubredditSelectionViewController
@@ -42,7 +43,11 @@ NSInteger const MAX_SELECTABLE_SUBREDDITS_FOR_DIGEST = 20;
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-//    [NoInternetAlertControl checkForInternetReachability:self];
+    [InternetConnectionTest testInternetConnectionWithViewController:self andCompletion:^(BOOL status) {
+        if (status == NO) {
+            self.doneSelectingSubredditsButton.enabled = NO;
+        }
+    }];
 
     KTCenterFlowLayout *layout = [KTCenterFlowLayout new];
     layout.minimumInteritemSpacing = 10.f;
@@ -439,5 +444,7 @@ NSInteger const MAX_SELECTABLE_SUBREDDITS_FOR_DIGEST = 20;
     NSSortDescriptor *sortedSubreddits = [[NSSortDescriptor alloc]initWithKey: @"name" ascending:YES selector:@selector(caseInsensitiveCompare:)];
     [self.subreddits sortUsingDescriptors:[NSArray arrayWithObject:sortedSubreddits]];
 }
+
+
 
 @end
