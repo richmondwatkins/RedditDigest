@@ -9,7 +9,7 @@
 //#define REDDIT_DARK_BLUE [UIColor colorWithRed:0.2 green:0.4 blue:0.6 alpha:1];
 
 #import "WebPostViewController.h"
-
+#import "InternetConnectionTest.h"
 @interface WebPostViewController () <UIGestureRecognizerDelegate, UIScrollViewDelegate, UIWebViewDelegate>
 
 @property (weak, nonatomic) IBOutlet UIView *statusBarBackground;
@@ -27,22 +27,26 @@
 {
     [super viewWillAppear:animated];
 
-    NSURLRequest *request;
-    if (![self.url containsString:@"imgur"]) {
-        request = [NSURLRequest requestWithURL:[NSURL URLWithString:self.url]];
-    }else{
-        request = [NSURLRequest requestWithURL:[NSURL URLWithString:self.url]];
-    }
+    [InternetConnectionTest testInternetConnectionWithViewController:self andCompletion:^(BOOL internet) {
+        if (internet == YES) {
+            NSURLRequest *request;
+            if (![self.url containsString:@"imgur"]) {
+                request = [NSURLRequest requestWithURL:[NSURL URLWithString:self.url]];
+            }else{
+                request = [NSURLRequest requestWithURL:[NSURL URLWithString:self.url]];
+            }
 
-    [self.webView loadRequest:request];
-    if (self.navController.navigationBarHidden) {
-        self.statusBarBackground.alpha = 1.0;
-        self.verticalSpaceConstraint.constant = 20;
-    }
-    else {
-        self.statusBarBackground.alpha = 0.0;
-        self.verticalSpaceConstraint.constant = 0;
-    }
+            [self.webView loadRequest:request];
+            if (self.navController.navigationBarHidden) {
+                self.statusBarBackground.alpha = 1.0;
+                self.verticalSpaceConstraint.constant = 20;
+            }
+            else {
+                self.statusBarBackground.alpha = 0.0;
+                self.verticalSpaceConstraint.constant = 0;
+            }
+        }
+    }];
 }
 
 - (void)webViewDidStartLoad:(UIWebView *)webView

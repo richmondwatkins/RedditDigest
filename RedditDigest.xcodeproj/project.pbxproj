@@ -20,6 +20,9 @@
 		34D1B9371A081B4D00C0C15F /* WelcomViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 34D1B9361A081B4D00C0C15F /* WelcomViewController.m */; };
 		34D1B93A1A081D0C00C0C15F /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 34D1B9391A081D0C00C0C15F /* LoginViewController.m */; };
 		34D1B93C1A08463500C0C15F /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 34D1B93B1A08463500C0C15F /* Security.framework */; };
+		5D09FB9B1A1DCE08002845F1 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D09FB9A1A1DCE08002845F1 /* Reachability.m */; };
+		5D09FB9E1A1DCE4C002845F1 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5D09FB9D1A1DCE4C002845F1 /* SystemConfiguration.framework */; };
+		5D09FBA11A1DD481002845F1 /* InternetConnectionTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D09FBA01A1DD481002845F1 /* InternetConnectionTest.m */; };
 		5D311EDE1A10A359002AFC3C /* CommentTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D311EDD1A10A359002AFC3C /* CommentTableViewCell.m */; };
 		5D366B8C1A194F7E006B0684 /* TextViewWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D366B8B1A194F7E006B0684 /* TextViewWebViewController.m */; };
 		5D366B951A19B873006B0684 /* RecHeaderCollectionReusableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D366B941A19B873006B0684 /* RecHeaderCollectionReusableView.m */; };
@@ -102,6 +105,11 @@
 		34D1B9381A081D0C00C0C15F /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
 		34D1B9391A081D0C00C0C15F /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
 		34D1B93B1A08463500C0C15F /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
+		5D09FB991A1DCE08002845F1 /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
+		5D09FB9A1A1DCE08002845F1 /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
+		5D09FB9D1A1DCE4C002845F1 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		5D09FB9F1A1DD481002845F1 /* InternetConnectionTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InternetConnectionTest.h; sourceTree = "<group>"; };
+		5D09FBA01A1DD481002845F1 /* InternetConnectionTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InternetConnectionTest.m; sourceTree = "<group>"; };
 		5D311EDD1A10A359002AFC3C /* CommentTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CommentTableViewCell.m; sourceTree = "<group>"; };
 		5D311EDF1A10A49D002AFC3C /* CommentTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CommentTableViewCell.h; sourceTree = "<group>"; };
 		5D366B8A1A194F7E006B0684 /* TextViewWebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TextViewWebViewController.h; path = ../TextViewWebViewController.h; sourceTree = "<group>"; };
@@ -189,6 +197,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5D09FB9E1A1DCE4C002845F1 /* SystemConfiguration.framework in Frameworks */,
 				5D614E5B1A16F96100A199A2 /* libxml2.dylib in Frameworks */,
 				5D614E4F1A15D70600A199A2 /* CoreLocation.framework in Frameworks */,
 				34D1B93C1A08463500C0C15F /* Security.framework in Frameworks */,
@@ -267,9 +276,21 @@
 			name = "Archive Digest";
 			sourceTree = "<group>";
 		};
+		5D09FB9C1A1DCE18002845F1 /* Reachability */ = {
+			isa = PBXGroup;
+			children = (
+				5D09FB991A1DCE08002845F1 /* Reachability.h */,
+				5D09FB9A1A1DCE08002845F1 /* Reachability.m */,
+			);
+			name = Reachability;
+			sourceTree = "<group>";
+		};
 		5D5C12B41A05716E002902A8 = {
 			isa = PBXGroup;
 			children = (
+				5D09FB9F1A1DD481002845F1 /* InternetConnectionTest.h */,
+				5D09FBA01A1DD481002845F1 /* InternetConnectionTest.m */,
+				5D09FB9C1A1DCE18002845F1 /* Reachability */,
 				81D291231A19903D002B2708 /* Sounds */,
 				5D614E501A16F73500A199A2 /* HTMLParser */,
 				5D5C12BF1A05716E002902A8 /* RedditDigest */,
@@ -451,6 +472,7 @@
 		711551BEEA23829AEA4B6967 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				5D09FB9D1A1DCE4C002845F1 /* SystemConfiguration.framework */,
 				5D614E5A1A16F96100A199A2 /* libxml2.dylib */,
 				5D614E4E1A15D70600A199A2 /* CoreLocation.framework */,
 				3417AC101A0945B40026961C /* CenterFlowLayout */,
@@ -620,6 +642,7 @@
 				34C2BD601A1DAF6100D2E245 /* ArchivedDigestTableViewCell.m in Sources */,
 				5DB47AEE1A0C4A700034EA84 /* UserRequests.m in Sources */,
 				5DE75CAC1A0DC9C30031F0F7 /* PageWrapperViewController.m in Sources */,
+				5D09FBA11A1DD481002845F1 /* InternetConnectionTest.m in Sources */,
 				340531ED1A1312AE000CF33C /* CommentViewController.m in Sources */,
 				5D311EDE1A10A359002AFC3C /* CommentTableViewCell.m in Sources */,
 				5DB5B8491A083DF0007DC036 /* SubredditSelectionViewController.m in Sources */,
@@ -629,6 +652,7 @@
 				5D366B951A19B873006B0684 /* RecHeaderCollectionReusableView.m in Sources */,
 				5D3AC6331A12BCCC0093E79E /* DigestCategory.m in Sources */,
 				5D614E571A16F77A00A199A2 /* TFHpple.m in Sources */,
+				5D09FB9B1A1DCE08002845F1 /* Reachability.m in Sources */,
 				5DB47A5D1A0ABA5B0034EA84 /* PostViewController.m in Sources */,
 				5D5C12C91A05716E002902A8 /* RedditDigest.xcdatamodeld in Sources */,
 				3417AC0D1A092D970026961C /* SettingsViewController.m in Sources */,
