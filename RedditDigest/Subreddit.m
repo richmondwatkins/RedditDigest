@@ -121,16 +121,17 @@
 }
 
 +(void)addSingleSubredditToCoreData:(RKSubreddit *)selectedSubreddit withManagedObject:(NSManagedObjectContext *)managedObject{
+    NSLog(@"SELECTED SUB %@",(selectedSubreddit.isLocalSubreddit) ? @"true" : @"false");
     NSFetchRequest * subredditFetch = [[NSFetchRequest alloc] init];
     [subredditFetch setEntity:[NSEntityDescription entityForName:@"Subreddit" inManagedObjectContext:managedObject]];
     subredditFetch.predicate = [NSPredicate predicateWithFormat:@"subreddit == %@", selectedSubreddit.name];
     NSArray *results = [managedObject executeFetchRequest:subredditFetch error:nil];
-    if (!results.count) {
+    if (results.count == 0) {
         if (!selectedSubreddit.isCurrentlySubscribed) {
             Subreddit *savedSubreddit = [NSEntityDescription insertNewObjectForEntityForName:@"Subreddit" inManagedObjectContext:managedObject];
             savedSubreddit.subreddit = selectedSubreddit.name;
             savedSubreddit.url = selectedSubreddit.URL;
-//            savedSubreddit.isLocalSubreddit = [NSNumber numberWithBool:YES];
+            savedSubreddit.isLocalSubreddit = [NSNumber numberWithBool:YES];
             if (selectedSubreddit.headerImageURL != nil) {
                 [NSURLConnection sendAsynchronousRequest:[NSURLRequest requestWithURL:selectedSubreddit.headerImageURL] queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
                     if (data) {
@@ -156,10 +157,11 @@
 
 +(void)removeLocalPostsAndSubreddits:(NSManagedObjectContext *)managedObject{
     NSFetchRequest *localSubFetch = [[NSFetchRequest alloc] initWithEntityName:@"Subreddit"];
-    localSubFetch.predicate = [NSPredicate predicateWithFormat:@"isLocalSubreddit == YES"];
+    localSubFetch.predicate = [NSPredicate predicateWithFormat:@"isLocalSubreddit == 1"];
     NSArray *results = [managedObject executeFetchRequest:localSubFetch error:nil];
     if (results.count) {
         for (Subreddit *subreddit in results) {
+            NSLog(@"SUBBBBB %@",subreddit);
             [managedObject deleteObject:subreddit];
             [managedObject save:nil];
         }

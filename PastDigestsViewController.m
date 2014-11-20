@@ -15,7 +15,7 @@
 @property NSArray *digests;
 @property NSArray *selectedDigestPosts;
 @property NSCache *imageCache;
-
+@property BOOL notificationsOn;
 @end
 
 @implementation PastDigestsViewController
@@ -23,12 +23,24 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self retrievePastDigestFromCoreData];
+
+    UIApplication *application = [UIApplication sharedApplication];
+
+    if ([application respondsToSelector:@selector(isRegisteredForRemoteNotifications)])
+    {
+        self.notificationsOn = [application isRegisteredForRemoteNotifications];
+    }
+    else
+    {
+        UIRemoteNotificationType types = [application enabledRemoteNotificationTypes];
+        self.notificationsOn = types & UIRemoteNotificationTypeAlert;
+    }
 }
 
 
 -(void)retrievePastDigestFromCoreData{
     NSFetchRequest *fetchDigests = [[NSFetchRequest alloc] initWithEntityName:@"Digest"];
-    NSSortDescriptor *sorter = [[NSSortDescriptor alloc] initWithKey:@"time" ascending:NO];
+    NSSortDescriptor *sorter = [[NSSortDescriptor alloc] initWithKey:@"time" ascending:YES];
     [fetchDigests setSortDescriptors:@[sorter]];
 
     NSArray *digests = [self.managedObject executeFetchRequest:fetchDigests error:nil];
@@ -40,33 +52,45 @@
 }
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    return self.digests.count;
+
+    if (self.notificationsOn) {
+        return self.digests.count;
+    }else{
+        return 1;
+    }
 }
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"DigestCell"];
-    Digest *digest = [self.digests objectAtIndex:indexPath.row];
+    if (self.notificationsOn) {
+        Digest *digest = [self.digests objectAtIndex:indexPath.row];
 
-    NSArray *posts = [digest.digestPost allObjects];
-    DigestPost *post = posts.firstObject;
+        NSArray *posts = [digest.digestPost allObjects];
+        DigestPost *post = posts.firstObject;
 
-    if ([post.image boolValue]) {
-        cell.imageView.image = [self returnImageForCellFromData:post.postID withSubredditNameForKey:post.subreddit andFilePathPrefix:@"image-copy"];
-    }else if([post.thumbnailImagePath boolValue]){
-         cell.imageView.image = [self returnImageForCellFromData:post.postID withSubredditNameForKey:post.subreddit  andFilePathPrefix:@"thumbnail-copy"];
-    }else if([post.subredditImage boolValue]){
-         cell.imageView.image = [self returnImageForCellFromData:post.subreddit withSubredditNameForKey:post.subreddit andFilePathPrefix:@"subreddit-copy"];
+        if ([post.image boolValue]) {
+            cell.imageView.image = [self returnImageForCellFromData:post.postID withSubredditNameForKey:post.subreddit andFilePathPrefix:@"image-copy"];
+        }else if([post.thumbnailImagePath boolValue]){
+            cell.imageView.image = [self returnImageForCellFromData:post.postID withSubredditNameForKey:post.subreddit  andFilePathPrefix:@"thumbnail-copy"];
+        }else if([post.subredditImage boolValue]){
+            cell.imageView.image = [self returnImageForCellFromData:post.subreddit withSubredditNameForKey:post.subreddit andFilePathPrefix:@"subreddit-copy"];
+        }else{
+            cell.imageView.image = [UIImage imageNamed:@"snoo_camera_placeholder"];
+        }
+
+        NSDate* date = [NSDate dateWithTimeIntervalSince1970:[digest.time doubleValue]];
+
+        NSDateFormatter *dateFormat =[[NSDateFormatter alloc]init];
+        [dateFormat setDateFormat:@"MMMM dd, yyyy - h:00"];
+        NSString *dateText = [dateFormat stringFromDate:date];
+        cell.textLabel.text = dateText;
     }else{
-         cell.imageView.image = [UIImage imageNamed:@"snoo_camera_placeholder"];
+        cell.textLabel.text = @"Push notifications must be enabled to recieve archived digests";
     }
+    cell.textLabel.lineBreakMode = NSLineBreakByWordWrapping;
+    cell.textLabel.numberOfLines = 0;
 
-    NSDate* date = [NSDate dateWithTimeIntervalSince1970:[digest.time doubleValue]];
-
-    NSDateFormatter *dateFormat =[[NSDateFormatter alloc]init];
-    [dateFormat setDateFormat:@"MMMM dd, yyyy"];
-    NSString *dateText = [dateFormat stringFromDate:date];
-    cell.textLabel.text = dateText;
     return cell;
 }
 
