@@ -509,7 +509,7 @@
                                 </connections>
                             </collectionView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZWK-lh-Y8J">
-                                <rect key="frame" x="0.0" y="555" width="600" height="44"/>
+                                <rect key="frame" x="0.0" y="556" width="600" height="44"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="44" id="Owp-Qr-mHa"/>
@@ -542,7 +542,7 @@
                             </constraint>
                             <constraint firstItem="4Dj-3k-U5H" firstAttribute="top" secondItem="jsl-Cu-EB1" secondAttribute="bottom" id="qmb-xs-YHF"/>
                             <constraint firstItem="4Dj-3k-U5H" firstAttribute="top" secondItem="jsl-Cu-EB1" secondAttribute="bottom" id="vYc-IA-vi1"/>
-                            <constraint firstItem="4Dj-3k-U5H" firstAttribute="top" secondItem="ZWK-lh-Y8J" secondAttribute="bottom" constant="1" id="xSH-3P-O4e"/>
+                            <constraint firstItem="4Dj-3k-U5H" firstAttribute="top" secondItem="ZWK-lh-Y8J" secondAttribute="bottom" id="xSH-3P-O4e"/>
                         </constraints>
                         <variation key="default">
                             <mask key="constraints">
@@ -873,7 +873,7 @@
                                 </connections>
                             </collectionView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="J8O-Nf-ZfV">
-                                <rect key="frame" x="0.0" y="555" width="600" height="44"/>
+                                <rect key="frame" x="0.0" y="556" width="600" height="44"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="44" id="lIv-f6-4D2"/>
@@ -901,7 +901,7 @@
                                 <variation key="heightClass=regular-widthClass=regular" constant="100"/>
                             </constraint>
                             <constraint firstItem="J8O-Nf-ZfV" firstAttribute="leading" secondItem="8H1-Rh-GMU" secondAttribute="leadingMargin" constant="-16" id="rOF-JB-Oqu"/>
-                            <constraint firstItem="IpW-Tr-ueH" firstAttribute="top" secondItem="J8O-Nf-ZfV" secondAttribute="bottom" constant="1" id="uXd-BE-Jzy"/>
+                            <constraint firstItem="IpW-Tr-ueH" firstAttribute="top" secondItem="J8O-Nf-ZfV" secondAttribute="bottom" id="uXd-BE-Jzy"/>
                         </constraints>
                     </view>
                     <connections>
