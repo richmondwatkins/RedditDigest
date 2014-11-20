@@ -209,7 +209,7 @@
         [self.upVoteButton setImage:[UIImage imageNamed:@"up_arrow"] forState:UIControlStateNormal];
         self.post.downvoted = [NSNumber numberWithBool:YES];
         self.post.upvoted = [NSNumber numberWithBool:NO];
-        // Remove vote from reddit
+        // Send downvote to reddit
         [self sendDownVoteToReddit:self.post.postID];
     }
     [self.managedObjectContext save:nil];
@@ -233,7 +233,7 @@
         [self.downVoteButton setImage:[UIImage imageNamed:@"down_arrow"] forState:UIControlStateNormal];
         self.post.upvoted = [NSNumber numberWithBool:YES];
         self.post.downvoted = [NSNumber numberWithBool:NO];
-        // Remove vote from reddit
+        // Send upvote to reddit
         [self sendUpVoteToReddit:self.post.postID];
     }
 
