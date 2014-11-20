@@ -37,15 +37,14 @@
 @dynamic isLocalPost;
 @dynamic domain;
 
-+(void)savePost:(RKLink *)post withManagedObject:(NSManagedObjectContext *)managedObjectContext withComments:(NSArray *)comments andCompletion:(void (^)(BOOL))complete{
-
-    NSFetchRequest * postFetch = [[NSFetchRequest alloc] initWithEntityName:@"Post"];
-    postFetch.predicate = [NSPredicate predicateWithFormat:@"postID == %@", post.fullName];
-    NSArray * posts = [managedObjectContext executeFetchRequest:postFetch error:nil];
-    
-    if (posts.count) {
++(void)savePosts:(NSMutableArray *)posts withManagedObject:(NSManagedObjectContext *)managedObjectContext andCompletion:(void (^)(BOOL))complete{
+    NSMutableArray *notInCoreDataArray = [self returnPostNotInCoreData:posts withManagedObject:managedObjectContext];
+    if (notInCoreDataArray.count == 0) {
         complete(YES);
-    }else{
+    }
+    [self removePostsNotInLatestRefresh:posts withManagedObject:managedObjectContext];
+    __block int i = 0;
+    for (RKLink *post in notInCoreDataArray) {
         Post *savedPost = [NSEntityDescription insertNewObjectForEntityForName:@"Post" inManagedObjectContext:managedObjectContext];
         savedPost.title = post.title;
         savedPost.url = [post.URL absoluteString];
@@ -55,75 +54,86 @@
         savedPost.postID = post.fullName;
         savedPost.isLocalPost = [NSNumber numberWithBool:post.isLocalPost];
         savedPost.domain = post.domain;
-        
-        if (comments) {
-            [Comment addCommentsToPost:savedPost commentsArray:comments withMangedObject:managedObjectContext];
-        }
 
-        if ([[post.URL absoluteString] containsString:@"youtube.com"] || [[post.URL absoluteString] containsString:@"youtu.be"]) {
-            savedPost.url = [self performRegexOnYoutube:post.URL];
-            savedPost.isYouTube = [NSNumber numberWithBool:YES];
-        }
-
-        if (post.isImageLink) {
-            post.customIsImage = YES;
-            post.customURL = post.URL;
-        }
-
-        if ([[post.URL absoluteString] containsString:@"imgur"] && [post.URL absoluteString].length == 24 && ![[post.URL absoluteString] containsString:@"/a/"] && ![[post.URL absoluteString] containsString:@"gallery"]) {
-            NSString *stringURL = [NSString stringWithFormat:@"%@.jpg", [post.URL absoluteString]];
-            post.customIsImage = YES;
-            post.customURL = [NSURL URLWithString:stringURL];
-        }
-
-        [self createSubredditRelationship:post withPostObject:savedPost withManagedObj:managedObjectContext];
-
-        NSURLRequest *thumbnailRequest = [NSURLRequest requestWithURL:post.thumbnailURL];
-        [NSURLConnection sendAsynchronousRequest:thumbnailRequest queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
-            if (data) {
-                savedPost.thumbnailImage = [NSNumber numberWithBool:YES];
+        [[RKClient sharedClient] commentsForLink:post completion:^(NSArray *comments, RKPagination *pagination, NSError *error) {
+            if (comments) {
+                [Comment addCommentsToPost:savedPost commentsArray:comments withMangedObject:managedObjectContext];
             }
 
-            [self saveDataToDocumentsDirectory:data withFileNamePrefix:@"thumbnail" andPostfix:savedPost.postID];
+            if ([[post.URL absoluteString] containsString:@"youtube.com"] || [[post.URL absoluteString] containsString:@"youtu.be"]) {
+                savedPost.url = [self performRegexOnYoutube:post.URL];
+                savedPost.isYouTube = [NSNumber numberWithBool:YES];
+            }
 
-            if (post.customIsImage) {
-                savedPost.isImageLink = [NSNumber numberWithBool:YES];
-                NSURLRequest *mainImageRequest = [NSURLRequest requestWithURL:post.customURL];
-                [NSURLConnection sendAsynchronousRequest:mainImageRequest queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
+            if (post.isImageLink) {
+                post.customIsImage = YES;
+                post.customURL = post.URL;
+            }
 
-                    NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse*)response;
-                    NSString *contentType = [httpResponse allHeaderFields][@"Content-Type"];
+            if ([[post.URL absoluteString] containsString:@"imgur"] && [post.URL absoluteString].length == 24 && ![[post.URL absoluteString] containsString:@"/a/"] && ![[post.URL absoluteString] containsString:@"gallery"]) {
+                NSString *stringURL = [NSString stringWithFormat:@"%@.jpg", [post.URL absoluteString]];
+                post.customIsImage = YES;
+                post.customURL = [NSURL URLWithString:stringURL];
+            }
 
-                    if ([contentType isEqualToString:@"image/gif"]) {
-                        savedPost.isImageLink = [NSNumber numberWithBool:NO];
-                        savedPost.isGif = [NSNumber numberWithBool:YES];
-                    }else{
-                        [self saveDataToDocumentsDirectory:data withFileNamePrefix:@"image" andPostfix:savedPost.postID];
-                        savedPost.image = [NSNumber numberWithBool:YES];
-                    }
+            [self createSubredditRelationship:post withPostObject:savedPost withManagedObj:managedObjectContext];
 
-                    [managedObjectContext save:nil];
-                    complete(YES);
-                }];
-            }else{
-                savedPost.isImageLink = [NSNumber numberWithBool:NO];
-
-                if (post.isSelfPost) {
-                    savedPost.isSelfPost = [NSNumber numberWithBool:YES];
-
-                    if ([post.selfText isEqualToString:@""]) {
-                        savedPost.selfText = post.title;
-                    }else{
-                        savedPost.selfText = post.selfText;
-                    }
-                    [managedObjectContext save:nil];
-                    complete(YES);
-                }else{
-                    savedPost.isWebPage = [NSNumber numberWithBool:YES];
-                    [managedObjectContext save:nil];
-                    complete(YES);
+            NSURLRequest *thumbnailRequest = [NSURLRequest requestWithURL:post.thumbnailURL];
+            [NSURLConnection sendAsynchronousRequest:thumbnailRequest queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
+                if (data) {
+                    savedPost.thumbnailImage = [NSNumber numberWithBool:YES];
                 }
-            }
+
+                [self saveDataToDocumentsDirectory:data withFileNamePrefix:@"thumbnail" andPostfix:savedPost.postID];
+
+                if (post.customIsImage) {
+                    savedPost.isImageLink = [NSNumber numberWithBool:YES];
+                    NSURLRequest *mainImageRequest = [NSURLRequest requestWithURL:post.customURL];
+                    [NSURLConnection sendAsynchronousRequest:mainImageRequest queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
+
+                        NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse*)response;
+                        NSString *contentType = [httpResponse allHeaderFields][@"Content-Type"];
+
+                        if ([contentType isEqualToString:@"image/gif"]) {
+                            savedPost.isImageLink = [NSNumber numberWithBool:NO];
+                            savedPost.isGif = [NSNumber numberWithBool:YES];
+                        }else{
+                            [self saveDataToDocumentsDirectory:data withFileNamePrefix:@"image" andPostfix:savedPost.postID];
+                            savedPost.image = [NSNumber numberWithBool:YES];
+                        }
+
+                        [managedObjectContext save:nil];
+                        i += 1;
+                        if (i == notInCoreDataArray.count) {
+                            complete(YES);
+                        }
+                    }];
+                }else{
+                    i += 1;
+
+                    savedPost.isImageLink = [NSNumber numberWithBool:NO];
+
+                    if (post.isSelfPost) {
+                        savedPost.isSelfPost = [NSNumber numberWithBool:YES];
+
+                        if ([post.selfText isEqualToString:@""]) {
+                            savedPost.selfText = post.title;
+                        }else{
+                            savedPost.selfText = post.selfText;
+                        }
+                        [managedObjectContext save:nil];
+                        if (i == notInCoreDataArray.count) {
+                            complete(YES);
+                        }
+                    }else{
+                        savedPost.isWebPage = [NSNumber numberWithBool:YES];
+                        [managedObjectContext save:nil];
+                        if (i == notInCoreDataArray.count) {
+                            complete(YES);
+                        }
+                    }
+                }
+            }];
         }];
     }
 }
@@ -148,6 +158,39 @@
         [managedObjectContext deleteObject:post];
     }
     [managedObjectContext save:nil];
+}
+
++(NSMutableArray *)returnPostNotInCoreData:(NSMutableArray *)newPosts  withManagedObject:(NSManagedObjectContext *)managedObjectContext{
+    NSMutableArray *notInCoreData = [NSMutableArray array];
+    for (RKLink *post in newPosts) {
+        NSFetchRequest * allPostsFetch = [[NSFetchRequest alloc] initWithEntityName:@"Post"];
+        allPostsFetch.predicate = [NSPredicate predicateWithFormat:@"postID == %@", post.fullName];
+        NSArray *results = [managedObjectContext executeFetchRequest:allPostsFetch error:nil];
+
+        if (results.count == 0) {
+            [notInCoreData addObject:post];
+        }
+    }
+
+    return notInCoreData;
+}
+
++(void)removePostsNotInLatestRefresh:(NSMutableArray *)posts withManagedObject:(NSManagedObjectContext *)managedObject{
+    NSFetchRequest * allPostsFetch = [[NSFetchRequest alloc] initWithEntityName:@"Post"];
+    NSArray *results = [managedObject executeFetchRequest:allPostsFetch error:nil];
+
+    for (Post *post in results) {
+        BOOL isInCoreData = NO;
+        for (RKLink *rkLink in posts) {
+            if ([post.postID isEqualToString:rkLink.fullName]) {
+                isInCoreData = YES;
+            }
+        }
+        if (isInCoreData == NO) {
+            [managedObject deleteObject:post];
+            [managedObject save:nil];
+        }
+    }
 }
 
 +(void)removePhotoFromDocumentDirectory:(NSString *)fileName{
@@ -200,6 +243,96 @@
     return [NSURL URLWithString:[NSString stringWithFormat:@"http://imgur.com/%@.png", imgurID]];
 }
 
+
++(void)saveLocalSubreddit:(RKLink *)post withManagedObject:(NSManagedObjectContext *)managedObjectContext withComments:(NSArray *)comments andCompletion:(void (^)(BOOL completed))complete{
+    NSFetchRequest * postFetch = [[NSFetchRequest alloc] initWithEntityName:@"Post"];
+    postFetch.predicate = [NSPredicate predicateWithFormat:@"postID == %@", post.fullName];
+    NSArray * posts = [managedObjectContext executeFetchRequest:postFetch error:nil];
+
+    if (posts.count) {
+        complete(YES);
+    }else{
+        Post *savedPost = [NSEntityDescription insertNewObjectForEntityForName:@"Post" inManagedObjectContext:managedObjectContext];
+        savedPost.title = post.title;
+        savedPost.url = [post.URL absoluteString];
+        savedPost.nsfw = [NSNumber numberWithBool:post.NSFW];
+        savedPost.author = post.author;
+        savedPost.voteRatio = [NSNumber numberWithFloat:post.score];
+        savedPost.postID = post.fullName;
+        savedPost.isLocalPost = [NSNumber numberWithBool:post.isLocalPost];
+        savedPost.domain = post.domain;
+
+        if (comments) {
+            [Comment addCommentsToPost:savedPost commentsArray:comments withMangedObject:managedObjectContext];
+        }
+
+        if ([[post.URL absoluteString] containsString:@"youtube.com"] || [[post.URL absoluteString] containsString:@"youtu.be"]) {
+            savedPost.url = [self performRegexOnYoutube:post.URL];
+            savedPost.isYouTube = [NSNumber numberWithBool:YES];
+        }
+
+        if (post.isImageLink) {
+            post.customIsImage = YES;
+            post.customURL = post.URL;
+        }
+
+//        if ([[post.URL absoluteString] containsString:@"imgur"] && [post.URL absoluteString].length == 24 && ![[post.URL absoluteString] containsString:@"/a/"] && ![[post.URL absoluteString] containsString:@"gallery"]) {
+//            NSString *stringURL = [NSString stringWithFormat:@"%@.jpg", [post.URL absoluteString]];
+//            post.customIsImage = YES;
+//            post.customURL = [NSURL URLWithString:stringURL];
+//        }
+
+        [self createSubredditRelationship:post withPostObject:savedPost withManagedObj:managedObjectContext];
+
+        NSURLRequest *thumbnailRequest = [NSURLRequest requestWithURL:post.thumbnailURL];
+        [NSURLConnection sendAsynchronousRequest:thumbnailRequest queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
+            if (data) {
+                savedPost.thumbnailImage = [NSNumber numberWithBool:YES];
+            }
+
+            [self saveDataToDocumentsDirectory:data withFileNamePrefix:@"thumbnail" andPostfix:savedPost.postID];
+
+            if (post.customIsImage) {
+                savedPost.isImageLink = [NSNumber numberWithBool:YES];
+                NSURLRequest *mainImageRequest = [NSURLRequest requestWithURL:post.customURL];
+                [NSURLConnection sendAsynchronousRequest:mainImageRequest queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
+
+                    NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse*)response;
+                    NSString *contentType = [httpResponse allHeaderFields][@"Content-Type"];
+
+                    if ([contentType isEqualToString:@"image/gif"]) {
+                        savedPost.isImageLink = [NSNumber numberWithBool:NO];
+                        savedPost.isGif = [NSNumber numberWithBool:YES];
+                    }else{
+                        [self saveDataToDocumentsDirectory:data withFileNamePrefix:@"image" andPostfix:savedPost.postID];
+                        savedPost.image = [NSNumber numberWithBool:YES];
+                    }
+
+                    [managedObjectContext save:nil];
+                    complete(YES);
+                }];
+            }else{
+                savedPost.isImageLink = [NSNumber numberWithBool:NO];
+
+                if (post.isSelfPost) {
+                    savedPost.isSelfPost = [NSNumber numberWithBool:YES];
+
+                    if ([post.selfText isEqualToString:@""]) {
+                        savedPost.selfText = post.title;
+                    }else{
+                        savedPost.selfText = post.selfText;
+                    }
+                    [managedObjectContext save:nil];
+                    complete(YES);
+                }else{
+                    savedPost.isWebPage = [NSNumber numberWithBool:YES];
+                    [managedObjectContext save:nil];
+                    complete(YES);
+                }
+            }
+        }];
+    }
+}
 
 
 //SAVE IF WE WANT TO INCORPORATE IMGUR REGEX

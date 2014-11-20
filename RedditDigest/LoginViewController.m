@@ -170,6 +170,7 @@
         selectionController.managedObject = self.managedObject;
         if (self.isFromSettings) {
             selectionController.isFromSettings = YES;
+        
         }
     }
 }

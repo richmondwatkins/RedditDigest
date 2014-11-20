@@ -24,6 +24,7 @@
 @property (strong, nonatomic) IBOutlet UICollectionView *subredditCollectionView;
 @property (strong, nonatomic) IBOutlet UIButton *doneSelectingSubredditsButton;
 @property SubredditListCollectionViewCell *sizingCell;
+@property (strong, nonatomic) IBOutlet UIActivityIndicatorView *activityIndicator;
 
 @end
 
@@ -31,6 +32,10 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.activityIndicator.hidden = NO;
+    [self.activityIndicator startAnimating];
+
+    [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
 
     KTCenterFlowLayout *layout = [KTCenterFlowLayout new];
     layout.minimumInteritemSpacing = 10.f;
@@ -60,11 +65,16 @@
                     i++;
 //                    if (object.totalSubscribers >= 20000) {
                         if (![self.recommendedFromSubscriptions containsObject:object] && ![self.recommendedFromUsers containsObject:object]) {
-                            [self.recommendedFromUsers addObject:object];
+                            if (self.recommendedFromUsers.count <= 20) {
+                                [self.recommendedFromUsers addObject:object];
+                            }
                         }
 //                    }
 
                     if (i == results.count) {
+                        self.activityIndicator.hidden = YES;
+                        [self.activityIndicator stopAnimating];
+
                         [self checkForExistingSubscription:self.recommendedFromUsers];
                         [self.recomendations addObject:self.recommendedFromUsers];
                         [self.subredditCollectionView reloadData];
@@ -108,6 +118,7 @@
             if (i == flattenedSubNames.count) {
                 [self checkForExistingSubscription:self.recommendedFromSubscriptions];
                 [self.recomendations addObject:self.recommendedFromSubscriptions];
+                [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
                 [self.subredditCollectionView reloadData];
             }
         }];

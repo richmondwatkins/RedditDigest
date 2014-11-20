@@ -8,7 +8,6 @@ pod 'ZeroPush'
 pod 'RedditKit', '1.3'
 pod 'SSKeychain'
 pod 'FLAnimatedImage', '~> 1.0'
-pod 'PocketAPI'
 pod 'TSMessages'
 pod 'MCSwipeTableViewCell', '~> 2.1'
 end

@@ -10,12 +10,15 @@
 #import "Digest.h"
 #import "DigestViewController.h"
 #import "DigestPost.h"
+#import "ArchivedDigestTableViewCell.h"
+
 @interface PastDigestsViewController () <UITableViewDataSource, UITableViewDelegate>
+
 @property (strong, nonatomic) IBOutlet UITableView *pastDigestTableView;
 @property NSArray *digests;
 @property NSArray *selectedDigestPosts;
 @property NSCache *imageCache;
-
+@property BOOL notificationsOn;
 @end
 
 @implementation PastDigestsViewController
@@ -23,13 +26,24 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self retrievePastDigestFromCoreData];
-    self.imageCache = [[NSCache alloc] init];
+
+    UIApplication *application = [UIApplication sharedApplication];
+
+    if ([application respondsToSelector:@selector(isRegisteredForRemoteNotifications)])
+    {
+        self.notificationsOn = [application isRegisteredForRemoteNotifications];
+    }
+    else
+    {
+        UIRemoteNotificationType types = [application enabledRemoteNotificationTypes];
+        self.notificationsOn = types & UIRemoteNotificationTypeAlert;
+    }
 }
 
 
 -(void)retrievePastDigestFromCoreData{
     NSFetchRequest *fetchDigests = [[NSFetchRequest alloc] initWithEntityName:@"Digest"];
-    NSSortDescriptor *sorter = [[NSSortDescriptor alloc] initWithKey:@"time" ascending:NO];
+    NSSortDescriptor *sorter = [[NSSortDescriptor alloc] initWithKey:@"time" ascending:YES];
     [fetchDigests setSortDescriptors:@[sorter]];
 
     NSArray *digests = [self.managedObject executeFetchRequest:fetchDigests error:nil];
@@ -41,43 +55,57 @@
 }
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    return self.digests.count;
+
+    if (self.notificationsOn) {
+        return self.digests.count;
+    }else{
+        return 1;
+    }
 }
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-    
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"DigestCell"];
-    Digest *digest = [self.digests objectAtIndex:indexPath.row];
 
-    NSArray *posts = [digest.digestPost allObjects];
-    DigestPost *post = posts.firstObject;
+    ArchivedDigestTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"DigestCell"];
 
-    if ([post.image boolValue]) {
-        cell.imageView.image = [self returnImageForCellFromData:post.postID withSubredditNameForKey:post.subreddit andFilePathPrefix:@"image-copy"];
-    }else if([post.thumbnailImagePath boolValue]){
-         cell.imageView.image = [self returnImageForCellFromData:post.postID withSubredditNameForKey:post.subreddit  andFilePathPrefix:@"thumbnail-copy"];
-    }else if([post.subredditImage boolValue]){
-         cell.imageView.image = [self returnImageForCellFromData:post.subreddit withSubredditNameForKey:post.subreddit andFilePathPrefix:@"subreddit-copy"];
-    }else{
-         cell.imageView.image = [UIImage imageNamed:@"snoo_camera_placeholder"];
+    if (self.notificationsOn)
+    {
+        Digest *digest = [self.digests objectAtIndex:indexPath.row];
+
+        NSArray *posts = [digest.digestPost allObjects];
+        DigestPost *post = posts.firstObject;
+
+        if ([post.image boolValue]) {
+            cell.archiveImageView.image = [self returnImageForCellFromData:post.postID withSubredditNameForKey:post.subreddit andFilePathPrefix:@"image-copy"];
+        }else if([post.thumbnailImagePath boolValue]){
+            cell.archiveImageView.image = [self returnImageForCellFromData:post.postID withSubredditNameForKey:post.subreddit  andFilePathPrefix:@"thumbnail-copy"];
+        }else if([post.subredditImage boolValue]){
+            cell.archiveImageView.image = [self returnImageForCellFromData:post.subreddit withSubredditNameForKey:post.subreddit andFilePathPrefix:@"subreddit-copy"];
+        }else{
+            cell.archiveImageView.image = [UIImage imageNamed:@"snoo_camera_placeholder"];
+        }
+        cell.archiveImageView.clipsToBounds = YES;
+
+        NSDate* date = [NSDate dateWithTimeIntervalSince1970:[digest.time doubleValue]];
+
+        NSDateFormatter *dateFormat =[[NSDateFormatter alloc]init];
+        [dateFormat setDateFormat:@"MMMM dd, yyyy - h:00"];
+        NSString *dateText = [dateFormat stringFromDate:date];
+        cell.archiveTitleLabel.text = dateText;
     }
+    else {
+        [cell setUserInteractionEnabled:NO];
+        cell.archiveTitleLabel.text = @"Push notifications must be enabled to recieve archived digests";
+    }
+    cell.archiveTitleLabel.lineBreakMode = NSLineBreakByWordWrapping;
 
-    NSDate* date = [NSDate dateWithTimeIntervalSince1970:[digest.time doubleValue]];
-
-    NSDateFormatter *dateFormat =[[NSDateFormatter alloc]init];
-    [dateFormat setDateFormat:@"MMMM dd, yyyy"];
-
-    cell.textLabel.text = [dateFormat stringFromDate:date];
     return cell;
 }
 
 -(UIImage *)returnImageForCellFromData:(NSString *)filePath withSubredditNameForKey:(NSString *)subreddit andFilePathPrefix:(NSString *)prefix{
-    UIImage *image = [self.imageCache objectForKey:subreddit];
-    if (image == nil) {
-        NSData *imageData = [NSData dataWithContentsOfFile:[self documentsPathForFileName:filePath withPrefix:prefix]];
-        image = [UIImage imageWithData:imageData];
-        [self.imageCache setObject:image forKey:subreddit];
-    }
+
+    NSData *imageData = [NSData dataWithContentsOfFile:[self documentsPathForFileName:filePath withPrefix:prefix]];
+    UIImage *image = [UIImage imageWithData:imageData];
+
     return image;
 }
 
@@ -97,6 +125,12 @@
 
     digestController.oldDigest = [selectedDigest.digestPost allObjects];
     digestController.isFromPastDigest = YES;
+
+    NSDateFormatter *dateFormat =[[NSDateFormatter alloc] init];
+    [dateFormat setDateFormat:@"MMMM dd, yyyy"];
+    NSString *dateText = [dateFormat stringFromDate:[NSDate dateWithTimeIntervalSince1970:[selectedDigest.time doubleValue]]];
+
+    digestController.oldDigestDate = dateText;
 }
 
 @end

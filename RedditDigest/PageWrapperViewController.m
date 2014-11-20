@@ -23,7 +23,6 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    self.navController.navigationItem.title = self.post.title;
 }
 
 - (void)viewDidLoad {
@@ -33,9 +32,7 @@
         [self.post.managedObjectContext save:nil];
     }
     self.statusBarBackground.backgroundColor = REDDIT_DARK_BLUE;
-
 }
-
 
 #pragma mark - Pan 
 - (IBAction)onPan:(UIPanGestureRecognizer *)panGesture

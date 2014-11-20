@@ -22,7 +22,8 @@
 #import "LoginViewController.h"
 #import "DigestCategory.h"
 #import <AudioToolbox/AudioToolbox.h>
-
+//#import "NoInternetAlertControl.h"
+NSInteger const MAX_SELECTABLE_SUBREDDITS_FOR_DIGEST = 20;
 
 @interface SubredditSelectionViewController () <UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, UIAlertViewDelegate, UITextFieldDelegate>
 
@@ -41,6 +42,8 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+//    [NoInternetAlertControl checkForInternetReachability:self];
+
     KTCenterFlowLayout *layout = [KTCenterFlowLayout new];
     layout.minimumInteritemSpacing = 10.f;
     layout.minimumLineSpacing = 10.f;
@@ -55,6 +58,15 @@
     self.subreddits = [NSMutableArray array];
     [self.activityIndicator startAnimating];
 
+    if (self.isFromSettings) {
+        //[self.navigationItem setHidesBackButton:YES]; <-- This didn't work so create a view to put over the button
+        UIView *backButtonCoverView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 44, 44)];
+        backButtonCoverView.backgroundColor = [UIColor colorWithRed:0.2 green:0.4 blue:0.6 alpha:1];
+        self.navigationController.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:backButtonCoverView];
+        [UIView animateWithDuration:0.3 animations:^{
+            self.doneSelectingSubredditsButton.alpha = 1.0;
+        }];
+    }
     // Logged in with reddit account
     if ([[NSUserDefaults standardUserDefaults] boolForKey:@"HasRedditAccount"])
     {
@@ -94,7 +106,7 @@
 
 -(void)setUpView{
     self.subredditCollectionView.contentOffset = CGPointMake(0, 44);
-    self.navigationItem.title = @"Choose your subreddits";
+    self.navigationItem.title = @"Choose Your subreddits";
     //for resizing template
     UINib *cellNib = [UINib nibWithNibName:@"SubredditSelectionCell" bundle:nil];
     [self.subredditCollectionView registerNib:cellNib forCellWithReuseIdentifier:@"Cell"];
@@ -112,8 +124,16 @@
     self.activityIndicator.hidden = YES;
     [self sortSubredditsAlphabetically];
     [self.subredditCollectionView reloadData];
+
+    [self updateSelectedSubredditCounter];
 }
 
+- (void)updateSelectedSubredditCounter
+{
+    // Set number of subredds select and number left to select
+    NSString *selectedSubredditsCount = [NSString stringWithFormat:@"%lu/%zd", (unsigned long)self.selectedSubreddits.count, MAX_SELECTABLE_SUBREDDITS_FOR_DIGEST];
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:selectedSubredditsCount style:UIBarButtonItemStylePlain target:nil action:nil];
+}
 
 #pragma mark - Collection View
 -(NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
@@ -134,31 +154,35 @@
 {
     RKSubreddit *subreddit = self.subreddits[indexPath.row];
 
-    if (self.selectedSubreddits.count < 10)
+    if (self.selectedSubreddits.count < MAX_SELECTABLE_SUBREDDITS_FOR_DIGEST)
     {
          [self.selectedSubreddits addObject:subreddit];
         if (self.selectedSubreddits.count > 0) {
+            [self updateSelectedSubredditCounter];
             [UIView animateWithDuration:0.3 animations:^{
                 self.doneSelectingSubredditsButton.alpha = 1.0;
+                /*
                 NSString *path  = [[NSBundle mainBundle] pathForResource:@"SelectSubreddit" ofType:@"mp3"];
                 NSURL *pathURL = [NSURL fileURLWithPath : path];
 
                 SystemSoundID audioEffect;
                 AudioServicesCreateSystemSoundID((__bridge CFURLRef) pathURL, &audioEffect);
                 AudioServicesPlaySystemSound(audioEffect);
+                 */
             }];
         }
     }
     else
     {
         [self.subredditCollectionView deselectItemAtIndexPath:indexPath animated: YES];
-        
+        /*
         NSString *path  = [[NSBundle mainBundle] pathForResource:@"DeselectSubreddit" ofType:@"mp3"];
         NSURL *pathURL = [NSURL fileURLWithPath : path];
 
         SystemSoundID audioEffect;
         AudioServicesCreateSystemSoundID((__bridge CFURLRef) pathURL, &audioEffect);
         AudioServicesPlaySystemSound(audioEffect);
+        */
     }
 }
 
@@ -188,7 +212,6 @@
 
 - (void)collectionView:(UICollectionView *)collectionView didDeselectItemAtIndexPath:(NSIndexPath *)indexPath
 {
-
     RKSubreddit *subreddit = self.subreddits[indexPath.row];
 
     if ([self.selectedSubreddits containsObject:subreddit]) {
@@ -208,13 +231,14 @@
             self.doneSelectingSubredditsButton.alpha = 1.0;
         }];
     }
+    [self updateSelectedSubredditCounter];
 }
 
 #pragma mark - Cell Spacing and Padding
 
 - (UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout insetForSectionAtIndex:(NSInteger)section
 {
-    return UIEdgeInsetsMake(20, 15, 10, 15);
+    return UIEdgeInsetsMake(0, 15, 10, 15);
 }
 
 - (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout minimumInteritemSpacingForSectionAtIndex:(NSInteger)section
@@ -279,6 +303,7 @@
             [self.subreddits insertObject:subreddit atIndex:0];
             NSIndexPath *firstIndex = [NSIndexPath indexPathForRow:0 inSection:0];
             [self.subredditCollectionView insertItemsAtIndexPaths:@[firstIndex]];
+
         }
         else
         {
@@ -335,28 +360,17 @@
 }
 
 #pragma mark - Backend
-/*
-    .         .
-    |         |
-    j    :    l
-   /           \
-  /             \
- Y       .       Y
- |       |       |
- l "----~Y~----" !
-  \      |      /
-   Y     |     Y
-   |     I     |
- ***************************************
- */
+
 - (IBAction)finishSelectingSubreddits:(id)sender
 {
+    /*
     NSString *path  = [[NSBundle mainBundle] pathForResource:@"LoadDigest" ofType:@"mp3"];
     NSURL *pathURL = [NSURL fileURLWithPath : path];
 
     SystemSoundID audioEffect;
     AudioServicesCreateSystemSoundID((__bridge CFURLRef) pathURL, &audioEffect);
     AudioServicesPlaySystemSound(audioEffect);
+    */
 
     [Subreddit addSubredditsToCoreData:self.selectedSubreddits withManagedObject:self.managedObject];
 

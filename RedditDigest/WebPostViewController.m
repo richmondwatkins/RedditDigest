@@ -21,19 +21,6 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-
-    // To block swipping in web sites. Only do our swipes
-    UISwipeGestureRecognizer *rightSwipeGesture = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(handleSwipeGesture:)];
-    UISwipeGestureRecognizer *leftSwipeGesture = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(handleSwipeGesture:)];
-    rightSwipeGesture.direction = UISwipeGestureRecognizerDirectionRight;
-    leftSwipeGesture.direction = UISwipeGestureRecognizerDirectionLeft;
-    [self.view addGestureRecognizer:rightSwipeGesture];
-    [self.view addGestureRecognizer:leftSwipeGesture];
-
-    [self.webView.scrollView.panGestureRecognizer requireGestureRecognizerToFail:rightSwipeGesture];
-    [self.webView.scrollView.panGestureRecognizer requireGestureRecognizerToFail:leftSwipeGesture];
-    [self.webView stringByEvaluatingJavaScriptFromString:@"window.onscroll = function(){ window.scrollTo(0,0);}"];
-
 }
 
 -(void)viewWillAppear:(BOOL)animated
@@ -154,11 +141,6 @@
         self.verticalSpaceConstraint.constant = 0;
         [self.view layoutIfNeeded];
     }];
-}
-
-- (void)handleSwipeGesture:(id)sender
-{
-    NSLog(@"Swipe Blocked!");
 }
 
 -(BOOL)prefersStatusBarHidden {

@@ -21,11 +21,6 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-
-    //self.statusBarBackground.backgroundColor = REDDIT_DARK_BLUE;
-//    if (!self.navigationController.navigationBarHidden) {
-//        self.statusBarBackground.alpha = 0.0;
-//    }
 }
 
 -(void)viewWillAppear:(BOOL)animated

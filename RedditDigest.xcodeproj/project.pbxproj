@@ -16,6 +16,7 @@
 		3417AC131A0945B40026961C /* KTCenterFlowLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 3417AC121A0945B40026961C /* KTCenterFlowLayout.m */; };
 		343257411A0A96CF003A3115 /* HeaderCollectionReusableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 343257401A0A96CF003A3115 /* HeaderCollectionReusableView.m */; };
 		345700D41A13B91B00FA6FC8 /* DetailPostViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 345700D31A13B91B00FA6FC8 /* DetailPostViewController.m */; };
+		34C2BD601A1DAF6100D2E245 /* ArchivedDigestTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 34C2BD5F1A1DAF6100D2E245 /* ArchivedDigestTableViewCell.m */; };
 		34D1B9371A081B4D00C0C15F /* WelcomViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 34D1B9361A081B4D00C0C15F /* WelcomViewController.m */; };
 		34D1B93A1A081D0C00C0C15F /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 34D1B9391A081D0C00C0C15F /* LoginViewController.m */; };
 		34D1B93C1A08463500C0C15F /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 34D1B93B1A08463500C0C15F /* Security.framework */; };
@@ -95,6 +96,8 @@
 		343257401A0A96CF003A3115 /* HeaderCollectionReusableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HeaderCollectionReusableView.m; path = RedditDigest/HeaderCollectionReusableView.m; sourceTree = "<group>"; };
 		345700D21A13B91B00FA6FC8 /* DetailPostViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DetailPostViewController.h; sourceTree = "<group>"; };
 		345700D31A13B91B00FA6FC8 /* DetailPostViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DetailPostViewController.m; sourceTree = "<group>"; };
+		34C2BD5E1A1DAF6100D2E245 /* ArchivedDigestTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ArchivedDigestTableViewCell.h; sourceTree = "<group>"; };
+		34C2BD5F1A1DAF6100D2E245 /* ArchivedDigestTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ArchivedDigestTableViewCell.m; sourceTree = "<group>"; };
 		34D1B9351A081B4D00C0C15F /* WelcomViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WelcomViewController.h; sourceTree = "<group>"; };
 		34D1B9361A081B4D00C0C15F /* WelcomViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WelcomViewController.m; sourceTree = "<group>"; };
 		34D1B9381A081D0C00C0C15F /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
@@ -104,8 +107,8 @@
 		5D311EDF1A10A49D002AFC3C /* CommentTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CommentTableViewCell.h; sourceTree = "<group>"; };
 		5D366B871A194991006B0684 /* DigestTitleLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DigestTitleLabel.h; sourceTree = "<group>"; };
 		5D366B881A194991006B0684 /* DigestTitleLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DigestTitleLabel.m; sourceTree = "<group>"; };
-		5D366B8A1A194F7E006B0684 /* TextViewWebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TextViewWebViewController.h; sourceTree = "<group>"; };
-		5D366B8B1A194F7E006B0684 /* TextViewWebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TextViewWebViewController.m; sourceTree = "<group>"; };
+		5D366B8A1A194F7E006B0684 /* TextViewWebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TextViewWebViewController.h; path = ../TextViewWebViewController.h; sourceTree = "<group>"; };
+		5D366B8B1A194F7E006B0684 /* TextViewWebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TextViewWebViewController.m; path = ../TextViewWebViewController.m; sourceTree = "<group>"; };
 		5D366B931A19B873006B0684 /* RecHeaderCollectionReusableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RecHeaderCollectionReusableView.h; sourceTree = "<group>"; };
 		5D366B941A19B873006B0684 /* RecHeaderCollectionReusableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RecHeaderCollectionReusableView.m; sourceTree = "<group>"; };
 		5D3AC6311A12BCCC0093E79E /* DigestCategory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DigestCategory.h; sourceTree = "<group>"; };
@@ -135,8 +138,8 @@
 		5D614E5A1A16F96100A199A2 /* libxml2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.dylib; path = usr/lib/libxml2.dylib; sourceTree = SDKROOT; };
 		5D614E5F1A1838A200A199A2 /* RecommendedSubredditsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RecommendedSubredditsViewController.h; sourceTree = "<group>"; };
 		5D614E601A1838A200A199A2 /* RecommendedSubredditsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RecommendedSubredditsViewController.m; sourceTree = "<group>"; };
-		5D7DDE3A1A1B03AE0000C6C3 /* PastDigestsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PastDigestsViewController.h; sourceTree = "<group>"; };
-		5D7DDE3B1A1B03AE0000C6C3 /* PastDigestsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PastDigestsViewController.m; sourceTree = "<group>"; };
+		5D7DDE3A1A1B03AE0000C6C3 /* PastDigestsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PastDigestsViewController.h; path = ../PastDigestsViewController.h; sourceTree = "<group>"; };
+		5D7DDE3B1A1B03AE0000C6C3 /* PastDigestsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PastDigestsViewController.m; path = ../PastDigestsViewController.m; sourceTree = "<group>"; };
 		5DA1F1451A0EEE480017DE39 /* ChildComment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChildComment.h; sourceTree = "<group>"; };
 		5DA1F1461A0EEE480017DE39 /* ChildComment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChildComment.m; sourceTree = "<group>"; };
 		5DA1F1471A0EEE480017DE39 /* Comment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Comment.h; sourceTree = "<group>"; };
@@ -256,16 +259,23 @@
 			path = CenterFlowLayout;
 			sourceTree = "<group>";
 		};
-		5D5C12B41A05716E002902A8 = {
+		34C2BD611A1DB0E000D2E245 /* Archive Digest */ = {
 			isa = PBXGroup;
 			children = (
 				5D7DDE3A1A1B03AE0000C6C3 /* PastDigestsViewController.h */,
 				5D7DDE3B1A1B03AE0000C6C3 /* PastDigestsViewController.m */,
+				34C2BD5E1A1DAF6100D2E245 /* ArchivedDigestTableViewCell.h */,
+				34C2BD5F1A1DAF6100D2E245 /* ArchivedDigestTableViewCell.m */,
+			);
+			name = "Archive Digest";
+			sourceTree = "<group>";
+		};
+		5D5C12B41A05716E002902A8 = {
+			isa = PBXGroup;
+			children = (
 				81D291231A19903D002B2708 /* Sounds */,
 				5D366B871A194991006B0684 /* DigestTitleLabel.h */,
 				5D366B881A194991006B0684 /* DigestTitleLabel.m */,
-				5D366B8A1A194F7E006B0684 /* TextViewWebViewController.h */,
-				5D366B8B1A194F7E006B0684 /* TextViewWebViewController.m */,
 				5D614E501A16F73500A199A2 /* HTMLParser */,
 				5D5C12BF1A05716E002902A8 /* RedditDigest */,
 				5D5C12DC1A05716E002902A8 /* RedditDigestTests */,
@@ -294,9 +304,9 @@
 				5DE75CA61A0D99720031F0F7 /* SubredditSelection */,
 				3413FC331A11172C0018A172 /* Loading View */,
 				341340191A0C9925004C8C15 /* Digest View */,
-				5DE75CA41A0D98B30031F0F7 /* PaginatedViewControllers */,
-				5DE75CA31A0D98930031F0F7 /* HttpRequestHelpers */,
 				5DE75CA21A0D98740031F0F7 /* CoreDataModels */,
+				5DE75CA31A0D98930031F0F7 /* HttpRequestHelpers */,
+				5DE75CA41A0D98B30031F0F7 /* PaginatedViewControllers */,
 				345700D21A13B91B00FA6FC8 /* DetailPostViewController.h */,
 				345700D31A13B91B00FA6FC8 /* DetailPostViewController.m */,
 				5DB47A5B1A0ABA5B0034EA84 /* PostViewController.h */,
@@ -305,6 +315,8 @@
 				340531EC1A1312AE000CF33C /* CommentViewController.m */,
 				5D311EDF1A10A49D002AFC3C /* CommentTableViewCell.h */,
 				5D311EDD1A10A359002AFC3C /* CommentTableViewCell.m */,
+				5D366B8A1A194F7E006B0684 /* TextViewWebViewController.h */,
+				5D366B8B1A194F7E006B0684 /* TextViewWebViewController.m */,
 				3417AC0B1A092D970026961C /* SettingsViewController.h */,
 				3417AC0C1A092D970026961C /* SettingsViewController.m */,
 				81D5237F1A0C0E710059C9B3 /* SettingsAboutRedditViewController.h */,
@@ -313,6 +325,7 @@
 				815EED171A097E36006286FF /* EditSubredditViewController.m */,
 				5D614E5F1A1838A200A199A2 /* RecommendedSubredditsViewController.h */,
 				5D614E601A1838A200A199A2 /* RecommendedSubredditsViewController.m */,
+				34C2BD611A1DB0E000D2E245 /* Archive Digest */,
 				5D5C12D01A05716E002902A8 /* Images.xcassets */,
 				5D5C12D21A05716E002902A8 /* LaunchScreen.xib */,
 				5D366B931A19B873006B0684 /* RecHeaderCollectionReusableView.h */,
@@ -609,6 +622,7 @@
 			files = (
 				5DE75C9B1A0D92580031F0F7 /* SelfPostViewController.m in Sources */,
 				5DB5B84C1A084055007DC036 /* SubredditListCollectionViewCell.m in Sources */,
+				34C2BD601A1DAF6100D2E245 /* ArchivedDigestTableViewCell.m in Sources */,
 				5DB47AEE1A0C4A700034EA84 /* UserRequests.m in Sources */,
 				5DE75CAC1A0DC9C30031F0F7 /* PageWrapperViewController.m in Sources */,
 				340531ED1A1312AE000CF33C /* CommentViewController.m in Sources */,

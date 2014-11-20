@@ -28,7 +28,7 @@
 #import "DigestPost.h"
 #import <ZeroPush.h>
 #import "MCSwipeTableViewCell.h"
-
+//#import "NoInternetAlertControl.h"
 @interface DigestViewController () <UITableViewDataSource, UITableViewDelegate, CLLocationManagerDelegate, MCSwipeTableViewCellDelegate>
 
 @property NSMutableArray *digestPosts;
@@ -75,17 +75,6 @@
 
 - (void)viewWillAppear:(BOOL)animated
 {
-    if (self.isFromPastDigest != YES) {
-        self.refreshControl = [[UIRefreshControl alloc] init];
-
-        [self.refreshControl addTarget:self action:@selector(requestNewLinksFromRefresh) forControlEvents:UIControlEventValueChanged];
-        [self.digestTableView addSubview:self.refreshControl];
-    }else{
-        self.todayBarButton.title = @"Today";
-        [self.refreshControl endRefreshing];
-        [self.refreshControl removeFromSuperview];
-        self.refreshControl = nil;
-    }
 
     [self.imageCache removeAllObjects];
     [super viewWillAppear:animated];
@@ -110,6 +99,8 @@
 
 - (void)viewDidAppear:(BOOL)animated
 {
+//    [NoInternetAlertControl checkForInternetReachability:self];
+
     [super viewDidAppear:animated];
     // These two lines enable automatic cell resizing thanks to iOS 8 🐋
     self.digestTableView.estimatedRowHeight = 227.0;
@@ -121,10 +112,26 @@
     }
 //    [self.digestTableView reloadData];
     [[UIApplication sharedApplication] setApplicationIconBadgeNumber:0];
+
+    if (self.isFromPastDigest != YES && [[NSUserDefaults standardUserDefaults] boolForKey:@"HasSubscriptions"]) {
+        self.refreshControl = [[UIRefreshControl alloc] init];
+
+        [self.refreshControl addTarget:self action:@selector(requestNewLinksFromRefresh) forControlEvents:UIControlEventValueChanged];
+        [self.digestTableView addSubview:self.refreshControl];
+    }else if([[NSUserDefaults standardUserDefaults] boolForKey:@"HasSubscriptions"]){
+        self.todayBarButton.title = @"Today";
+        [self.refreshControl endRefreshing];
+        [self.refreshControl removeFromSuperview];
+        self.refreshControl = nil;
+        self.title = self.oldDigestDate;
+    }
+    
 }
 
 #pragma mark - Location Services
 -(void)checkForLocationServices{
+
+    NSLog(@"MADE IT");
     if ([[NSUserDefaults standardUserDefaults] boolForKey:@"Location"] && [CLLocationManager locationServicesEnabled]) {
         self.locationManger = [[CLLocationManager alloc] init];
         self.locationManger.delegate = self;
@@ -135,13 +142,13 @@
 -(void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations{
     if (self.didUpdateLocation == NO) {
         for(CLLocation *location in locations){
-            if (location.verticalAccuracy < 1000 && location.horizontalAccuracy < 1000) {
+//            if (location.verticalAccuracy < 100 && location.horizontalAccuracy < 100) {
                 self.userLocation = location;
                 [self findUsersLocationByCityName];
                 [self.locationManger stopUpdatingLocation];
                 self.didUpdateLocation = YES;
                 break;
-            }
+//            }
         }
     }
 }
@@ -171,11 +178,13 @@
 
 - (IBAction)onTodayButtonTouched:(id)sender {
     self.isFromPastDigest = NO;
-    [self retrievePostsFromCoreData:YES withCompletion:^(BOOL completed) {
-        self.todayBarButton.title = @"";
-        self.refreshControl = [[UIRefreshControl alloc] init];
-        [self.refreshControl addTarget:self action:@selector(requestNewLinksFromRefresh) forControlEvents:UIControlEventValueChanged];
-        [self.digestTableView addSubview:self.refreshControl];
+    [self retrievePostsFromCoreData:NO withCompletion:^(BOOL completed) {
+        if (!self.refreshControl) {
+            self.todayBarButton.title = @"";
+            self.refreshControl = [[UIRefreshControl alloc] init];
+            [self.refreshControl addTarget:self action:@selector(requestNewLinksFromRefresh) forControlEvents:UIControlEventValueChanged];
+            [self.digestTableView addSubview:self.refreshControl];
+        }
     }];
 }
 
@@ -281,6 +290,7 @@
 
     [cell setSwipeGestureWithView:downVoteView color:downVoteColor mode:MCSwipeTableViewCellModeSwitch state:MCSwipeTableViewCellState3 completionBlock:^(MCSwipeTableViewCell *cell, MCSwipeTableViewCellState state, MCSwipeTableViewCellMode mode) {
     }];
+
 
     if (self.isFromPastDigest) {
         DigestPost *post = self.digestPosts[indexPath.row];
@@ -501,7 +511,7 @@
 
 -(void)fetchNewData:(BOOL)isDigest withCompletion:(void (^)(UIBackgroundFetchResult))completionHandler
 {
-    [Post removeAllPostsFromCoreData:self.managedObjectContext];
+//    [Post removeAllPostsFromCoreData:self.managedObjectContext];
     [self.digestPosts removeAllObjects];
     NSArray *subreddits = [Subreddit retrieveAllSubreddits:self.managedObjectContext];
     [RedditRequests retrieveLatestPostFromArray:subreddits withManagedObject:self.managedObjectContext  withCompletion:^(BOOL completed) {
@@ -520,8 +530,9 @@
     NSFetchRequest * fetch = [[NSFetchRequest alloc] init];
     [fetch setEntity:[NSEntityDescription entityForName:@"Post" inManagedObjectContext:self.managedObjectContext]];
     NSSortDescriptor *sorter = [[NSSortDescriptor alloc] initWithKey:@"voteRatio" ascending:NO];
+    NSSortDescriptor *sorterTwo = [[NSSortDescriptor alloc] initWithKey:@"isLocalPost" ascending:NO];
 
-    [fetch setSortDescriptors:@[sorter]];
+    [fetch setSortDescriptors:@[sorterTwo, sorter]];
 
     NSArray * posts = [self.managedObjectContext executeFetchRequest:fetch error:nil];
 
@@ -545,7 +556,6 @@
 
 -(void)requestNewLinks:(BOOL)isDigest
 {
-    [Post removeAllPostsFromCoreData:self.managedObjectContext];
 
     NSFetchRequest * fetch = [[NSFetchRequest alloc] init];
     [fetch setEntity:[NSEntityDescription entityForName:@"Subreddit" inManagedObjectContext:self.managedObjectContext]];
@@ -561,6 +571,7 @@
 {
     [self retrievePostsFromCoreData:isDigest withCompletion:^(BOOL completed) {
         if (completed) {
+            [self.refreshControl endRefreshing];
             [self.refreshControl endRefreshing];
         }
     }];
@@ -588,23 +599,32 @@
     }
 
     [self.imageCache removeAllObjects];
+
+    [self.refreshControl endRefreshing];
+    [self.refreshControl removeFromSuperview];
+    self.refreshControl = nil;
+
+    [self.imageCache removeAllObjects];
+
+    [self.refreshControl endRefreshing];
+    [self.refreshControl removeFromSuperview];
+    self.refreshControl = nil;
     //    self.isFromPastDigest = NO;
 }
 
 -(IBAction)unwindFromSubredditSelectionViewController:(UIStoryboardSegue *)segue
 {
-
     if (self.isFromPastDigest) {
         [self.imageCache removeAllObjects];
         self.digestPosts = [NSMutableArray arrayWithArray:self.oldDigest];
         [self.digestTableView reloadData];
         //        [self convertToPostObjects:[NSMutableArray arrayWithArray:self.oldDigest]];
-        //        [self.digestTableView reloadData];
     }
 
     if (self.isComingFromSubredditSelectionView) {
-        [Post removeAllPostsFromCoreData:self.managedObjectContext];
+//        [Post removeAllPostsFromCoreData:self.managedObjectContext];
         [self.digestPosts removeAllObjects];
+        [self requestNewLinks:YES];
 
         if(![[NSUserDefaults standardUserDefaults] boolForKey:@"HasSubscriptions"]){
             UIApplication *application = [UIApplication sharedApplication];
@@ -620,8 +640,6 @@
 
         [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"HasSubscriptions"];
         [[NSUserDefaults standardUserDefaults] synchronize];
-
-        [self requestNewLinks:YES];
     }
 }
 

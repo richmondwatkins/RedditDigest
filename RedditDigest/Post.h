@@ -50,8 +50,10 @@
 - (void)addComments:(NSSet *)values;
 - (void)removeComments:(NSSet *)values;
 
-+(void)savePost:(RKLink *)post withManagedObject:(NSManagedObjectContext *)managedObjectContext withComments:(NSArray *)comment andCompletion:(void (^)(BOOL completed))complete;
++(void)savePosts:(NSMutableArray *)posts withManagedObject:(NSManagedObjectContext *)managedObjectContext andCompletion:(void (^)(BOOL completed))complete;
 
 +(void)removeAllPostsFromCoreData:(NSManagedObjectContext *)managedObjectContext;
+
++(void)saveLocalSubreddit:(RKLink *)post withManagedObject:(NSManagedObjectContext *)managedObject withComments:(NSArray *)comments andCompletion:(void (^)(BOOL completed))complete;
 
 @end

@@ -35,13 +35,7 @@
         self.statusBarBackground.alpha = 1.0;
     }
 
-   // NSLog(@"%f", self.verticalSpaceConstraint.constant);
-   // NSLog(self.navController.navigationBarHidden ? @"Yes" : @"No");
-//    if (self.navController.navigationBarHidden && self.verticalSpaceConstraint.constant <= 0) {
-//        self.verticalSpaceConstraint.constant = 0;
-//    }
     self.verticalSpaceConstraint.constant = 0;
-    //NSLog(@"%f", self.verticalSpaceConstraint.constant);
 
     self.activityIndicator.hidden = YES;
     [self.activityIndicator stopAnimating];
