@@ -10,7 +10,10 @@
 #import "Digest.h"
 #import "DigestViewController.h"
 #import "DigestPost.h"
+#import "ArchivedDigestTableViewCell.h"
+
 @interface PastDigestsViewController () <UITableViewDataSource, UITableViewDelegate>
+
 @property (strong, nonatomic) IBOutlet UITableView *pastDigestTableView;
 @property NSArray *digests;
 @property NSArray *selectedDigestPosts;
@@ -45,28 +48,30 @@
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"DigestCell"];
+    ArchivedDigestTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"DigestCell"];
     Digest *digest = [self.digests objectAtIndex:indexPath.row];
 
     NSArray *posts = [digest.digestPost allObjects];
     DigestPost *post = posts.firstObject;
 
     if ([post.image boolValue]) {
-        cell.imageView.image = [self returnImageForCellFromData:post.postID withSubredditNameForKey:post.subreddit andFilePathPrefix:@"image-copy"];
+        cell.archiveImageView.image = [self returnImageForCellFromData:post.postID withSubredditNameForKey:post.subreddit andFilePathPrefix:@"image-copy"];
     }else if([post.thumbnailImagePath boolValue]){
-         cell.imageView.image = [self returnImageForCellFromData:post.postID withSubredditNameForKey:post.subreddit  andFilePathPrefix:@"thumbnail-copy"];
+         cell.archiveImageView.image = [self returnImageForCellFromData:post.postID withSubredditNameForKey:post.subreddit  andFilePathPrefix:@"thumbnail-copy"];
     }else if([post.subredditImage boolValue]){
-         cell.imageView.image = [self returnImageForCellFromData:post.subreddit withSubredditNameForKey:post.subreddit andFilePathPrefix:@"subreddit-copy"];
+         cell.archiveImageView.image = [self returnImageForCellFromData:post.subreddit withSubredditNameForKey:post.subreddit andFilePathPrefix:@"subreddit-copy"];
     }else{
-         cell.imageView.image = [UIImage imageNamed:@"snoo_camera_placeholder"];
+         cell.archiveImageView.image = [UIImage imageNamed:@"snoo_camera_placeholder"];
     }
+
+    cell.archiveImageView.clipsToBounds = YES;
 
     NSDate* date = [NSDate dateWithTimeIntervalSince1970:[digest.time doubleValue]];
 
     NSDateFormatter *dateFormat =[[NSDateFormatter alloc]init];
     [dateFormat setDateFormat:@"MMMM dd, yyyy"];
     NSString *dateText = [dateFormat stringFromDate:date];
-    cell.textLabel.text = dateText;
+    cell.archiveTitleLabel.text = dateText;
     return cell;
 }
 

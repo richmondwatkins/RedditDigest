@@ -784,13 +784,38 @@
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="DigestCell" id="Y3m-Y3-Ixc">
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="DigestCell" id="Y3m-Y3-Ixc" customClass="ArchivedDigestTableViewCell">
                                         <rect key="frame" x="0.0" y="0.0" width="600" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Y3m-Y3-Ixc" id="S16-Ao-8Wy">
                                             <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7qq-i0-co9">
+                                                    <rect key="frame" x="60" y="10" width="532" height="21"/>
+                                                    <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="17"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="a1Q-Sc-gPH">
+                                                    <rect key="frame" x="8" y="0.0" width="44" height="44"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="44" id="p93-Ov-biY"/>
+                                                        <constraint firstAttribute="width" constant="44" id="t2u-Da-nbZ"/>
+                                                    </constraints>
+                                                </imageView>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="7qq-i0-co9" firstAttribute="trailing" secondItem="S16-Ao-8Wy" secondAttribute="trailingMargin" id="UUr-gN-LKl"/>
+                                                <constraint firstAttribute="bottomMargin" secondItem="7qq-i0-co9" secondAttribute="bottom" constant="5" id="Ujn-Pb-VJo"/>
+                                                <constraint firstItem="a1Q-Sc-gPH" firstAttribute="top" secondItem="S16-Ao-8Wy" secondAttribute="top" id="g1V-X2-hxa"/>
+                                                <constraint firstItem="7qq-i0-co9" firstAttribute="leading" secondItem="S16-Ao-8Wy" secondAttribute="leadingMargin" constant="52" id="lLL-TY-2s6"/>
+                                                <constraint firstItem="a1Q-Sc-gPH" firstAttribute="leading" secondItem="S16-Ao-8Wy" secondAttribute="leading" constant="8" id="mHM-RX-Bpa"/>
+                                                <constraint firstItem="7qq-i0-co9" firstAttribute="top" secondItem="S16-Ao-8Wy" secondAttribute="topMargin" constant="2" id="yG1-bh-66D"/>
+                                            </constraints>
                                         </tableViewCellContentView>
                                         <connections>
+                                            <outlet property="archiveImageView" destination="a1Q-Sc-gPH" id="DwQ-ov-Ga8"/>
+                                            <outlet property="archiveTitleLabel" destination="7qq-i0-co9" id="Q9h-FC-WoJ"/>
                                             <segue destination="nKc-Mn-Ulc" kind="unwind" unwindAction="unwindFromSubredditSelectionViewController:" id="ne8-AV-eaY"/>
                                         </connections>
                                     </tableViewCell>
