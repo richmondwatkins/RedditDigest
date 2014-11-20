@@ -8,8 +8,9 @@
 
 #import "TextViewWebViewController.h"
 
-@interface TextViewWebViewController ()
+@interface TextViewWebViewController () <UIWebViewDelegate>
 @property (strong, nonatomic) IBOutlet UIWebView *webView;
+@property (strong, nonatomic) IBOutlet UIActivityIndicatorView *activityIndicator;
 
 @end
 
@@ -17,6 +18,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [self.activityIndicator startAnimating];
+    [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
     NSURLRequest *request = [NSURLRequest requestWithURL:self.urlToLoad];
     [self.webView loadRequest:request];
 }
@@ -25,5 +28,9 @@
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
+-(void)webViewDidFinishLoad:(UIWebView *)webView{
+    [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
+    [self.activityIndicator stopAnimating];
+}
 
 @end

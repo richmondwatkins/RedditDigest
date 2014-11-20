@@ -1530,7 +1530,13 @@
                             <webView contentMode="scaleToFill" scalesPageToFit="YES" translatesAutoresizingMaskIntoConstraints="NO" id="O5d-k8-bZc">
                                 <rect key="frame" x="0.0" y="44" width="600" height="556"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <connections>
+                                    <outlet property="delegate" destination="80a-Vk-4qB" id="1NE-GG-Qoq"/>
+                                </connections>
                             </webView>
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="3gK-Sz-1Kz">
+                                <rect key="frame" x="290" y="290" width="20" height="20"/>
+                            </activityIndicatorView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
@@ -1538,6 +1544,8 @@
                             <constraint firstItem="xaQ-vi-5hL" firstAttribute="top" secondItem="O5d-k8-bZc" secondAttribute="bottom" id="Das-2O-KVX"/>
                             <constraint firstItem="O5d-k8-bZc" firstAttribute="leading" secondItem="285-BJ-OVn" secondAttribute="leading" id="dUb-f8-obZ"/>
                             <constraint firstAttribute="trailing" secondItem="O5d-k8-bZc" secondAttribute="trailing" id="gRl-6e-stW"/>
+                            <constraint firstItem="3gK-Sz-1Kz" firstAttribute="centerX" secondItem="O5d-k8-bZc" secondAttribute="centerX" id="lhm-If-yEm"/>
+                            <constraint firstItem="3gK-Sz-1Kz" firstAttribute="centerY" secondItem="285-BJ-OVn" secondAttribute="centerY" id="xU8-PL-xg5"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="WIu-ex-06z">
@@ -1548,6 +1556,7 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="activityIndicator" destination="3gK-Sz-1Kz" id="f9p-k8-7OS"/>
                         <outlet property="webView" destination="O5d-k8-bZc" id="ghF-uH-X4Z"/>
                     </connections>
                 </viewController>
@@ -1574,9 +1583,6 @@
                                     <constraint firstAttribute="height" constant="20" id="dKZ-6Q-7Ys"/>
                                 </constraints>
                             </view>
-                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="Gap-KO-jpP">
-                                <rect key="frame" x="290" y="290" width="20" height="20"/>
-                            </activityIndicatorView>
                             <webView contentMode="scaleToFill" scalesPageToFit="YES" translatesAutoresizingMaskIntoConstraints="NO" id="xAZ-3t-2Y0">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="556"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -1584,6 +1590,9 @@
                                     <outlet property="delegate" destination="VdO-7b-mon" id="VWd-qz-isX"/>
                                 </connections>
                             </webView>
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="Gap-KO-jpP">
+                                <rect key="frame" x="290" y="290" width="20" height="20"/>
+                            </activityIndicatorView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <gestureRecognizers/>
