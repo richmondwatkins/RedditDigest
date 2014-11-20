@@ -130,7 +130,7 @@ NSInteger const MAX_SELECTABLE_SUBREDDITS_FOR_DIGEST = 20;
 {
     // Set number of subredds select and number left to select
     NSString *selectedSubredditsCount = [NSString stringWithFormat:@"%lu/%zd", (unsigned long)self.selectedSubreddits.count, MAX_SELECTABLE_SUBREDDITS_FOR_DIGEST];
-    self.navigationController.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:selectedSubredditsCount style:UIBarButtonItemStylePlain target:nil action:nil];
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:selectedSubredditsCount style:UIBarButtonItemStylePlain target:nil action:nil];
 }
 
 #pragma mark - Collection View
