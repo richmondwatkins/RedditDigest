@@ -28,7 +28,7 @@
 #import "DigestPost.h"
 #import <ZeroPush.h>
 #import "MCSwipeTableViewCell.h"
-
+//#import "NoInternetAlertControl.h"
 @interface DigestViewController () <UITableViewDataSource, UITableViewDelegate, CLLocationManagerDelegate, MCSwipeTableViewCellDelegate>
 
 @property NSMutableArray *digestPosts;
@@ -99,6 +99,8 @@
 
 - (void)viewDidAppear:(BOOL)animated
 {
+//    [NoInternetAlertControl checkForInternetReachability:self];
+
     [super viewDidAppear:animated];
     // These two lines enable automatic cell resizing thanks to iOS 8 🐋
     self.digestTableView.estimatedRowHeight = 227.0;

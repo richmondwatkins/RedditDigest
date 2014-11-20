@@ -22,7 +22,7 @@
 #import "LoginViewController.h"
 #import "DigestCategory.h"
 #import <AudioToolbox/AudioToolbox.h>
-
+//#import "NoInternetAlertControl.h"
 NSInteger const MAX_SELECTABLE_SUBREDDITS_FOR_DIGEST = 20;
 
 @interface SubredditSelectionViewController () <UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, UIAlertViewDelegate, UITextFieldDelegate>
@@ -42,6 +42,8 @@ NSInteger const MAX_SELECTABLE_SUBREDDITS_FOR_DIGEST = 20;
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+//    [NoInternetAlertControl checkForInternetReachability:self];
+
     KTCenterFlowLayout *layout = [KTCenterFlowLayout new];
     layout.minimumInteritemSpacing = 10.f;
     layout.minimumLineSpacing = 10.f;
@@ -301,6 +303,7 @@ NSInteger const MAX_SELECTABLE_SUBREDDITS_FOR_DIGEST = 20;
             [self.subreddits insertObject:subreddit atIndex:0];
             NSIndexPath *firstIndex = [NSIndexPath indexPathForRow:0 inSection:0];
             [self.subredditCollectionView insertItemsAtIndexPaths:@[firstIndex]];
+
         }
         else
         {
