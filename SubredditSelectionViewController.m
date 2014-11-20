@@ -23,6 +23,7 @@
 #import "DigestCategory.h"
 #import <AudioToolbox/AudioToolbox.h>
 
+NSInteger const MAX_SELECTABLE_SUBREDDITS_FOR_DIGEST = 20;
 
 @interface SubredditSelectionViewController () <UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, UIAlertViewDelegate, UITextFieldDelegate>
 
