@@ -16,7 +16,11 @@
 #import "SubredditListCollectionViewCell.h"
 #import "DigestViewController.h"
 #import "RecHeaderCollectionReusableView.h"
+#import "SubredditSelectionViewController.h"
+#import "TSMessage.h"
+
 @interface RecommendedSubredditsViewController () <UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout>
+
 @property NSMutableArray *recommendedFromSubscriptions;
 @property NSMutableArray *recommendedFromUsers;
 @property NSMutableArray *selectedSubreddits;
@@ -25,6 +29,7 @@
 @property (strong, nonatomic) IBOutlet UIButton *doneSelectingSubredditsButton;
 @property SubredditListCollectionViewCell *sizingCell;
 @property (strong, nonatomic) IBOutlet UIActivityIndicatorView *activityIndicator;
+@property NSInteger totalSubreddits;
 
 @end
 
@@ -53,9 +58,22 @@
     self.recommendedFromSubscriptions = [NSMutableArray array];
     self.recommendedFromUsers = [NSMutableArray array];
 
-    [self lookUpRelatedSubreddit:[Subreddit retrieveAllSubreddits:self.managedObject]];
+    NSMutableArray *usersSubreddits = [NSMutableArray arrayWithArray:[Subreddit retrieveAllSubreddits:self.managedObject]];
+    [self lookUpRelatedSubreddit:usersSubreddits];
+
+    self.totalSubreddits = usersSubreddits.count;
+
+    // Tell the user that they have the max subreddits selected and have to remove some in edit digest
+    if (self.totalSubreddits >= MAX_SELECTABLE_SUBREDDITS_FOR_DIGEST) {
+        [TSMessage showNotificationInViewController:self
+                                              title:@"Max subreddits selected"
+                                           subtitle:@"Go to Edit Digest page to remove subreddits"
+                                               type:TSMessageNotificationTypeWarning
+                                           duration:TSMessageNotificationDurationAutomatic];
+    }
 
     [self setUpView];
+    [self updateSelectedSubredditCounter];
 }
 
 
@@ -148,9 +166,12 @@
 {
     RKSubreddit *subreddit = [[self.recomendations objectAtIndex:indexPath.section] objectAtIndex:indexPath.row];
 
-    if (self.selectedSubreddits.count < 10)
+    if (self.totalSubreddits < MAX_SELECTABLE_SUBREDDITS_FOR_DIGEST)
     {
         [self.selectedSubreddits addObject:subreddit];
+        self.totalSubreddits ++;
+        [self updateSelectedSubredditCounter];
+
         if (self.selectedSubreddits.count > 0) {
             [UIView animateWithDuration:0.3 animations:^{
                 self.doneSelectingSubredditsButton.alpha = 1.0;
@@ -173,6 +194,8 @@
         if (subreddit.isCurrentlySubscribed) {
             [Subreddit removeFromCoreData:subreddit.name withManagedObject:self.managedObject];
         }
+        self.totalSubreddits --;
+        [self updateSelectedSubredditCounter];
     }
 
     if (self.selectedSubreddits.count == 0) {
@@ -231,7 +254,7 @@
 
 -(void)setUpView{
     self.subredditCollectionView.contentOffset = CGPointMake(0, 44);
-    self.navigationItem.title = @"Recommended Subreddits";
+    self.navigationItem.title = @"Recommended subreddits";
     //for resizing template
     UINib *cellNib = [UINib nibWithNibName:@"SubredditSelectionCell" bundle:nil];
     [self.subredditCollectionView registerNib:cellNib forCellWithReuseIdentifier:@"Cell"];
@@ -256,13 +279,13 @@
     cell.subredditTitleLabel.text = subreddit.name;
 
     // SubredditTitleLabel font and color
-    cell.subredditTitleLabel.font = [UIFont fontWithName:@"Helvetica" size:16.0];
+    cell.subredditTitleLabel.font = [UIFont fontWithName:@"AvenirNext" size:16.0];
     cell.subredditTitleLabel.textColor = REDDIT_DARK_BLUE;
 }
 
 - (UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout insetForSectionAtIndex:(NSInteger)section
 {
-    return UIEdgeInsetsMake(20, 15, 10, 15);
+    return UIEdgeInsetsMake(0, 15, 0, 15);
 }
 
 - (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout minimumInteritemSpacingForSectionAtIndex:(NSInteger)section
@@ -305,6 +328,13 @@
     return reusableview;
 }
 
+#pragma mark - Subreddit Label Counter 
 
+- (void)updateSelectedSubredditCounter
+{
+    // Set number of subredds select and number left to select
+    NSString *selectedSubredditsCount = [NSString stringWithFormat:@"%zd/%zd", self.totalSubreddits, MAX_SELECTABLE_SUBREDDITS_FOR_DIGEST];
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:selectedSubredditsCount style:UIBarButtonItemStylePlain target:nil action:nil];
+}
 
 @end
