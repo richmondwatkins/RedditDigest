@@ -75,18 +75,6 @@
 
 - (void)viewWillAppear:(BOOL)animated
 {
-    if (self.isFromPastDigest != YES) {
-        self.refreshControl = [[UIRefreshControl alloc] init];
-
-        [self.refreshControl addTarget:self action:@selector(requestNewLinksFromRefresh) forControlEvents:UIControlEventValueChanged];
-        [self.digestTableView addSubview:self.refreshControl];
-    }else{
-        self.todayBarButton.title = @"Today";
-        [self.refreshControl endRefreshing];
-        [self.refreshControl removeFromSuperview];
-        self.refreshControl = nil;
-        self.title = self.oldDigestDate;
-    }
 
     [self.imageCache removeAllObjects];
     [super viewWillAppear:animated];
@@ -122,10 +110,26 @@
     }
 //    [self.digestTableView reloadData];
     [[UIApplication sharedApplication] setApplicationIconBadgeNumber:0];
+
+    if (self.isFromPastDigest != YES && [[NSUserDefaults standardUserDefaults] boolForKey:@"HasSubscriptions"]) {
+        self.refreshControl = [[UIRefreshControl alloc] init];
+
+        [self.refreshControl addTarget:self action:@selector(requestNewLinksFromRefresh) forControlEvents:UIControlEventValueChanged];
+        [self.digestTableView addSubview:self.refreshControl];
+    }else{
+        self.todayBarButton.title = @"Today";
+        [self.refreshControl endRefreshing];
+        [self.refreshControl removeFromSuperview];
+        self.refreshControl = nil;
+        self.title = self.oldDigestDate;
+    }
+
 }
 
 #pragma mark - Location Services
 -(void)checkForLocationServices{
+
+    NSLog(@"MADE IT");
     if ([[NSUserDefaults standardUserDefaults] boolForKey:@"Location"] && [CLLocationManager locationServicesEnabled]) {
         self.locationManger = [[CLLocationManager alloc] init];
         self.locationManger.delegate = self;
@@ -495,7 +499,7 @@
 
 -(void)fetchNewData:(BOOL)isDigest withCompletion:(void (^)(UIBackgroundFetchResult))completionHandler
 {
-    [Post removeAllPostsFromCoreData:self.managedObjectContext];
+//    [Post removeAllPostsFromCoreData:self.managedObjectContext];
     [self.digestPosts removeAllObjects];
     NSArray *subreddits = [Subreddit retrieveAllSubreddits:self.managedObjectContext];
     [RedditRequests retrieveLatestPostFromArray:subreddits withManagedObject:self.managedObjectContext  withCompletion:^(BOOL completed) {
@@ -539,7 +543,7 @@
 
 -(void)requestNewLinks:(BOOL)isDigest
 {
-    [Post removeAllPostsFromCoreData:self.managedObjectContext];
+//    [Post removeAllPostsFromCoreData:self.managedObjectContext];
 
     NSFetchRequest * fetch = [[NSFetchRequest alloc] init];
     [fetch setEntity:[NSEntityDescription entityForName:@"Subreddit" inManagedObjectContext:self.managedObjectContext]];
@@ -555,6 +559,7 @@
 {
     [self retrievePostsFromCoreData:isDigest withCompletion:^(BOOL completed) {
         if (completed) {
+            [self.refreshControl endRefreshing];
             [self.refreshControl endRefreshing];
         }
     }];
@@ -601,7 +606,7 @@
     }
 
     if (self.isComingFromSubredditSelectionView) {
-        [Post removeAllPostsFromCoreData:self.managedObjectContext];
+//        [Post removeAllPostsFromCoreData:self.managedObjectContext];
         [self.digestPosts removeAllObjects];
 
         if(![[NSUserDefaults standardUserDefaults] boolForKey:@"HasSubscriptions"]){
