@@ -16,6 +16,8 @@
 #import "SubredditListCollectionViewCell.h"
 #import "DigestViewController.h"
 #import "RecHeaderCollectionReusableView.h"
+#import "SubredditSelectionViewController.h"
+#import "TSMessage.h"
 
 @interface RecommendedSubredditsViewController () <UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout>
 
@@ -27,6 +29,7 @@
 @property (strong, nonatomic) IBOutlet UIButton *doneSelectingSubredditsButton;
 @property SubredditListCollectionViewCell *sizingCell;
 @property (strong, nonatomic) IBOutlet UIActivityIndicatorView *activityIndicator;
+@property NSInteger totalSubreddits;
 
 @end
 
@@ -55,9 +58,22 @@
     self.recommendedFromSubscriptions = [NSMutableArray array];
     self.recommendedFromUsers = [NSMutableArray array];
 
-    [self lookUpRelatedSubreddit:[Subreddit retrieveAllSubreddits:self.managedObject]];
+    NSMutableArray *usersSubreddits = [NSMutableArray arrayWithArray:[Subreddit retrieveAllSubreddits:self.managedObject]];
+    [self lookUpRelatedSubreddit:usersSubreddits];
+
+    self.totalSubreddits = usersSubreddits.count;
+
+    // Tell the user that they have the max subreddits selected and have to remove some in edit digest
+    if (self.totalSubreddits >= MAX_SELECTABLE_SUBREDDITS_FOR_DIGEST) {
+        [TSMessage showNotificationInViewController:self
+                                              title:@"Max subreddits selected"
+                                           subtitle:@"Go to Edit Digest page to remove subreddits"
+                                               type:TSMessageNotificationTypeWarning
+                                           duration:TSMessageNotificationDurationAutomatic];
+    }
 
     [self setUpView];
+    [self updateSelectedSubredditCounter];
 }
 
 
@@ -150,9 +166,12 @@
 {
     RKSubreddit *subreddit = [[self.recomendations objectAtIndex:indexPath.section] objectAtIndex:indexPath.row];
 
-    if (self.selectedSubreddits.count < 10)
+    if (self.totalSubreddits < MAX_SELECTABLE_SUBREDDITS_FOR_DIGEST)
     {
         [self.selectedSubreddits addObject:subreddit];
+        self.totalSubreddits ++;
+        [self updateSelectedSubredditCounter];
+
         if (self.selectedSubreddits.count > 0) {
             [UIView animateWithDuration:0.3 animations:^{
                 self.doneSelectingSubredditsButton.alpha = 1.0;
@@ -175,6 +194,8 @@
         if (subreddit.isCurrentlySubscribed) {
             [Subreddit removeFromCoreData:subreddit.name withManagedObject:self.managedObject];
         }
+        self.totalSubreddits --;
+        [self updateSelectedSubredditCounter];
     }
 
     if (self.selectedSubreddits.count == 0) {
@@ -312,7 +333,7 @@
 - (void)updateSelectedSubredditCounter
 {
     // Set number of subredds select and number left to select
-    NSString *selectedSubredditsCount = [NSString stringWithFormat:@"%lu/%zd", (unsigned long)self.selectedSubreddits.count, MAX_SELECTABLE_SUBREDDITS_FOR_DIGEST];
+    NSString *selectedSubredditsCount = [NSString stringWithFormat:@"%zd/%zd", self.totalSubreddits, MAX_SELECTABLE_SUBREDDITS_FOR_DIGEST];
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:selectedSubredditsCount style:UIBarButtonItemStylePlain target:nil action:nil];
 }
 
