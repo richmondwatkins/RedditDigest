@@ -233,7 +233,7 @@
         [self.downVoteButton setImage:[UIImage imageNamed:@"down_arrow"] forState:UIControlStateNormal];
         self.post.upvoted = [NSNumber numberWithBool:YES];
         self.post.downvoted = [NSNumber numberWithBool:NO];
-        // Remove vote from reddit
+        // Send upvote from reddit
         [self sendUpVoteToReddit:self.post.postID];
     }
 
