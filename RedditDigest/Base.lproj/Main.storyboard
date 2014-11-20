@@ -610,10 +610,11 @@
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="eXR-C0-3De" id="aKk-7i-xHe">
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Display Local subreddits" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zDk-K9-hyR">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Display Local subreddits" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zDk-K9-hyR">
                                                     <rect key="frame" x="21" y="6" width="191" height="31"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="height" constant="31" id="X9K-xw-psK"/>
+                                                        <constraint firstAttribute="height" constant="31" id="Ens-mA-qch"/>
+                                                        <constraint firstAttribute="width" constant="191" id="V5k-ra-wyb"/>
                                                     </constraints>
                                                     <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="17"/>
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
@@ -632,8 +633,8 @@
                                             </subviews>
                                             <constraints>
                                                 <constraint firstItem="ig4-6X-2pQ" firstAttribute="top" secondItem="aKk-7i-xHe" secondAttribute="topMargin" constant="-4" id="HcT-yp-3dN"/>
-                                                <constraint firstItem="zDk-K9-hyR" firstAttribute="top" secondItem="aKk-7i-xHe" secondAttribute="topMargin" constant="-2" id="RaX-cD-QIb"/>
-                                                <constraint firstItem="zDk-K9-hyR" firstAttribute="leading" secondItem="aKk-7i-xHe" secondAttribute="leadingMargin" constant="13" id="fcd-s0-Fal"/>
+                                                <constraint firstItem="zDk-K9-hyR" firstAttribute="top" secondItem="aKk-7i-xHe" secondAttribute="topMargin" constant="-2" id="dBE-bF-2CM"/>
+                                                <constraint firstItem="zDk-K9-hyR" firstAttribute="leading" secondItem="aKk-7i-xHe" secondAttribute="leadingMargin" constant="13" id="i5M-x4-A94"/>
                                                 <constraint firstAttribute="trailingMargin" secondItem="ig4-6X-2pQ" secondAttribute="trailing" id="pEm-dz-MDk"/>
                                             </constraints>
                                         </tableViewCellContentView>
@@ -643,10 +644,11 @@
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="03j-mE-UBv" id="NWH-Df-1Wh">
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Recommended subreddits" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ov0-nB-caO">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Recommended subreddits" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ov0-nB-caO">
                                                     <rect key="frame" x="21" y="6" width="209" height="31"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="height" constant="31" id="aee-gg-DFh"/>
+                                                        <constraint firstAttribute="width" constant="209" id="YIM-7g-gne"/>
+                                                        <constraint firstAttribute="height" constant="31" id="x9a-7K-Kpa"/>
                                                     </constraints>
                                                     <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="17"/>
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
@@ -654,8 +656,8 @@
                                                 </label>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstItem="ov0-nB-caO" firstAttribute="leading" secondItem="NWH-Df-1Wh" secondAttribute="leadingMargin" constant="13" id="8NA-xH-JwK"/>
-                                                <constraint firstItem="ov0-nB-caO" firstAttribute="top" secondItem="NWH-Df-1Wh" secondAttribute="topMargin" constant="-2" id="XnO-p2-KXU"/>
+                                                <constraint firstItem="ov0-nB-caO" firstAttribute="top" secondItem="NWH-Df-1Wh" secondAttribute="top" constant="6" id="CnA-xB-kXv"/>
+                                                <constraint firstItem="ov0-nB-caO" firstAttribute="leading" secondItem="NWH-Df-1Wh" secondAttribute="leading" constant="21" id="c1Q-7B-vzA"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <connections>
