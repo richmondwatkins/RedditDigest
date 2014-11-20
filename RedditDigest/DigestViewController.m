@@ -537,7 +537,7 @@
 -(void)requestNewLinksFromRefresh
 {
     self.isFromPastDigest = NO;
-    [self requestNewLinks:NO];
+    [self requestNewLinks:YES];
 }
 
 -(void)requestNewLinks:(BOOL)isDigest
@@ -611,7 +611,7 @@
     if (self.isComingFromSubredditSelectionView) {
 //        [Post removeAllPostsFromCoreData:self.managedObjectContext];
         [self.digestPosts removeAllObjects];
-        [self requestNewLinks:NO];
+        [self requestNewLinks:YES];
 
         if(![[NSUserDefaults standardUserDefaults] boolForKey:@"HasSubscriptions"]){
             UIApplication *application = [UIApplication sharedApplication];
