@@ -84,7 +84,7 @@
     for (Subreddit *subreddit in subsFromCoreData) {
         [[RKClient sharedClient] recommendedSubredditsForSubreddits:@[subreddit.subreddit] completion:^(NSArray *collection, NSError *error) {
             i++;
-            [recSubredditNames addObject:collection];
+            [recSubredditNames addObject:collection.firstObject];
             if (i == subsFromCoreData.count) {
                 [self retrieveSubredditInfoFromReddit:recSubredditNames];
             }
@@ -94,18 +94,18 @@
 
 
 -(void)retrieveSubredditInfoFromReddit:(NSMutableArray *)recommendedSubNames{
-    NSArray *flattenedSubNames = [recommendedSubNames valueForKeyPath: @"@unionOfArrays.self"];
+//    NSArray *flattenedSubNames = [recommendedSubNames valueForKeyPath: @"@unionOfArrays.self"];
     __block int i = 0;
-    for (NSString *subName in flattenedSubNames) {
+    for (NSString *subName in recommendedSubNames) {
         [[RKClient sharedClient] subredditWithName:subName completion:^(RKSubreddit *object, NSError *error) {
             i++;
-            if (object.totalSubscribers >= 10000) {
+            if (object.totalSubscribers >= 5000) {
                 if (![self.recommendedFromSubscriptions containsObject:object]) {
                     [self.recommendedFromSubscriptions addObject:object];
                 }
             }
 
-            if (i == flattenedSubNames.count) {
+            if (i == recommendedSubNames.count) {
                 [self checkForExistingSubscription:self.recommendedFromSubscriptions];
                 [self.recomendations addObject:self.recommendedFromSubscriptions];
 //                [self.subredditCollectionView reloadData];

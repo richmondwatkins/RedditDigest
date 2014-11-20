@@ -47,12 +47,6 @@
 
 -(void)viewDidLoad{
     [super viewDidLoad];
-    NSString *path  = [[NSBundle mainBundle] pathForResource:@"LoadDigest" ofType:@"mp3"];
-    NSURL *pathURL = [NSURL fileURLWithPath : path];
-
-    SystemSoundID audioEffect;
-    AudioServicesCreateSystemSoundID((__bridge CFURLRef) pathURL, &audioEffect);
-    AudioServicesPlaySystemSound(audioEffect);
 
     [self getDateString];
     self.navigationItem.title = self.dateToday;
@@ -595,11 +589,11 @@
     [self.refreshControl removeFromSuperview];
     self.refreshControl = nil;
     //needs two for some reason
-
-    [self.imageCache removeAllObjects];
-    [self.refreshControl endRefreshing];
-    [self.refreshControl removeFromSuperview];
-    self.refreshControl = nil;
+//
+//    [self.imageCache removeAllObjects];
+//    [self.refreshControl endRefreshing];
+//    [self.refreshControl removeFromSuperview];
+//    self.refreshControl = nil;
 
 }
 
@@ -672,7 +666,7 @@
 -(void)initializeRefreshControl{
 
     [InternetConnectionTest testInternetConnectionWithViewController:self andCompletion:^(BOOL internet) {
-        if (internet) {
+        if (internet && !self.refreshControl) {
             self.refreshControl = [[UIRefreshControl alloc] init];
 
             [self.refreshControl addTarget:self action:@selector(requestNewLinksFromRefresh) forControlEvents:UIControlEventValueChanged];
