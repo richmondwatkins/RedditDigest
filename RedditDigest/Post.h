@@ -54,4 +54,6 @@
 
 +(void)removeAllPostsFromCoreData:(NSManagedObjectContext *)managedObjectContext;
 
++(void)saveLocalSubreddit:(RKLink *)post withManagedObject:(NSManagedObjectContext *)managedObject withComments:(NSArray *)comments andCompletion:(void (^)(BOOL completed))complete;
+
 @end

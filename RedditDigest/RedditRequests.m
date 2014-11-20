@@ -79,9 +79,8 @@
 
         if (![RedditRequests existsInCoreData:topPost.fullName withManagedObject:managedObject]) {
             [[RKClient sharedClient] commentsForLink:topPost completion:^(NSArray *collection, RKPagination *pagination, NSError *error) {
-                NSMutableArray *topPostArray = [NSMutableArray arrayWithObjects:topPost, nil];
-                [Post savePosts:topPostArray withManagedObject:managedObject andCompletion:^(BOOL completed) {
-                    if (complete) {
+                [Post saveLocalSubreddit:topPost withManagedObject:managedObject withComments:collection andCompletion:^(BOOL completed) {
+                    if (completed) {
                         NSFetchRequest * subredditFetch = [[NSFetchRequest alloc] init];
                         [subredditFetch setEntity:[NSEntityDescription entityForName:@"Post" inManagedObjectContext:managedObject]];
                         subredditFetch.predicate = [NSPredicate predicateWithFormat:@"postID == %@", topPost.fullName];
@@ -90,7 +89,11 @@
                             complete(results.firstObject);
                         }
                     }
+
                 }];
+
+//                {
+//                }];
             }];
         }else{
             complete(nil);
