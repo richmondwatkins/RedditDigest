@@ -444,7 +444,7 @@
             </objects>
             <point key="canvasLocation" x="231" y="-2345.25"/>
         </scene>
-        <!--Subreddits-->
+        <!--Choose Your subreddits-->
         <scene sceneID="HSq-y9-90H">
             <objects>
                 <viewController id="e1g-HR-koU" customClass="SubredditSelectionViewController" sceneMemberID="viewController">
@@ -553,7 +553,7 @@
                             </mask>
                         </variation>
                     </view>
-                    <navigationItem key="navigationItem" title="Subreddits" id="qVF-ff-WVh"/>
+                    <navigationItem key="navigationItem" title="Choose Your subreddits" id="qVF-ff-WVh"/>
                     <simulatedStatusBarMetrics key="simulatedStatusBarMetrics" statusBarStyle="lightContent"/>
                     <connections>
                         <outlet property="activityIndicator" destination="hgS-xW-Bme" id="M8o-pq-iIN"/>
