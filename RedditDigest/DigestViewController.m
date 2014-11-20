@@ -283,61 +283,65 @@
     cell.upvoteView.backgroundColor = upVoteColor;
     cell.downvoteView.backgroundColor = downVoteColor;
 
+    if ([[NSUserDefaults standardUserDefaults] boolForKey:@"UserIsLoggedIn"]) {
+
     // Functionality for right swipe, upvote
-    [cell setSwipeGestureWithView:upVoteView color:upVoteColor mode:MCSwipeTableViewCellModeSwitch state:MCSwipeTableViewCellState1 completionBlock:^(MCSwipeTableViewCell *cell, MCSwipeTableViewCellState state, MCSwipeTableViewCellMode mode)
-     {
-         DigestCellWithImageTableViewCell *swipedCell  = (DigestCellWithImageTableViewCell *)cell;
-         NSIndexPath *swipedIndexPath = [self.digestTableView indexPathForCell:swipedCell];
+        [cell setSwipeGestureWithView:upVoteView color:upVoteColor mode:MCSwipeTableViewCellModeSwitch state:MCSwipeTableViewCellState1 completionBlock:^(MCSwipeTableViewCell *cell, MCSwipeTableViewCellState state, MCSwipeTableViewCellMode mode)
+         {
+             DigestCellWithImageTableViewCell *swipedCell  = (DigestCellWithImageTableViewCell *)cell;
+             NSIndexPath *swipedIndexPath = [self.digestTableView indexPathForCell:swipedCell];
 
-         Post *post = [self.digestPosts objectAtIndex:swipedIndexPath.row];
+             Post *post = [self.digestPosts objectAtIndex:swipedIndexPath.row];
 
-         if ([post.upvoted boolValue]) {
-             // Remove upvote
-             swipedCell.upvoteView.hidden = YES;
-             swipedCell.downvoteView.hidden = YES;
-             post.upvoted = [NSNumber numberWithBool:NO];
-             post.downvoted = [NSNumber numberWithBool:NO];
-             // Remove from reddit
-             [self removeVoteFromReddit:post.postID];
-         }
-         else {
-             // Upvote
-             swipedCell.upvoteView.hidden = NO;
-             swipedCell.downvoteView.hidden = YES;
-             post.upvoted = [NSNumber numberWithBool:YES];
-             post.downvoted = [NSNumber numberWithBool:NO];
-             // Send upvote to reddit
-             [self sendUpVoteToReddit:post.postID];
-         }
-         [self.managedObjectContext save:nil];
-     }];
+             if ([post.upvoted boolValue]) {
+                 // Remove upvote
+                 swipedCell.upvoteView.hidden = YES;
+                 swipedCell.downvoteView.hidden = YES;
+                 post.upvoted = [NSNumber numberWithBool:NO];
+                 post.downvoted = [NSNumber numberWithBool:NO];
+                 // Remove from reddit
+                 [self removeVoteFromReddit:post.postID];
+             }
+             else {
+                 // Upvote
+                 swipedCell.upvoteView.hidden = NO;
+                 swipedCell.downvoteView.hidden = YES;
+                 post.upvoted = [NSNumber numberWithBool:YES];
+                 post.downvoted = [NSNumber numberWithBool:NO];
+                 // Send upvote to reddit
+                 [self sendUpVoteToReddit:post.postID];
+             }
+             [self.managedObjectContext save:nil];
+         }];
 
-    // Functionality for left swipe, downvote
-    [cell setSwipeGestureWithView:downVoteView color:downVoteColor mode:MCSwipeTableViewCellModeSwitch state:MCSwipeTableViewCellState3 completionBlock:^(MCSwipeTableViewCell *cell, MCSwipeTableViewCellState state, MCSwipeTableViewCellMode mode)
-    {
-        DigestCellWithImageTableViewCell *swipedCell  = (DigestCellWithImageTableViewCell *)cell;
-        NSIndexPath *swipedIndexPath = [self.digestTableView indexPathForCell:swipedCell];
+        // Functionality for left swipe, downvote
+        [cell setSwipeGestureWithView:downVoteView color:downVoteColor mode:MCSwipeTableViewCellModeSwitch state:MCSwipeTableViewCellState3 completionBlock:^(MCSwipeTableViewCell *cell, MCSwipeTableViewCellState state, MCSwipeTableViewCellMode mode)
+        {
+            DigestCellWithImageTableViewCell *swipedCell  = (DigestCellWithImageTableViewCell *)cell;
+            NSIndexPath *swipedIndexPath = [self.digestTableView indexPathForCell:swipedCell];
 
-        Post *post = [self.digestPosts objectAtIndex:swipedIndexPath.row];
+            Post *post = [self.digestPosts objectAtIndex:swipedIndexPath.row];
 
-        if ([post.downvoted boolValue]) {
-            swipedCell.upvoteView.hidden = YES;
-            swipedCell.downvoteView.hidden = YES;
-            post.upvoted = [NSNumber numberWithBool:NO];
-            post.downvoted = [NSNumber numberWithBool:NO];
-            // Remove from reddit
-            [self removeVoteFromReddit:post.postID];
-        }
-        else {
-            swipedCell.upvoteView.hidden = YES;
-            swipedCell.downvoteView.hidden = NO;
-            post.upvoted = [NSNumber numberWithBool:NO];
-            post.downvoted = [NSNumber numberWithBool:YES];
-            // Send downvote to reddit
-            [self sendDownVoteToReddit:post.postID];
-        }
-        [self.managedObjectContext save:nil];
-    }];
+            if ([post.downvoted boolValue]) {
+                swipedCell.upvoteView.hidden = YES;
+                swipedCell.downvoteView.hidden = YES;
+                post.upvoted = [NSNumber numberWithBool:NO];
+                post.downvoted = [NSNumber numberWithBool:NO];
+                // Remove from reddit
+                [self removeVoteFromReddit:post.postID];
+            }
+            else {
+                swipedCell.upvoteView.hidden = YES;
+                swipedCell.downvoteView.hidden = NO;
+                post.upvoted = [NSNumber numberWithBool:NO];
+                post.downvoted = [NSNumber numberWithBool:YES];
+                // Send downvote to reddit
+                [self sendDownVoteToReddit:post.postID];
+            }
+            [self.managedObjectContext save:nil];
+        }];
+    }
+
 
     if (self.isFromPastDigest) {
         DigestPost *post = self.digestPosts[indexPath.row];
