@@ -122,8 +122,16 @@ NSInteger const MAX_SELECTABLE_SUBREDDITS_FOR_DIGEST = 20;
     self.activityIndicator.hidden = YES;
     [self sortSubredditsAlphabetically];
     [self.subredditCollectionView reloadData];
+
+    [self updateSelectedSubredditCounter];
 }
 
+- (void)updateSelectedSubredditCounter
+{
+    // Set number of subredds select and number left to select
+    NSString *selectedSubredditsCount = [NSString stringWithFormat:@"%lu/%zd", (unsigned long)self.selectedSubreddits.count, MAX_SELECTABLE_SUBREDDITS_FOR_DIGEST];
+    self.navigationController.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:selectedSubredditsCount style:UIBarButtonItemStylePlain target:nil action:nil];
+}
 
 #pragma mark - Collection View
 -(NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
@@ -144,31 +152,35 @@ NSInteger const MAX_SELECTABLE_SUBREDDITS_FOR_DIGEST = 20;
 {
     RKSubreddit *subreddit = self.subreddits[indexPath.row];
 
-    if (self.selectedSubreddits.count < 10)
+    if (self.selectedSubreddits.count < MAX_SELECTABLE_SUBREDDITS_FOR_DIGEST)
     {
          [self.selectedSubreddits addObject:subreddit];
         if (self.selectedSubreddits.count > 0) {
+            [self updateSelectedSubredditCounter];
             [UIView animateWithDuration:0.3 animations:^{
                 self.doneSelectingSubredditsButton.alpha = 1.0;
+                /*
                 NSString *path  = [[NSBundle mainBundle] pathForResource:@"SelectSubreddit" ofType:@"mp3"];
                 NSURL *pathURL = [NSURL fileURLWithPath : path];
 
                 SystemSoundID audioEffect;
                 AudioServicesCreateSystemSoundID((__bridge CFURLRef) pathURL, &audioEffect);
                 AudioServicesPlaySystemSound(audioEffect);
+                 */
             }];
         }
     }
     else
     {
         [self.subredditCollectionView deselectItemAtIndexPath:indexPath animated: YES];
-        
+        /*
         NSString *path  = [[NSBundle mainBundle] pathForResource:@"DeselectSubreddit" ofType:@"mp3"];
         NSURL *pathURL = [NSURL fileURLWithPath : path];
 
         SystemSoundID audioEffect;
         AudioServicesCreateSystemSoundID((__bridge CFURLRef) pathURL, &audioEffect);
         AudioServicesPlaySystemSound(audioEffect);
+        */
     }
 }
 
@@ -198,7 +210,6 @@ NSInteger const MAX_SELECTABLE_SUBREDDITS_FOR_DIGEST = 20;
 
 - (void)collectionView:(UICollectionView *)collectionView didDeselectItemAtIndexPath:(NSIndexPath *)indexPath
 {
-
     RKSubreddit *subreddit = self.subreddits[indexPath.row];
 
     if ([self.selectedSubreddits containsObject:subreddit]) {
@@ -218,6 +229,7 @@ NSInteger const MAX_SELECTABLE_SUBREDDITS_FOR_DIGEST = 20;
             self.doneSelectingSubredditsButton.alpha = 1.0;
         }];
     }
+    [self updateSelectedSubredditCounter];
 }
 
 #pragma mark - Cell Spacing and Padding
