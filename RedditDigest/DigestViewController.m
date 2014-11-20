@@ -285,11 +285,62 @@
     cell.downvoteView.backgroundColor = downVoteColor;
 
     [cell setSwipeGestureWithView:upVoteView color:upVoteColor mode:MCSwipeTableViewCellModeSwitch state:MCSwipeTableViewCellState1 completionBlock:^(MCSwipeTableViewCell *cell, MCSwipeTableViewCellState state, MCSwipeTableViewCellMode mode) {
+
+        //CGPoint location = [rightSwipe locationInView:self.digestTableView];
+        //NSIndexPath *swipedIndexPath = [self.digestTableView indexPathForRowAtPoint:location];
+        DigestCellWithImageTableViewCell *swipedCell  = (DigestCellWithImageTableViewCell *)cell;
+        NSIndexPath *swipedIndexPath = [self.digestTableView indexPathForCell:swipedCell];
+
+        Post *post = [self.digestPosts objectAtIndex:swipedIndexPath.row];
+
+        if ([post.upvoted boolValue]) {
+            // Remove upvote
+            swipedCell.upvoteView.hidden = YES;
+            swipedCell.downvoteView.hidden = YES;
+            post.upvoted = [NSNumber numberWithBool:NO];
+            post.downvoted = [NSNumber numberWithBool:NO];
+            // Remove from reddit
+            [self removeVoteFromReddit:post.postID];
+        }
+        else {
+            // Upvote
+            swipedCell.upvoteView.hidden = NO;
+            swipedCell.downvoteView.hidden = YES;
+            post.upvoted = [NSNumber numberWithBool:YES];
+            post.downvoted = [NSNumber numberWithBool:NO];
+            // Send upvote to reddit
+            [self sendUpVoteToReddit:post.postID];
+        }
+        [self.managedObjectContext save:nil];
     }];
 
     [cell setSwipeGestureWithView:downVoteView color:downVoteColor mode:MCSwipeTableViewCellModeSwitch state:MCSwipeTableViewCellState3 completionBlock:^(MCSwipeTableViewCell *cell, MCSwipeTableViewCellState state, MCSwipeTableViewCellMode mode) {
-    }];
+        DigestCellWithImageTableViewCell *swipedCell  = (DigestCellWithImageTableViewCell *)cell;
+        NSIndexPath *swipedIndexPath = [self.digestTableView indexPathForCell:swipedCell];
+        //CGPoint location = [leftSwipe locationInView:self.digestTableView];
+        //NSIndexPath *swipedIndexPath = [self.digestTableView indexPathForRowAtPoint:location];
+        //DigestCellWithImageTableViewCell *swipedCell = (DigestCellWithImageTableViewCell *)[self.digestTableView cellForRowAtIndexPath:swipedIndexPath];
+        Post *post = [self.digestPosts objectAtIndex:swipedIndexPath.row];
 
+        if ([post.downvoted boolValue]) {
+            swipedCell.upvoteView.hidden = YES;
+            swipedCell.downvoteView.hidden = YES;
+            post.upvoted = [NSNumber numberWithBool:NO];
+            post.downvoted = [NSNumber numberWithBool:NO];
+            // Remove from reddit
+            [self removeVoteFromReddit:post.postID];
+        }
+        else {
+            swipedCell.upvoteView.hidden = YES;
+            swipedCell.downvoteView.hidden = NO;
+            post.upvoted = [NSNumber numberWithBool:NO];
+            post.downvoted = [NSNumber numberWithBool:YES];
+            // Send downvote to reddit
+            [self sendDownVoteToReddit:post.postID];
+        }
+        [self.managedObjectContext save:nil];
+        
+    }];
 
     if (self.isFromPastDigest) {
         DigestPost *post = self.digestPosts[indexPath.row];
@@ -309,9 +360,8 @@
         }else{
             cell.thumbnailImage.image = [UIImage imageNamed:@"snoo_camera_placeholder"];
         }
-
-    } else {
-
+    }
+    else {
         Post *post = self.digestPosts[indexPath.row];
 
         cell.titleLabel.text = post.title;
@@ -330,24 +380,22 @@
             cell.thumbnailImage.image = [UIImage imageNamed:@"snoo_camera_placeholder"];
         }
 
+        // Initialize vote status of cells
+        if ([post.upvoted boolValue]) {
+            cell.upvoteView.hidden = NO;
+        }
+        else {
+            cell.upvoteView.hidden = YES;
+        }
 
-            // Initialize vote status of cells
-
-            if ([post.upvoted boolValue] == YES) {
-                cell.upvoteView.hidden = NO;
-
-            }else{
-                cell.upvoteView.hidden = YES;
-
-            }
-            if ([post.downvoted boolValue] == YES) {
-                cell.downvoteView.hidden = NO;
-            } else {
-                cell.downvoteView.hidden = YES;
-            }
+        if ([post.downvoted boolValue]) {
+            cell.downvoteView.hidden = NO;
+        }
+        else {
+            cell.downvoteView.hidden = YES;
+        }
 
     }
-
     return cell;
 }
 
@@ -358,7 +406,6 @@
     imageView.contentMode = UIViewContentModeCenter;
     return imageView;
 }
-
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -411,14 +458,14 @@
 
 -(NSString *)abbreviateNumber:(NSInteger)num
 {
-    NSString *abbrevNum;
+    NSString *abbreviatedNumunber;
     float number = (float)num;
 
     //Prevent numbers smaller than 1000 to return NULL
     if (num >= 1000) {
-        NSArray *abbrev = @[@"k", @"m", @"b"];
+        NSArray *abbreviations = @[@"k", @"m", @"b"];
 
-        for (NSInteger i = abbrev.count - 1; i >= 0; i--)
+        for (NSInteger i = abbreviations.count - 1; i >= 0; i--)
         {
             // Convert array index to "1000", "1000000", etc
             int size = pow(10,(i+1)*3);
@@ -429,14 +476,14 @@
                 NSString *numberString = [self floatToString:number];
 
                 // Add the letter for the abbreviation
-                abbrevNum = [NSString stringWithFormat:@"%@%@", numberString, [abbrev objectAtIndex:i]];
+                abbreviatedNumunber = [NSString stringWithFormat:@"%@%@", numberString, [abbreviations objectAtIndex:i]];
             }
         }
     } else {
         // Numbers like: 999 returns 999 instead of NULL
-        abbrevNum = [NSString stringWithFormat:@"%d", (int)number];
+        abbreviatedNumunber = [NSString stringWithFormat:@"%d", (int)number];
     }
-    return abbrevNum;
+    return abbreviatedNumunber;
 }
 
 - (NSString *) floatToString:(float) val
@@ -455,56 +502,6 @@
     return ret;
 }
 
-- (UIImage *)squareCropImageToSideLength:(UIImage *)sourceImage sideLength:(CGFloat)sideLength;
-{
-    // input size comes from image
-    CGSize inputSize = sourceImage.size;
-
-    // round up side length to avoid fractional output size
-    sideLength = ceilf(sideLength);
-
-    // output size has sideLength for both dimensions
-    CGSize outputSize = CGSizeMake(sideLength, sideLength);
-
-    // calculate scale so that smaller dimension fits sideLength
-    CGFloat scale = MAX(sideLength / inputSize.width,
-                        sideLength / inputSize.height);
-
-    // scaling the image with this scale results in this output size
-    CGSize scaledInputSize = CGSizeMake(inputSize.width * scale,
-                                        inputSize.height * scale);
-
-    // determine point in center of "canvas"
-    CGPoint center = CGPointMake(outputSize.width/2.0,
-                                 outputSize.height/2.0);
-
-    // calculate drawing rect relative to output Size
-    CGRect outputRect = CGRectMake(center.x - scaledInputSize.width/2.0,
-                                   center.y - scaledInputSize.height/2.0,
-                                   scaledInputSize.width,
-                                   scaledInputSize.height);
-
-    // begin a new bitmap context, scale 0 takes display scale
-    UIGraphicsBeginImageContextWithOptions(outputSize, YES, 0);
-
-    // optional: set the interpolation quality.
-    // For this you need to grab the underlying CGContext
-    CGContextRef ctx = UIGraphicsGetCurrentContext();
-    CGContextSetInterpolationQuality(ctx, kCGInterpolationHigh);
-
-    // draw the source image into the calculated rect
-    [sourceImage drawInRect:outputRect];
-
-    // create new image from bitmap context
-    UIImage *outImage = UIGraphicsGetImageFromCurrentImageContext();
-
-    // clean up
-    UIGraphicsEndImageContext();
-
-    // pass back new image
-    return outImage;
-}
-
 
 #pragma mark - Fetch from Server
 
@@ -518,7 +515,6 @@
         completionHandler(UIBackgroundFetchResultNewData);
     }];
 }
-
 
 -(void)retrievePostsFromCoreData:(BOOL)isDigest withCompletion:(void (^)(BOOL))completionHandler
 {
@@ -548,7 +544,8 @@
     }
 }
 
--(void)requestNewLinksFromRefresh{
+-(void)requestNewLinksFromRefresh
+{
     self.isFromPastDigest = NO;
     [self requestNewLinks:NO];
 }
@@ -603,11 +600,11 @@
     [self.refreshControl removeFromSuperview];
     self.refreshControl = nil;
 
-    [self.imageCache removeAllObjects];
-
-    [self.refreshControl endRefreshing];
-    [self.refreshControl removeFromSuperview];
-    self.refreshControl = nil;
+//    [self.imageCache removeAllObjects];
+//
+//    [self.refreshControl endRefreshing];
+//    [self.refreshControl removeFromSuperview];
+//    self.refreshControl = nil;
     //    self.isFromPastDigest = NO;
 }
 
@@ -642,7 +639,8 @@
     }
 }
 
--(void)convertToPostObjects:(NSArray *)digestPosts{
+-(void)convertToPostObjects:(NSArray *)digestPosts
+{
     for (DigestPost *digestPost in digestPosts) {
         Post *post = [[Post alloc] init];
         post.title = digestPost.title;
@@ -661,115 +659,114 @@
 
 #pragma mark - Buttons & Gestures
 
--(void)upVoteButtonPressed:(DigestCellWithImageTableViewCell*)cell{
+//-(void)upVoteButtonPressed:(DigestCellWithImageTableViewCell*)cell{
+//
+////    NSString *path  = [[NSBundle mainBundle] pathForResource:@"UpVote" ofType:@"mp3"];
+////    NSURL *pathURL = [NSURL fileURLWithPath : path];
+////
+////    SystemSoundID audioEffect;
+////    AudioServicesCreateSystemSoundID((__bridge CFURLRef) pathURL, &audioEffect);
+////    AudioServicesPlaySystemSound(audioEffect);
+////
+//
+//    if ([[NSUserDefaults standardUserDefaults] boolForKey:@"HasRedditAccount"]){
+//
+//        NSIndexPath *indexPath = [self.digestTableView indexPathForCell:cell];
+//        Post *selectedPost = [self.digestPosts objectAtIndex:indexPath.row];
+//
+////        selectedPost.upvoted = [NSNumber numberWithBool:YES];
+////        selectedPost.downvoted = [NSNumber numberWithBool:NO];
+//        [self.managedObjectContext save:nil];
+//
+//        [self sendUpVoteToReddit:selectedPost.postID];
+//    }
+//}
 
-//    NSString *path  = [[NSBundle mainBundle] pathForResource:@"UpVote" ofType:@"mp3"];
+//-(void)downVoteButtonPressed:(DigestCellWithImageTableViewCell *)cell
+//{
+//    /*
+//    NSString *path  = [[NSBundle mainBundle] pathForResource:@"DownVoteTest" ofType:@"mp3"];
 //    NSURL *pathURL = [NSURL fileURLWithPath : path];
 //
 //    SystemSoundID audioEffect;
 //    AudioServicesCreateSystemSoundID((__bridge CFURLRef) pathURL, &audioEffect);
 //    AudioServicesPlaySystemSound(audioEffect);
+//     */
 //
+//    if ([[NSUserDefaults standardUserDefaults] boolForKey:@"HasRedditAccount"]){
+//
+//        NSIndexPath *indexPath = [self.digestTableView indexPathForCell:cell];
+//        Post *selectedPost = [self.digestPosts objectAtIndex:indexPath.row];
+//
+////        selectedPost.downvoted = [NSNumber numberWithBool:YES];
+////        selectedPost.upvoted = [NSNumber numberWithBool:NO];
+//
+//        // TODO:
+//        // Show upvote indicator in cell
+//        //[cell.downVoteButton setBackgroundImage:[UIImage imageNamed:@"downvote_arrow_selected"] forState:UIControlStateNormal];
+//        //[cell.upVoteButton setBackgroundImage:[UIImage imageNamed:@"upvote_arrow"] forState:UIControlStateNormal];
+//
+//        [self sendDownVoteToReddit:selectedPost.postID];
+//    }
+//}
 
-    if ([[NSUserDefaults standardUserDefaults] boolForKey:@"HasRedditAccount"]){
-
-        NSIndexPath *indexPath = [self.digestTableView indexPathForCell:cell];
-        Post *selectedPost = [self.digestPosts objectAtIndex:indexPath.row];
-
-//        selectedPost.upvoted = [NSNumber numberWithBool:YES];
-//        selectedPost.downvoted = [NSNumber numberWithBool:NO];
-        [self.managedObjectContext save:nil];
-
-        // TODO:
-        // Show upvote indicator in cell
-        //[cell.upVoteButton setBackgroundImage:[UIImage imageNamed:@"upvote_arrow_selected"] forState:UIControlStateNormal];
-        //[cell.downVoteButton setBackgroundImage:[UIImage imageNamed:@"downvote_arrow"] forState:UIControlStateNormal];
-
-        [self sendUpVoteToReddit:selectedPost.postID];
-    }
-}
-
--(void)downVoteButtonPressed:(DigestCellWithImageTableViewCell *)cell{
-
-    NSString *path  = [[NSBundle mainBundle] pathForResource:@"DownVoteTest" ofType:@"mp3"];
-    NSURL *pathURL = [NSURL fileURLWithPath : path];
-
-    SystemSoundID audioEffect;
-    AudioServicesCreateSystemSoundID((__bridge CFURLRef) pathURL, &audioEffect);
-    AudioServicesPlaySystemSound(audioEffect);
-
-    if ([[NSUserDefaults standardUserDefaults] boolForKey:@"HasRedditAccount"]){
-
-        NSIndexPath *indexPath = [self.digestTableView indexPathForCell:cell];
-        Post *selectedPost = [self.digestPosts objectAtIndex:indexPath.row];
-
-//        selectedPost.downvoted = [NSNumber numberWithBool:YES];
-//        selectedPost.upvoted = [NSNumber numberWithBool:NO];
-        [self.managedObjectContext save:nil];
-
-        // TODO:
-        // Show upvote indicator in cell
-        //[cell.downVoteButton setBackgroundImage:[UIImage imageNamed:@"downvote_arrow_selected"] forState:UIControlStateNormal];
-        //[cell.upVoteButton setBackgroundImage:[UIImage imageNamed:@"upvote_arrow"] forState:UIControlStateNormal];
-
-        [self sendDownVoteToReddit:selectedPost.postID];
-    }
+- (void)swipeTableViewCellDidEndSwiping:(MCSwipeTableViewCell *)cell
+{
+    NSLog(@"End");
 }
 
 - (IBAction)onRightSwipeGesture:(UISwipeGestureRecognizer *)rightSwipe
 {
-    CGPoint location = [rightSwipe locationInView:self.digestTableView];
-    NSIndexPath *swipedIndexPath = [self.digestTableView indexPathForRowAtPoint:location];
-    DigestCellWithImageTableViewCell *swipedCell  = (DigestCellWithImageTableViewCell *)[self.digestTableView cellForRowAtIndexPath:swipedIndexPath];
-    Post *post = [self.digestPosts objectAtIndex:swipedIndexPath.row];
-    // if post cell is already upvoted, then unvote and hide indicator
-    if ([post.upvoted boolValue])
-    {
-        swipedCell.upvoteView.hidden = YES;
-        swipedCell.downvoteView.hidden = YES;
-        post.upvoted = [NSNumber numberWithBool:NO];
-        post.downvoted = [NSNumber numberWithBool:NO];
-        // remove vote & check property of cell isUpvoted/Downvoted
-        // really want to upvote
-        // if cell is not upvoted, then upVote and show indicator
-    }
-    else {
-        swipedCell.upvoteView.hidden = NO;
-        swipedCell.downvoteView.hidden = YES;
-        post.upvoted = [NSNumber numberWithBool:YES];
-        post.downvoted = [NSNumber numberWithBool:NO];
-        // add upvote
-    }
-    [self upVoteButtonPressed:swipedCell];
+//    CGPoint location = [rightSwipe locationInView:self.digestTableView];
+//    NSIndexPath *swipedIndexPath = [self.digestTableView indexPathForRowAtPoint:location];
+//    DigestCellWithImageTableViewCell *swipedCell  = (DigestCellWithImageTableViewCell *)[self.digestTableView cellForRowAtIndexPath:swipedIndexPath];
+//    Post *post = [self.digestPosts objectAtIndex:swipedIndexPath.row];
+//
+//    if ([post.upvoted boolValue]) {
+//        // Remove upvote
+//        swipedCell.upvoteView.hidden = YES;
+//        swipedCell.downvoteView.hidden = YES;
+//        post.upvoted = [NSNumber numberWithBool:NO];
+//        post.downvoted = [NSNumber numberWithBool:NO];
+//        // Remove from reddit
+//        [self removeVoteFromReddit:post.postID];
+//    }
+//    else {
+//        // Upvote
+//        swipedCell.upvoteView.hidden = NO;
+//        swipedCell.downvoteView.hidden = YES;
+//        post.upvoted = [NSNumber numberWithBool:YES];
+//        post.downvoted = [NSNumber numberWithBool:NO];
+//        // Send upvote to reddit
+//        [self sendUpVoteToReddit:post.postID];
+//    }
+//    [self.managedObjectContext save:nil];
 }
 
 - (IBAction)onLeftSwipeGesture:(UISwipeGestureRecognizer *)leftSwipe
 {
-    CGPoint location = [leftSwipe locationInView:self.digestTableView];
-    NSIndexPath *swipedIndexPath = [self.digestTableView indexPathForRowAtPoint:location];
-    DigestCellWithImageTableViewCell *swipedCell  = (DigestCellWithImageTableViewCell *)[self.digestTableView cellForRowAtIndexPath:swipedIndexPath];
-    Post *post = [self.digestPosts objectAtIndex:swipedIndexPath.row];
-
-    if ([post.downvoted boolValue])
-    {
-        swipedCell.upvoteView.hidden = YES;
-        swipedCell.downvoteView.hidden = YES;
-        post.upvoted = [NSNumber numberWithBool:NO];
-        post.downvoted = [NSNumber numberWithBool:NO];
-        // remove vote & check property of cell isUpvoted/Downvoted
-        // really want to upvote
-
-        // if cell is not upvoted, then upVote and show indicator
-
-    }
-    else {
-        swipedCell.upvoteView.hidden = YES;
-        swipedCell.downvoteView.hidden = NO;
-        post.upvoted = [NSNumber numberWithBool:NO];
-        post.downvoted = [NSNumber numberWithBool:YES];
-        // add upvote
-    }
-    [self downVoteButtonPressed:swipedCell];
+//    CGPoint location = [leftSwipe locationInView:self.digestTableView];
+//    NSIndexPath *swipedIndexPath = [self.digestTableView indexPathForRowAtPoint:location];
+//    DigestCellWithImageTableViewCell *swipedCell = (DigestCellWithImageTableViewCell *)[self.digestTableView cellForRowAtIndexPath:swipedIndexPath];
+//    Post *post = [self.digestPosts objectAtIndex:swipedIndexPath.row];
+//
+//    if ([post.downvoted boolValue]) {
+//        swipedCell.upvoteView.hidden = YES;
+//        swipedCell.downvoteView.hidden = YES;
+//        post.upvoted = [NSNumber numberWithBool:NO];
+//        post.downvoted = [NSNumber numberWithBool:NO];
+//        // Remove from reddit
+//        [self removeVoteFromReddit:post.postID];
+//    }
+//    else {
+//        swipedCell.upvoteView.hidden = YES;
+//        swipedCell.downvoteView.hidden = NO;
+//        post.upvoted = [NSNumber numberWithBool:NO];
+//        post.downvoted = [NSNumber numberWithBool:YES];
+//        // Send downvote to reddit
+//        [self sendDownVoteToReddit:post.postID];
+//    }
+//    [self.managedObjectContext save:nil];
 }
 
 -(void)sendUpVoteToReddit:(NSString *)postID{
@@ -784,6 +781,15 @@
     [[RKClient sharedClient] linkWithFullName:postID completion:^(id object, NSError *error) {
         [[RKClient sharedClient] downvote:object completion:^(NSError *error) {
             //NSLog(@"Downvote");
+        }];
+    }];
+}
+
+- (void)removeVoteFromReddit:(NSString *)postID
+{
+    [[RKClient sharedClient] linkWithFullName:postID completion:^(id object, NSError *error) {
+        [[RKClient sharedClient] revokeVote:object completion:^(NSError *error) {
+            //NSLog(@"Removed Vote");
         }];
     }];
 }
