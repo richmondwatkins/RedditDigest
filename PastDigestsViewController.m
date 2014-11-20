@@ -43,7 +43,7 @@
 
 -(void)retrievePastDigestFromCoreData{
     NSFetchRequest *fetchDigests = [[NSFetchRequest alloc] initWithEntityName:@"Digest"];
-    NSSortDescriptor *sorter = [[NSSortDescriptor alloc] initWithKey:@"time" ascending:YES];
+    NSSortDescriptor *sorter = [[NSSortDescriptor alloc] initWithKey:@"time" ascending:NO];
     [fetchDigests setSortDescriptors:@[sorter]];
 
     NSArray *digests = [self.managedObject executeFetchRequest:fetchDigests error:nil];
@@ -72,7 +72,7 @@
         Digest *digest = [self.digests objectAtIndex:indexPath.row];
 
         NSArray *posts = [digest.digestPost allObjects];
-        DigestPost *post = posts.firstObject;
+        DigestPost *post = [posts objectAtIndex:arc4random_uniform(posts.count)];
 
         if ([post.image boolValue]) {
             cell.archiveImageView.image = [self returnImageForCellFromData:post.postID withSubredditNameForKey:post.subreddit andFilePathPrefix:@"image-copy"];
@@ -88,7 +88,7 @@
         NSDate* date = [NSDate dateWithTimeIntervalSince1970:[digest.time doubleValue]];
 
         NSDateFormatter *dateFormat =[[NSDateFormatter alloc]init];
-        [dateFormat setDateFormat:@"MMMM dd, yyyy - h:00"];
+        [dateFormat setDateFormat:@"MMMM dd, yyyy - h:mm"];
         NSString *dateText = [dateFormat stringFromDate:date];
         cell.archiveTitleLabel.text = dateText;
     }

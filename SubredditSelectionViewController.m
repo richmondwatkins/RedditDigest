@@ -397,8 +397,7 @@ NSInteger const MAX_SELECTABLE_SUBREDDITS_FOR_DIGEST = 20;
 
 
 -(void)addItemsFromCoreData{
-    NSFetchRequest *subredditFetch = [NSFetchRequest fetchRequestWithEntityName:@"Subreddit"];
-    NSArray *subscribedSubreddits = [self.managedObject executeFetchRequest:subredditFetch error:nil];
+    NSArray *subscribedSubreddits = [Subreddit retrieveAllSubreddits:self.managedObject];
 
     if (subscribedSubreddits) {
         for (Subreddit *subFromCore in subscribedSubreddits) {
@@ -423,8 +422,7 @@ NSInteger const MAX_SELECTABLE_SUBREDDITS_FOR_DIGEST = 20;
 //TODO Move to Subbreddit Core Data Class
 -(void)checkForExistingSubscription
 {
-    NSFetchRequest *subredditFetch = [NSFetchRequest fetchRequestWithEntityName:@"Subreddit"];
-    NSArray *subscribedSubreddits = [self.managedObject executeFetchRequest:subredditFetch error:nil];
+    NSArray *subscribedSubreddits = [Subreddit retrieveAllSubreddits:self.managedObject];
     if (subscribedSubreddits.count) {
         for (Subreddit *subscribedSub in subscribedSubreddits) {
             for (RKSubreddit *rkSubreddit in self.subreddits) {
