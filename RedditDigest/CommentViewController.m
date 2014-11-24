@@ -63,7 +63,10 @@
 
     self.tableView.estimatedRowHeight = 45.0;
     self.tableView.rowHeight = UITableViewAutomaticDimension;
-    [self setupVoteButtons];
+
+    if (!self.isFromPastDigest) {
+        [self setupVoteButtons];
+    }
 }
 
 #pragma mark - Table View Delegate Methods
@@ -183,7 +186,7 @@
 
 - (void)setupVoteButtons
 {
-    NSLog(@"OPJOIIOJPO %@",self.post);
+
     if ([self.post.upvoted boolValue]) {
         [self.upVoteButton setImage:[UIImage imageNamed:@"up_arrow_selected"] forState:UIControlStateNormal];
     }
