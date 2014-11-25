@@ -94,6 +94,7 @@
     }
 
     [[UIApplication sharedApplication] setApplicationIconBadgeNumber:0];
+    [self.digestTableView reloadData];
 }
 
 - (void)viewDidLayoutSubviews

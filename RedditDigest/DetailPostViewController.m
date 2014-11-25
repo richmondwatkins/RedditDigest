@@ -39,6 +39,7 @@
     [self showCounterLabelAtIndex:self.index];
     Post *post = self.allPosts[self.index];
     post.viewed = [NSNumber numberWithBool:YES];
+    [post.managedObjectContext save:nil];
     self.navigationItem.title = post.title;
 }
 
@@ -116,6 +117,8 @@
 //    [self showCounterLabelAtIndex:index];
     // Set title of nav bar on change to new post
     Post *currentPost = [self.allPosts objectAtIndex:index];
+    currentPost.viewed = [NSNumber numberWithBool:YES];
+    [currentPost.managedObjectContext save:nil];
     self.navigationItem.title = currentPost.title;
 
 
