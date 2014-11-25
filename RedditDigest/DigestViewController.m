@@ -297,11 +297,11 @@
         cell.upVoteDownVoteLabel.text = [self abbreviateNumber:post.voteRatio.integerValue];
 
         UIColor *notViewedColor = [UIColor colorWithRed:1 green:0.545 blue:0.376 alpha:0.5];
-
+        UIColor *tester = [UIColor colorWithRed:0.2 green:0.4 blue:0.6 alpha:0.5];
         if ([post.viewed boolValue] == NO) {
-            cell.backgroundColor = notViewedColor;
-            cell.authorAndSubredditContainerView.backgroundColor = notViewedColor;
-            cell.selectedBackgroundView.backgroundColor = notViewedColor;
+            cell.backgroundColor = tester;
+            cell.authorAndSubredditContainerView.backgroundColor = tester;
+            cell.selectedBackgroundView.backgroundColor = tester;
             cell.authorAndSubredditContainerView.alpha = 0.2;
         }else{
             cell.backgroundColor = [UIColor whiteColor];
