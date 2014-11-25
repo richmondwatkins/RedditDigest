@@ -143,6 +143,7 @@
 
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
     [userDefaults setObject:uuidStr forKey:@"DeviceID"];
+    [userDefaults setBool:YES forKey:@"HideNSFW"];
 
     [userDefaults synchronize];
     [UserRequests registerDevice:uuidStr];

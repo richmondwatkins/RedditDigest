@@ -54,6 +54,12 @@
     [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
     self.activityIndicator.hidden = NO;
     [self.activityIndicator startAnimating];
+
+    if (self.isNSFW && [[NSUserDefaults standardUserDefaults] boolForKey:@"HideNSFW"]) {
+        UIVisualEffectView *blurEffect = [[UIVisualEffectView alloc] initWithEffect:[UIBlurEffect effectWithStyle:UIBlurEffectStyleLight]];
+        blurEffect.frame = webView.bounds;
+        [webView addSubview:blurEffect];
+    }
 }
 
 - (void)webViewDidFinishLoad:(UIWebView *)webView
@@ -62,12 +68,6 @@
     [self.activityIndicator stopAnimating];
     self.activityIndicator.hidden = YES;
 
-
-    if (self.isNSFW) {
-        UIVisualEffectView *blurEffect = [[UIVisualEffectView alloc] initWithEffect:[UIBlurEffect effectWithStyle:UIBlurEffectStyleLight]];
-        blurEffect.frame = webView.bounds;
-        [webView addSubview:blurEffect];
-    }
 }
 
 #pragma mark - Pan

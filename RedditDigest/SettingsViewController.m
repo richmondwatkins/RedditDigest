@@ -35,6 +35,7 @@
 @property (strong, nonatomic) IBOutlet UITableViewCell *archiveCell;
 @property (strong, nonatomic) IBOutlet UITableViewCell *loginCell;
 @property BOOL madChangeToLocation;
+@property (strong, nonatomic) IBOutlet UISwitch *nsfwSwitcher;
 @end
 
 @implementation SettingsViewController
@@ -45,9 +46,7 @@
 
     self.title = @"Settings";
 
-    [self setupLoginCell];
-    [self setupLocationCell];
-    [self setupAutoUpdatingCell];
+    [self setUpCells];
 
     [InternetConnectionTest testInternetConnectionWithViewController:self andCompletion:^(BOOL internet) {
             if (internet == NO) {
@@ -57,20 +56,35 @@
                 self.editDigestCell.userInteractionEnabled = NO;
             }
     }];
-    
+
     self.digestViewController.madeChangeToLocation = NO;
     [self retrievePastDigestFromCoreData];
+
 }
 
-#pragma mark - Login
+#pragma mark - Cells
 
-- (void)setupLoginCell
-{
+-(void)setUpCells{
+    //login cell
     if ([[NSUserDefaults standardUserDefaults] boolForKey:@"UserIsLoggedIn"]) {
         self.loginLogoutLabel.text = [@"Logout - " stringByAppendingString:[self findUserName]];
     }
     else {
         self.loginLogoutLabel.text = @"Login";
+    }
+
+    //nsfw cell
+    if ([[NSUserDefaults standardUserDefaults] boolForKey:@"HideNSFW"]) {
+        self.nsfwSwitcher.on = YES;
+    }else{
+        self.nsfwSwitcher.on = NO;
+    }
+
+    //location cell
+    if ([[NSUserDefaults standardUserDefaults] boolForKey:@"Location"]) {
+        self.locationSwitcher.on = YES;
+    } else {
+        self.locationSwitcher.on = NO;
     }
 }
 
@@ -109,15 +123,6 @@
 
 #pragma mark - Location
 
-- (void)setupLocationCell
-{
-    if ([[NSUserDefaults standardUserDefaults] boolForKey:@"Location"]) {
-        self.locationSwitcher.on = YES;
-    } else {
-        self.locationSwitcher.on = NO;
-    }
-}
-
 - (IBAction)switchLocalization:(UISwitch *)sender
 {
     if (sender.on) {
@@ -136,6 +141,18 @@
     }
     [[NSUserDefaults standardUserDefaults] synchronize];
     self.digestViewController.madeChangeToLocation = YES;
+}
+
+
+- (IBAction)nsfwSwitched:(UISwitch *)sender {
+
+    if (sender.on) {
+        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"HideNSFW"];
+    }else{
+        [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"HideNSFW"];
+    }
+
+    [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
 // TODO figure out why this method isn't being called and make it get called
