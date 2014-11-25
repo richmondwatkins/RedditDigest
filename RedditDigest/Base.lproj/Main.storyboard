@@ -1140,6 +1140,7 @@
                                         </tableViewCellContentView>
                                         <gestureRecognizers/>
                                         <connections>
+                                            <outlet property="authorAndSubredditContainerView" destination="upy-7j-1GM" id="Fno-W0-rKS"/>
                                             <outlet property="authorLabel" destination="Qch-SH-AKQ" id="B8a-7n-iWM"/>
                                             <outlet property="downvoteView" destination="oE0-x9-bsD" id="VFx-Mq-4hT"/>
                                             <outlet property="subredditLabel" destination="u9V-3r-XgS" id="WeX-TV-Qvh"/>

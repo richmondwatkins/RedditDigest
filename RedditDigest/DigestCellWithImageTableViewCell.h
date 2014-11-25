@@ -25,7 +25,10 @@
 @property (weak, nonatomic) IBOutlet UILabel *authorLabel;
 @property (strong, nonatomic) IBOutlet UIView *upvoteView;
 @property (strong, nonatomic) IBOutlet UIView *downvoteView;
+@property (strong, nonatomic) IBOutlet UIView *authorAndSubredditContainerView;
 
 //@property id <DigestCellDelegate> delegate;
+
+-(void)formatCellAndAllSubviews;
 
 @end

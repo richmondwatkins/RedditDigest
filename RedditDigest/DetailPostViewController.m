@@ -38,6 +38,7 @@
 
     [self showCounterLabelAtIndex:self.index];
     Post *post = self.allPosts[self.index];
+    post.viewed = [NSNumber numberWithBool:YES];
     self.navigationItem.title = post.title;
 }
 

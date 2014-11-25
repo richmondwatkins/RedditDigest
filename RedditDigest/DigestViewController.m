@@ -52,6 +52,7 @@
     self.navigationItem.title = self.dateToday;
     self.imageCache = [[NSCache alloc] init];
 
+    self.digestTableView.contentOffset = CGPointMake(0, 0 - self.digestTableView.contentInset.top);
 }
 
 - (void)loadView
@@ -259,87 +260,14 @@
 {
     DigestCellWithImageTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"DigestCell"];
 
+    [cell formatCellAndAllSubviews];
+
     cell.delegate = self;
-    cell.titleLabel.lineBreakMode = NSLineBreakByWordWrapping;
-    cell.titleLabel.numberOfLines = 0;
-
-    // Selected Cell color
-    UIImageView *selectedBackgroundView = [[UIImageView alloc]initWithFrame:cell.frame];
-    selectedBackgroundView.backgroundColor = [UIColor colorWithRed:0.937 green:0.969 blue:1 alpha:1];
-    cell.selectedBackgroundView = selectedBackgroundView;
-    cell.thumbnailImage.contentMode = UIViewContentModeScaleAspectFill;
-    cell.thumbnailImage.alpha = 0.75;
-    cell.thumbnailImage.layer.cornerRadius = 2.0;
-    cell.thumbnailImage.layer.masksToBounds = YES;
-
-    UIView *upVoteView = [self viewWithImageName:@"up_arrow_white"];
-    UIColor *upVoteColor = [UIColor colorWithRed:1 green:0.545 blue:0.376 alpha:1];
-
-    UIView *downVoteView = [self viewWithImageName:@"down_arrow_white"];
-    UIColor *downVoteColor = [UIColor colorWithRed:0.58 green:0.58 blue:1 alpha:1];
-
-    cell.upvoteView.backgroundColor = upVoteColor;
-    cell.downvoteView.backgroundColor = downVoteColor;
 
     if ([[NSUserDefaults standardUserDefaults] boolForKey:@"UserIsLoggedIn"] && self.isFromPastDigest == NO) {
-
-    // Functionality for right swipe, upvote
-        [cell setSwipeGestureWithView:upVoteView color:upVoteColor mode:MCSwipeTableViewCellModeSwitch state:MCSwipeTableViewCellState1 completionBlock:^(MCSwipeTableViewCell *cell, MCSwipeTableViewCellState state, MCSwipeTableViewCellMode mode)
-         {
-             DigestCellWithImageTableViewCell *swipedCell  = (DigestCellWithImageTableViewCell *)cell;
-             NSIndexPath *swipedIndexPath = [self.digestTableView indexPathForCell:swipedCell];
-
-             Post *post = [self.digestPosts objectAtIndex:swipedIndexPath.row];
-
-             if ([post.upvoted boolValue]) {
-                 // Remove upvote
-                 swipedCell.upvoteView.hidden = YES;
-                 swipedCell.downvoteView.hidden = YES;
-                 post.upvoted = [NSNumber numberWithBool:NO];
-                 post.downvoted = [NSNumber numberWithBool:NO];
-                 // Remove from reddit
-                 [self removeVoteFromReddit:post.postID];
-             }
-             else {
-                 // Upvote
-                 swipedCell.upvoteView.hidden = NO;
-                 swipedCell.downvoteView.hidden = YES;
-                 post.upvoted = [NSNumber numberWithBool:YES];
-                 post.downvoted = [NSNumber numberWithBool:NO];
-                 // Send upvote to reddit
-                 [self sendUpVoteToReddit:post.postID];
-             }
-             [self.managedObjectContext save:nil];
-         }];
-
-        // Functionality for left swipe, downvote
-        [cell setSwipeGestureWithView:downVoteView color:downVoteColor mode:MCSwipeTableViewCellModeSwitch state:MCSwipeTableViewCellState3 completionBlock:^(MCSwipeTableViewCell *cell, MCSwipeTableViewCellState state, MCSwipeTableViewCellMode mode)
-        {
-            DigestCellWithImageTableViewCell *swipedCell  = (DigestCellWithImageTableViewCell *)cell;
-            NSIndexPath *swipedIndexPath = [self.digestTableView indexPathForCell:swipedCell];
-
-            Post *post = [self.digestPosts objectAtIndex:swipedIndexPath.row];
-
-            if ([post.downvoted boolValue]) {
-                swipedCell.upvoteView.hidden = YES;
-                swipedCell.downvoteView.hidden = YES;
-                post.upvoted = [NSNumber numberWithBool:NO];
-                post.downvoted = [NSNumber numberWithBool:NO];
-                // Remove from reddit
-                [self removeVoteFromReddit:post.postID];
-            }
-            else {
-                swipedCell.upvoteView.hidden = YES;
-                swipedCell.downvoteView.hidden = NO;
-                post.upvoted = [NSNumber numberWithBool:NO];
-                post.downvoted = [NSNumber numberWithBool:YES];
-                // Send downvote to reddit
-                [self sendDownVoteToReddit:post.postID];
-            }
-            [self.managedObjectContext save:nil];
-        }];
+        [self setUpCellForDownVote:cell];
+        [self setUpCellForUpVote:cell];
     }
-
 
     if (self.isFromPastDigest) {
         DigestPost *post = self.digestPosts[indexPath.row];
@@ -367,6 +295,20 @@
         cell.subredditLabel.text = post.subreddit.subreddit;
         cell.authorLabel.text = post.author;
         cell.upVoteDownVoteLabel.text = [self abbreviateNumber:post.voteRatio.integerValue];
+
+        UIColor *notViewedColor = [UIColor colorWithRed:1 green:0.545 blue:0.376 alpha:0.5];
+
+        if ([post.viewed boolValue] == NO) {
+            cell.backgroundColor = notViewedColor;
+            cell.authorAndSubredditContainerView.backgroundColor = notViewedColor;
+            cell.selectedBackgroundView.backgroundColor = notViewedColor;
+            cell.authorAndSubredditContainerView.alpha = 0.2;
+        }else{
+            cell.backgroundColor = [UIColor whiteColor];
+            cell.selectedBackgroundView.backgroundColor = [UIColor whiteColor];
+            cell.authorAndSubredditContainerView.backgroundColor = [UIColor whiteColor];
+            cell.authorAndSubredditContainerView.alpha = 1;
+        }
 //        cell.commentsLabel.text = [self abbreviateNumber:post.totalComments.integerValue];
 
         if ([post.image boolValue]) {
@@ -423,6 +365,74 @@
 
     NSString *pathCompenent = [NSString stringWithFormat:@"%@-%@",prefix, name];
     return [documentsPath stringByAppendingPathComponent:pathCompenent];
+}
+
+-(void)setUpCellForDownVote:(DigestCellWithImageTableViewCell *)cell{
+    UIView *downVoteView = [self viewWithImageName:@"down_arrow_white"];
+    UIColor *downVoteColor = [UIColor colorWithRed:0.58 green:0.58 blue:1 alpha:1];
+
+    cell.downvoteView.backgroundColor = downVoteColor;
+
+    [cell setSwipeGestureWithView:downVoteView color:downVoteColor mode:MCSwipeTableViewCellModeSwitch state:MCSwipeTableViewCellState3 completionBlock:^(MCSwipeTableViewCell *cell, MCSwipeTableViewCellState state, MCSwipeTableViewCellMode mode)
+     {
+         DigestCellWithImageTableViewCell *swipedCell  = (DigestCellWithImageTableViewCell *)cell;
+         NSIndexPath *swipedIndexPath = [self.digestTableView indexPathForCell:swipedCell];
+
+         Post *post = [self.digestPosts objectAtIndex:swipedIndexPath.row];
+
+         if ([post.downvoted boolValue]) {
+             swipedCell.upvoteView.hidden = YES;
+             swipedCell.downvoteView.hidden = YES;
+             post.upvoted = [NSNumber numberWithBool:NO];
+             post.downvoted = [NSNumber numberWithBool:NO];
+             // Remove from reddit
+             [self removeVoteFromReddit:post.postID];
+         }
+         else {
+             swipedCell.upvoteView.hidden = YES;
+             swipedCell.downvoteView.hidden = NO;
+             post.upvoted = [NSNumber numberWithBool:NO];
+             post.downvoted = [NSNumber numberWithBool:YES];
+             // Send downvote to reddit
+             [self sendDownVoteToReddit:post.postID];
+         }
+         [self.managedObjectContext save:nil];
+     }];
+}
+
+-(void)setUpCellForUpVote:(DigestCellWithImageTableViewCell *)cell{
+
+    UIView *upVoteView = [self viewWithImageName:@"up_arrow_white"];
+    UIColor *upVoteColor = [UIColor colorWithRed:1 green:0.545 blue:0.376 alpha:1];
+    cell.upvoteView.backgroundColor = upVoteColor;
+
+    [cell setSwipeGestureWithView:upVoteView color:upVoteColor mode:MCSwipeTableViewCellModeSwitch state:MCSwipeTableViewCellState1 completionBlock:^(MCSwipeTableViewCell *cell, MCSwipeTableViewCellState state, MCSwipeTableViewCellMode mode)
+     {
+         DigestCellWithImageTableViewCell *swipedCell  = (DigestCellWithImageTableViewCell *)cell;
+         NSIndexPath *swipedIndexPath = [self.digestTableView indexPathForCell:swipedCell];
+
+         Post *post = [self.digestPosts objectAtIndex:swipedIndexPath.row];
+
+         if ([post.upvoted boolValue]) {
+             // Remove upvote
+             swipedCell.upvoteView.hidden = YES;
+             swipedCell.downvoteView.hidden = YES;
+             post.upvoted = [NSNumber numberWithBool:NO];
+             post.downvoted = [NSNumber numberWithBool:NO];
+             // Remove from reddit
+             [self removeVoteFromReddit:post.postID];
+         }
+         else {
+             // Upvote
+             swipedCell.upvoteView.hidden = NO;
+             swipedCell.downvoteView.hidden = YES;
+             post.upvoted = [NSNumber numberWithBool:YES];
+             post.downvoted = [NSNumber numberWithBool:NO];
+             // Send upvote to reddit
+             [self sendUpVoteToReddit:post.postID];
+         }
+         [self.managedObjectContext save:nil];
+     }];
 }
 
 -(void) tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
@@ -512,16 +522,15 @@
 
 -(void)retrievePostsFromCoreData:(BOOL)isDigest withCompletion:(void (^)(BOOL))completionHandler
 {
-    //    [Digest createAndSaveDigestWithPost:savedPost andManagedObject:managedObjectContext];
 
     self.digestPosts = [NSMutableArray array];
 
     NSFetchRequest * fetch = [[NSFetchRequest alloc] init];
     [fetch setEntity:[NSEntityDescription entityForName:@"Post" inManagedObjectContext:self.managedObjectContext]];
-    NSSortDescriptor *sorter = [[NSSortDescriptor alloc] initWithKey:@"voteRatio" ascending:NO];
-    NSSortDescriptor *sorterTwo = [[NSSortDescriptor alloc] initWithKey:@"isLocalPost" ascending:NO];
+    NSSortDescriptor *voteSort = [[NSSortDescriptor alloc] initWithKey:@"voteRatio" ascending:NO];
+    NSSortDescriptor *localSort = [[NSSortDescriptor alloc] initWithKey:@"isLocalPost" ascending:NO];
 
-    [fetch setSortDescriptors:@[sorterTwo, sorter]];
+    [fetch setSortDescriptors:@[localSort, voteSort]];
 
     NSArray * posts = [self.managedObjectContext executeFetchRequest:fetch error:nil];
 
