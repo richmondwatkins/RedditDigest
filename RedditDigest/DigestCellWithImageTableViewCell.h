@@ -28,6 +28,7 @@
 @property (strong, nonatomic) IBOutlet UIView *authorAndSubredditContainerView;
 
 //@property id <DigestCellDelegate> delegate;
+@property (strong, nonatomic) IBOutlet UILabel *nsfwLabel;
 
 -(void)formatCellAndAllSubviews;
 

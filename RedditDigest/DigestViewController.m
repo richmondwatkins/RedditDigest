@@ -93,7 +93,7 @@
         [self.digestTableView reloadRowsAtIndexPaths:@[selectedRowIndexPath] withRowAnimation:UITableViewRowAnimationNone];
     }
 
-    //    [self performNewFetchedDataActions];
+    [[UIApplication sharedApplication] setApplicationIconBadgeNumber:0];
 }
 
 - (void)viewDidLayoutSubviews
@@ -113,8 +113,6 @@
         [self createLoadingSnoo];
         self.navigationItem.rightBarButtonItem.enabled = NO;
     }
-//    [self.digestTableView reloadData];
-    [[UIApplication sharedApplication] setApplicationIconBadgeNumber:0];
 
     if (self.isFromPastDigest == NO && [[NSUserDefaults standardUserDefaults] boolForKey:@"HasSubscriptions"]) {
         [self initializeRefreshControl];
@@ -296,20 +294,16 @@
         cell.authorLabel.text = post.author;
         cell.upVoteDownVoteLabel.text = [self abbreviateNumber:post.voteRatio.integerValue];
 
-        UIColor *notViewedColor = [UIColor colorWithRed:1 green:0.545 blue:0.376 alpha:0.5];
-        UIColor *tester = [UIColor colorWithRed:0.2 green:0.4 blue:0.6 alpha:0.5];
+        UIColor *cellNotViewed = [UIColor colorWithRed:0.2 green:0.4 blue:0.6 alpha:0.5];
         if ([post.viewed boolValue] == NO) {
-            cell.backgroundColor = tester;
-            cell.authorAndSubredditContainerView.backgroundColor = tester;
-            cell.selectedBackgroundView.backgroundColor = tester;
-            cell.authorAndSubredditContainerView.alpha = 0.2;
+            cell.backgroundColor = cellNotViewed;
+            cell.authorAndSubredditContainerView.backgroundColor = [UIColor clearColor];
+            cell.selectedBackgroundView.backgroundColor = cellNotViewed;
         }else{
             cell.backgroundColor = [UIColor whiteColor];
             cell.selectedBackgroundView.backgroundColor = [UIColor whiteColor];
             cell.authorAndSubredditContainerView.backgroundColor = [UIColor whiteColor];
-            cell.authorAndSubredditContainerView.alpha = 1;
         }
-//        cell.commentsLabel.text = [self abbreviateNumber:post.totalComments.integerValue];
 
         if ([post.image boolValue]) {
             cell.thumbnailImage.image = [self returnImageForCellFromData:post.postID withSubredditNameForKey:post.subreddit.subreddit andFilePathPrefix:@"image"];
@@ -336,7 +330,18 @@
             cell.downvoteView.hidden = YES;
         }
 
+        if ([post.nsfw boolValue]) {
+            UIVisualEffectView *effectView = [[UIVisualEffectView alloc] initWithEffect:[UIBlurEffect effectWithStyle:UIBlurEffectStyleLight]];
+            effectView.frame = cell.thumbnailImage.bounds;
+            [cell.thumbnailImage addSubview:effectView];
+            cell.nsfwLabel.hidden = NO;
+        }else{
+            [[cell.thumbnailImage subviews] makeObjectsPerformSelector:@selector(removeFromSuperview)];
+            cell.nsfwLabel.hidden = YES;
+        }
+
     }
+
     return cell;
 }
 

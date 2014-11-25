@@ -1068,11 +1068,18 @@
                                                             <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="NSFW" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lHF-fw-HiQ">
+                                                            <rect key="frame" x="526" y="2" width="50" height="21"/>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                            <color key="textColor" red="1" green="0.0" blue="0.041947927615659353" alpha="1" colorSpace="calibratedRGB"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
                                                     </subviews>
                                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                     <constraints>
                                                         <constraint firstItem="o70-OA-hBd" firstAttribute="leading" secondItem="Qch-SH-AKQ" secondAttribute="trailing" constant="1" id="3WN-cE-VlQ"/>
                                                         <constraint firstItem="u9V-3r-XgS" firstAttribute="top" secondItem="upy-7j-1GM" secondAttribute="top" constant="-2" id="3kQ-MC-Q87"/>
+                                                        <constraint firstItem="lHF-fw-HiQ" firstAttribute="baseline" secondItem="Qch-SH-AKQ" secondAttribute="baseline" constant="2" id="A5r-me-naf"/>
                                                         <constraint firstItem="4vQ-S3-CqE" firstAttribute="top" secondItem="upy-7j-1GM" secondAttribute="top" constant="-3" id="Dij-Lk-ODv"/>
                                                         <constraint firstItem="Qch-SH-AKQ" firstAttribute="leading" secondItem="4vQ-S3-CqE" secondAttribute="trailing" constant="1" id="ERF-tV-AmS">
                                                             <variation key="heightClass=regular-widthClass=compact" constant="1"/>
@@ -1081,6 +1088,7 @@
                                                         <constraint firstItem="Qch-SH-AKQ" firstAttribute="top" secondItem="upy-7j-1GM" secondAttribute="top" id="Uad-j3-mGe"/>
                                                         <constraint firstItem="o70-OA-hBd" firstAttribute="top" secondItem="upy-7j-1GM" secondAttribute="top" id="eJg-zr-VZm"/>
                                                         <constraint firstItem="u9V-3r-XgS" firstAttribute="leading" secondItem="upy-7j-1GM" secondAttribute="leading" id="hEg-Ix-bHW"/>
+                                                        <constraint firstItem="lHF-fw-HiQ" firstAttribute="trailing" secondItem="upy-7j-1GM" secondAttribute="trailingMargin" id="hmk-Yx-qdk"/>
                                                         <constraint firstItem="8si-Mc-4aB" firstAttribute="leading" secondItem="o70-OA-hBd" secondAttribute="trailing" constant="1" id="iAC-A1-QG5"/>
                                                         <constraint firstItem="8si-Mc-4aB" firstAttribute="top" secondItem="upy-7j-1GM" secondAttribute="top" constant="2" id="l2s-C8-sA2"/>
                                                         <constraint firstItem="4vQ-S3-CqE" firstAttribute="leading" secondItem="u9V-3r-XgS" secondAttribute="trailing" constant="1" id="vlz-6R-Hxh"/>
@@ -1143,6 +1151,7 @@
                                             <outlet property="authorAndSubredditContainerView" destination="upy-7j-1GM" id="Fno-W0-rKS"/>
                                             <outlet property="authorLabel" destination="Qch-SH-AKQ" id="B8a-7n-iWM"/>
                                             <outlet property="downvoteView" destination="oE0-x9-bsD" id="VFx-Mq-4hT"/>
+                                            <outlet property="nsfwLabel" destination="lHF-fw-HiQ" id="nvr-Fh-vWe"/>
                                             <outlet property="subredditLabel" destination="u9V-3r-XgS" id="WeX-TV-Qvh"/>
                                             <outlet property="thumbnailImage" destination="gNq-N4-MhL" id="c7h-eW-QB3"/>
                                             <outlet property="titleLabel" destination="COR-ut-o5n" id="M3A-C3-fIW"/>
