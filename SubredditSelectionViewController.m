@@ -1,3 +1,4 @@
+
 //
 //  SubredditSelectionViewController.m
 //  RedditDigest
@@ -309,9 +310,9 @@ NSInteger const MAX_SELECTABLE_SUBREDDITS_FOR_DIGEST = 20;
         if (subreddit != NULL) {
             if (![self.subreddits containsObject:subreddit]) {
                 [self.subreddits insertObject:subreddit atIndex:0];
-                [self.subredditCollectionView reloadData];
-//                NSIndexPath *firstIndex = [NSIndexPath indexPathForRow:0 inSection:0];
-//                [self.subredditCollectionView insertItemsAtIndexPaths:@[firstIndex]];
+//                [self.subredditCollectionView reloadData];
+                NSIndexPath *firstIndex = [NSIndexPath indexPathForRow:0 inSection:0];
+                [self.subredditCollectionView insertItemsAtIndexPaths:@[firstIndex]];
             }else{
                 textField.placeholder = @"Subreddit already in list";
             }

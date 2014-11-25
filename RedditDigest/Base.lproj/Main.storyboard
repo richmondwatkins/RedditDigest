@@ -1801,6 +1801,13 @@
                                     <constraint firstAttribute="height" constant="20" id="st9-yy-hKi"/>
                                 </constraints>
                             </view>
+                            <webView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="l1u-Fi-ZYy">
+                                <rect key="frame" x="0.0" y="20" width="600" height="348"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <connections>
+                                    <outlet property="delegate" destination="SW4-4c-RCO" id="ndS-62-0R9"/>
+                                </connections>
+                            </webView>
                             <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="ZsL-ym-Jfp">
                                 <rect key="frame" x="290" y="290" width="20" height="20"/>
                             </activityIndicatorView>
@@ -1808,8 +1815,12 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <gestureRecognizers/>
                         <constraints>
+                            <constraint firstItem="l1u-Fi-ZYy" firstAttribute="top" secondItem="NIY-zX-cGu" secondAttribute="bottom" id="2FL-qv-YNk"/>
                             <constraint firstAttribute="centerX" secondItem="ZsL-ym-Jfp" secondAttribute="centerX" id="Cgd-86-th0"/>
                             <constraint firstItem="S8U-cs-cwC" firstAttribute="top" secondItem="PRd-nZ-FOl" secondAttribute="top" id="EVn-h7-QWx"/>
+                            <constraint firstItem="l1u-Fi-ZYy" firstAttribute="leading" secondItem="S8U-cs-cwC" secondAttribute="leading" id="Ilc-U9-ZKU"/>
+                            <constraint firstItem="ZsC-gR-IYU" firstAttribute="top" secondItem="l1u-Fi-ZYy" secondAttribute="bottom" constant="232" id="L0Q-iF-qd7"/>
+                            <constraint firstItem="l1u-Fi-ZYy" firstAttribute="trailing" secondItem="S8U-cs-cwC" secondAttribute="trailing" id="MgE-Vh-UAf"/>
                             <constraint firstAttribute="trailing" secondItem="S8U-cs-cwC" secondAttribute="trailing" id="deb-QZ-7b7"/>
                             <constraint firstAttribute="centerY" secondItem="ZsL-ym-Jfp" secondAttribute="centerY" id="dya-jD-8gh"/>
                             <constraint firstItem="S8U-cs-cwC" firstAttribute="leading" secondItem="PRd-nZ-FOl" secondAttribute="leading" id="zFK-yx-d5Q"/>
@@ -1820,6 +1831,7 @@
                     </view>
                     <connections>
                         <outlet property="activityIndicator" destination="ZsL-ym-Jfp" id="Tvk-Uc-9wt"/>
+                        <outlet property="gifWebView" destination="l1u-Fi-ZYy" id="ZKP-in-5Kb"/>
                         <outlet property="statusBarBackground" destination="S8U-cs-cwC" id="zFU-AZ-Auh"/>
                         <outlet property="verticalSpaceConstraint" destination="EVn-h7-QWx" id="xnh-mg-zPZ"/>
                     </connections>

@@ -11,11 +11,12 @@
 #import "GifPostViewController.h"
 #import "FLAnimatedImage.h"
 #import "InternetConnectionTest.h"
-@interface GifPostViewController ()<UIGestureRecognizerDelegate, UIScrollViewDelegate>
+@interface GifPostViewController ()<UIGestureRecognizerDelegate, UIScrollViewDelegate, UIWebViewDelegate>
 
 @property (weak, nonatomic) IBOutlet UIView *statusBarBackground;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *verticalSpaceConstraint;
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *activityIndicator;
+@property (strong, nonatomic) IBOutlet UIWebView *gifWebView;
 
 @end
 @implementation GifPostViewController
@@ -23,7 +24,6 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-
     self.statusBarBackground.backgroundColor = REDDIT_DARK_BLUE;
     if (!self.navigationController.navigationBarHidden) {
         self.statusBarBackground.alpha = 0.0;
@@ -36,30 +36,9 @@
 
     [InternetConnectionTest testInternetConnectionWithViewController:self andCompletion:^(BOOL internet) {
         if (internet == YES) {
-            self.activityIndicator.hidden = NO;
-            [self.activityIndicator startAnimating];
 
-            dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(void){
-                FLAnimatedImage *image = [FLAnimatedImage animatedImageWithGIFData:[NSData dataWithContentsOfURL:[NSURL URLWithString:self.url]]];
-                dispatch_async(dispatch_get_main_queue(), ^(void){
-                    FLAnimatedImageView *imageView = [[FLAnimatedImageView alloc] init];
-                    imageView.animatedImage = image;
-                    CGRect screenRect =[[UIScreen mainScreen] bounds];
-                    CGFloat screenWidth = screenRect.size.width;
-                    CGFloat screenHeight = screenRect.size.height;
-                    imageView.frame = CGRectMake(0.0, self.view.center.y/2, screenWidth, screenHeight/2);
-                    [self.view addSubview:imageView];
-
-                    [self.activityIndicator stopAnimating];
-                    self.activityIndicator.hidden = YES;
-
-                    if (self.isNSFW && [[NSUserDefaults standardUserDefaults] boolForKey:@"HideNSFW"]) {
-                        UIVisualEffectView *blurEffect = [[UIVisualEffectView alloc] initWithEffect:[UIBlurEffect effectWithStyle:UIBlurEffectStyleLight]];
-                        blurEffect.frame = imageView.bounds;
-                        [imageView addSubview:blurEffect];
-                    }
-                });
-            });
+            NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:self.url]];
+            [self.gifWebView loadRequest:request];
 
             if (!self.navController.navigationBarHidden) {
                 self.statusBarBackground.alpha = 0.0;
@@ -69,6 +48,22 @@
             }
         }
     }];
+}
+
+-(void)webViewDidStartLoad:(UIWebView *)webView{
+    self.activityIndicator.hidden = NO;
+    [self.activityIndicator startAnimating];
+}
+
+-(void)webViewDidFinishLoad:(UIWebView *)webView{
+    [self.activityIndicator stopAnimating];
+    self.activityIndicator.hidden = YES;
+
+    if (self.isNSFW && [[NSUserDefaults standardUserDefaults] boolForKey:@"HideNSFW"]) {
+        UIVisualEffectView *blurEffect = [[UIVisualEffectView alloc] initWithEffect:[UIBlurEffect effectWithStyle:UIBlurEffectStyleLight]];
+        blurEffect.frame = webView.bounds;
+        [webView addSubview:blurEffect];
+    }
 }
 
 - (IBAction)onPan:(UIPanGestureRecognizer *)panGesture
