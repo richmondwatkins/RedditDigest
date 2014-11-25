@@ -122,39 +122,6 @@
     [self showCounterLabelAtIndex:index];
 }
 
-- (void)pageViewController:(UIPageViewController *)pageViewController willTransitionToViewControllers:(NSArray *)pendingViewControllers
-{
-//    NSUInteger index;
-//
-//    if([pendingViewControllers count] > 0)
-//    {
-//        index =[(PageWrapperViewController*)[pendingViewControllers objectAtIndex:0] index];
-//
-//        if ((index <= 0) || (index == NSNotFound)) {
-//            index = self.allPosts.count;
-//        }
-//
-//        if (index >= self.allPosts.count) {
-//            index = 0;
-//        }
-//
-//        [self loadCommentsFromSelectedPost:index];
-//    }
-//    [self showCounterLabelAtIndex:index];
-//    // Set title of nav bar on change to new post 
-//    Post *currentPost = [self.allPosts objectAtIndex:index];
-//    self.navigationItem.title = currentPost.title;
-//
-//    if (index <= 0 || (index == NSNotFound)) {
-//        index = self.allPosts.count;
-//    }
-//
-//    if (index >= self.allPosts.count) {
-//        index = 0;
-//    }
-//
-//    [self showCounterLabelAtIndex:index];
-}
 
 - (void)loadCommentsFromSelectedPost:(NSUInteger)index
 {
@@ -210,6 +177,7 @@
             viewController.sourceViewIdentifier = 5;
             viewController.url = post.url;
         }
+        viewController.isNSFW = [post.nsfw boolValue];
         viewController.postID = post.postID;
     }else{
         DigestPost *post = self.allPosts[index];

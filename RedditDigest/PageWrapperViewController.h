@@ -22,5 +22,5 @@
 @property NSMutableArray *comments;
 @property BOOL isOldDigest;
 @property UINavigationController *navController;
-
+@property BOOL isNSFW;
 @end

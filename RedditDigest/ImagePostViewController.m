@@ -62,6 +62,12 @@
 
             [self.activityIndicator stopAnimating];
             self.activityIndicator.hidden = YES;
+
+            if (self.isNSFW) {
+                UIVisualEffectView *blurEffect = [[UIVisualEffectView alloc] initWithEffect:[UIBlurEffect effectWithStyle:UIBlurEffectStyleLight]];
+                blurEffect.frame = self.imageView.bounds;
+                [self.imageView addSubview:blurEffect];
+            }
         });
     });
 }

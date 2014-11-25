@@ -63,6 +63,7 @@
     [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
     [self.activityIndicator stopAnimating];
     self.activityIndicator.hidden = YES;
+
 }
 
 //- (IBAction)onPan:(UIPanGestureRecognizer *)panGesture

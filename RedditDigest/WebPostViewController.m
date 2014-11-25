@@ -61,6 +61,13 @@
     [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
     [self.activityIndicator stopAnimating];
     self.activityIndicator.hidden = YES;
+
+
+    if (self.isNSFW) {
+        UIVisualEffectView *blurEffect = [[UIVisualEffectView alloc] initWithEffect:[UIBlurEffect effectWithStyle:UIBlurEffectStyleLight]];
+        blurEffect.frame = webView.bounds;
+        [webView addSubview:blurEffect];
+    }
 }
 
 #pragma mark - Pan
