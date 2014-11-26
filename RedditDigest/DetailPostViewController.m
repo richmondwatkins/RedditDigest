@@ -37,10 +37,15 @@
     [self setUpPageViewController];
 
     [self showCounterLabelAtIndex:self.index];
-    Post *post = self.allPosts[self.index];
-    post.viewed = [NSNumber numberWithBool:YES];
-    [post.managedObjectContext save:nil];
-    self.navigationItem.title = post.title;
+    if (!self.isFromPastDigest) {
+        Post *post = self.allPosts[self.index];
+        post.viewed = [NSNumber numberWithBool:YES];
+        [post.managedObjectContext save:nil];
+        self.navigationItem.title = post.title;
+    }else{
+        DigestPost *archivedPost = self.allPosts[self.index];
+        self.navigationItem.title = archivedPost.title;
+    }
 }
 
 - (BOOL)prefersStatusBarHidden {
@@ -116,11 +121,15 @@
     [self loadCommentsFromSelectedPost:index];
 //    [self showCounterLabelAtIndex:index];
     // Set title of nav bar on change to new post
-    Post *currentPost = [self.allPosts objectAtIndex:index];
-    currentPost.viewed = [NSNumber numberWithBool:YES];
-    [currentPost.managedObjectContext save:nil];
-    self.navigationItem.title = currentPost.title;
-
+    if (!self.isFromPastDigest) {
+        Post *currentPost = [self.allPosts objectAtIndex:index];
+        currentPost.viewed = [NSNumber numberWithBool:YES];
+        [currentPost.managedObjectContext save:nil];
+        self.navigationItem.title = currentPost.title;
+    }else{
+        DigestPost *archivedPost = [self.allPosts objectAtIndex:index];
+        self.navigationItem.title = archivedPost.title;
+    }
 
     [self showCounterLabelAtIndex:index];
 }
