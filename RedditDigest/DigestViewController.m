@@ -41,6 +41,7 @@
 @property BOOL didUpdateLocation;
 @property NSCache *imageCache;
 @property (strong, nonatomic) IBOutlet UIBarButtonItem *todayBarButton;
+
 @end
 
 @implementation DigestViewController
@@ -295,15 +296,12 @@
         cell.authorLabel.text = post.author;
         cell.upVoteDownVoteLabel.text = [self abbreviateNumber:post.voteRatio.integerValue];
 
-        UIColor *cellNotViewed = [UIColor colorWithRed:0.2 green:0.4 blue:0.6 alpha:0.5];
         if ([post.viewed boolValue] == NO) {
-            cell.backgroundColor = cellNotViewed;
-            cell.authorAndSubredditContainerView.backgroundColor = [UIColor clearColor];
-            cell.selectedBackgroundView.backgroundColor = cellNotViewed;
+            cell.checkmarkImageView.alpha = 0.0;
         }else{
-            cell.backgroundColor = [UIColor whiteColor];
-            cell.selectedBackgroundView.backgroundColor = [UIColor whiteColor];
-            cell.authorAndSubredditContainerView.backgroundColor = [UIColor whiteColor];
+            [UIView animateWithDuration:2.0 animations:^{
+                cell.checkmarkImageView.alpha = 0.3;
+            }];
         }
 
         if ([post.image boolValue]) {
