@@ -275,13 +275,12 @@
             CGPoint translation = [panGesture locationInView:panGesture.view];
             if (direction != UIPanGestureRecognizerDirectionLeft && direction != UIPanGestureRecognizerDirectionRight)
             {
-                // View begins as size of iphone screen
-
-                //if (self.commentsViewController.view.frame.size.height > 479 || self.commentsViewController.view.frame.size.height > 43) {
                 self.commentsHeightConstraint.constant -= translation.y;
                 [panGesture setTranslation:CGPointMake(0, 0) inView:panGesture.view];
-                //}
             }
+            NSLog(@"%f", translation.y);
+            NSLog(@"%f", self.commentsHeightConstraint.constant);
+
             break;
         }
 
@@ -332,6 +331,39 @@
         }
         default:
             break;
+    }
+}
+
+- (void)showOrHideCommentsViewController:(float)contentOffSet isScrolling:(BOOL)isScrolling
+{
+    if (self.navigationController.navigationBarHidden) {
+        self.commentsHeightConstraint.constant -= contentOffSet;
+        if (self.commentsHeightConstraint.constant < self.view.frame.size.height - 110) {
+            [self animateCommentsViewIntoPlace:self.navigationController.navigationBar.frame.size.height offSet:0 isScrolling:isScrolling];
+        }
+        else
+        {
+            [self animateCommentsViewIntoPlace:self.view.frame.size.height offSet:20 isScrolling:isScrolling];
+        }
+    }
+    else
+    {
+        self.commentsHeightConstraint.constant -= contentOffSet;
+        if (self.commentsHeightConstraint.constant < self.view.frame.size.height - 90) {
+            [self animateCommentsViewIntoPlace:self.navigationController.navigationBar.frame.size.height offSet:0 isScrolling:isScrolling];
+        }
+        else
+        {
+            [self animateCommentsViewIntoPlace:self.view.frame.size.height offSet:0 isScrolling:isScrolling];
+        }
+    }
+}
+
+- (void)animateCommentsViewIntoPlace:(float)finalConstraintSize offSet:(NSInteger)offSet isScrolling:(BOOL)isScrolling
+{
+    if (!isScrolling) {
+        self.commentsHeightConstraint.constant = finalConstraintSize - offSet;
+        [self animateViewIntoPlace];
     }
 }
 
