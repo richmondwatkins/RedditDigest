@@ -26,6 +26,7 @@
 @property (strong, nonatomic) IBOutlet UIView *upvoteView;
 @property (strong, nonatomic) IBOutlet UIView *downvoteView;
 @property (strong, nonatomic) IBOutlet UIView *authorAndSubredditContainerView;
+@property (weak, nonatomic) IBOutlet UIImageView *checkmarkImageView;
 
 //@property id <DigestCellDelegate> delegate;
 @property (strong, nonatomic) IBOutlet UILabel *nsfwLabel;
