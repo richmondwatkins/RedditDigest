@@ -127,6 +127,31 @@
     return NO;
 }
 
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView
+{
+    if (scrollView.contentOffset.y < 0)
+    {
+        [self.delegate showOrHideCommentsViewController:abs(scrollView.contentOffset.y) isScrolling:YES];
+    }
+}
+
+- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
+{
+    if (!decelerate) {
+        [self scrollingFinish];
+    }
+}
+
+- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
+{
+    [self scrollingFinish];
+}
+
+- (void)scrollingFinish
+{
+    [self.delegate showOrHideCommentsViewController:1.0 isScrolling:NO];
+}
+
 #pragma mark - Segue
 
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
