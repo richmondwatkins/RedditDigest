@@ -19,7 +19,7 @@
 #import "Comment.h"
 #import "ChildComment.h"
 #import "DigestPost.h"
-@interface DetailPostViewController () <UIGestureRecognizerDelegate>
+@interface DetailPostViewController () <UIGestureRecognizerDelegate, CommentViewControllerDelegate>
 
 @property (strong, nonatomic) UIPageViewController *postPageController;
 @property CommentViewController *commentsViewController;
@@ -83,6 +83,7 @@
         self.delegate = self.commentsViewController;
         self.commentsViewController.post = [self.allPosts objectAtIndex:self.index];
         self.commentsViewController.managedObjectContext = self.managedObjectContext;
+        self.commentsViewController.delegate = self;
         [self loadCommentsFromSelectedPost:self.index];
     }
 }

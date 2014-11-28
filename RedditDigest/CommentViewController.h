@@ -11,6 +11,11 @@
 #import "Post.h"
 #import "DetailPostViewController.h"
 
+@protocol CommentViewControllerDelegate <NSObject>
+
+- (void)showOrHideCommentsViewController:(float)contentOffSet isScrolling:(BOOL)isScrolling;
+
+@end
 
 @interface CommentViewController : UIViewController <DetailPostViewControllerDelegate>
 
@@ -22,6 +27,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *showHideCommentsViewButton;
 @property BOOL isFromPastDigest;
 @property (strong, nonatomic) NSManagedObjectContext *managedObjectContext;
+@property id<CommentViewControllerDelegate>delegate;
 
 - (void)setupVoteButtons;
 
