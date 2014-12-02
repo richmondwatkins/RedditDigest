@@ -37,6 +37,7 @@
 @dynamic isLocalPost;
 @dynamic domain;
 @dynamic isHidden;
+@dynamic isReported;
 
 +(void)savePosts:(NSMutableArray *)posts withManagedObject:(NSManagedObjectContext *)managedObjectContext andCompletion:(void (^)(BOOL))complete{
     NSMutableArray *notInCoreDataArray = [self returnPostNotInCoreData:posts withManagedObject:managedObjectContext];
@@ -56,6 +57,7 @@
         savedPost.isLocalPost = [NSNumber numberWithBool:post.isLocalPost];
         savedPost.domain = post.domain;
         savedPost.isHidden = [NSNumber numberWithBool:NO];
+        savedPost.isReported = [NSNumber numberWithBool:NO];
         [[RKClient sharedClient] commentsForLink:post completion:^(NSArray *comments, RKPagination *pagination, NSError *error) {
             if (comments) {
                 [Comment addCommentsToPost:savedPost commentsArray:comments withMangedObject:managedObjectContext];
@@ -337,7 +339,12 @@
 
 -(void)markPostAsHidden{
     self.isHidden = [NSNumber numberWithBool:YES];
-    NSLog(@"SELFFFF %@",self);
+    //NSLog(@"SELFFFF %@",self);
+    [self.managedObjectContext save:nil];
+}
+
+- (void)markPostAsReported {
+    self.isReported = [NSNumber numberWithBool:YES];
     [self.managedObjectContext save:nil];
 }
 

@@ -40,7 +40,7 @@
 @property (nonatomic, retain) NSNumber *isLocalPost;
 @property (nonatomic, retain) NSString *domain;
 @property (nonatomic, retain) NSNumber *isHidden;
-
+@property (nonatomic, retain) NSNumber *isReported;
 
 @end
 
@@ -51,6 +51,7 @@
 - (void)addComments:(NSSet *)values;
 - (void)removeComments:(NSSet *)values;
 -(void)markPostAsHidden;
+- (void)markPostAsReported;
 
 +(void)savePosts:(NSMutableArray *)posts withManagedObject:(NSManagedObjectContext *)managedObjectContext andCompletion:(void (^)(BOOL completed))complete;
 
