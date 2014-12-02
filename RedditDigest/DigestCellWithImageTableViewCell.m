@@ -34,4 +34,8 @@
 
 }
 
+- (IBAction)hideButtonPressed:(id)sender {
+    [self.delegate hideButtonPressedDelegate:self];
+}
+
 @end

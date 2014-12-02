@@ -39,6 +39,7 @@
 @property (nonatomic, retain) Subreddit *subreddit;
 @property (nonatomic, retain) NSNumber *isLocalPost;
 @property (nonatomic, retain) NSString *domain;
+@property (nonatomic, retain) NSNumber *isHidden;
 
 
 @end
@@ -49,11 +50,13 @@
 - (void)removeCommentsObject:(Comment *)value;
 - (void)addComments:(NSSet *)values;
 - (void)removeComments:(NSSet *)values;
+-(void)markPostAsHidden;
 
 +(void)savePosts:(NSMutableArray *)posts withManagedObject:(NSManagedObjectContext *)managedObjectContext andCompletion:(void (^)(BOOL completed))complete;
 
 +(void)removeAllPostsFromCoreData:(NSManagedObjectContext *)managedObjectContext;
 
 +(void)saveLocalSubreddit:(RKLink *)post withManagedObject:(NSManagedObjectContext *)managedObject withComments:(NSArray *)comments andCompletion:(void (^)(BOOL completed))complete;
++(void)removePhotoFromDocumentDirectory:(NSString *)fileName;
 
 @end

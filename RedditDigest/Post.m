@@ -36,6 +36,7 @@
 @dynamic subreddit;
 @dynamic isLocalPost;
 @dynamic domain;
+@dynamic isHidden;
 
 +(void)savePosts:(NSMutableArray *)posts withManagedObject:(NSManagedObjectContext *)managedObjectContext andCompletion:(void (^)(BOOL))complete{
     NSMutableArray *notInCoreDataArray = [self returnPostNotInCoreData:posts withManagedObject:managedObjectContext];
@@ -54,7 +55,7 @@
         savedPost.postID = post.fullName;
         savedPost.isLocalPost = [NSNumber numberWithBool:post.isLocalPost];
         savedPost.domain = post.domain;
-
+        savedPost.isHidden = [NSNumber numberWithBool:NO];
         [[RKClient sharedClient] commentsForLink:post completion:^(NSArray *comments, RKPagination *pagination, NSError *error) {
             if (comments) {
                 [Comment addCommentsToPost:savedPost commentsArray:comments withMangedObject:managedObjectContext];
@@ -334,6 +335,11 @@
     }
 }
 
+-(void)markPostAsHidden{
+    self.isHidden = [NSNumber numberWithBool:YES];
+    NSLog(@"SELFFFF %@",self);
+    [self.managedObjectContext save:nil];
+}
 
 //SAVE IF WE WANT TO INCORPORATE IMGUR REGEX
 //    if ([[post.URL absoluteString] containsString:@"imgur"] && ![[post.URL absoluteString] containsString:@"/a/"] && ![[post.URL absoluteString] containsString:@"gallery"]) {

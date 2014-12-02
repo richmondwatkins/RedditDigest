@@ -29,7 +29,7 @@
 #import <ZeroPush.h>
 #import "MCSwipeTableViewCell.h"
 #import "InternetConnectionTest.h"
-@interface DigestViewController () <UITableViewDataSource, UITableViewDelegate, CLLocationManagerDelegate, MCSwipeTableViewCellDelegate>
+@interface DigestViewController () <UITableViewDataSource, UITableViewDelegate, CLLocationManagerDelegate, MCSwipeTableViewCellDelegate, DigestCellDelegate>
 
 @property NSMutableArray *digestPosts;
 @property UIRefreshControl *refreshControl;
@@ -291,54 +291,55 @@
     else {
         Post *post = self.digestPosts[indexPath.row];
 
-        cell.titleLabel.text = post.title;
-        cell.subredditLabel.text = post.subreddit.subreddit;
-        cell.authorLabel.text = post.author;
-        cell.upVoteDownVoteLabel.text = [self abbreviateNumber:post.voteRatio.integerValue];
+        if (![post.isHidden boolValue]) {
+            cell.titleLabel.text = post.title;
+            cell.subredditLabel.text = post.subreddit.subreddit;
+            cell.authorLabel.text = post.author;
+            cell.upVoteDownVoteLabel.text = [self abbreviateNumber:post.voteRatio.integerValue];
 
-        if ([post.viewed boolValue] == NO) {
-            cell.checkmarkImageView.alpha = 0.0;
-        }else{
-            [UIView animateWithDuration:2.0 animations:^{
-                cell.checkmarkImageView.alpha = 0.3;
-            }];
-        }
+            if ([post.viewed boolValue] == NO) {
+                cell.checkmarkImageView.alpha = 0.0;
+            }else{
+                [UIView animateWithDuration:2.0 animations:^{
+                    cell.checkmarkImageView.alpha = 0.3;
+                }];
+            }
 
-        if ([post.image boolValue]) {
-            cell.thumbnailImage.image = [self returnImageForCellFromData:post.postID withSubredditNameForKey:post.subreddit.subreddit andFilePathPrefix:@"image"];
-        }else if([post.thumbnailImage boolValue]){
-            cell.thumbnailImage.image = [self returnImageForCellFromData:post.postID withSubredditNameForKey:post.subreddit.subreddit andFilePathPrefix:@"thumbnail"];
-        }else if([post.subreddit.image boolValue]){
-            cell.thumbnailImage.image = [self returnImageForCellFromData:post.subreddit.subreddit withSubredditNameForKey:post.subreddit.subreddit andFilePathPrefix:@"subreddit"];
-        }else{
-            cell.thumbnailImage.image = [UIImage imageNamed:@"snoo_camera_placeholder"];
-        }
+            if ([post.image boolValue]) {
+                cell.thumbnailImage.image = [self returnImageForCellFromData:post.postID withSubredditNameForKey:post.subreddit.subreddit andFilePathPrefix:@"image"];
+            }else if([post.thumbnailImage boolValue]){
+                cell.thumbnailImage.image = [self returnImageForCellFromData:post.postID withSubredditNameForKey:post.subreddit.subreddit andFilePathPrefix:@"thumbnail"];
+            }else if([post.subreddit.image boolValue]){
+                cell.thumbnailImage.image = [self returnImageForCellFromData:post.subreddit.subreddit withSubredditNameForKey:post.subreddit.subreddit andFilePathPrefix:@"subreddit"];
+            }else{
+                cell.thumbnailImage.image = [UIImage imageNamed:@"snoo_camera_placeholder"];
+            }
 
-        // Initialize vote status of cells
-        if ([post.upvoted boolValue]) {
-            cell.upvoteView.hidden = NO;
-        }
-        else {
-            cell.upvoteView.hidden = YES;
-        }
+            // Initialize vote status of cells
+            if ([post.upvoted boolValue]) {
+                cell.upvoteView.hidden = NO;
+            }
+            else {
+                cell.upvoteView.hidden = YES;
+            }
 
-        if ([post.downvoted boolValue]) {
-            cell.downvoteView.hidden = NO;
-        }
-        else {
-            cell.downvoteView.hidden = YES;
-        }
+            if ([post.downvoted boolValue]) {
+                cell.downvoteView.hidden = NO;
+            }
+            else {
+                cell.downvoteView.hidden = YES;
+            }
 
-        if ([post.nsfw boolValue]) {
-            UIVisualEffectView *effectView = [[UIVisualEffectView alloc] initWithEffect:[UIBlurEffect effectWithStyle:UIBlurEffectStyleLight]];
-            effectView.frame = cell.thumbnailImage.bounds;
-            [cell.thumbnailImage addSubview:effectView];
-            cell.nsfwLabel.hidden = NO;
-        }else{
-            [[cell.thumbnailImage subviews] makeObjectsPerformSelector:@selector(removeFromSuperview)];
-            cell.nsfwLabel.hidden = YES;
+            if ([post.nsfw boolValue]) {
+                UIVisualEffectView *effectView = [[UIVisualEffectView alloc] initWithEffect:[UIBlurEffect effectWithStyle:UIBlurEffectStyleLight]];
+                effectView.frame = cell.thumbnailImage.bounds;
+                [cell.thumbnailImage addSubview:effectView];
+                cell.nsfwLabel.hidden = NO;
+            }else{
+                [[cell.thumbnailImage subviews] makeObjectsPerformSelector:@selector(removeFromSuperview)];
+                cell.nsfwLabel.hidden = YES;
+            }
         }
-
     }
 
     return cell;
@@ -357,7 +358,9 @@
     if (image == nil) {
         NSData *imageData = [NSData dataWithContentsOfFile:[self documentsPathForFileName:filePath withPrefix:prefix]];
         image = [UIImage imageWithData:imageData];
-        [self.imageCache setObject:image forKey:subreddit];
+        if (image) {
+            [self.imageCache setObject:image forKey:subreddit];
+        }
     }
     return image;
 }
@@ -533,7 +536,7 @@
     [fetch setEntity:[NSEntityDescription entityForName:@"Post" inManagedObjectContext:self.managedObjectContext]];
     NSSortDescriptor *voteSort = [[NSSortDescriptor alloc] initWithKey:@"voteRatio" ascending:NO];
     NSSortDescriptor *localSort = [[NSSortDescriptor alloc] initWithKey:@"isLocalPost" ascending:NO];
-
+    fetch.predicate = [NSPredicate predicateWithFormat:@"isHidden != 1"];
     [fetch setSortDescriptors:@[localSort, voteSort]];
 
     NSArray * posts = [self.managedObjectContext executeFetchRequest:fetch error:nil];
@@ -710,6 +713,17 @@
             //NSLog(@"Removed Vote");
         }];
     }];
+}
+
+-(void)hideButtonPressedDelegate:(DigestCellWithImageTableViewCell *)cell{
+    NSIndexPath *indexPath = [self.digestTableView indexPathForCell:cell];
+    Post *objectToHide = [self.digestPosts objectAtIndex:indexPath.row];
+    [Post removePhotoFromDocumentDirectory:objectToHide.postID];
+    [objectToHide markPostAsHidden];
+    [self.imageCache removeObjectForKey:objectToHide.subreddit.subreddit];
+    [self.digestPosts removeObjectAtIndex:indexPath.row];
+    [self.digestTableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:YES];
+    [self.digestTableView reloadData];
 }
 
 @end

@@ -44,12 +44,14 @@
                             if ([idString isEqualToString:@"header-img"]) {
                                 NSDictionary *nodeDict = [element attributes];
                                 thumnailSrc = [nodeDict objectForKey:@"src"];
+                                NSLog(@"SUB ID SRC %@",thumnailSrc);
+
                             }
                         }
                         savedSubreddit.image = [NSNumber numberWithBool:NO];
 
                         if (thumnailSrc.length > 10) {
-                            [NSURLConnection sendAsynchronousRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:thumnailSrc]] queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
+                            [NSURLConnection sendAsynchronousRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"http:%@", thumnailSrc]]] queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
                                 savedSubreddit.image = [NSNumber numberWithBool:YES];
                                 [self saveDataToDocumentsDirectory:data withFileNamePrefix:@"subreddit" andPostfix:savedSubreddit.subreddit];
                                 [managedObject save:nil];
