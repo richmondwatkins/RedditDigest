@@ -308,6 +308,11 @@
                 }];
             }
 
+            if ([post.isReported boolValue] == YES) {
+                cell.checkmarkImageView.image = [UIImage imageNamed:@"warning"];
+                cell.checkmarkImageView.alpha = 0.8;
+            } 
+
             if ([post.image boolValue]) {
                 cell.thumbnailImage.image = [self returnImageForCellFromData:post.postID withSubredditNameForKey:post.subreddit.subreddit andFilePathPrefix:@"image"];
             }else if([post.thumbnailImage boolValue]){
@@ -735,7 +740,8 @@
 
     [[RKClient sharedClient] linkWithFullName:objectToReport.postID completion:^(RKLink *object, NSError *error) {
         [[RKClient sharedClient] reportLink:object completion:^(NSError *error) {
-            //
+            [objectToReport markPostAsReported];
+            [self.digestTableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
         }];
     }];
 }
