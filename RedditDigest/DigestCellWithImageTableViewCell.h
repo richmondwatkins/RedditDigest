@@ -13,6 +13,7 @@
 @protocol DigestCellDelegate <NSObject>
 
 -(void)hideButtonPressedDelegate:(id)cell;
+-(void)reportPost:(id)cell;
 
 @end
 

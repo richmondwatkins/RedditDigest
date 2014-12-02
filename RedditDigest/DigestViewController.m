@@ -29,7 +29,7 @@
 #import <ZeroPush.h>
 #import "MCSwipeTableViewCell.h"
 #import "InternetConnectionTest.h"
-@interface DigestViewController () <UITableViewDataSource, UITableViewDelegate, CLLocationManagerDelegate, MCSwipeTableViewCellDelegate, DigestCellDelegate>
+@interface DigestViewController () <UITableViewDataSource, UITableViewDelegate, CLLocationManagerDelegate, MCSwipeTableViewCellDelegate, DigestCellDelegate, UIActionSheetDelegate>
 
 @property NSMutableArray *digestPosts;
 @property UIRefreshControl *refreshControl;
@@ -724,6 +724,29 @@
     [self.digestPosts removeObjectAtIndex:indexPath.row];
     [self.digestTableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:YES];
     [self.digestTableView reloadData];
+}
+
+-(void)reportPost:(DigestCellWithImageTableViewCell *)cell{
+    NSIndexPath *indexPath = [self.digestTableView indexPathForCell:cell];
+    Post *objectToReport = [self.digestPosts objectAtIndex:indexPath.row];
+
+    [[RKClient sharedClient] linkWithFullName:objectToReport.postID completion:^(RKLink *object, NSError *error) {
+        [[RKClient sharedClient] reportLink:object completion:^(NSError *error) {
+            //
+        }];
+    }];
+
+    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:@"Hide or Report"
+                                                             delegate:self
+                                                    cancelButtonTitle:@"Cancel"
+                                               destructiveButtonTitle:@"Report"
+                                                    otherButtonTitles:@"Hide", nil];
+
+    [actionSheet showInView:self.view];
+}
+
+-(void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex{
+    NSLog(@"INDEX %li",(long)buttonIndex);
 }
 
 @end
