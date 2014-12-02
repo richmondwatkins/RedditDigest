@@ -29,7 +29,7 @@
 #import <ZeroPush.h>
 #import "MCSwipeTableViewCell.h"
 #import "InternetConnectionTest.h"
-@interface DigestViewController () <UITableViewDataSource, UITableViewDelegate, CLLocationManagerDelegate, MCSwipeTableViewCellDelegate, DigestCellDelegate, UIActionSheetDelegate>
+@interface DigestViewController () <UITableViewDataSource, UITableViewDelegate, CLLocationManagerDelegate, MCSwipeTableViewCellDelegate, UIActionSheetDelegate>
 
 @property NSMutableArray *digestPosts;
 @property UIRefreshControl *refreshControl;
@@ -41,7 +41,7 @@
 @property BOOL didUpdateLocation;
 @property NSCache *imageCache;
 @property (strong, nonatomic) IBOutlet UIBarButtonItem *todayBarButton;
-
+@property DigestCellWithImageTableViewCell *longHoldCell;
 @end
 
 @implementation DigestViewController
@@ -263,6 +263,9 @@
     [cell formatCellAndAllSubviews];
 
     cell.delegate = self;
+
+    UILongPressGestureRecognizer *longPress = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longPressOnCell:)];
+    [cell addGestureRecognizer:longPress];
 
     if ([[NSUserDefaults standardUserDefaults] boolForKey:@"UserIsLoggedIn"] && self.isFromPastDigest == NO) {
         [self setUpCellForDownVote:cell];
@@ -715,8 +718,8 @@
     }];
 }
 
--(void)hideButtonPressedDelegate:(DigestCellWithImageTableViewCell *)cell{
-    NSIndexPath *indexPath = [self.digestTableView indexPathForCell:cell];
+-(void)hideButtonPressed{
+    NSIndexPath *indexPath = [self.digestTableView indexPathForCell:self.longHoldCell];
     Post *objectToHide = [self.digestPosts objectAtIndex:indexPath.row];
     [Post removePhotoFromDocumentDirectory:objectToHide.postID];
     [objectToHide markPostAsHidden];
@@ -726,8 +729,8 @@
     [self.digestTableView reloadData];
 }
 
--(void)reportPost:(DigestCellWithImageTableViewCell *)cell{
-    NSIndexPath *indexPath = [self.digestTableView indexPathForCell:cell];
+-(void)reportPost{
+    NSIndexPath *indexPath = [self.digestTableView indexPathForCell:self.longHoldCell];
     Post *objectToReport = [self.digestPosts objectAtIndex:indexPath.row];
 
     [[RKClient sharedClient] linkWithFullName:objectToReport.postID completion:^(RKLink *object, NSError *error) {
@@ -735,18 +738,28 @@
             //
         }];
     }];
-
-    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:@"Hide or Report"
-                                                             delegate:self
-                                                    cancelButtonTitle:@"Cancel"
-                                               destructiveButtonTitle:@"Report"
-                                                    otherButtonTitles:@"Hide", nil];
-
-    [actionSheet showInView:self.view];
 }
 
 -(void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex{
-    NSLog(@"INDEX %li",(long)buttonIndex);
+    if (buttonIndex == 0) {
+        [self reportPost];
+    }else if (buttonIndex == 1){
+        [self hideButtonPressed];
+    }
+}
+
+-(void)longPressOnCell:(UILongPressGestureRecognizer *)gesture{
+    if (gesture.state == UIGestureRecognizerStateBegan) {
+       self.longHoldCell = (DigestCellWithImageTableViewCell *)[self.digestTableView cellForRowAtIndexPath:[self.digestTableView indexPathForRowAtPoint:[gesture locationInView:self.digestTableView]]];
+
+        UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:@"Hide or Report"
+                                                                 delegate:self
+                                                        cancelButtonTitle:@"Cancel"
+                                                   destructiveButtonTitle:@"Report"
+                                                        otherButtonTitles:@"Hide", nil];
+
+        [actionSheet showInView:self.view];
+    }
 }
 
 @end

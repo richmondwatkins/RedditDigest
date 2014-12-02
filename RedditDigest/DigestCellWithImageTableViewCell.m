@@ -34,13 +34,5 @@
 
 }
 
-- (IBAction)hideButtonPressed:(id)sender {
-    [self.delegate hideButtonPressedDelegate:self];
-}
-
-- (IBAction)reportPostButtonPressed:(id)sender {
-    [self.delegate reportPost:self];
-}
-
 
 @end

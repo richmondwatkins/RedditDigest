@@ -10,13 +10,6 @@
 #import "Post.h"
 #import "MCSwipeTableViewCell.h"
 
-@protocol DigestCellDelegate <NSObject>
-
--(void)hideButtonPressedDelegate:(id)cell;
--(void)reportPost:(id)cell;
-
-@end
-
 @interface DigestCellWithImageTableViewCell : MCSwipeTableViewCell
 
 @property (weak, nonatomic) IBOutlet UIImageView *thumbnailImage;
@@ -29,7 +22,6 @@
 @property (strong, nonatomic) IBOutlet UIView *authorAndSubredditContainerView;
 @property (weak, nonatomic) IBOutlet UIImageView *checkmarkImageView;
 
-@property id <DigestCellDelegate> delegate;
 @property (strong, nonatomic) IBOutlet UILabel *nsfwLabel;
 
 -(void)formatCellAndAllSubviews;
