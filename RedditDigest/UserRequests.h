@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <CoreData/CoreData.h>
 @interface UserRequests : NSObject
 
 +(void)retrieveUsersSubredditswithCompletion:(void (^)(NSDictionary *results))complete;
@@ -14,4 +15,5 @@
 +(void)registerDevice:(NSString *)deviceID;
 +(void)registerDeviceForPushNotifications:(NSString *)token;
 +(void)retrieveRecommendedSubredditsWithCompletion:(void (^)(NSArray *results))complete;
++(void)setUpRecommendationsOnServer:(NSManagedObjectContext *)managedObject;
 @end

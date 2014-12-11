@@ -102,7 +102,7 @@
 
     NSString *deviceString = [[NSUserDefaults standardUserDefaults] valueForKey:@"DeviceID"];
 
-    NSString *urlString = [NSString stringWithFormat:@"https://gentle-ocean-7650.herokuapp.com/subreddits/delete/%@",  deviceString];
+    NSString *urlString = [NSString stringWithFormat:@"http://192.168.0.180:3000/subreddits/delete/%@",  deviceString];
 
     NSDictionary *objectToDelete = [[NSDictionary alloc] initWithObjectsAndKeys:tempDict, @"subreddit", nil];
     NSError *error;

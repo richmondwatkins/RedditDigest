@@ -100,7 +100,6 @@
     NSArray *flattenedSubNames = [recommendedSubNames valueForKeyPath: @"@unionOfArrays.self"];
     __block int i = 0;
     for (NSString *subName in flattenedSubNames) {
-        NSLog(@"SUB SUB SUB SUB SUB %@",subName);
         [[RKClient sharedClient] subredditWithName:subName completion:^(RKSubreddit *object, NSError *error) {
             i++;
             if (object.totalSubscribers >= 5000) {
@@ -142,10 +141,8 @@
                         }
                     }
                 }];
-
             }
         }];
-
     }
 }
 

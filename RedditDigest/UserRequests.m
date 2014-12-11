@@ -8,11 +8,12 @@
 
 #import "UserRequests.h"
 #import <RedditKit.h>
+#import "Subreddit.h"
 @implementation UserRequests
 
 +(void)retrieveUsersSubredditswithCompletion:(void (^)(NSDictionary *results))complete{
     NSString *deviceString = [[NSUserDefaults standardUserDefaults] valueForKey:@"DeviceID"];
-    NSString *urlString = [NSString stringWithFormat:@"https://gentle-ocean-7650.herokuapp.com/subreddits/%@",deviceString];
+    NSString *urlString = [NSString stringWithFormat:@"http://192.168.0.180:3000/subreddits/%@",deviceString];
 
     NSURL *url = [[NSURL alloc] initWithString:[urlString stringByAddingPercentEscapesUsingEncoding:NSASCIIStringEncoding]];
 
@@ -31,7 +32,7 @@
 
     NSString *deviceString = [[NSUserDefaults standardUserDefaults] valueForKey:@"DeviceID"];
     NSError *error;
-    NSString *urlString = [NSString stringWithFormat:@"https://gentle-ocean-7650.herokuapp.com/subreddits/%@",  deviceString];
+    NSString *urlString = [NSString stringWithFormat:@"http://192.168.0.180:3000/subreddits/%@",  deviceString];
 
     NSMutableArray *subsArray = [NSMutableArray array];
     for (RKSubreddit *selectableSubbreddit in selectionsDictionary[@"subreddits"]) {
@@ -63,7 +64,7 @@
 +(void)registerDevice:(NSString *)deviceID{
     NSString *deviceString = [NSString stringWithFormat:@"%@", deviceID];
 
-    NSString* deviceURLString = @"https://gentle-ocean-7650.herokuapp.com/register/device";
+    NSString* deviceURLString = @"http://192.168.0.180:3000/register/device";
 
     NSURL *url = [[NSURL alloc] initWithString:[deviceURLString stringByAddingPercentEscapesUsingEncoding:NSASCIIStringEncoding]];
     NSLog(@"INS URS RE %@",deviceID);
@@ -89,7 +90,7 @@
 
     NSString *deviceString = [[NSUserDefaults standardUserDefaults] valueForKey:@"DeviceID"];
 
-    NSString* urlString = @"https://gentle-ocean-7650.herokuapp.com/register/push";
+    NSString* urlString = @"http://192.168.0.180:3000/register/push";
 
     NSURL *url = [[NSURL alloc] initWithString:[urlString stringByAddingPercentEscapesUsingEncoding:NSASCIIStringEncoding]];
 
@@ -118,7 +119,7 @@
 
     NSString *deviceString = [[NSUserDefaults standardUserDefaults] valueForKey:@"DeviceID"];
 
-    NSString *urlString = [NSString stringWithFormat:@"https://gentle-ocean-7650.herokuapp.com/recommendations/%@", deviceString];
+    NSString *urlString = [NSString stringWithFormat:@"http://192.168.0.180:3000/recommendations/%@", deviceString];
 
     NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:urlString]];
     [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
@@ -134,5 +135,71 @@
     }];
 }
 
++(void)setUpRecommendationsOnServer:(NSManagedObjectContext *)managedObject{
+    NSMutableArray *usersSubreddits = [NSMutableArray arrayWithArray:[Subreddit retrieveAllSubreddits:managedObject]];
+
+    NSMutableArray *recSubredditNames = [NSMutableArray array];
+    __block int i = 0;
+    for (Subreddit *subreddit in usersSubreddits) {
+        [[RKClient sharedClient] recommendedSubredditsForSubreddits:@[subreddit.subreddit] completion:^(NSArray *collection, NSError *error) {
+            i++;
+            if (collection) {
+                [recSubredditNames addObject:collection];
+            }
+            if (i == usersSubreddits.count) {
+                [self retrieveSubredditInfoFromReddit:recSubredditNames];
+            }
+        }];
+    }
+}
+
++(void)retrieveSubredditInfoFromReddit:(NSMutableArray *)recSubNames{
+    NSArray *flattenedSubNames = [recSubNames valueForKeyPath: @"@unionOfArrays.self"];
+    __block int i = 0;
+    NSMutableArray *recFromReddit = [NSMutableArray array];
+    for (NSString *subName in flattenedSubNames) {
+        [[RKClient sharedClient] subredditWithName:subName completion:^(RKSubreddit *object, NSError *error) {
+            i++;
+            if (object.totalSubscribers >= 5000) {
+                [recFromReddit addObject:object];
+            }
+
+            if (i >= flattenedSubNames.count) {
+                [self retrieveRecommendedSubredditsWithCompletion:^(NSArray *results) {
+                    [self formatToSendToServer:recFromReddit andRecsFromUser:results];
+                }];
+            }
+
+        }];
+    }
+}
+
++(void)formatToSendToServer:(NSMutableArray *)recsFromReddit andRecsFromUser:(NSArray *)recsFromUser{
+    NSMutableArray *formattedRecsFromReddit = [NSMutableArray array];
+    for (RKSubreddit *subreddit in recsFromReddit) {
+            [formattedRecsFromReddit addObject:subreddit.name];
+    }
+
+    NSString *deviceString = [[NSUserDefaults standardUserDefaults] valueForKey:@"DeviceID"];
+    NSString *urlString = [NSString stringWithFormat:@"http://192.168.0.180:3000/recommendations/%@",deviceString];
+    NSURL *url = [NSURL URLWithString:urlString];
+
+    NSDictionary *dictionaryToPost = @{@"subreddits":formattedRecsFromReddit};
+    NSData *postData = [NSJSONSerialization dataWithJSONObject:dictionaryToPost options:0 error:nil];
+
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
+    request.HTTPMethod = @"Post";
+    [request addValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
+    [request setHTTPBody:postData];
+
+    [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
+        NSLog(@"USER RECS %@",recsFromUser);
+    }];
+
+
+    NSLog(@"USER RECS %@",recsFromUser);
+    NSLog(@"REDDit RECS %@",formattedRecsFromReddit);
+
+}
 
 @end

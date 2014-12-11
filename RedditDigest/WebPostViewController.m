@@ -176,42 +176,5 @@
     return YES;
 }
 
--(void)scrollViewDidScrollToTop:(UIScrollView *)scrollView
-{
-    [self showNavigationAndTabBars];
-}
-
--(void)scrollViewDidScroll:(UIScrollView *)scrollView{
-    NSLog(@"Scroll");
-}
-
--(void)scrollViewWillBeginDragging:(UIScrollView *)scrollView{
-    CGPoint translation = [scrollView.panGestureRecognizer velocityInView:self.view];
-    NSLog(@"TRANSLATION %@",NSStringFromCGPoint(translation));
-    if (translation.x > 0) {
-        NSLog(@"RIGHT");
-    }else if(translation.x < 0){
-        NSLog(@"LEFT");
-    }
-}
-
--(void)sendTouchToWebView:(NSSet *)touches withEven:(UIEvent *)event{
-
-    [self.webView touchesMoved:touches withEvent:event];
-}
-
--(void)aTouchBegan:(NSSet *)touches withEven:(UIEvent *)event{
-    NSLog(@"Touchessssss %@",touches);
-    NSLog(@"Event %@",event);
-    [self.webView touchesBegan:touches withEvent:event];
-}
-
--(void)aTouchCancled:(NSSet *)touches withEven:(UIEvent *)event{
-    [self.webView touchesCancelled:touches withEvent:event];
-}
-
--(void)aTouchEnded:(NSSet *)touches withEven:(UIEvent *)event{
-    [self.webView touchesEnded:touches withEvent:event];
-}
 
 @end

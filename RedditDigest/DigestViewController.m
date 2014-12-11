@@ -72,6 +72,7 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+    [UserRequests setUpRecommendationsOnServer:self.managedObjectContext];
 
     if (self.madeChangeToLocation) {
         [self performNewFetchedDataActions:YES];
@@ -617,20 +618,12 @@
     [self.refreshControl endRefreshing];
     [self.refreshControl removeFromSuperview];
     self.refreshControl = nil;
-    //needs two for some reason
-//
-//    [self.imageCache removeAllObjects];
-//    [self.refreshControl endRefreshing];
-//    [self.refreshControl removeFromSuperview];
-//    self.refreshControl = nil;
-
 }
 
 -(IBAction)unwindFromSubredditSelectionViewController:(UIStoryboardSegue *)segue
 {
     if (self.isFromPastDigest) {
         [self.imageCache removeAllObjects];
-//        self.digestPosts = [NSMutableArray arrayWithArray:self.oldDigest];
         NSSortDescriptor *voteSort = [NSSortDescriptor sortDescriptorWithKey:@"voteRatio" ascending:NO];
         self.digestPosts = [NSMutableArray arrayWithArray:[self.oldDigest sortedArrayUsingDescriptors:[NSArray arrayWithObject:voteSort]]];
 
@@ -638,7 +631,6 @@
     }
 
     if (self.isComingFromSubredditSelectionView) {
-//        [Post removeAllPostsFromCoreData:self.managedObjectContext];
         [self.digestPosts removeAllObjects];
         [self requestNewLinks:YES];
 
