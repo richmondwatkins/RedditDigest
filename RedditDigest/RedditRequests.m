@@ -50,20 +50,15 @@
 }
 
 +(void)localSubredditRequest:(NSString *)cityName andStateAbbreviation:(NSString *)stateAbbreviation withManagedObject:(NSManagedObjectContext *)managedObject withCompletion:(void (^)(NSMutableArray *))complete{
-    [[RKClient sharedClient] subredditWithName:cityName completion:^(RKSubreddit *object, NSError *error) {
-        if (!error) {
-            NSMutableArray *localSubs = [NSMutableArray array];
-            [self handleLocalSubredditResponse:object withManagedObject:managedObject withCompletion:^(Post *cityPost) {
-                if (cityPost) {[localSubs addObject:cityPost];}
-                [[RKClient sharedClient] subredditWithName:[self returnStateFromAbbreviation:stateAbbreviation] completion:^(RKSubreddit *object, NSError *error) {
-                    [self handleLocalSubredditResponse:object withManagedObject:managedObject withCompletion:^(Post *statePost) {
-                        if (statePost) {[localSubs addObject:statePost];}
-                        complete(localSubs);
-                    }];
+    //removed city name
+        NSMutableArray *localSubs = [NSMutableArray array];
+
+            [[RKClient sharedClient] subredditWithName:[self returnStateFromAbbreviation:stateAbbreviation] completion:^(RKSubreddit *object, NSError *error) {
+                [self handleLocalSubredditResponse:object withManagedObject:managedObject withCompletion:^(Post *statePost) {
+                    if (statePost) {[localSubs addObject:statePost];}
+                    complete(localSubs);
                 }];
             }];
-        }
-    }];
 }
 
 +(void)handleLocalSubredditResponse:(RKSubreddit *)subreddit withManagedObject:(NSManagedObjectContext *)managedObject withCompletion:(void (^)(Post *))complete{

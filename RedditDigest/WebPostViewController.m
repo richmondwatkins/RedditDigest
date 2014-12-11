@@ -10,7 +10,8 @@
 
 #import "WebPostViewController.h"
 #import "InternetConnectionTest.h"
-@interface WebPostViewController () <UIGestureRecognizerDelegate, UIScrollViewDelegate, UIWebViewDelegate>
+#import "WebViewOverlayTouchIntercept.h"
+@interface WebPostViewController () <UIGestureRecognizerDelegate, UIScrollViewDelegate, UIWebViewDelegate, WebViewTouchIntercepts, UIScrollViewDelegate>
 
 @property (weak, nonatomic) IBOutlet UIView *statusBarBackground;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *verticalSpaceConstraint;
@@ -51,6 +52,8 @@
 
 - (void)webViewDidStartLoad:(UIWebView *)webView
 {
+    self.webView.scrollView.delegate = self;
+
     [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
     self.activityIndicator.hidden = NO;
     [self.activityIndicator startAnimating];
@@ -62,12 +65,21 @@
     }
 }
 
+
 - (void)webViewDidFinishLoad:(UIWebView *)webView
 {
+    [webView stringByEvaluatingJavaScriptFromString:@"window.alert=null;"];
     [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
     [self.activityIndicator stopAnimating];
     self.activityIndicator.hidden = YES;
 
+    [webView stringByEvaluatingJavaScriptFromString:@"(function removeElementsByClass(){"
+     "var elements = document.getElementsByClassName('gallery-carousel');"
+     "var i = elements.length;"
+     "while(i > 0){"
+        "elements[0].className += ' noSwipe';"
+        "i--;}})();"
+     ];
 }
 
 #pragma mark - Pan
@@ -169,8 +181,37 @@
     [self showNavigationAndTabBars];
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
+-(void)scrollViewDidScroll:(UIScrollView *)scrollView{
+    NSLog(@"Scroll");
+}
+
+-(void)scrollViewWillBeginDragging:(UIScrollView *)scrollView{
+    CGPoint translation = [scrollView.panGestureRecognizer velocityInView:self.view];
+    NSLog(@"TRANSLATION %@",NSStringFromCGPoint(translation));
+    if (translation.x > 0) {
+        NSLog(@"RIGHT");
+    }else if(translation.x < 0){
+        NSLog(@"LEFT");
+    }
+}
+
+-(void)sendTouchToWebView:(NSSet *)touches withEven:(UIEvent *)event{
+
+    [self.webView touchesMoved:touches withEvent:event];
+}
+
+-(void)aTouchBegan:(NSSet *)touches withEven:(UIEvent *)event{
+    NSLog(@"Touchessssss %@",touches);
+    NSLog(@"Event %@",event);
+    [self.webView touchesBegan:touches withEvent:event];
+}
+
+-(void)aTouchCancled:(NSSet *)touches withEven:(UIEvent *)event{
+    [self.webView touchesCancelled:touches withEvent:event];
+}
+
+-(void)aTouchEnded:(NSSet *)touches withEven:(UIEvent *)event{
+    [self.webView touchesEnded:touches withEvent:event];
 }
 
 @end
