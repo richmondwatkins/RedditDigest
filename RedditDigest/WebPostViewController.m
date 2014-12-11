@@ -10,8 +10,8 @@
 
 #import "WebPostViewController.h"
 #import "InternetConnectionTest.h"
-#import "WebViewOverlayTouchIntercept.h"
-@interface WebPostViewController () <UIGestureRecognizerDelegate, UIScrollViewDelegate, UIWebViewDelegate, WebViewTouchIntercepts, UIScrollViewDelegate>
+
+@interface WebPostViewController () <UIGestureRecognizerDelegate, UIScrollViewDelegate, UIWebViewDelegate, UIScrollViewDelegate>
 
 @property (weak, nonatomic) IBOutlet UIView *statusBarBackground;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *verticalSpaceConstraint;

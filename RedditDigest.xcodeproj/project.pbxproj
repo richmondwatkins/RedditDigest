@@ -23,8 +23,6 @@
 		5D09FB9B1A1DCE08002845F1 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D09FB9A1A1DCE08002845F1 /* Reachability.m */; };
 		5D09FB9E1A1DCE4C002845F1 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5D09FB9D1A1DCE4C002845F1 /* SystemConfiguration.framework */; };
 		5D09FBA11A1DD481002845F1 /* InternetConnectionTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D09FBA01A1DD481002845F1 /* InternetConnectionTest.m */; };
-		5D11248D1A395D5F0082FE96 /* WebViewOverlayTouchIntercept.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D11248C1A395D5F0082FE96 /* WebViewOverlayTouchIntercept.m */; };
-		5D1124901A39738A0082FE96 /* WebViewSubClass.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D11248F1A39738A0082FE96 /* WebViewSubClass.m */; };
 		5D311EDE1A10A359002AFC3C /* CommentTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D311EDD1A10A359002AFC3C /* CommentTableViewCell.m */; };
 		5D366B8C1A194F7E006B0684 /* TextViewWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D366B8B1A194F7E006B0684 /* TextViewWebViewController.m */; };
 		5D366B951A19B873006B0684 /* RecHeaderCollectionReusableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D366B941A19B873006B0684 /* RecHeaderCollectionReusableView.m */; };
@@ -112,10 +110,6 @@
 		5D09FB9D1A1DCE4C002845F1 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		5D09FB9F1A1DD481002845F1 /* InternetConnectionTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InternetConnectionTest.h; sourceTree = "<group>"; };
 		5D09FBA01A1DD481002845F1 /* InternetConnectionTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InternetConnectionTest.m; sourceTree = "<group>"; };
-		5D11248B1A395D5F0082FE96 /* WebViewOverlayTouchIntercept.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WebViewOverlayTouchIntercept.h; sourceTree = "<group>"; };
-		5D11248C1A395D5F0082FE96 /* WebViewOverlayTouchIntercept.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WebViewOverlayTouchIntercept.m; sourceTree = "<group>"; };
-		5D11248E1A39738A0082FE96 /* WebViewSubClass.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WebViewSubClass.h; sourceTree = "<group>"; };
-		5D11248F1A39738A0082FE96 /* WebViewSubClass.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WebViewSubClass.m; sourceTree = "<group>"; };
 		5D311EDD1A10A359002AFC3C /* CommentTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CommentTableViewCell.m; sourceTree = "<group>"; };
 		5D311EDF1A10A49D002AFC3C /* CommentTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CommentTableViewCell.h; sourceTree = "<group>"; };
 		5D366B8A1A194F7E006B0684 /* TextViewWebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TextViewWebViewController.h; path = ../TextViewWebViewController.h; sourceTree = "<group>"; };
@@ -294,10 +288,6 @@
 		5D5C12B41A05716E002902A8 = {
 			isa = PBXGroup;
 			children = (
-				5D11248E1A39738A0082FE96 /* WebViewSubClass.h */,
-				5D11248F1A39738A0082FE96 /* WebViewSubClass.m */,
-				5D11248B1A395D5F0082FE96 /* WebViewOverlayTouchIntercept.h */,
-				5D11248C1A395D5F0082FE96 /* WebViewOverlayTouchIntercept.m */,
 				5D09FB9F1A1DD481002845F1 /* InternetConnectionTest.h */,
 				5D09FBA01A1DD481002845F1 /* InternetConnectionTest.m */,
 				5D09FB9C1A1DCE18002845F1 /* Reachability */,
@@ -670,7 +660,6 @@
 				81D523811A0C0E710059C9B3 /* SettingsAboutRedditViewController.m in Sources */,
 				3413401D1A0C996F004C8C15 /* DigestCellWithImageTableViewCell.m in Sources */,
 				5DE75C9E1A0D92760031F0F7 /* GifPostViewController.m in Sources */,
-				5D1124901A39738A0082FE96 /* WebViewSubClass.m in Sources */,
 				5D7DDE3C1A1B03AE0000C6C3 /* PastDigestsViewController.m in Sources */,
 				34D1B93A1A081D0C00C0C15F /* LoginViewController.m in Sources */,
 				5DA1F14A1A0EEE480017DE39 /* ChildComment.m in Sources */,
@@ -683,7 +672,6 @@
 				345700D41A13B91B00FA6FC8 /* DetailPostViewController.m in Sources */,
 				343257411A0A96CF003A3115 /* HeaderCollectionReusableView.m in Sources */,
 				5DA5E4011A1A672E0091867F /* DigestPost.m in Sources */,
-				5D11248D1A395D5F0082FE96 /* WebViewOverlayTouchIntercept.m in Sources */,
 				5DE75CA11A0D941D0031F0F7 /* VideoPostViewController.m in Sources */,
 				5D5C12CC1A05716E002902A8 /* DigestViewController.m in Sources */,
 				5D614E581A16F77A00A199A2 /* TFHppleElement.m in Sources */,

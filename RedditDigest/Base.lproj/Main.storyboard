@@ -1687,7 +1687,7 @@
                                     <constraint firstAttribute="height" constant="20" id="dKZ-6Q-7Ys"/>
                                 </constraints>
                             </view>
-                            <webView contentMode="scaleToFill" scalesPageToFit="YES" translatesAutoresizingMaskIntoConstraints="NO" id="xAZ-3t-2Y0" customClass="WebViewSubClass">
+                            <webView contentMode="scaleToFill" scalesPageToFit="YES" translatesAutoresizingMaskIntoConstraints="NO" id="xAZ-3t-2Y0">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="556"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <connections>
