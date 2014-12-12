@@ -159,22 +159,20 @@
     NSMutableArray *recFromReddit = [NSMutableArray array];
     for (NSString *subName in flattenedSubNames) {
         [[RKClient sharedClient] subredditWithName:subName completion:^(RKSubreddit *object, NSError *error) {
-            i++;
+            ++i;
             if (object.totalSubscribers >= 5000) {
                 [recFromReddit addObject:object];
             }
 
             if (i >= flattenedSubNames.count) {
-                [self retrieveRecommendedSubredditsWithCompletion:^(NSArray *results) {
-                    [self formatToSendToServer:recFromReddit andRecsFromUser:results];
-                }];
+                [self formatToSendToServer:recFromReddit];
             }
 
         }];
     }
 }
 
-+(void)formatToSendToServer:(NSMutableArray *)recsFromReddit andRecsFromUser:(NSArray *)recsFromUser{
++(void)formatToSendToServer:(NSMutableArray *)recsFromReddit{
     NSMutableArray *formattedRecsFromReddit = [NSMutableArray array];
     for (RKSubreddit *subreddit in recsFromReddit) {
             [formattedRecsFromReddit addObject:subreddit.name];
@@ -193,13 +191,8 @@
     [request setHTTPBody:postData];
 
     [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
-        NSLog(@"USER RECS %@",recsFromUser);
+        NSLog(@"Saved Recs");
     }];
-
-
-    NSLog(@"USER RECS %@",recsFromUser);
-    NSLog(@"REDDit RECS %@",formattedRecsFromReddit);
-
 }
 
 @end

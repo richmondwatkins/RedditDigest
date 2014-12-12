@@ -72,7 +72,6 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    [UserRequests setUpRecommendationsOnServer:self.managedObjectContext];
 
     if (self.madeChangeToLocation) {
         [self performNewFetchedDataActions:YES];
@@ -97,6 +96,13 @@
 
     [[UIApplication sharedApplication] setApplicationIconBadgeNumber:0];
     [self.digestTableView reloadData];
+
+    if (![[NSUserDefaults standardUserDefaults] boolForKey:@"HasFirstRecommendations"]) {
+        [UserRequests setUpRecommendationsOnServer:self.managedObjectContext]; //sets up the recommendations
+        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"HasFirstRecommendations"];
+        [[NSUserDefaults standardUserDefaults] synchronize];
+    }
+
 }
 
 - (void)viewDidLayoutSubviews
@@ -632,22 +638,28 @@
 
     if (self.isComingFromSubredditSelectionView) {
         [self.digestPosts removeAllObjects];
-        [self requestNewLinks:YES];
+        [self requestNewLinks:NO];
 
         if(![[NSUserDefaults standardUserDefaults] boolForKey:@"HasSubscriptions"]){
+
             UIApplication *application = [UIApplication sharedApplication];
-            
             [ZeroPush engageWithAPIKey:@"QfpEFaa6fkgKYzUCYGQE" delegate:application];
             [[UIApplication sharedApplication] registerUserNotificationSettings:[UIUserNotificationSettings settingsForTypes:(UIUserNotificationTypeSound | UIUserNotificationTypeAlert | UIUserNotificationTypeBadge) categories:nil]];
             [[ZeroPush shared] registerForRemoteNotifications];
-
             [application registerUserNotificationSettings:[UIUserNotificationSettings settingsForTypes:(UIUserNotificationTypeSound | UIUserNotificationTypeAlert | UIUserNotificationTypeBadge) categories:nil]];
-
             [application registerForRemoteNotifications];
+
+            [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"HasSubscriptions"];
+            [[NSUserDefaults standardUserDefaults] synchronize];
         }
 
-        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"HasSubscriptions"];
-        [[NSUserDefaults standardUserDefaults] synchronize];
+
+        if (![[NSUserDefaults standardUserDefaults] boolForKey:@"HasFirstRecommendations"]) {
+            [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"HasFirstRecommendations"];
+            [[NSUserDefaults standardUserDefaults] synchronize];
+        }
+
+        [UserRequests setUpRecommendationsOnServer:self.managedObjectContext]; //sets up the recommendations
     }
 }
 

@@ -69,7 +69,7 @@
         cell.archiveImageView.clipsToBounds = YES;
 
         NSDate* date = [NSDate dateWithTimeIntervalSince1970:[digest.time doubleValue]];
-
+        NSLog(@"DATE %@",date);
         NSDateFormatter *dateFormat =[[NSDateFormatter alloc]init];
         date = [date dateByAddingTimeInterval:60*60];
         [dateFormat setDateFormat:@"MMMM dd, yyyy - h:00"];

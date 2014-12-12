@@ -58,11 +58,7 @@
     self.recommendedFromSubscriptions = [NSMutableArray array];
     self.recommendedFromUsers = [NSMutableArray array];
 
-    NSMutableArray *usersSubreddits = [NSMutableArray arrayWithArray:[Subreddit retrieveAllSubreddits:self.managedObject]];
-    [self lookUpRelatedSubreddit:usersSubreddits];
-
-
-    self.totalSubreddits = usersSubreddits.count;
+    [self pullRecommendationsFromServer];
 
     // Tell the user that they have the max subreddits selected and have to remove some in edit digest
     if (self.totalSubreddits >= MAX_SELECTABLE_SUBREDDITS_FOR_DIGEST) {
@@ -74,95 +70,82 @@
     }
 
     [self setUpView];
+}
+
+
+-(void)pullRecommendationsFromServer{
+    NSString *deviceString = [[NSUserDefaults standardUserDefaults] valueForKey:@"DeviceID"];
+    NSString *urlString = [NSString stringWithFormat:@"http://192.168.0.180:3000/recommendations/%@",deviceString];
+    NSURL *url = [[NSURL alloc] initWithString:[urlString stringByAddingPercentEscapesUsingEncoding:NSASCIIStringEncoding]];
+    NSURLRequest *request = [NSURLRequest requestWithURL:url];
+
+    [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
+        if (data) {
+
+            NSDictionary *results = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:nil];
+
+            for (NSDictionary *result in results[@"recs"]) {
+                [self sortRecommendationResults:result];
+            }
+
+            [self convertDictionariesIntoRKSubredditObjs];
+        }
+    }];
+}
+
+- (void)sortRecommendationResults:(NSDictionary *)resultItem{
+
+    if ([resultItem[@"is_user"] boolValue]) {
+        [self.recommendedFromUsers addObject:resultItem[@"name"]];
+    }else{
+        [self.recommendedFromSubscriptions addObject:resultItem[@"name"]];
+    }
+}
+
+
+- (void)convertDictionariesIntoRKSubredditObjs{
+    NSArray *fromRedditCopy = [self.recommendedFromSubscriptions copy];
+    NSArray *fromUserCopy = [self.recommendedFromUsers copy];
+    [self.recommendedFromSubscriptions removeAllObjects];
+    [self.recommendedFromUsers removeAllObjects];
+
+    __block int i = 0;
+    for (NSString *subName in fromRedditCopy) {
+        [[RKClient sharedClient] subredditWithName:subName completion:^(RKSubreddit *object, NSError *error) {
+            i++;
+            [self.recommendedFromSubscriptions addObject:object];
+
+            if (i >= fromRedditCopy.count) {
+                __block int j = 0;
+                for (NSString *fromUserName in fromUserCopy) {
+                    [[RKClient sharedClient] subredditWithName:fromUserName completion:^(RKSubreddit *object, NSError *error) {
+                        j++;
+                        [self.recommendedFromUsers addObject:object];
+
+                        if (j >= fromUserCopy.count) {
+                            [self completeServerRequestMethods];
+                        }
+                    }];
+                }
+            }
+        }];
+    }
+}
+
+- (void)completeServerRequestMethods{
+    [self.recomendations addObject:self.recommendedFromUsers];
+    [self.recomendations addObject:self.recommendedFromSubscriptions];
+    [self.subredditCollectionView reloadData];
+    [self.activityIndicator stopAnimating];
+    self.activityIndicator.hidden = YES;
+    [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
+
+    NSFetchRequest *fetch = [[NSFetchRequest alloc] initWithEntityName:@"Subreddit"];
+    NSArray *results = [self.managedObject executeFetchRequest:fetch error:nil];
+    self.totalSubreddits = results.count;
     [self updateSelectedSubredditCounter];
 }
 
-
--(void)lookUpRelatedSubreddit:(NSArray *)subsFromCoreData{
-    NSMutableArray *recSubredditNames = [NSMutableArray array];
-    __block int i = 0;
-    for (Subreddit *subreddit in subsFromCoreData) {
-        [[RKClient sharedClient] recommendedSubredditsForSubreddits:@[subreddit.subreddit] completion:^(NSArray *collection, NSError *error) {
-            i++;
-            if (collection) {
-                [recSubredditNames addObject:collection];
-            }
-            if (i == subsFromCoreData.count) {
-                [self retrieveSubredditInfoFromReddit:recSubredditNames];
-            }
-        }];
-    }
-}
-
-
--(void)retrieveSubredditInfoFromReddit:(NSMutableArray *)recommendedSubNames{
-
-    NSArray *flattenedSubNames = [recommendedSubNames valueForKeyPath: @"@unionOfArrays.self"];
-    __block int i = 0;
-    for (NSString *subName in flattenedSubNames) {
-        [[RKClient sharedClient] subredditWithName:subName completion:^(RKSubreddit *object, NSError *error) {
-            i++;
-            if (object.totalSubscribers >= 5000) {
-                if (![self.recommendedFromSubscriptions containsObject:object]) {
-                    [self.recommendedFromSubscriptions addObject:object];
-                }
-            }
-
-            if (i >= flattenedSubNames.count) {
-                [self checkForExistingSubscription:self.recommendedFromSubscriptions];
-                [self.recomendations addObject:self.recommendedFromSubscriptions];
-//                [self.subredditCollectionView reloadData];
-
-                [UserRequests retrieveRecommendedSubredditsWithCompletion:^(NSArray *results) {
-                    if (results) {
-                        NSLog(@"RESULTS IN REC CONTRLLER %@",results);
-                        __block int i = 0;
-                        for (NSString *subreddit in results) {
-                            [[RKClient sharedClient] subredditWithName:subreddit completion:^(RKSubreddit *object, NSError *error) {
-                                i++;
-                                //                    if (object.totalSubscribers >= 20000) {
-                                if (![self.recommendedFromSubscriptions containsObject:object] && ![self.recommendedFromUsers containsObject:object]) {
-                                    if (self.recommendedFromUsers.count <= 20) {
-                                        [self.recommendedFromUsers addObject:object];
-                                    }
-                                }
-                                //                    }
-
-                                if (i == results.count) {
-                                    self.activityIndicator.hidden = YES;
-                                    [self.activityIndicator stopAnimating];
-                                    [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
-
-                                    [self checkForExistingSubscription:self.recommendedFromUsers];
-                                    [self.recomendations insertObject:self.recommendedFromUsers atIndex:0];
-                                    [self.subredditCollectionView reloadData];
-                                }
-                            }];
-                        }
-                    }
-                }];
-            }
-        }];
-    }
-}
-
--(void)checkForExistingSubscription:(NSMutableArray *)subredditsArray
-{
-    NSMutableArray *subredditsArrayCopy = [NSMutableArray arrayWithArray:subredditsArray];
-    NSFetchRequest *subredditFetch = [NSFetchRequest fetchRequestWithEntityName:@"Subreddit"];
-    NSArray *subscribedSubreddits = [self.managedObject executeFetchRequest:subredditFetch error:nil];
-    if (subscribedSubreddits.count) {
-        for (Subreddit *subscribedSub in subscribedSubreddits) {
-            for (RKSubreddit *rkSubreddit in subredditsArrayCopy) {
-                if ([subscribedSub.subreddit isEqualToString:rkSubreddit.name]) {
-                    if (!subscribedSub.isLocalSubreddit) {
-                        [subredditsArray removeObject:rkSubreddit];
-                    }
-                }
-            }
-        }
-    }
-}
 
 -(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
