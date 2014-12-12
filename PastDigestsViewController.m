@@ -71,7 +71,8 @@
         NSDate* date = [NSDate dateWithTimeIntervalSince1970:[digest.time doubleValue]];
 
         NSDateFormatter *dateFormat =[[NSDateFormatter alloc]init];
-        [dateFormat setDateFormat:@"MMMM dd, yyyy - h:mm"];
+        date = [date dateByAddingTimeInterval:60*60];
+        [dateFormat setDateFormat:@"MMMM dd, yyyy - h:00"];
         NSString *dateText = [dateFormat stringFromDate:date];
         cell.archiveTitleLabel.text = dateText;
         cell.archiveTitleLabel.lineBreakMode = NSLineBreakByWordWrapping;
