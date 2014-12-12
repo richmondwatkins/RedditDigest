@@ -72,6 +72,8 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+    [UserRequests setUpRecommendationsOnServer:self.managedObjectContext]; //sets up the recommendations
+
 
     if (self.madeChangeToLocation) {
         [self performNewFetchedDataActions:YES];
@@ -572,7 +574,7 @@
 -(void)requestNewLinksFromRefresh
 {
     self.isFromPastDigest = NO;
-    [self requestNewLinks:YES];
+    [self requestNewLinks:NO];
 }
 
 -(void)requestNewLinks:(BOOL)isDigest

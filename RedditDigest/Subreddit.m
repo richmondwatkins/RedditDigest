@@ -51,7 +51,10 @@
                         savedSubreddit.image = [NSNumber numberWithBool:NO];
 
                         if (thumnailSrc.length > 10) {
-                            [NSURLConnection sendAsynchronousRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"http:%@", thumnailSrc]]] queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
+                            if (![thumnailSrc containsString:@"http"]) {
+                                thumnailSrc = [NSString stringWithFormat:@"http:%@", thumnailSrc];
+                            }
+                            [NSURLConnection sendAsynchronousRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:thumnailSrc]] queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
                                 savedSubreddit.image = [NSNumber numberWithBool:YES];
                                 [self saveDataToDocumentsDirectory:data withFileNamePrefix:@"subreddit" andPostfix:savedSubreddit.subreddit];
                                 [managedObject save:nil];
@@ -123,7 +126,6 @@
 }
 
 +(void)addSingleSubredditToCoreData:(RKSubreddit *)selectedSubreddit withManagedObject:(NSManagedObjectContext *)managedObject{
-    NSLog(@"SELECTED SUB %@",(selectedSubreddit.isLocalSubreddit) ? @"true" : @"false");
     NSFetchRequest * subredditFetch = [[NSFetchRequest alloc] init];
     [subredditFetch setEntity:[NSEntityDescription entityForName:@"Subreddit" inManagedObjectContext:managedObject]];
     subredditFetch.predicate = [NSPredicate predicateWithFormat:@"subreddit == %@", selectedSubreddit.name];
