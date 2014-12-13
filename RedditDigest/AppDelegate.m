@@ -132,6 +132,11 @@
         }else{
             [digestController performNewFetchedDataActions:NO]; //fetches from core data
         }
+    }else{
+        [digestController createLoadingSnoo];
+        [digestController fetchNewData:NO withCompletion:^(UIBackgroundFetchResult complete) {
+            [digestController removeSnooFromView];
+        }];
     }
 }
 

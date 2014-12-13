@@ -48,6 +48,9 @@
             }
         }
     }];
+
+    [self showNavigationAndTabBars];
+
 }
 
 -(void)webViewDidStartLoad:(UIWebView *)webView{
@@ -140,6 +143,8 @@
 //        }
         [self.view layoutIfNeeded];
     }];
+
+    self.navBarIsHidden = YES;
 }
 
 - (void)showNavigationAndTabBars
@@ -152,6 +157,8 @@
         self.verticalSpaceConstraint.constant = 0; //self.verticalSpaceConstraint.constant -= self.navController.navigationBar.frame.size.height;
         [self.view layoutIfNeeded];
     }];
+
+    self.navBarIsHidden = NO;
 }
 
 -(BOOL)prefersStatusBarHidden {

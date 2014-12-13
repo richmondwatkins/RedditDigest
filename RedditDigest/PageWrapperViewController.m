@@ -23,6 +23,10 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+    
+    if (self.navBarIsHidden) {
+        [self showNavigationAndTabBars];
+    }
 }
 
 - (void)viewDidLoad {
@@ -109,6 +113,7 @@
 //        }
         [self.view layoutIfNeeded];
     }];
+    self.navBarIsHidden = YES;
 }
 
 - (void)showNavigationAndTabBars
@@ -121,6 +126,8 @@
         self.verticalSpaceConstraint.constant -= self.navController.navigationBar.frame.size.height;
         [self.view layoutIfNeeded];
     }];
+
+    self.navBarIsHidden = NO;
 }
 
 -(BOOL)prefersStatusBarHidden {

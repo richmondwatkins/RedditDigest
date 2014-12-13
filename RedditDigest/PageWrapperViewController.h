@@ -23,4 +23,5 @@
 @property BOOL isOldDigest;
 @property UINavigationController *navController;
 @property BOOL isNSFW;
+@property BOOL navBarIsHidden;
 @end

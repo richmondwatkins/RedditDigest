@@ -351,7 +351,7 @@
         self.commentsHeightConstraint.constant -= contentOffSet;
         if (self.commentsHeightConstraint.constant < self.view.frame.size.height - 90) {
             [self animateCommentsViewIntoPlace:self.navigationController.navigationBar.frame.size.height offSet:0 isScrolling:isScrolling];
-        }
+            [self.commentsViewController.showHideCommentsViewButton setImage:[UIImage imageNamed:@"comment_up"] forState:UIControlStateNormal];        }
         else
         {
             [self animateCommentsViewIntoPlace:self.view.frame.size.height offSet:0 isScrolling:isScrolling];

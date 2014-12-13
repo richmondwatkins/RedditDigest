@@ -44,8 +44,6 @@
                             if ([idString isEqualToString:@"header-img"]) {
                                 NSDictionary *nodeDict = [element attributes];
                                 thumnailSrc = [nodeDict objectForKey:@"src"];
-                                NSLog(@"SUB ID SRC %@",thumnailSrc);
-
                             }
                         }
                         savedSubreddit.image = [NSNumber numberWithBool:NO];
@@ -141,8 +139,10 @@
                     if (data) {
                         [self saveDataToDocumentsDirectory:data withFileNamePrefix:@"subreddit" andPostfix:savedSubreddit.subreddit];
                         savedSubreddit.image = [NSNumber numberWithBool:YES];
-                        [managedObject save:nil];
+                    }else{
+                        savedSubreddit.image = [NSNumber numberWithBool:NO];
                     }
+                    [managedObject save:nil];
                 }];
             }else{
                 NSError *error;
@@ -165,7 +165,6 @@
     NSArray *results = [managedObject executeFetchRequest:localSubFetch error:nil];
     if (results.count) {
         for (Subreddit *subreddit in results) {
-            NSLog(@"SUBBBBB %@",subreddit);
             [managedObject deleteObject:subreddit];
             [managedObject save:nil];
         }

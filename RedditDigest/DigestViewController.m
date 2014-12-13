@@ -34,7 +34,6 @@
 @property NSMutableArray *digestPosts;
 @property UIRefreshControl *refreshControl;
 @property UILabel *creatingYourDigestLabel;
-@property NSTimer *snooTextTimer;
 @property NSString *dateToday;
 @property CLLocationManager *locationManger;
 @property CLLocation *userLocation;
@@ -42,6 +41,8 @@
 @property NSCache *imageCache;
 @property (strong, nonatomic) IBOutlet UIBarButtonItem *todayBarButton;
 @property DigestCellWithImageTableViewCell *longHoldCell;
+@property NSTimer *snooTextTimer;
+
 @end
 
 @implementation DigestViewController
@@ -288,7 +289,6 @@
         cell.subredditLabel.text = post.subreddit;
         cell.authorLabel.text = post.author;
         cell.upVoteDownVoteLabel.text = [self abbreviateNumber:post.voteRatio.integerValue];
-//        cell.commentsLabel.text = [self abbreviateNumber:post.totalComments.integerValue];
 
         if ([post.image boolValue]) {
             cell.thumbnailImage.image = [self returnImageForCellFromData:post.postID withSubredditNameForKey:post.subreddit andFilePathPrefix:@"image-copy"];
@@ -466,22 +466,27 @@
         //for example [activityIndicator stopAnimating];
         // Close the loading snoo when subreddit loading is done
         if (self.isComingFromSubredditSelectionView) {
-            UIView *viewToRemove = [self.view viewWithTag:1];
-            [self.snooTextTimer invalidate];
-            self.navigationItem.rightBarButtonItem.enabled = YES;
 
-            // Fade out loading snoo
-            [UIView animateWithDuration:0.3 delay:0.0
-                                options:UIViewAnimationOptionAllowUserInteraction
-                             animations:^{ viewToRemove.alpha = 0.0;}
-                             completion:^(BOOL fin) {
-                                 if (fin) [viewToRemove removeFromSuperview];
-                             }];
+            [self removeSnooFromView];
 
             //[self dismissViewControllerAnimated:YES completion:nil];
             self.isComingFromSubredditSelectionView = NO;
         }
     }
+}
+
+- (void)removeSnooFromView{
+    UIView *viewToRemove = [self.view viewWithTag:1];
+    [self.snooTextTimer invalidate];
+    self.navigationItem.rightBarButtonItem.enabled = YES;
+
+    // Fade out loading snoo
+    [UIView animateWithDuration:0.3 delay:0.0
+                        options:UIViewAnimationOptionAllowUserInteraction
+                     animations:^{ viewToRemove.alpha = 0.0;}
+                     completion:^(BOOL fin) {
+                         if (fin) [viewToRemove removeFromSuperview];
+                     }];
 }
 
 -(NSString *)abbreviateNumber:(NSInteger)num
@@ -563,6 +568,7 @@
     if (self.digestPosts.count) {
         completionHandler(YES);
         [self.imageCache removeAllObjects];
+        [self getDateString];
         [self.digestTableView reloadData];
 
         if (isDigest) {

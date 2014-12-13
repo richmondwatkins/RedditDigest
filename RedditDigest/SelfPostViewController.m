@@ -25,12 +25,12 @@
     [super viewWillAppear:animated];
     self.activityIndicator.hidden = NO;
     [self.activityIndicator startAnimating];
-    NSLog(@"SELFPOST STRINGGGGGG %@",self.selfPostText);
+
     if ([self.selfPostText isEqualToString:@""]) {
         self.selfPostText = self.post.title;
-    }else{
-        self.textView.text = self.selfPostText;
     }
+
+    self.textView.text = [self htmlToText:self.selfPostText];
 
     self.textView.delegate = self;
     if (!self.navController.navigationBarHidden) {
@@ -44,6 +44,8 @@
 
     self.activityIndicator.hidden = YES;
     [self.activityIndicator stopAnimating];
+
+    [self showNavigationAndTabBars];
 }
 
 - (void)viewDidLoad {
@@ -118,7 +120,7 @@
     [UIView animateWithDuration:0.2 animations:^{
         self.statusBarBackground.alpha = 1.0;
     }];
-    NSLog(@"%f", self.verticalSpaceConstraint.constant);
+
     [UIView animateWithDuration:UINavigationControllerHideShowBarDuration animations:^{
         [self.navController setNavigationBarHidden:YES animated:YES];
         //        if (self.verticalSpaceConstraint.constant < 0) {
@@ -130,6 +132,8 @@
         //}
         [self.view layoutIfNeeded];
     }];
+
+    self.navBarIsHidden = YES;
 }
 
 - (void)showNavigationAndTabBars
@@ -142,6 +146,7 @@
         self.verticalSpaceConstraint.constant = 0; //self.navController.navigationBar.frame.size.height;
         [self.view layoutIfNeeded];
     }];
+    self.navBarIsHidden = NO;
 }
 
 -(BOOL)prefersStatusBarHidden {
@@ -174,6 +179,17 @@
         TextViewWebViewController *commentWebCtrl = navigationController.viewControllers.firstObject;
         commentWebCtrl.urlToLoad = self.urlToSend;
     }
+}
+
+- (NSString*)htmlToText:(NSString*)string 
+{
+    string = [string stringByReplacingOccurrencesOfString:@"&quot;" withString:@""];
+    string = [string stringByReplacingOccurrencesOfString:@"&apos;" withString:@""];
+    string = [string stringByReplacingOccurrencesOfString:@"&amp;" withString:@""];
+    string = [string stringByReplacingOccurrencesOfString:@"&lt;" withString:@""];
+    string = [string stringByReplacingOccurrencesOfString:@"&gt;" withString:@""];
+
+    return string;
 }
 
 @end

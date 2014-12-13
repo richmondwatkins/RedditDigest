@@ -81,7 +81,7 @@
         NSDictionary *commentDictionary = self.comments[indexPath.row];
         Comment *comment = commentDictionary[@"parent"];
 
-        NSString *partialComment = [self textToHtml:comment.body withCell:cell andComment:comment];
+        NSString *partialComment = [self htmlToText:comment.body];
         cell.commentTextView.text = comment.html;
         // [cell.commentTextView sizeToFit];
         //self.cellHeight = cell.commentTextView.frame.size.height;
@@ -162,7 +162,7 @@
     }
 }
 
-- (NSString*)textToHtml:(NSString*)string withCell:(CommentTableViewCell *)cell andComment:(Comment *)comment
+- (NSString*)htmlToText:(NSString*)string
 {
     string = [string stringByReplacingOccurrencesOfString:@"&quot;" withString:@""];
     string = [string stringByReplacingOccurrencesOfString:@"&apos;" withString:@""];
