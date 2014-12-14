@@ -48,6 +48,7 @@
 		5DA5E4011A1A672E0091867F /* DigestPost.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DA5E3FF1A1A672E0091867F /* DigestPost.m */; };
 		5DAADDD21A0D4CD200BB91AB /* ImagePostViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DAADDD11A0D4CD200BB91AB /* ImagePostViewController.m */; };
 		5DAADDD51A0D502600BB91AB /* WebPostViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DAADDD41A0D502600BB91AB /* WebPostViewController.m */; };
+		5DAE3ABE1A3E068400F4A07C /* SelfPostTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DAE3ABD1A3E068400F4A07C /* SelfPostTextView.m */; };
 		5DB47A5D1A0ABA5B0034EA84 /* PostViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DB47A5C1A0ABA5B0034EA84 /* PostViewController.m */; };
 		5DB47AEB1A0C45190034EA84 /* RedditRequests.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DB47AEA1A0C45190034EA84 /* RedditRequests.m */; };
 		5DB47AEE1A0C4A700034EA84 /* UserRequests.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DB47AED1A0C4A700034EA84 /* UserRequests.m */; };
@@ -157,6 +158,8 @@
 		5DAADDD11A0D4CD200BB91AB /* ImagePostViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImagePostViewController.m; sourceTree = "<group>"; };
 		5DAADDD31A0D502600BB91AB /* WebPostViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WebPostViewController.h; sourceTree = "<group>"; };
 		5DAADDD41A0D502600BB91AB /* WebPostViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WebPostViewController.m; sourceTree = "<group>"; };
+		5DAE3ABC1A3E068400F4A07C /* SelfPostTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SelfPostTextView.h; sourceTree = "<group>"; };
+		5DAE3ABD1A3E068400F4A07C /* SelfPostTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SelfPostTextView.m; sourceTree = "<group>"; };
 		5DB47A5B1A0ABA5B0034EA84 /* PostViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PostViewController.h; sourceTree = "<group>"; };
 		5DB47A5C1A0ABA5B0034EA84 /* PostViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PostViewController.m; sourceTree = "<group>"; };
 		5DB47AE91A0C45190034EA84 /* RedditRequests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RedditRequests.h; path = RedditDigest/RedditRequests.h; sourceTree = "<group>"; };
@@ -290,6 +293,8 @@
 			children = (
 				5D09FB9F1A1DD481002845F1 /* InternetConnectionTest.h */,
 				5D09FBA01A1DD481002845F1 /* InternetConnectionTest.m */,
+				5DAE3ABC1A3E068400F4A07C /* SelfPostTextView.h */,
+				5DAE3ABD1A3E068400F4A07C /* SelfPostTextView.m */,
 				5D09FB9C1A1DCE18002845F1 /* Reachability */,
 				81D291231A19903D002B2708 /* Sounds */,
 				5D614E501A16F73500A199A2 /* HTMLParser */,
@@ -646,6 +651,7 @@
 				340531ED1A1312AE000CF33C /* CommentViewController.m in Sources */,
 				5D311EDE1A10A359002AFC3C /* CommentTableViewCell.m in Sources */,
 				5DB5B8491A083DF0007DC036 /* SubredditSelectionViewController.m in Sources */,
+				5DAE3ABE1A3E068400F4A07C /* SelfPostTextView.m in Sources */,
 				3417AC131A0945B40026961C /* KTCenterFlowLayout.m in Sources */,
 				3413FC361A1117490018A172 /* LoadingViewController.m in Sources */,
 				5DDA80BF1A11DED900527AF9 /* Subreddit.m in Sources */,

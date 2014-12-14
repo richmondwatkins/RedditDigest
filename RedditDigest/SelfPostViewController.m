@@ -29,8 +29,7 @@
     if ([self.selfPostText isEqualToString:@""]) {
         self.selfPostText = self.post.title;
     }
-
-    self.textView.text = [self htmlToText:self.selfPostText];
+    [self.textView htmlToTextAndSetViewsText:self.selfPostText];
 
     self.textView.delegate = self;
     if (!self.navController.navigationBarHidden) {
@@ -181,15 +180,5 @@
     }
 }
 
-- (NSString*)htmlToText:(NSString*)string 
-{
-    string = [string stringByReplacingOccurrencesOfString:@"&quot;" withString:@""];
-    string = [string stringByReplacingOccurrencesOfString:@"&apos;" withString:@""];
-    string = [string stringByReplacingOccurrencesOfString:@"&amp;" withString:@""];
-    string = [string stringByReplacingOccurrencesOfString:@"&lt;" withString:@""];
-    string = [string stringByReplacingOccurrencesOfString:@"&gt;" withString:@""];
-
-    return string;
-}
 
 @end

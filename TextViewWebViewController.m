@@ -7,11 +7,12 @@
 //
 
 #import "TextViewWebViewController.h"
+#import "SelfPostTextView.h"
 #import <RedditKit.h>
 @interface TextViewWebViewController () <UIWebViewDelegate>
 @property (strong, nonatomic) IBOutlet UIWebView *webView;
 @property (strong, nonatomic) IBOutlet UIActivityIndicatorView *activityIndicator;
-@property (weak, nonatomic) IBOutlet UITextView *selfPostTextiView;
+@property (weak, nonatomic) IBOutlet SelfPostTextView *selfPostTextiView;
 @property (weak, nonatomic) IBOutlet UINavigationItem *navBar;
 
 @end
@@ -63,8 +64,9 @@
 }
 
 - (void)downloadSelfPost:(NSDictionary *)post{
-    self.selfPostTextiView.text = post[@"selftext"];
     self.navBar.title = post[@"title"];
+
+    [self.selfPostTextiView htmlToTextAndSetViewsText:post[@"selftext"]];
 
     [self.activityIndicator stopAnimating];
     [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
