@@ -7,10 +7,12 @@
 //
 
 #import "TextViewWebViewController.h"
-
+#import <RedditKit.h>
 @interface TextViewWebViewController () <UIWebViewDelegate>
 @property (strong, nonatomic) IBOutlet UIWebView *webView;
 @property (strong, nonatomic) IBOutlet UIActivityIndicatorView *activityIndicator;
+@property (weak, nonatomic) IBOutlet UITextView *selfPostTextiView;
+@property (weak, nonatomic) IBOutlet UINavigationItem *navBar;
 
 @end
 
@@ -19,9 +21,53 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self.activityIndicator startAnimating];
+    self.activityIndicator.hidesWhenStopped = YES;
+
     [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
-    NSURLRequest *request = [NSURLRequest requestWithURL:self.urlToLoad];
+
+    NSString *urlString = [self.urlToLoad absoluteString];
+
+    if ([urlString containsString:@"reddit.com/r/"]) {
+        [self loadPostInternally:urlString];
+        self.selfPostTextiView.hidden = NO;
+    }else{
+        [self loadPostExternally:urlString];
+        self.selfPostTextiView.hidden = YES;
+    }
+}
+
+- (void)loadPostInternally:(NSString *)urlString{
+    if (![urlString containsString:@"http"]) {
+        urlString = [NSString stringWithFormat:@"http://%@", urlString];
+    }
+    urlString = [urlString stringByAppendingString:@".json"];
+    NSLog(@"URL STRING %@",urlString);
+    NSURL *url = [NSURL URLWithString:urlString];
+    NSURLRequest *request = [NSURLRequest requestWithURL:url];
+    [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
+        NSArray *resultsArray = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:nil];
+        NSDictionary *result = resultsArray[0][@"data"][@"children"][0][@"data"];
+
+        if ([result[@"is_self"] boolValue]) {
+            [self downloadSelfPost:result];
+        }else{
+            self.selfPostTextiView.hidden = YES;
+            [self loadPostExternally:urlString];
+        }
+    }];
+}
+
+- (void)loadPostExternally:(NSString *)urlString{
+    NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:urlString]];
     [self.webView loadRequest:request];
+}
+
+- (void)downloadSelfPost:(NSDictionary *)post{
+    self.selfPostTextiView.text = post[@"selftext"];
+    self.navBar.title = post[@"title"];
+
+    [self.activityIndicator stopAnimating];
+    [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
 }
 
 - (IBAction)dismissWebView:(id)sender {

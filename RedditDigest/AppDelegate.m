@@ -134,7 +134,7 @@
         }
     }else{
         [digestController createLoadingSnoo];
-        [digestController fetchNewData:NO withCompletion:^(UIBackgroundFetchResult complete) {
+        [digestController fetchNewData:YES withCompletion:^(UIBackgroundFetchResult complete) {
             [digestController removeSnooFromView];
         }];
     }

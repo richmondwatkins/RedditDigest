@@ -122,6 +122,7 @@
 -(BOOL)textView:(UITextView *)textView shouldInteractWithURL:(NSURL *)URL inRange:(NSRange)characterRange{
 
     self.urlToSend = URL;
+
     [self performSegueWithIdentifier:@"TextViewWebSegue" sender:self];
 
     return NO;
@@ -305,7 +306,6 @@
 #pragma mark - Share
 - (IBAction)onShareButtonPressed:(id)sender
 {
-    NSLog(@"SELECTED POST %@", self.post.url);
     UIActivityViewController *activityViewController = [[UIActivityViewController alloc] initWithActivityItems:@[self.post.url]
                                       applicationActivities:nil];
             [self.navigationController presentViewController:activityViewController
