@@ -58,6 +58,7 @@
     self.postPageController.dataSource = self;
     self.postPageController.view.frame = self.view.bounds;
     self.postPageController.delegate = self;
+    self.commentsViewController.pageViewController = self.postPageController;
 
     PageWrapperViewController *detailPostViewController = [self viewControllerAtIndex:self.index];
     NSArray *postViewControllers = [NSArray arrayWithObject:detailPostViewController];
@@ -110,7 +111,7 @@
 
 -(void)pageViewController:(UIPageViewController *)pageViewController didFinishAnimating:(BOOL)finished previousViewControllers:(NSArray *)previousViewControllers transitionCompleted:(BOOL)completed{
 
-    NSUInteger index = [[pageViewController.viewControllers lastObject] index];
+    NSInteger index = [[pageViewController.viewControllers lastObject] index];
     if ((index <= 0) || (index == NSNotFound)) {
         index = self.allPosts.count;
     }
@@ -119,7 +120,10 @@
         index = 0;
     }
 
+
     [self loadCommentsFromSelectedPost:index];
+    self.commentsViewController.pageViewController = pageViewController; //setting to allow paging within comment view
+
 //    [self showCounterLabelAtIndex:index];
     // Set title of nav bar on change to new post
     if (!self.isFromPastDigest) {
@@ -136,7 +140,7 @@
 }
 
 
-- (void)loadCommentsFromSelectedPost:(NSUInteger)index
+- (void)loadCommentsFromSelectedPost:(NSInteger)index
 {
     if (!self.isFromPastDigest) {
         if ((index <= 0) || (index == NSNotFound)) {
@@ -153,6 +157,26 @@
     }else{
         self.commentsViewController.isFromPastDigest = YES;
     }
+
+    [self setUpBeforeCommentViewController:index - 1];
+    [self setUpAfterCommentViewController:index + 1];
+}
+
+- (void)setUpBeforeCommentViewController:(NSInteger)index{
+
+
+    if ((index == 0) || (index == NSNotFound)) {
+        index = self.allPosts.count;
+    }
+
+    self.commentsViewController.beforeViewController = [self viewControllerAtIndex:index];
+}
+
+- (void)setUpAfterCommentViewController:(NSInteger)index{
+    if ((index == self.allPosts.count) || (index == NSNotFound)) {
+        index = 0;
+    }
+    self.commentsViewController.afterViewController = [self viewControllerAtIndex:index];
 }
 
 - (PageWrapperViewController *)viewControllerAtIndex:(NSInteger)index
@@ -178,7 +202,7 @@
             viewController.sourceViewIdentifier = 2;
             viewController.url = post.url;
         }else if(post.isGif.intValue == 1){
-            viewController =[self.storyboard instantiateViewControllerWithIdentifier:@"GifView"];
+            viewController =[self.storyboard instantiateViewControllerWithIdentifier:@"WebView"];
             viewController.sourceViewIdentifier = 3;
             viewController.url = post.url;
         }else if(post.isSelfPost.integerValue == 1){
@@ -314,6 +338,8 @@
                     [self animateViewIntoPlace];
                     [self.commentsViewController.showHideCommentsViewButton setImage:[UIImage imageNamed:@"comment_down"] forState:UIControlStateNormal];
                 }
+
+                
             }
             direction = UIPanGestureRecognizerDirectionUndefined;
             break;

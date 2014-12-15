@@ -1385,6 +1385,7 @@
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" allowsSelection="NO" rowHeight="76" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="W7d-rk-Yno">
                                 <rect key="frame" x="0.0" y="44" width="600" height="556"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <gestureRecognizers/>
                                 <prototypes>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="CommentCell" rowHeight="76" id="1Su-cK-jcw" customClass="CommentTableViewCell">
                                         <rect key="frame" x="0.0" y="0.0" width="600" height="44"/>
@@ -1503,6 +1504,9 @@
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
+                                <connections>
+                                    <outletCollection property="gestureRecognizers" destination="gbi-W0-lM2" appends="YES" id="B3e-gx-AUe"/>
+                                </connections>
                             </tableView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="HhL-gR-4dF">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="44"/>
@@ -1593,6 +1597,7 @@
                                 </constraints>
                             </view>
                         </subviews>
+                        <gestureRecognizers/>
                         <constraints>
                             <constraint firstAttribute="bottom" secondItem="W7d-rk-Yno" secondAttribute="bottom" id="35L-tz-z1C"/>
                             <constraint firstItem="HhL-gR-4dF" firstAttribute="leading" secondItem="3p4-y1-ZwX" secondAttribute="leading" id="4AL-pY-ThT"/>
@@ -1616,6 +1621,11 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="VAy-o2-vYu" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <panGestureRecognizer minimumNumberOfTouches="1" id="gbi-W0-lM2" userLabel="Right Pan">
+                    <connections>
+                        <action selector="onPanGesture:" destination="lJS-Le-QsK" id="sHW-tL-4Sh"/>
+                    </connections>
+                </panGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="-485" y="-105"/>
         </scene>
@@ -2011,8 +2021,8 @@
         <image name="welcome_snoo" width="400" height="537"/>
     </resources>
     <inferredMetricsTieBreakers>
+        <segue reference="jTu-Ox-EHd"/>
         <segue reference="IWx-eg-FxF"/>
         <segue reference="bKw-lt-3Nc"/>
-        <segue reference="Mou-ub-Yyx"/>
     </inferredMetricsTieBreakers>
 </document>

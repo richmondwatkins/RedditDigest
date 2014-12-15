@@ -10,6 +10,7 @@
 #import "Comment.h"
 #import "Post.h"
 #import "DetailPostViewController.h"
+#import "PageWrapperViewController.h"
 
 @protocol CommentViewControllerDelegate <NSObject>
 
@@ -27,6 +28,10 @@
 @property (weak, nonatomic) IBOutlet UIButton *showHideCommentsViewButton;
 @property BOOL isFromPastDigest;
 @property (strong, nonatomic) NSManagedObjectContext *managedObjectContext;
+@property UIPageViewController *pageViewController;
+@property PageWrapperViewController *beforeViewController;
+@property PageWrapperViewController *afterViewController;
+
 @property id<CommentViewControllerDelegate>delegate;
 
 - (void)setupVoteButtons;

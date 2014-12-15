@@ -365,4 +365,17 @@
 }
 
 
+- (IBAction)onPanGesture:(UIPanGestureRecognizer *)rec {
+    CGPoint vel = [rec velocityInView:self.view];
+
+    if (vel.x > 0){
+        NSLog(@"BEFOREEEEE %@",self.beforeViewController);
+        [self.pageViewController setViewControllers:@[self.beforeViewController] direction:UIPageViewControllerNavigationDirectionReverse animated:YES completion:nil];
+    }
+    else if(vel.x < 0){
+        NSLog(@"AFTERRRR %@",self.afterViewController);
+        [self.pageViewController setViewControllers:@[self.afterViewController] direction:UIPageViewControllerNavigationDirectionForward animated:YES completion:nil];
+    }
+}
+
 @end
