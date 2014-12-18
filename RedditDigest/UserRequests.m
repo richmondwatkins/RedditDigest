@@ -191,7 +191,10 @@
     [request setHTTPBody:postData];
 
     [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
-        NSLog(@"Saved Recs");
+
+        if (!connectionError) {
+            NSLog(@"Saved Recs");
+        }
     }];
 }
 

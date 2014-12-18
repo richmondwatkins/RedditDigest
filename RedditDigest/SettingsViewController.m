@@ -62,18 +62,23 @@
     self.digestViewController.madeChangeToLocation = NO;
     [self retrievePastDigestFromCoreData];
 
-    [self.navigationItem setHidesBackButton:YES];
 
+    NSString *deviceModel = [UIDevice currentDevice].model; // no room for bottom button corner on iphone 4
 
-    UIButton *button = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-    [button addTarget:self
-               action:@selector(popViewController:)
-     forControlEvents:UIControlEventTouchUpInside];
-    UIImage *closeImage = [UIImage imageNamed:@"closeButton"];
+    if (![deviceModel containsString:@"iPhone4"]) {
+        [self.navigationItem setHidesBackButton:YES];
 
-    [button setBackgroundImage:closeImage forState:UIControlStateNormal];
-    button.frame = CGRectMake(5, self.tableView.frame.size.height - 100, 25, 25);
-    [self.view addSubview:button];
+        UIButton *button = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+        [button addTarget:self
+                   action:@selector(popViewController:)
+         forControlEvents:UIControlEventTouchUpInside];
+        UIImage *closeImage = [UIImage imageNamed:@"closeButton"];
+
+        [button setBackgroundImage:closeImage forState:UIControlStateNormal];
+        button.frame = CGRectMake(5, self.tableView.frame.size.height - 100, 25, 25);
+        [self.view addSubview:button];
+
+    }
 
 }
 
