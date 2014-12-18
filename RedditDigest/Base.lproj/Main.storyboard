@@ -127,7 +127,8 @@
                                         <exclude reference="ElM-di-aPn"/>
                                     </mask>
                                 </variation>
-                                <variation key="heightClass=regular-widthClass=compact">
+                                <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
+                                    <rect key="frame" x="25" y="164" width="350" height="472"/>
                                     <mask key="constraints">
                                         <include reference="5Ui-Wy-zdw"/>
                                         <include reference="ElM-di-aPn"/>
@@ -574,21 +575,9 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
-                        <view key="tableFooterView" contentMode="scaleToFill" id="bqn-qX-Q5N">
-                            <rect key="frame" x="0.0" y="474" width="600" height="125"/>
+                        <view key="tableFooterView" contentMode="scaleToFill" id="Psa-x4-EBY">
+                            <rect key="frame" x="0.0" y="474" width="600" height="127"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            <subviews>
-                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="iMq-Ps-rAv">
-                                    <rect key="frame" x="8" y="87" width="46" height="30"/>
-                                    <state key="normal" title="Button">
-                                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                    </state>
-                                </button>
-                            </subviews>
-                            <constraints>
-                                <constraint firstItem="iMq-Ps-rAv" firstAttribute="leading" secondItem="bqn-qX-Q5N" secondAttribute="leadingMargin" id="74Y-m0-hfd"/>
-                                <constraint firstItem="iMq-Ps-rAv" firstAttribute="bottom" secondItem="bqn-qX-Q5N" secondAttribute="bottomMargin" id="9jD-Df-UHe"/>
-                            </constraints>
                         </view>
                         <sections>
                             <tableViewSection headerTitle="Digest" id="x4n-vL-pM6">
@@ -774,7 +763,7 @@
                     <connections>
                         <outlet property="archiveCell" destination="SKK-HQ-clL" id="n4y-Q8-ugZ"/>
                         <outlet property="editDigestCell" destination="BPR-M7-CNs" id="ccu-Gx-AnW"/>
-                        <outlet property="footerView" destination="bqn-qX-Q5N" id="gf7-do-xcT"/>
+                        <outlet property="footerView" destination="Psa-x4-EBY" id="K1e-GD-Yhv"/>
                         <outlet property="locationSwitcher" destination="ig4-6X-2pQ" id="lco-pn-DkQ"/>
                         <outlet property="loginCell" destination="Q8O-mR-3xN" id="qzx-MO-Soq"/>
                         <outlet property="loginLogoutLabel" destination="ks2-c6-pnf" id="cOa-C8-Xed"/>

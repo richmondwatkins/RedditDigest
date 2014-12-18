@@ -48,6 +48,8 @@
 
     [self setUpCells];
 
+    self.tableView.scrollEnabled = NO;
+
     [InternetConnectionTest testInternetConnectionWithViewController:self andCompletion:^(BOOL internet) {
             if (internet == NO) {
                 self.recCell.userInteractionEnabled = NO;
@@ -61,6 +63,18 @@
     [self retrievePastDigestFromCoreData];
 
     [self.navigationItem setHidesBackButton:YES];
+
+
+    UIButton *button = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+    [button addTarget:self
+               action:@selector(popViewController:)
+     forControlEvents:UIControlEventTouchUpInside];
+    UIImage *closeImage = [UIImage imageNamed:@"closeButton"];
+
+    [button setBackgroundImage:closeImage forState:UIControlStateNormal];
+    button.frame = CGRectMake(5, self.tableView.frame.size.height - 100, 25, 25);
+    [self.view addSubview:button];
+
 }
 
 #pragma mark - Cells
@@ -264,7 +278,7 @@
     return YES;
 }
 
-- (IBAction)popViewController:(id)sender {
+- (void)popViewController:(id)sender {
     [self.navigationController popViewControllerAnimated:YES];
 }
 
