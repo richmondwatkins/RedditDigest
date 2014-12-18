@@ -56,6 +56,7 @@
 		5DB47AEE1A0C4A700034EA84 /* UserRequests.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DB47AED1A0C4A700034EA84 /* UserRequests.m */; };
 		5DB5B8491A083DF0007DC036 /* SubredditSelectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DB5B8481A083DF0007DC036 /* SubredditSelectionViewController.m */; };
 		5DB5B84C1A084055007DC036 /* SubredditListCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DB5B84B1A084055007DC036 /* SubredditListCollectionViewCell.m */; };
+		5DC1A3B81A428E9800100EE4 /* UserInteractionSettingsExit.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DC1A3B71A428E9800100EE4 /* UserInteractionSettingsExit.m */; };
 		5DDA80BF1A11DED900527AF9 /* Subreddit.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DDA80BC1A11DED900527AF9 /* Subreddit.m */; };
 		5DDA80C01A11DED900527AF9 /* Post.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DDA80BE1A11DED900527AF9 /* Post.m */; };
 		5DE75C9B1A0D92580031F0F7 /* SelfPostViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DE75C9A1A0D92580031F0F7 /* SelfPostViewController.m */; };
@@ -176,6 +177,8 @@
 		5DB5B8481A083DF0007DC036 /* SubredditSelectionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SubredditSelectionViewController.m; sourceTree = "<group>"; };
 		5DB5B84A1A084055007DC036 /* SubredditListCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SubredditListCollectionViewCell.h; path = RedditDigest/SubredditListCollectionViewCell.h; sourceTree = "<group>"; };
 		5DB5B84B1A084055007DC036 /* SubredditListCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SubredditListCollectionViewCell.m; path = RedditDigest/SubredditListCollectionViewCell.m; sourceTree = "<group>"; };
+		5DC1A3B61A428E9800100EE4 /* UserInteractionSettingsExit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserInteractionSettingsExit.h; sourceTree = "<group>"; };
+		5DC1A3B71A428E9800100EE4 /* UserInteractionSettingsExit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserInteractionSettingsExit.m; sourceTree = "<group>"; };
 		5DDA80BB1A11DED900527AF9 /* Subreddit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Subreddit.h; sourceTree = "<group>"; };
 		5DDA80BC1A11DED900527AF9 /* Subreddit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Subreddit.m; sourceTree = "<group>"; };
 		5DDA80BD1A11DED900527AF9 /* Post.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Post.h; sourceTree = "<group>"; };
@@ -412,6 +415,8 @@
 				5D99ED5B1A42502E002F29F6 /* SettingsSlideDown.m */,
 				5D99ED5D1A425AA5002F29F6 /* SettingsSlideUp.h */,
 				5D99ED5E1A425AA5002F29F6 /* SettingsSlideUp.m */,
+				5DC1A3B61A428E9800100EE4 /* UserInteractionSettingsExit.h */,
+				5DC1A3B71A428E9800100EE4 /* UserInteractionSettingsExit.m */,
 			);
 			name = "Custom Transitions";
 			sourceTree = "<group>";
@@ -696,6 +701,7 @@
 				815EED181A097E36006286FF /* EditSubredditViewController.m in Sources */,
 				345700D41A13B91B00FA6FC8 /* DetailPostViewController.m in Sources */,
 				5D99ED5F1A425AA5002F29F6 /* SettingsSlideUp.m in Sources */,
+				5DC1A3B81A428E9800100EE4 /* UserInteractionSettingsExit.m in Sources */,
 				343257411A0A96CF003A3115 /* HeaderCollectionReusableView.m in Sources */,
 				5DA5E4011A1A672E0091867F /* DigestPost.m in Sources */,
 				5DE75CA11A0D941D0031F0F7 /* VideoPostViewController.m in Sources */,

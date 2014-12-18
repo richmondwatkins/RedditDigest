@@ -33,10 +33,15 @@
     [UIView animateWithDuration:[self transitionDuration:transitionContext] animations:^{
         fromSnapShot.center = CGPointMake(fromVC.view.center.x, (fromVC.view.center.y - fromVC.view.frame.size.height) - 80);
     } completion:^(BOOL finished) {
-        [fromSnapShot removeFromSuperview];
-        [container addSubview:toVC.view];
 
-        [transitionContext completeTransition:YES];
+        if ([transitionContext transitionWasCancelled]) {
+            [container addSubview:fromVC.view];
+            [transitionContext completeTransition:NO];
+        } else{
+            [container addSubview:toVC.view];
+            [transitionContext completeTransition:YES];
+        }
+        [fromSnapShot removeFromSuperview];
     }];
 }
 

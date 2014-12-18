@@ -31,7 +31,7 @@
 #import "InternetConnectionTest.h"
 #import "SettingsSlideDown.h"
 #import "SettingsSlideUp.h"
-
+#import "UserInteractionSettingsExit.h"
 @interface DigestViewController () <UITableViewDataSource, UITableViewDelegate, CLLocationManagerDelegate, MCSwipeTableViewCellDelegate, UIActionSheetDelegate, UIViewControllerAnimatedTransitioning>
 
 @property NSMutableArray *digestPosts;
@@ -45,7 +45,7 @@
 @property (strong, nonatomic) IBOutlet UIBarButtonItem *todayBarButton;
 @property DigestCellWithImageTableViewCell *longHoldCell;
 @property NSTimer *snooTextTimer;
-
+@property UserInteractionSettingsExit *interactiveTransition;
 @end
 
 @implementation DigestViewController
@@ -806,6 +806,22 @@
     return nil;
 }
 
+-(id<UIViewControllerInteractiveTransitioning>)navigationController:(UINavigationController *)navigationController interactionControllerForAnimationController:(id<UIViewControllerAnimatedTransitioning>)animationController
+{
 
+    if (self.interactiveTransition.isInteractive) {
+        return self.interactiveTransition;
+    }
+
+    return nil;
+}
+
+- (void)navigationController:(UINavigationController *)navigationController didShowViewController:(UIViewController *)viewController animated:(BOOL)animated
+{
+    if (!self.interactiveTransition && [viewController isKindOfClass:[SettingsViewController class]]) {
+        self.interactiveTransition = [[UserInteractionSettingsExit alloc] init];
+    }
+    [self.interactiveTransition addInteractionToViewController:viewController];
+}
 
 @end
