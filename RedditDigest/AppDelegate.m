@@ -16,7 +16,6 @@
 
 @interface AppDelegate ()
 
-@property (nonatomic, strong) NSString *temperature;
 @property NSString *deviceString;
 @property NSMutableArray *posts;
 
@@ -204,7 +203,6 @@
         // This is the first launch ever -- ooooo
     }
 }
-
 
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo fetchCompletionHandler:(void (^)(UIBackgroundFetchResult result))handler{
     DigestViewController *digestViewController = [(id)self.window.rootViewController viewControllers][0];

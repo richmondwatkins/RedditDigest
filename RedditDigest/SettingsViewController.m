@@ -26,8 +26,6 @@
 @property CLLocationManager *locationManger;
 @property CLLocationCoordinate2D userLocation;
 @property (strong, nonatomic) IBOutlet UISwitch *locationSwitcher;
-@property (strong, nonatomic) IBOutlet UISwitch *autoUpdatingSwitcher;
-
 @property (strong, nonatomic) IBOutlet UILabel *loginLogoutLabel;
 @property (strong, nonatomic) IBOutlet UITableViewCell *editDigestCell;
 
@@ -36,6 +34,8 @@
 @property (strong, nonatomic) IBOutlet UITableViewCell *loginCell;
 @property BOOL madChangeToLocation;
 @property (strong, nonatomic) IBOutlet UISwitch *nsfwSwitcher;
+
+@property (weak, nonatomic) IBOutlet UIView *footerView;
 @end
 
 @implementation SettingsViewController
@@ -60,6 +60,7 @@
     self.digestViewController.madeChangeToLocation = NO;
     [self retrievePastDigestFromCoreData];
 
+    [self.navigationItem setHidesBackButton:YES];
 }
 
 #pragma mark - Cells
@@ -192,47 +193,17 @@
     }
 }
 
-#pragma mark - Auto Updating
-
-- (void)setupAutoUpdatingCell
-{
-    if ([[NSUserDefaults standardUserDefaults] boolForKey:@"BackgroundFetch"]) {
-        self.autoUpdatingSwitcher.on = YES;
-    } else {
-        self.autoUpdatingSwitcher.on = NO;
-    }
-}
-
-- (IBAction)switchAutoUpdating:(UISwitch *)sender
-{
-    if (sender.on) {
-        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"BackgroundFetch"];
-        [TSMessage showNotificationInViewController:self
-                                              title:@"Turned on Autoupdating!"
-                                           subtitle:@"Now, the more often you use Reddit Digest the more your content will be up to date"
-                                               type:TSMessageNotificationTypeSuccess
-                                           duration:TSMessageNotificationDurationAutomatic];
-    } else {
-        [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"BackgroundFetch"];
-        [TSMessage showNotificationInViewController:self
-                                              title:@"Turned off Autoupdating!"
-                                           subtitle:nil
-                                               type:TSMessageNotificationTypeError
-                                           duration:1.5];
-    }
-    [[NSUserDefaults standardUserDefaults] synchronize];
-}
 
 -(void)retrievePastDigestFromCoreData
 {
-    NSFetchRequest *fetchDigests = [[NSFetchRequest alloc] initWithEntityName:@"Digest"];
-    NSSortDescriptor *sorter = [[NSSortDescriptor alloc] initWithKey:@"time" ascending:NO];
-    [fetchDigests setSortDescriptors:@[sorter]];
-
-    NSArray *digests = [self.managedObject executeFetchRequest:fetchDigests error:nil];
-    for (Digest *digest in digests) {
-        NSLog(@"DIGESTSSS %@",digest.digestPost);
-    }
+//    NSFetchRequest *fetchDigests = [[NSFetchRequest alloc] initWithEntityName:@"Digest"];
+//    NSSortDescriptor *sorter = [[NSSortDescriptor alloc] initWithKey:@"time" ascending:NO];
+//    [fetchDigests setSortDescriptors:@[sorter]];
+//
+//    NSArray *digests = [self.managedObject executeFetchRequest:fetchDigests error:nil];
+//    for (Digest *digest in digests) {
+//        NSLog(@"DIGESTSSS %@",digest.digestPost);
+//    }
 }
 
 #pragma mark - Table View Delegate Methods
@@ -293,6 +264,9 @@
     return YES;
 }
 
+- (IBAction)popViewController:(id)sender {
+    [self.navigationController popViewControllerAnimated:YES];
+}
 
 
 

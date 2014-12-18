@@ -55,6 +55,10 @@
     [visualEffectView setFrame:blurView];
     visualEffectView.tag = 2;
     [self.view insertSubview:visualEffectView belowSubview:self.tableView];
+
+    if ([UIApplication sharedApplication].networkActivityIndicatorVisible == YES) {
+        [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
+    }
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -365,17 +369,17 @@
 }
 
 
-- (IBAction)onPanGesture:(UIPanGestureRecognizer *)rec {
-    CGPoint vel = [rec velocityInView:self.view];
+//- (IBAction)onPanGesture:(UIPanGestureRecognizer *)rec {
+//    CGPoint vel = [rec velocityInView:self.view];
 
-    if (vel.x > 0){
-        NSLog(@"BEFOREEEEE %@",self.beforeViewController);
-        [self.pageViewController setViewControllers:@[self.beforeViewController] direction:UIPageViewControllerNavigationDirectionReverse animated:YES completion:nil];
-    }
-    else if(vel.x < 0){
-        NSLog(@"AFTERRRR %@",self.afterViewController);
-        [self.pageViewController setViewControllers:@[self.afterViewController] direction:UIPageViewControllerNavigationDirectionForward animated:YES completion:nil];
-    }
-}
+//    if (vel.x > 0){
+//        NSLog(@"BEFOREEEEE %@",self.beforeViewController);
+//        [self.pageViewController setViewControllers:@[self.beforeViewController] direction:UIPageViewControllerNavigationDirectionReverse animated:YES completion:nil];
+//    }
+//    else if(vel.x < 0){
+//        NSLog(@"AFTERRRR %@",self.afterViewController);
+//        [self.pageViewController setViewControllers:@[self.afterViewController] direction:UIPageViewControllerNavigationDirectionForward animated:YES completion:nil];
+//    }
+//}
 
 @end

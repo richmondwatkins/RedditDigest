@@ -29,7 +29,10 @@
 #import <ZeroPush.h>
 #import "MCSwipeTableViewCell.h"
 #import "InternetConnectionTest.h"
-@interface DigestViewController () <UITableViewDataSource, UITableViewDelegate, CLLocationManagerDelegate, MCSwipeTableViewCellDelegate, UIActionSheetDelegate>
+#import "SettingsSlideDown.h"
+#import "SettingsSlideUp.h"
+
+@interface DigestViewController () <UITableViewDataSource, UITableViewDelegate, CLLocationManagerDelegate, MCSwipeTableViewCellDelegate, UIActionSheetDelegate, UIViewControllerAnimatedTransitioning>
 
 @property NSMutableArray *digestPosts;
 @property UIRefreshControl *refreshControl;
@@ -73,6 +76,9 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+    
+    if ([UIApplication sharedApplication].networkActivityIndicatorVisible == YES) {[UIApplication sharedApplication].networkActivityIndicatorVisible = NO;}
+
     [UserRequests setUpRecommendationsOnServer:self.managedObjectContext]; //sets up the recommendations
 
 
@@ -620,9 +626,13 @@
         if (self.isFromPastDigest) {
             detailPostViewController.isFromPastDigest = YES;
         }
+
+        self.navigationController.delegate = nil;
     }
     else if ([segue.identifier isEqualToString:@"SettingsSegue"])
     {
+        self.navigationController.delegate = self; //for custom transition
+
         SettingsViewController *settingsController = segue.destinationViewController;
         settingsController.managedObject = self.managedObjectContext;
         settingsController.digestViewController = self;
@@ -779,5 +789,23 @@
         [actionSheet showInView:self.view];
     }
 }
+
+-(id<UIViewControllerAnimatedTransitioning>)navigationController:(UINavigationController *)navigationController animationControllerForOperation:(UINavigationControllerOperation)operation fromViewController:(UIViewController *)fromVC toViewController:(UIViewController *)toVC
+{
+
+    if ([fromVC isKindOfClass:[self class]] && [toVC isKindOfClass:[SettingsViewController class]]) {
+        SettingsSlideDown *customTransitions = [[SettingsSlideDown alloc] init];
+        return customTransitions;
+    }
+
+    if ([toVC isKindOfClass:[DigestViewController class]] && [fromVC isKindOfClass:[SettingsViewController class]]) {
+        SettingsSlideUp *customSlideUp = [[SettingsSlideUp alloc] init];
+        return customSlideUp;
+    }
+
+    return nil;
+}
+
+
 
 @end

@@ -123,7 +123,7 @@
 
     [self loadCommentsFromSelectedPost:index];
     self.commentsViewController.pageViewController = pageViewController; //setting to allow paging within comment view
-
+    self.postPageController = pageViewController;
 //    [self showCounterLabelAtIndex:index];
     // Set title of nav bar on change to new post
     if (!self.isFromPastDigest) {
@@ -164,16 +164,22 @@
 
 - (void)setUpBeforeCommentViewController:(NSInteger)index{
 
-
-    if ((index == 0) || (index == NSNotFound)) {
+    if ((index <= 0) || (index == NSNotFound)) {
         index = self.allPosts.count;
     }
 
+    if (index >= self.allPosts.count) {
+        index = 0;
+    }
     self.commentsViewController.beforeViewController = [self viewControllerAtIndex:index];
 }
 
 - (void)setUpAfterCommentViewController:(NSInteger)index{
-    if ((index == self.allPosts.count) || (index == NSNotFound)) {
+    if ((index <= 0) || (index == NSNotFound)) {
+        index = self.allPosts.count;
+    }
+
+    if (index >= self.allPosts.count) {
         index = 0;
     }
     self.commentsViewController.afterViewController = [self viewControllerAtIndex:index];
@@ -338,8 +344,6 @@
                     [self animateViewIntoPlace];
                     [self.commentsViewController.showHideCommentsViewButton setImage:[UIImage imageNamed:@"comment_down"] forState:UIControlStateNormal];
                 }
-
-                
             }
             direction = UIPanGestureRecognizerDirectionUndefined;
             break;
@@ -357,6 +361,18 @@
         }
         default:
             break;
+    }
+
+
+    if (direction == UIPanGestureRecognizerDirectionRight) {
+        self.commentsHeightConstraint.constant = self.navigationController.navigationBar.frame.size.height;
+        [self animateViewIntoPlace];
+//        [self.postPageController setViewControllers:@[self.commentsViewController.beforeViewController] direction:UIPageViewControllerNavigationDirectionReverse animated:YES completion:nil];
+
+    } else if (direction == UIPanGestureRecognizerDirectionLeft){
+        self.commentsHeightConstraint.constant = self.navigationController.navigationBar.frame.size.height;
+        [self animateViewIntoPlace];
+//        [self.postPageController setViewControllers:@[self.commentsViewController.afterViewController] direction:UIPageViewControllerNavigationDirectionForward animated:YES completion:nil];
     }
 }
 

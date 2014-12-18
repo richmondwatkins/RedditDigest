@@ -42,6 +42,8 @@
 		5D614E5B1A16F96100A199A2 /* libxml2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 5D614E5A1A16F96100A199A2 /* libxml2.dylib */; };
 		5D614E611A1838A200A199A2 /* RecommendedSubredditsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D614E601A1838A200A199A2 /* RecommendedSubredditsViewController.m */; };
 		5D7DDE3C1A1B03AE0000C6C3 /* PastDigestsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D7DDE3B1A1B03AE0000C6C3 /* PastDigestsViewController.m */; };
+		5D99ED5C1A42502E002F29F6 /* SettingsSlideDown.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D99ED5B1A42502E002F29F6 /* SettingsSlideDown.m */; };
+		5D99ED5F1A425AA5002F29F6 /* SettingsSlideUp.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D99ED5E1A425AA5002F29F6 /* SettingsSlideUp.m */; };
 		5DA1F14A1A0EEE480017DE39 /* ChildComment.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DA1F1461A0EEE480017DE39 /* ChildComment.m */; };
 		5DA1F14B1A0EEE480017DE39 /* Comment.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DA1F1481A0EEE480017DE39 /* Comment.m */; };
 		5DA5E4001A1A672E0091867F /* Digest.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DA5E3FD1A1A672E0091867F /* Digest.m */; };
@@ -146,6 +148,10 @@
 		5D614E601A1838A200A199A2 /* RecommendedSubredditsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RecommendedSubredditsViewController.m; sourceTree = "<group>"; };
 		5D7DDE3A1A1B03AE0000C6C3 /* PastDigestsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PastDigestsViewController.h; path = ../PastDigestsViewController.h; sourceTree = "<group>"; };
 		5D7DDE3B1A1B03AE0000C6C3 /* PastDigestsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PastDigestsViewController.m; path = ../PastDigestsViewController.m; sourceTree = "<group>"; };
+		5D99ED5A1A42502E002F29F6 /* SettingsSlideDown.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsSlideDown.h; sourceTree = "<group>"; };
+		5D99ED5B1A42502E002F29F6 /* SettingsSlideDown.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsSlideDown.m; sourceTree = "<group>"; };
+		5D99ED5D1A425AA5002F29F6 /* SettingsSlideUp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsSlideUp.h; sourceTree = "<group>"; };
+		5D99ED5E1A425AA5002F29F6 /* SettingsSlideUp.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsSlideUp.m; sourceTree = "<group>"; };
 		5DA1F1451A0EEE480017DE39 /* ChildComment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChildComment.h; sourceTree = "<group>"; };
 		5DA1F1461A0EEE480017DE39 /* ChildComment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChildComment.m; sourceTree = "<group>"; };
 		5DA1F1471A0EEE480017DE39 /* Comment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Comment.h; sourceTree = "<group>"; };
@@ -295,6 +301,7 @@
 				5D09FBA01A1DD481002845F1 /* InternetConnectionTest.m */,
 				5DAE3ABC1A3E068400F4A07C /* SelfPostTextView.h */,
 				5DAE3ABD1A3E068400F4A07C /* SelfPostTextView.m */,
+				5D99ED591A42501C002F29F6 /* Custom Transitions */,
 				5D09FB9C1A1DCE18002845F1 /* Reachability */,
 				81D291231A19903D002B2708 /* Sounds */,
 				5D614E501A16F73500A199A2 /* HTMLParser */,
@@ -396,6 +403,17 @@
 				5D614E511A16F75600A199A2 /* TFHpple.h */,
 			);
 			name = HTMLParser;
+			sourceTree = "<group>";
+		};
+		5D99ED591A42501C002F29F6 /* Custom Transitions */ = {
+			isa = PBXGroup;
+			children = (
+				5D99ED5A1A42502E002F29F6 /* SettingsSlideDown.h */,
+				5D99ED5B1A42502E002F29F6 /* SettingsSlideDown.m */,
+				5D99ED5D1A425AA5002F29F6 /* SettingsSlideUp.h */,
+				5D99ED5E1A425AA5002F29F6 /* SettingsSlideUp.m */,
+			);
+			name = "Custom Transitions";
 			sourceTree = "<group>";
 		};
 		5DE75CA21A0D98740031F0F7 /* CoreDataModels */ = {
@@ -659,6 +677,7 @@
 				5D3AC6331A12BCCC0093E79E /* DigestCategory.m in Sources */,
 				5D614E571A16F77A00A199A2 /* TFHpple.m in Sources */,
 				5D09FB9B1A1DCE08002845F1 /* Reachability.m in Sources */,
+				5D99ED5C1A42502E002F29F6 /* SettingsSlideDown.m in Sources */,
 				5DB47A5D1A0ABA5B0034EA84 /* PostViewController.m in Sources */,
 				5D5C12C91A05716E002902A8 /* RedditDigest.xcdatamodeld in Sources */,
 				3417AC0D1A092D970026961C /* SettingsViewController.m in Sources */,
@@ -676,6 +695,7 @@
 				5DAADDD21A0D4CD200BB91AB /* ImagePostViewController.m in Sources */,
 				815EED181A097E36006286FF /* EditSubredditViewController.m in Sources */,
 				345700D41A13B91B00FA6FC8 /* DetailPostViewController.m in Sources */,
+				5D99ED5F1A425AA5002F29F6 /* SettingsSlideUp.m in Sources */,
 				343257411A0A96CF003A3115 /* HeaderCollectionReusableView.m in Sources */,
 				5DA5E4011A1A672E0091867F /* DigestPost.m in Sources */,
 				5DE75CA11A0D941D0031F0F7 /* VideoPostViewController.m in Sources */,

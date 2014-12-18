@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface DigestViewController : UIViewController
+@interface DigestViewController : UIViewController <UINavigationControllerDelegate>
 
 @property (strong, nonatomic) NSManagedObjectContext *managedObjectContext;
 @property NSMutableArray *subredditsForFirstDigest;
